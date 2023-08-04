@@ -2,9 +2,9 @@
 
 import { PlayIcon, SkipBackIcon, SkipForwardIcon } from "lucide-react";
 import { ChangeEvent, useEffect, useState } from "react";
-import { Transport as Transp } from "tone";
+import { start, Transport as Transp } from "tone";
 
-const DEFAULT_BPM = 120;
+const DEFAULT_BPM = 94;
 
 export default function Transport() {
   const [bpm, setBpm] = useState(DEFAULT_BPM);
@@ -14,6 +14,16 @@ export default function Transport() {
     console.info("Change", "bpm:", Transp.bpm.value);
   }, [bpm]);
 
+  async function onClickPlay() {
+    await start();
+
+    if (Transp.state === "started") return Transp.stop();
+
+    Transp.start();
+
+    console.log("now:", Transp.now(), Transp.state);
+  }
+
   function onChange(event: ChangeEvent<HTMLInputElement>) {
     setBpm(parseInt(event.target.value));
   }
@@ -22,7 +32,7 @@ export default function Transport() {
     <div className="flex py-1 px-4">
       <div className="flex gap-2">
         <div className="flex items-center text-white">
-          <PlayIcon className="bg-black mr-1" />
+          <PlayIcon onClick={onClickPlay} className="bg-black mr-1" />
           <SkipBackIcon className="bg-black mr-1" />
           <SkipForwardIcon className="bg-black mr-1" />
         </div>
