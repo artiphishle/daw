@@ -10,6 +10,16 @@ import { ETrackType, type TTrackConfig } from "./components/tracks/types";
 import Mixer from "./components/Mixer";
 import PolySynth from "./instruments/PolySynth";
 import SnareDrum from "./instruments/drums/snareDrum/SnareDrum";
+import Tabs from "./components/ui/tabs/Tabs";
+import TabMenu from "./components/ui/tabs/TabMenu";
+import TabContent from "./components/ui/tabs/TabContent";
+import {
+  BeerIcon,
+  CogIcon,
+  FilesIcon,
+  FolderArchiveIcon,
+  Lightbulb,
+} from "lucide-react";
 
 export default function Home() {
   const { data, error, isLoading } = useConfig();
@@ -37,7 +47,19 @@ export default function Home() {
         })}
       </div>
 
-      <Mixer />
+      <Tabs>
+        <TabMenu
+          items={[
+            { Icon: FilesIcon, text: "Browser" },
+            { Icon: BeerIcon, text: "Mixer" },
+            { Icon: Lightbulb, text: "Effekte" },
+            { Icon: CogIcon, text: "Settings" },
+          ]}
+        ></TabMenu>
+        <TabContent>
+          <Mixer />
+        </TabContent>
+      </Tabs>
       <PolySynth />
     </main>
   );
