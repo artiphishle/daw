@@ -1,6 +1,12 @@
-export default function SnareDrum() {
+import cn from "classnames";
+
+interface ISnareDrumProps {
+  className?: string;
+}
+
+export default function SnareDrum({ className }: ISnareDrumProps) {
   return (
-    <div className="drum">
+    <div className={cn(className, "drum")}>
       <div className="side">
         <div className="side__bottom"></div>
         <div className="side__top"></div>

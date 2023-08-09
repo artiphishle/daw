@@ -38,10 +38,11 @@ export default function StepSequencerTrack({
 
   return (
     <Draggable {...props}>
-      <div className="handle bg-amber-100 p-4">
+      <div className="handle bg-green-100 p-4">
         <ol>
-          {tracks.map(({ steps }, trackIndex) => (
+          {tracks.map(({ name, steps }, trackIndex) => (
             <li key={`track-${trackIndex}`} className="block">
+              <div className="inline-block w-20">{name}</div>
               {steps.map((step, stepIndex) => (
                 <div className="inline mr-1" key={stepIndex}>
                   <label title="pad" htmlFor={`input-${stepIndex}`} />
