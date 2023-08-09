@@ -1,6 +1,6 @@
 import { TimerIcon } from "lucide-react";
 
-export default function Time() {
+export default function TimeTrack() {
   return (
     <div className="flex flex-1 bg-white items-center">
       <div className="py-1 px-4 border-r border-r-gray-200">

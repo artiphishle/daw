@@ -1,5 +1,6 @@
+"use client";
+
 import Transport from "./Transport";
-import PolySynth from "../instruments/PolySynth";
 import { MenuIcon } from "lucide-react";
 
 export default function Toolbar() {
