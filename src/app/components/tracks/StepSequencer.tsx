@@ -8,10 +8,10 @@ export default function StepSequencerTrack({
   tracks: trcks,
 }: IStepSequencerTrackConfig) {
   const [tracks, setTracks] = useState(trcks);
-  const [stepCount, setStepCount] = useState(trcks[0].steps.length);
+  const [stepCount] = useState(trcks[0].steps.length);
 
   function repeat(time: number) {
-    [0, 1, 2, 3, 4, 5, 6, 7].map((_, stepIndex) => {
+    new Array(stepCount).fill("").map((_, stepIndex) => {
       tracks.forEach(({ instrument, steps }) => {
         const { active, key } = steps[stepIndex];
         const stepTime = stepIndex * Time("8n").toSeconds() + time;
@@ -19,14 +19,6 @@ export default function StepSequencerTrack({
         if (active) instrument.triggerAttackRelease(key, "8n", stepTime);
       });
     });
-
-    /*
-    trcks.map(({ instrument, steps }) => {
-      steps.forEach(({ active, key }) => {
-        if (active) instrument.triggerAttackRelease(key, "8n", time);
-      });
-    });
-    */
   }
   Transport.scheduleRepeat(repeat, "1n");
 

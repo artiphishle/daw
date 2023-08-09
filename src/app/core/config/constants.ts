@@ -74,7 +74,7 @@ const DEFAULT_STEP_SEQUENCER: ITrack<IStepSequencerTrackConfig> = {
         steps: [
           { ...DEFAULT_INACTIVE_STEP },
           { ...DEFAULT_INACTIVE_STEP },
-          { key: "C3", active: true },
+          { key: "C2", active: true },
           { ...DEFAULT_INACTIVE_STEP },
 
           { ...DEFAULT_INACTIVE_STEP },
