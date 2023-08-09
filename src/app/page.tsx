@@ -8,6 +8,8 @@ import Toolbar from "@/app/components/Toolbar";
 
 import { ETrackType, type TTrackConfig } from "./components/tracks/types";
 import Mixer from "./components/Mixer";
+import PolySynth from "./instruments/PolySynth";
+import SnareDrum from "./instruments/drums/snareDrum/SnareDrum";
 
 export default function Home() {
   const { data, error, isLoading } = useConfig();
@@ -21,12 +23,12 @@ export default function Home() {
   }
 
   return (
-    <main className="h-full flex flex-1 flex-col justify-between">
+    <main className="relative h-full flex flex-1 flex-col justify-between">
       {/* Toolbar */}
       <Toolbar />
 
       {/* SnareDrum */}
-      {/*<SnareDrum />*/}
+      {<SnareDrum />}
 
       {/* Tracks */}
       <div className="flex-1">
@@ -35,10 +37,8 @@ export default function Home() {
         })}
       </div>
 
-      {/* Instrument */}
-      {/* <PolySynth /> */}
-
       <Mixer />
+      <PolySynth />
     </main>
   );
 }
