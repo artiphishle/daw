@@ -1,6 +1,7 @@
 import { type ChangeEvent, useState } from "react";
-// import ReactDraggable from "react-draggable";
 import { Time, Transport } from "tone";
+
+import useReactDraggable from "../ui/useReactDraggable";
 
 import type { IStepSequencerTrackConfig } from "./types";
 
@@ -9,6 +10,7 @@ export default function StepSequencerTrack({
 }: IStepSequencerTrackConfig) {
   const [tracks, setTracks] = useState(trcks);
   const [stepCount] = useState(trcks[0].steps.length);
+  const { Draggable, props } = useReactDraggable();
 
   function repeat(time: number) {
     new Array(stepCount).fill("").map((_, stepIndex) => {
@@ -35,50 +37,28 @@ export default function StepSequencerTrack({
   }
 
   return (
-    <div>
-      <ol>
-        {tracks.map(({ steps }, trackIndex) => (
-          <li key={`track-${trackIndex}`} className="block">
-            {steps.map((step, stepIndex) => (
-              <div className="inline mr-1" key={stepIndex}>
-                <label title="pad" htmlFor={`input-${stepIndex}`} />
-                <input
-                  id={`input-${stepIndex}`}
-                  type="checkbox"
-                  data-track-index={trackIndex}
-                  data-step-index={stepIndex}
-                  onChange={onToggleStep}
-                  checked={step.active}
-                />
-              </div>
-            ))}
-          </li>
-        ))}
-      </ol>
-    </div>
+    <Draggable {...props}>
+      <div className="handle bg-amber-100 p-4">
+        <ol>
+          {tracks.map(({ steps }, trackIndex) => (
+            <li key={`track-${trackIndex}`} className="block">
+              {steps.map((step, stepIndex) => (
+                <div className="inline mr-1" key={stepIndex}>
+                  <label title="pad" htmlFor={`input-${stepIndex}`} />
+                  <input
+                    id={`input-${stepIndex}`}
+                    type="checkbox"
+                    data-track-index={trackIndex}
+                    data-step-index={stepIndex}
+                    onChange={onToggleStep}
+                    checked={step.active}
+                  />
+                </div>
+              ))}
+            </li>
+          ))}
+        </ol>
+      </div>
+    </Draggable>
   );
 }
-
-/*
-function Draggable() {
-  function handleStart() {}
-  function handleDrag() {}
-  function handleStop() {}
-
-  return (
-    <ReactDraggable
-      axis="x"
-      handle=".handle"
-      defaultPosition={{ x: 0, y: 0 }}
-      position={undefined}
-      grid={[25, 25]}
-      scale={1}
-      onStart={handleStart}
-      onDrag={handleDrag}
-      onStop={handleStop}
-    >
-      <div></div>
-    </ReactDraggable>
-  );
-}
-*/
