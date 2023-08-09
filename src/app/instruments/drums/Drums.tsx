@@ -1,13 +1,13 @@
-import Base from "./base/Base";
+import BaseDrum from "./baseDrum/BaseDrum";
+import SnareDrum from "./snareDrum/SnareDrum";
 import HiHat from "./hiHat/HiHat";
-import Snare from "./snare/Snare";
 import Tom, { ETom } from "./tom/Tom";
 
 export default function Drums() {
   return (
     <section>
-      <Base />
-      <Snare />
+      <BaseDrum />
+      <SnareDrum />
       <HiHat />
       <Tom kind={ETom.Hi} />
       <Tom kind={ETom.Mid} />

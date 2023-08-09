@@ -1,30 +1,32 @@
 "use client";
 
-import { PlayIcon, SkipBackIcon, SkipForwardIcon } from "lucide-react";
 import { ChangeEvent, useEffect, useState } from "react";
-import { start, Transport as Transp } from "tone";
+import { PlayIcon, SkipBackIcon, SkipForwardIcon } from "lucide-react";
+import { start, Transport } from "tone";
 
 const DEFAULT_BPM = 94;
 
-export default function Transport() {
+export default function Transporter() {
   const [bpm, setBpm] = useState(DEFAULT_BPM);
 
+  // BPM change
   useEffect(() => {
-    Transp.bpm.value = bpm;
-    console.info("Change", "bpm:", Transp.bpm.value);
+    Transport.bpm.value = bpm;
+    console.info("Change", "bpm:", Transport.bpm.value);
   }, [bpm]);
 
   async function onClickPlay() {
     await start();
 
-    if (Transp.state === "started") return Transp.stop();
-
-    Transp.start();
-
-    console.log("now:", Transp.now(), Transp.state);
+    if (Transport.state === "started") {
+      Transport.stop();
+      return console.info("Transport 'stop'", Transport.now());
+    }
+    Transport.start();
+    return console.info("Transport 'start'", Transport.now());
   }
 
-  function onChange(event: ChangeEvent<HTMLInputElement>) {
+  function onChangeBpm(event: ChangeEvent<HTMLInputElement>) {
     setBpm(parseInt(event.target.value));
   }
 
@@ -43,7 +45,7 @@ export default function Transport() {
           <input
             className="w-8 ml-2 bg-transparent"
             id="bpm"
-            onChange={onChange}
+            onChange={onChangeBpm}
             value={bpm}
           />
         </div>
