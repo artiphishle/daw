@@ -2,7 +2,9 @@
 
 import { useEffect, useState } from "react";
 import { Destination } from "tone";
+
 import useConfig from "../core/config/useConfig";
+
 import { ETrackType } from "./tracks/types";
 
 export default function Mixer() {
@@ -18,27 +20,10 @@ export default function Mixer() {
   }, [audioVolume, midiVolume, masterVolume]);
 
   function Db() {
-    return (
-      <div className="py-2">
-        <div className="text-xs border-b-4 border-b-yellow-400 h-2 w-full">
-          &nbsp;
-        </div>
-        <div className="text-xs border-b-4 border-b-yellow-300 h-2 w-full">
-          &nbsp;
-        </div>
-        <div className="text-xs border-b-4 border-b-yellow-200 h-2 w-full">
-          &nbsp;
-        </div>
-        <div className="text-xs border-b-4 border-b-green-300 h-2 w-full">
-          &nbsp;
-        </div>
-        <div className="text-xs border-b-4 border-b-green-400 h-2 w-full">
-          &nbsp;
-        </div>
-      </div>
-    );
+    return <div className="py-2"></div>;
   }
 
+  // TODO not here
   const settings = {
     [ETrackType.Audio]: {
       bg: "bg-purple-100",
@@ -55,22 +40,23 @@ export default function Mixer() {
   };
 
   return (
-    <div className="py-4 bg-gray-100 flex w-full self-end">
-      {data?.tracks.map((track, trackIndex) => {
-        if (track.type === ETrackType.Time) return;
-        return (
-          <div
-            className={`p-4 ${settings[track.type].bg} text-xs`}
-            key={`mixer-track-${trackIndex}`}
-          >
-            <div className={`px-2 `}>Volume</div>
-            <Db />
-            <div>{(settings[track.type] as any).label}</div>
-          </div>
-        );
-      })}
-
-      <div className="p-4 bg-gray-400 text-xs">
+    <div className="py-4 bg-gray-100 flex justify-between w-full">
+      <div className="flex">
+        {data?.tracks.map((track, trackIndex) => {
+          if (track.type === ETrackType.Time) return;
+          return (
+            <div
+              className={`p-4 ${settings[track.type].bg} text-xs`}
+              key={`mixer-track-${trackIndex}`}
+            >
+              <div className={`px-2 `}>Volume</div>
+              <Db />
+              <div>{(settings[track.type] as any).label}</div>
+            </div>
+          );
+        })}
+      </div>
+      <div className="flex p-4 bg-gray-400 text-xs items-end">
         <div className="px-2 bg-gray-400">Volume</div>
         <Db />
         <div>Stereo out</div>

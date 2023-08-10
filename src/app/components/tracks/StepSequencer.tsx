@@ -18,11 +18,14 @@ export default function StepSequencerTrack({
         const { active, key } = steps[stepIndex];
         const stepTime = stepIndex * Time("8n").toSeconds() + time;
 
-        if (active) instrument.triggerAttackRelease(key, "8n", stepTime);
+        if (!active) return;
+        key
+          ? instrument.triggerAttackRelease(key, "8n", stepTime)
+          : instrument.triggerAttackRelease("8n", stepTime);
       });
     });
   }
-  Transport.scheduleRepeat(repeat, "1n");
+  Transport.scheduleRepeat(repeat, Time("1n").toSeconds() * 2);
 
   function onToggleStep(event: ChangeEvent<HTMLInputElement>) {
     const { target } = event;

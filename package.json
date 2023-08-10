@@ -2,6 +2,7 @@
   "name": "daw",
   "version": "0.1.0",
   "private": true,
+  "types": "./src/app/types.d.ts",
   "scripts": {
     "dev": "next dev",
     "build": "next build",
@@ -12,6 +13,7 @@
     "@types/node": "20.4.5",
     "@types/react": "18.2.17",
     "@types/react-dom": "18.2.7",
+    "audiokeys": "^0.1.1",
     "autoprefixer": "10.4.14",
     "classnames": "^2.3.2",
     "eslint": "8.46.0",
@@ -24,6 +26,7 @@
     "react-draggable": "^4.4.5",
     "swr": "^2.2.0",
     "tailwindcss": "3.3.3",
+    "tonal": "^5.0.0",
     "tone": "^14.7.77",
     "typescript": "5.1.6"
   }
