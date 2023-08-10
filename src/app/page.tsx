@@ -1,25 +1,20 @@
 "use client";
 
 import { createElement, type PropsWithoutRef } from "react";
+import { BeerIcon, CogIcon, FilesIcon, Lightbulb } from "lucide-react";
 
-import useConfig from "./core/config/useConfig";
-import { TRACK_MAP } from "./core/config/constants";
 import Toolbar from "@/app/components/Toolbar";
 
-import { ETrackType, type TTrackConfig } from "./components/tracks/types";
 import Mixer from "./components/Mixer";
-import PolySynth from "./instruments/PolySynth";
-import SnareDrum from "./instruments/drums/snareDrum/SnareDrum";
+import SnareDrum from "./components/instruments/drums/snareDrum/SnareDrum";
 import Tabs from "./components/ui/tabs/Tabs";
 import TabMenu from "./components/ui/tabs/TabMenu";
 import TabContent from "./components/ui/tabs/TabContent";
-import {
-  BeerIcon,
-  CogIcon,
-  FilesIcon,
-  FolderArchiveIcon,
-  Lightbulb,
-} from "lucide-react";
+
+import useConfig, { TRACK_MAP } from "./core/config/useConfig";
+import { ETrackType, type TTrackConfig } from "./components/tracks/types";
+import Piano from "./components/instruments/keys/Piano";
+import PolySynth from "./components/instruments/synths/PolySynth";
 
 export default function Home() {
   const { data, error, isLoading } = useConfig();
@@ -61,6 +56,7 @@ export default function Home() {
         </TabContent>
       </Tabs>
       <PolySynth />
+      <Piano />
     </main>
   );
 }

@@ -1,6 +1,6 @@
 "use client";
 
-import useOscillator, { Options } from "../hooks/useOscillator";
+import useOscillator, { Options } from "@/app/hooks/useOscillator";
 
 type Props = { options: Options };
 

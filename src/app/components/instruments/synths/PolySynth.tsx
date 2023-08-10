@@ -1,11 +1,13 @@
 import { PolySynth as PSynth, Synth } from "tone";
-import useReactDraggable from "../components/ui/useReactDraggable";
-import useMidiKeys from "../hooks/useMidiKeys";
+import useReactDraggable from "../../ui/useReactDraggable";
+
+import useMidiKeys from "@/app/hooks/useMidiKeys";
 
 export default function PolySynth() {
+  const { Draggable, props } = useReactDraggable();
+
   const polySynth = new PSynth(Synth, { detune: -1.4 }).toDestination();
   const MidiKeys = () => useMidiKeys({ octaves: 4, synth: polySynth });
-  const { Draggable, props } = useReactDraggable();
 
   return (
     <Draggable {...props} axis="both">
