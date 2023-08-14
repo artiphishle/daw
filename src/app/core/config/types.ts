@@ -5,6 +5,10 @@ interface IConfig {
   mixer: IMixerConfig;
   name: string;
   tracks: ITrack<TTrackConfig>[];
+  transport: {
+    bpm: number;
+    clef: string;
+  };
 }
 
 export type { IConfig };

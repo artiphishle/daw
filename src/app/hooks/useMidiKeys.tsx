@@ -1,8 +1,14 @@
-export default function useMidiKeys({ synth, octaves = 1 }: any) {
-  const keys = ["C", "D", "E", "F", "G", "A", "B"];
+import { MouseEvent } from "react";
+import useVerdisA from "../components/instruments/synths/hooks/useVerdisA";
 
-  function onClick(event: any) {
-    synth.triggerAttackRelease(event.target.getAttribute("data-key"), "5n");
+export default function useMidiKeys({ instrument, octaves = 1 }: any) {
+  const keys = ["C", "D", "E", "F", "G", "A", "B"];
+  const { getFrequency } = useVerdisA();
+
+  function onClick(event: MouseEvent<HTMLDivElement>) {
+    const key = (event.target as HTMLDivElement).getAttribute("data-key")!;
+
+    instrument.triggerAttackRelease(getFrequency(key), "5n");
   }
 
   return (

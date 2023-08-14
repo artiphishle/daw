@@ -4,15 +4,16 @@ import { useEffect, useState } from "react";
 import { Destination } from "tone";
 
 import useConfig from "../core/config/useConfig";
+import t from "../core/i18n";
 
 import { ETrackType } from "./tracks/types";
 
 export default function Mixer() {
   const { data, error, isLoading } = useConfig();
 
-  const [audioVolume, setAudioVolume] = useState(-6.01);
-  const [midiVolume, setMidiVolume] = useState(-6.31);
-  const [masterVolume, setMasterVolume] = useState(-8.01);
+  const [audioVolume, setAudioVolume] = useState(0);
+  const [midiVolume, setMidiVolume] = useState(0);
+  const [masterVolume, setMasterVolume] = useState(0);
 
   useEffect(() => {
     // TODO useChannel hook for dynamic channeling
@@ -20,7 +21,7 @@ export default function Mixer() {
   }, [audioVolume, midiVolume, masterVolume]);
 
   function Db() {
-    return <div className="py-2"></div>;
+    return <div className="py-2 h-20"></div>;
   }
 
   // TODO not here
@@ -28,28 +29,40 @@ export default function Mixer() {
     [ETrackType.Audio]: {
       bg: "bg-purple-100",
       label: "Audio",
+      text: "text-purple-800",
+    },
+    // TODO effect track?
+    [ETrackType.Effect]: {
+      bg: "bg-orange-100",
+      text: "text-orange-800",
+      label: "FX",
     },
     [ETrackType.Midi]: {
       bg: "bg-orange-100",
+      text: "text-orange-600",
       label: "Midi",
     },
     [ETrackType.StepSequencer]: {
-      bg: "bg-green-100",
+      bg: "bg-grey-900",
+      text: "text-300",
       label: "StepSequencer",
     },
   };
 
   return (
-    <div className="py-4 bg-gray-100 flex justify-between w-full">
+    <div className="py-4 bg-grey-100 flex justify-between w-full">
       <div className="flex">
         {data?.tracks.map((track, trackIndex) => {
           if (track.type === ETrackType.Time) return;
+
           return (
             <div
-              className={`p-4 ${settings[track.type].bg} text-xs`}
+              className={`p-4 mt-6 mr-2 justify-center ${
+                settings[track.type].bg
+              } text-xs items-center ${settings[track.type].text}`}
               key={`mixer-track-${trackIndex}`}
             >
-              <div className={`px-2 `}>Volume</div>
+              <div className={`px-2 `}>-0.02db</div>
               <Db />
               <div>{(settings[track.type] as any).label}</div>
             </div>
@@ -57,40 +70,11 @@ export default function Mixer() {
         })}
       </div>
       <div className="flex p-4 bg-gray-400 text-xs items-end">
-        <div className="px-2 bg-gray-400">Volume</div>
         <Db />
-        <div>Stereo out</div>
+        <div>{t("stereoOut")}</div>
       </div>
     </div>
   );
-
-  /*
-  return (
-    <div className="py-4 bg-gray-100 flex w-full self-end">
-      {new Array(4).fill("").map((_, i) => (
-        <div className="p-4 bg-orange-100 text-xs" key={`midi-${i}`}>
-          <div className="px-2 bg-orange-100">{midiVolume}</div>
-          <Db />
-          <div>Midi</div>
-        </div>
-      ))}
-      {new Array(2).fill("").map((_, i) => (
-        <div className="p-4 bg-purple-100 text-xs" key={`audio-${i}`}>
-          <div className="px-2 bg-purple-100">{audioVolume}</div>
-          <Db />
-          <div>Audio</div>
-        </div>
-      ))}
-      <div>
-        <div className="p-4 m-1 text-xs justify-self-end bg-white ">
-          <div>{masterVolume}</div>
-          <Db />
-          <div>Main</div>
-        </div>
-      </div>
-    </div>
-  );
-  */
 }
 
 interface IMixerConfig {

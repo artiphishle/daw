@@ -1,6 +1,7 @@
 import { type PropsWithoutRef } from "react";
 import {
   BitCrusher,
+  Chorus,
   Compressor,
   Delay,
   EQ3,
@@ -24,24 +25,29 @@ type TTrackConfig =
 
 enum ETrackType {
   Audio,
+  Effect,
   Midi,
   StepSequencer,
   Time,
 }
 
-interface IAudioTrackConfig {}
+interface IAudioTrackConfig {
+  name: string;
+}
 interface IEffectTrackConfig {
   effect:
+    | BitCrusher
+    | Chorus
     | Compressor
+    | Delay
     | EQ3
+    | Gain
     | Limiter
     | MultibandCompressor
-    | Gain
-    | BitCrusher
+    | PingPongDelay
     | Reverb
-    | Freeverb
-    | Delay
-    | PingPongDelay;
+    | Freeverb;
+  name: string;
 }
 interface IMidiTrackConfig {}
 interface IStepSequencerTrackConfig {
@@ -60,6 +66,7 @@ interface ITrack<T> {
 export type { TTrackConfig };
 export type {
   IAudioTrackConfig,
+  IEffectTrackConfig,
   IMidiTrackConfig,
   IStepSequencerTrackConfig,
   ITimeTrackConfig,

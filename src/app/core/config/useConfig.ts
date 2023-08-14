@@ -11,8 +11,11 @@ import AudioTrack from "@/app/components/tracks/AudioTrack";
 import MidiTrack from "@/app/components/tracks/MidiTrack";
 import TimeTrack from "@/app/components/tracks/TimeTrack";
 
+import StepSequencerTrack from "@/app/components/tracks/StepSequencer";
+
 import {
   ETrackType,
+  type TTrackConfig,
   type IAudioTrackConfig,
   type IMidiTrackConfig,
   type IStepSequencerTrackConfig,
@@ -21,9 +24,8 @@ import {
 
 import type { IConfig } from "./types";
 import type { IMixerConfig } from "@/app/components/Mixer";
-import StepSequencerTrack from "@/app/components/tracks/StepSequencer";
 
-export const TRACK_MAP = new Map([
+export const TRACK_MAP = new Map<ETrackType, TTrackConfig>([
   [ETrackType.Audio, AudioTrack],
   [ETrackType.Midi, MidiTrack],
   [ETrackType.StepSequencer, StepSequencerTrack],
@@ -173,6 +175,10 @@ export default function useConfig(config?: IConfig) {
       // Audio track
       { ...DEFAULT_AUDIO_TRACK },
     ],
+    transport: {
+      bpm: 90,
+      clef: "C",
+    },
   };
 
   const getConfig = () => config || DEFAULT;

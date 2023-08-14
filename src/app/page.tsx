@@ -1,62 +1,127 @@
 "use client";
 
-import { createElement, type PropsWithoutRef } from "react";
-import { BeerIcon, CogIcon, FilesIcon, Lightbulb } from "lucide-react";
+import * as Tone from "tone";
+import {
+  Attributes,
+  createElement,
+  FunctionComponent,
+  useEffect,
+  useState,
+} from "react";
+import { BeerIcon, CogIcon, FilesIcon } from "lucide-react";
 
-import Toolbar from "@/app/components/Toolbar";
+import { DndContext } from "@dnd-kit/core";
+import {
+  SortableContext,
+  verticalListSortingStrategy,
+} from "@dnd-kit/sortable";
 
 import Mixer from "./components/Mixer";
-import SnareDrum from "./components/instruments/drums/snareDrum/SnareDrum";
+import Toolbar from "@/app/components/Toolbar";
+
+import useConfig, { TRACK_MAP } from "./core/config/useConfig";
+
+import Piano from "./components/instruments/keys/Piano";
+import SortableItem from "./components/SortableItem";
+
 import Tabs from "./components/ui/tabs/Tabs";
 import TabMenu from "./components/ui/tabs/TabMenu";
 import TabContent from "./components/ui/tabs/TabContent";
-
-import useConfig, { TRACK_MAP } from "./core/config/useConfig";
-import { ETrackType, type TTrackConfig } from "./components/tracks/types";
-import Piano from "./components/instruments/keys/Piano";
+import Dialog from "./components/ui/dialog/Dialog";
+import { ETrackType } from "./components/tracks/types";
+import useMusicTheory from "./core/hooks/useMusicTheory";
 import PolySynth from "./components/instruments/synths/PolySynth";
 
 export default function Home() {
-  const { data, error, isLoading } = useConfig();
+  const [toneReady, setToneReady] = useState(false);
+  const [trackIds, setTrackIds] = useState<string[]>([]);
+  const { data = { tracks: [] }, error, isLoading } = useConfig();
 
-  function createTrack(
-    type: ETrackType,
-    config: PropsWithoutRef<TTrackConfig> = {}
-  ) {
-    const Track = TRACK_MAP.get(type)!;
-    return createElement(Track, { ...(config as any) });
+  useEffect(() => {
+    if (isLoading || error || !toneReady) return;
+    setTrackIds(data?.tracks.map((_, trackIndex) => `track-${trackIndex}`));
+  }, [data?.tracks, isLoading, error, toneReady]);
+
+  function createTrack(type: ETrackType, config: Attributes) {
+    const Track = TRACK_MAP.get(type) as FunctionComponent;
+    return createElement(Track, { ...config });
   }
 
+  function Tracks() {
+    const tracks = (data?.tracks || []).map(({ type, config }, trackIndex) => {
+      const attrs = { ...config } as Attributes;
+      const id = `track-${trackIndex}`;
+
+      return (
+        <SortableItem id={id} key={id}>
+          {createTrack(type, { ...attrs })}
+        </SortableItem>
+      );
+    });
+    return tracks;
+  }
+
+  const App = () => (
+    <DndContext>
+      <main className="relative h-full flex flex-1 justify-between">
+        <div className="bg-white"></div>
+        <div className="flex flex-col flex-1">
+          <Toolbar />
+
+          <p className="text-xl p-4">
+            <span className="font-black">NEWS:</span>&nbsp; Progressions,
+            Sortable tracks
+          </p>
+          <SortableContext
+            items={trackIds}
+            strategy={verticalListSortingStrategy}
+          >
+            <ol className="flex-1">{<>{Tracks()}</>}</ol>
+          </SortableContext>
+          {/*<SalamanderGrandPianoV3 />*/}
+          <Tabs>
+            <TabMenu
+              items={[
+                { Icon: FilesIcon, text: "Audio Browser F5" },
+                { Icon: BeerIcon, text: "Mixer F3" },
+                { Icon: CogIcon, text: "Einstellungen " },
+              ]}
+            ></TabMenu>
+            <TabContent>
+              <p>{useMusicTheory({ tonic: "C" }).getChords("I V vi IV")}</p>
+              <Mixer />
+            </TabContent>
+          </Tabs>
+          <Piano />
+        </div>
+        <div className="bg-cyan-400 flex flex-col 0"></div>
+        <PolySynth />
+      </main>
+    </DndContext>
+  );
+
   return (
-    <main className="relative h-full flex flex-1 flex-col justify-between">
-      {/* Toolbar */}
-      <Toolbar />
-
-      {/* SnareDrum */}
-      {<SnareDrum />}
-
-      {/* Tracks */}
-      <div className="flex-1">
-        {data?.tracks.map(({ type, config = {} }, trackIndex) => {
-          return createTrack(type, { ...config, key: `track-${trackIndex}` });
-        })}
-      </div>
-
-      <Tabs>
-        <TabMenu
-          items={[
-            { Icon: FilesIcon, text: "Browser" },
-            { Icon: BeerIcon, text: "Mixer" },
-            { Icon: Lightbulb, text: "Effekte" },
-            { Icon: CogIcon, text: "Settings" },
-          ]}
-        ></TabMenu>
-        <TabContent>
-          <Mixer />
-        </TabContent>
-      </Tabs>
-      <PolySynth />
-      <Piano />
-    </main>
+    <>
+      {toneReady && !isLoading && !error ? (
+        <App />
+      ) : (
+        <Dialog
+          className="flex flex-col shadow-2xl p-4 w-22 absolute top-0 left-0 right-0 bottom-0"
+          id="start"
+          open
+        >
+          <p className="p-4">Web Audio API erlauben, Audio abzuspielen?</p>
+          <button
+            className="flex items-center justify-center p-4 bg-green-600 text-white"
+            onClick={async () => {
+              await Tone.start();
+              setToneReady(true);
+            }}
+          >
+            OK
+          </button>
+        </Dialog>
+      )}
+    </>
   );
 }
