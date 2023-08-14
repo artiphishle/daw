@@ -14,10 +14,15 @@ const l = ELanguage.En;
 
 // Define translations
 const i18n: II18n = {
-  // project name
-  untitled: {
-    de: "Unbenannt",
-    en: "Untitled",
+  de: {
+    stereoOut: "Stereo Ausgang",
+    untitled: "Unbenannt",
+    volume: "Lautstärke",
+  },
+  en: {
+    stereoOut: "Stereo out",
+    untitled: "Untitled",
+    volume: "Volume",
   },
 };
 
@@ -26,7 +31,7 @@ const i18n: II18n = {
  * TODO migrate to any official i18n library
  */
 export default function t(term: string) {
-  const translation = i18n[term]?.[l];
+  const translation = i18n[l][term];
 
   // Requested translation is missing (return {term} as placeholder to avoid emptiness in app
   if (!translation) {

@@ -5,15 +5,14 @@ interface IAccordionSummaryProps {
 }
 
 export default function AccordionSummary({ children }: IAccordionSummaryProps) {
-  function handleClick(event: MouseEvent<HTMLElement>) {
+  function toggleAccordion(event: MouseEvent<HTMLElement>) {
     event.stopPropagation();
+    // const { target } = event;
     console.log(event.currentTarget, event.target);
-
-    const { target } = event;
   }
 
   return (
-    <summary className="list-none" onClick={handleClick}>
+    <summary className="list-none" onClick={toggleAccordion}>
       {children}
     </summary>
   );
