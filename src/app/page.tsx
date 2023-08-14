@@ -24,6 +24,7 @@ import useConfig, { TRACK_MAP } from "./core/config/useConfig";
 import Piano from "./components/instruments/keys/Piano";
 import SortableItem from "./components/SortableItem";
 
+import Adsr from "./components/ui/audio/envelope/adsr/Adsr";
 import Tabs from "./components/ui/tabs/Tabs";
 import TabMenu from "./components/ui/tabs/TabMenu";
 import TabContent from "./components/ui/tabs/TabContent";
@@ -92,10 +93,10 @@ export default function Home() {
               <Mixer />
             </TabContent>
           </Tabs>
+          <PolySynth />
           <Piano />
         </div>
         <div className="bg-cyan-400 flex flex-col 0"></div>
-        <PolySynth />
       </main>
     </DndContext>
   );
