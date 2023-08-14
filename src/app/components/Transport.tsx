@@ -3,7 +3,10 @@
 import { ChangeEvent, useEffect, useState } from "react";
 import { PauseIcon, PlayIcon } from "lucide-react";
 import * as Tone from "tone";
+<<<<<<< HEAD
 import PolySynth from "./instruments/synths/PolySynth";
+=======
+>>>>>>> 3b8d62b54c06675b582b9cacd4f435d4c5bc1f23
 
 const DEFAULT_BPM = 120;
 
