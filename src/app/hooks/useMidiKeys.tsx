@@ -24,7 +24,7 @@ export default function useMidiKeys({ instrument, octaves = 1 }: any) {
             {key === "E" || key === "B" ? null : (
               <div
                 data-key={`${key}#${octave}`}
-                className="bg-black w-2 h-6 text-white top-0 bottom-0 left-auto right-0 p-1"
+                className="bg-black absolute left-1 z-10 w-2 h-6 text-white p-1"
               ></div>
             )}
           </div>
