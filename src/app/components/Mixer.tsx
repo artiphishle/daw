@@ -42,11 +42,6 @@ export default function Mixer() {
       text: "text-orange-600",
       label: "Midi",
     },
-    [ETrackType.StepSequencer]: {
-      bg: "bg-grey-900",
-      text: "text-300",
-      label: "StepSequencer",
-    },
   };
 
   return (

@@ -59,9 +59,7 @@ export default function MidiTrack() {
             </div>
           </div>
         </AccordionSummary>
-        <p>
-          <MidiPluginDrums />
-        </p>
+        <MidiPluginDrums />
       </AccordionDetails>
     </Accordion>
   );
