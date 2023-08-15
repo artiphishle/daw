@@ -4,7 +4,7 @@ export default function MidiPluginDrums() {
   return (
     <ul className="flex flex-col">
       {usedMidiChannels.map((usedMidiChannel, channelIndex) => (
-        <li key={`midi-channel-${channelIndex + 1}`}>
+        <li key={`midi-channel-${channelIndex + 35}`}>
           {channelIndex + 35}: {Object.values(usedMidiChannel)}
         </li>
       ))}

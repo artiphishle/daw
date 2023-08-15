@@ -8,6 +8,7 @@ interface IConfig {
   transport: {
     bpm: number;
     clef: string;
+    measureCount: number;
   };
 }
 
