@@ -4,14 +4,32 @@ import { ListMusic } from "lucide-react";
 import Accordion from "../ui/accordion/Accordion";
 import AccordionDetails from "../ui/accordion/AccordionDetails";
 import AccordionSummary from "../ui/accordion/AccordionSummary";
-import { MouseEvent } from "react";
+import { MouseEvent, useState } from "react";
+import MidiPluginDrums from "./MidiPluginDrums";
+
+/**
+ * TODO put this into config
+ * @description It's the global project setting of how many measures are shown in the arrangement
+ */
+const MEASURE_COUNT = 8;
 
 export default function MidiTrack() {
-  function onClick(event: any) {
-    console.log(event.target);
-    event.target.classList.toggle("bg-[#ffffff50]");
-    event.target.classList.toggle("bg-orange-400");
-  }
+  const [measureCount, setMeasureCount] = useState(MEASURE_COUNT);
+
+  const events = {
+    // TODO this event handler should be in the accordion
+    cancel: function (event: MouseEvent<HTMLDivElement>) {
+      event.stopPropagation();
+      event.preventDefault();
+    },
+
+    togglePad: function (event: MouseEvent<HTMLDivElement>) {
+      const part = event.target as HTMLDivElement;
+
+      part.classList.toggle("bg-[#ffffff50]");
+      part.classList.toggle("bg-orange-400");
+    },
+  };
 
   return (
     <Accordion>
@@ -21,24 +39,17 @@ export default function MidiTrack() {
             <div className="px-4 py-1 border-r border-r-orange-200">
               <ListMusic className="fill-orange-400" />
             </div>
-            <div
-              onClick={(event: MouseEvent<HTMLDivElement>) => {
-                // TODO this event handler should be in the accordion
-                event.stopPropagation();
-                event.preventDefault();
-              }}
-              className="w-full flex"
-            >
-              {new Array(8).fill("").map((_, j) => (
+            <div onClick={events.cancel} className="w-full flex">
+              {new Array(measureCount).fill("").map((_, partIndex) => (
                 <div
-                  key={j}
+                  key={partIndex}
                   className="p-1 flex flex-1 w-full border-r border-orange-200"
                 >
-                  {new Array(8).fill("").map((_, k) => (
+                  {new Array(8).fill("").map((_, padIndex) => (
                     <div
                       className="flex-1 bg-[#ffffff50] mr-1"
-                      onClick={onClick}
-                      key={`sub-${k}}`}
+                      onClick={events.togglePad}
+                      key={`pad-${padIndex}}`}
                     >
                       &nbsp;
                     </div>
@@ -48,7 +59,9 @@ export default function MidiTrack() {
             </div>
           </div>
         </AccordionSummary>
-        <p>Hier ist der unsichtbare Teil, den man beim aufklappen sieht.</p>
+        <p>
+          <MidiPluginDrums />
+        </p>
       </AccordionDetails>
     </Accordion>
   );
