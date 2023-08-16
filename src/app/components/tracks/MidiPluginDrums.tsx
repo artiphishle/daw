@@ -1,15 +1,21 @@
-import { usedMidiChannels } from "./midi/constants/midiChannels.constants";
+import cn from "classNames";
+import midiChannels from "./midi/constants/midiChannels.constants";
+import { styles } from "./MidiTrack";
 
-export default function MidiPluginDrums() {
-  const tmpVisibleChannelNumbers = [36, 38, 42];
-  const tmpVisibleChannels = usedMidiChannels.filter((channel, channelIndex) =>
-    tmpVisibleChannelNumbers.includes(channelIndex + 35)
-  );
+interface IMidiPluginDrumsProps {
+  channels: any[];
+}
+
+export default function MidiPluginDrums({ channels }: IMidiPluginDrumsProps) {
   return (
     <ul className="flex flex-col">
-      {tmpVisibleChannels.map((usedMidiChannel, channelIndex) => (
-        <li key={`midi-channel-${channelIndex + 35}`}>
-          {channelIndex + 35}: {Object.values(usedMidiChannel)}
+      {channels.map(({ id, events }, channelIndex) => (
+        <li className={cn(styles.track)} key={`channel-${channelIndex}-${id}`}>
+          <div className={styles.trackCol1}>
+            <div key={`channel-${id}`}>
+              {id} {Object.values(midiChannels[id])[0]}
+            </div>
+          </div>
         </li>
       ))}
     </ul>
