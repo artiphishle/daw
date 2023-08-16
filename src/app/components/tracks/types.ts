@@ -6,13 +6,15 @@ enum ETrackType {
   Time,
 }
 
-interface ITrack<T> {
+interface ITrack {
+  name: string;
   type: ETrackType;
-  config?: T;
 }
-interface IAudioTrackConfig {}
-interface IMidiTrackConfig {}
-interface ITimeTrackConfig {}
+interface IAudioTrackConfig extends ITrack {}
+interface IMidiTrackConfig extends ITrack {
+  plugins?: any[];
+}
+interface ITimeTrackConfig extends ITrack {}
 
 export type { TTrackConfig };
 export type { IAudioTrackConfig, IMidiTrackConfig, ITimeTrackConfig, ITrack };

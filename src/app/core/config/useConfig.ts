@@ -17,12 +17,6 @@ import {
 import type { IConfig } from "./types";
 import type { IMixerConfig } from "@/app/components/Mixer";
 
-export const TRACK_MAP = new Map<ETrackType, TTrackConfig>([
-  [ETrackType.Audio, AudioTrack],
-  [ETrackType.Midi, MidiTrack],
-  [ETrackType.Time, TimeTrack],
-]);
-
 export default function useConfig(config?: IConfig) {
   const DEFAULT_MIXER: IMixerConfig = {
     visibility: {
@@ -30,10 +24,12 @@ export default function useConfig(config?: IConfig) {
       [ETrackType.Midi]: true,
     },
   };
-  const DEFAULT_AUDIO_TRACK: ITrack<IAudioTrackConfig> = {
+  const DEFAULT_AUDIO_TRACK: IAudioTrackConfig = {
+    name: t("untitled"),
     type: ETrackType.Audio,
   };
-  const DEFAULT_MIDI_TRACK: ITrack<IMidiTrackConfig> = {
+  const DEFAULT_MIDI_TRACK: IMidiTrackConfig = {
+    name: t("untitled"),
     type: ETrackType.Midi,
   };
   /*
@@ -147,6 +143,10 @@ export default function useConfig(config?: IConfig) {
   };
   */
 
+  enum EMidiPlugin {
+    Drums,
+  }
+
   const DEFAULT: IConfig = {
     mixer: { ...DEFAULT_MIXER },
     name: t("untitled"),
@@ -156,10 +156,30 @@ export default function useConfig(config?: IConfig) {
      */
     tracks: [
       // Time Indicator for tracks below
-      { type: ETrackType.Time },
+      { name: "", type: ETrackType.Time },
 
-      // Midi/Audio tracks
-      { ...DEFAULT_MIDI_TRACK },
+      // Midi tracks
+      {
+        ...DEFAULT_MIDI_TRACK,
+        name: "Drums",
+        plugins: [
+          {
+            name: EMidiPlugin.Drums,
+            channels: [
+              {
+                id: 36,
+                events: [{ time: 1 }, { time: 9 }],
+              },
+              {
+                id: 38,
+                events: [{ time: 5 }, { time: 13 }],
+              },
+            ],
+          },
+        ],
+      },
+
+      // Audio tracks
       { ...DEFAULT_AUDIO_TRACK },
     ],
     transport: { bpm: 90, clef: "C", measureCount: 8 },

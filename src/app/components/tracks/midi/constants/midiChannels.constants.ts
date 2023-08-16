@@ -56,7 +56,4 @@ midiChannels[79] = { G4: "Open Cuica" };
 midiChannels[80] = { "G#4": "Mute Triangle" };
 midiChannels[81] = { A4: "Open Triangle" };
 
-const usedMidiChannels = midiChannels.filter((midiChannel) => !!midiChannel);
-
-export { usedMidiChannels };
 export default midiChannels;

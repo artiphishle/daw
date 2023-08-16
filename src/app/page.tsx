@@ -1,14 +1,8 @@
 "use client";
 
-import * as Tone from "tone";
-import {
-  Attributes,
-  createElement,
-  FunctionComponent,
-  useEffect,
-  useState,
-} from "react";
+import { useEffect, useState } from "react";
 import { BeerIcon, CogIcon, FilesIcon } from "lucide-react";
+import * as Tone from "tone";
 
 import { DndContext } from "@dnd-kit/core";
 import {
@@ -16,15 +10,14 @@ import {
   verticalListSortingStrategy,
 } from "@dnd-kit/sortable";
 
+import useConfig from "./core/config/useConfig";
+
 import Mixer from "./components/Mixer";
 import Toolbar from "@/app/components/Toolbar";
-
-import useConfig, { TRACK_MAP } from "./core/config/useConfig";
 
 import Piano from "./components/instruments/keys/Piano";
 import SortableItem from "./components/SortableItem";
 
-import Adsr from "./components/ui/audio/envelope/adsr/Adsr";
 import Tabs from "./components/ui/tabs/Tabs";
 import TabMenu from "./components/ui/tabs/TabMenu";
 import TabContent from "./components/ui/tabs/TabContent";
@@ -32,6 +25,9 @@ import Dialog from "./components/ui/dialog/Dialog";
 import { ETrackType } from "./components/tracks/types";
 import useMusicTheory from "./core/hooks/useMusicTheory";
 import PolySynth from "./components/instruments/synths/PolySynth";
+import AudioTrack from "./components/tracks/AudioTrack";
+import MidiTrack from "./components/tracks/MidiTrack";
+import TimeTrack from "./components/tracks/TimeTrack";
 
 export default function Home() {
   const [toneReady, setToneReady] = useState(false);
@@ -43,22 +39,32 @@ export default function Home() {
     setTrackIds(data?.tracks.map((_, trackIndex) => `track-${trackIndex}`));
   }, [data?.tracks, isLoading, error, toneReady]);
 
-  function createTrack(type: ETrackType, config: Attributes) {
-    const Track = TRACK_MAP.get(type) as FunctionComponent;
-    return createElement(Track, { ...config });
-  }
-
   function Tracks() {
-    const tracks = (data?.tracks || []).map(({ type, config }, trackIndex) => {
-      const attrs = { ...config } as Attributes;
-      const id = `track-${trackIndex}`;
+    const tracks = (data?.tracks || []).map(
+      ({ type, ...props }, trackIndex) => {
+        const id = `track-${trackIndex}`;
 
-      return (
-        <SortableItem id={id} key={id}>
-          {createTrack(type, { ...attrs })}
-        </SortableItem>
-      );
-    });
+        let track;
+
+        switch (type) {
+          case ETrackType.Audio:
+            track = <AudioTrack {...props} />;
+            break;
+          case ETrackType.Midi:
+            track = <MidiTrack {...props} />;
+            break;
+          case ETrackType.Time:
+            track = <TimeTrack {...props} />;
+            break;
+        }
+
+        return (
+          <SortableItem id={id} key={id}>
+            {track}
+          </SortableItem>
+        );
+      }
+    );
     return tracks;
   }
 
