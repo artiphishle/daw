@@ -17,7 +17,7 @@ export default function AccordionSummary({
   }
 
   return (
-    <summary className={cn(className, "list-none")} onClick={toggleAccordion}>
+    <summary className={cn("list-none", className)} onClick={toggleAccordion}>
       {children}
     </summary>
   );

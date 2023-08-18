@@ -10,29 +10,33 @@ import {
   verticalListSortingStrategy,
 } from "@dnd-kit/sortable";
 
-import useConfig from "./core/config/useConfig";
+import useConfig from "@/app/core/config/useConfig";
+import useMusicTheory from "@/app/core/hooks/useMusicTheory";
 
-import Mixer from "./components/Mixer";
+import Mixer from "@/app/components/Mixer";
+import Piano from "@/app/components/instruments/keys/Piano";
+import SortableItem from "@/app/components/SortableItem";
 import Toolbar from "@/app/components/Toolbar";
 
-import Piano from "./components/instruments/keys/Piano";
-import SortableItem from "./components/SortableItem";
+import Tabs from "@/app/components/ui/tabs/Tabs";
+import TabMenu from "@/app/components/ui/tabs/TabMenu";
+import TabContent from "@/app/components/ui/tabs/TabContent";
+import Dialog from "@/app/components/ui/dialog/Dialog";
 
-import Tabs from "./components/ui/tabs/Tabs";
-import TabMenu from "./components/ui/tabs/TabMenu";
-import TabContent from "./components/ui/tabs/TabContent";
-import Dialog from "./components/ui/dialog/Dialog";
+import AudioTrack from "./components/tracks/audio/AudioTrack";
+import MidiTrack from "./components/tracks/midi/MidiTrack";
+import TimeTrack from "./components/tracks/time/TimeTrack";
 import { ETrackType } from "./components/tracks/types";
-import useMusicTheory from "./core/hooks/useMusicTheory";
-import PolySynth from "./components/instruments/synths/PolySynth";
-import AudioTrack from "./components/tracks/AudioTrack";
-import MidiTrack from "./components/tracks/MidiTrack";
-import TimeTrack from "./components/tracks/TimeTrack";
+import t from "./core/i18n";
+import { styles } from "./components/tracks/styles";
 
 export default function Home() {
+  // TODO load project or preset
+  const config = undefined;
+
   const [toneReady, setToneReady] = useState(false);
   const [trackIds, setTrackIds] = useState<string[]>([]);
-  const { data = { tracks: [] }, error, isLoading } = useConfig();
+  const { data = { tracks: [] }, error, isLoading } = useConfig(config);
 
   useEffect(() => {
     if (isLoading || error || !toneReady) return;
@@ -40,22 +44,24 @@ export default function Home() {
   }, [data?.tracks, isLoading, error, toneReady]);
 
   function Tracks() {
-    const tracks = (data?.tracks || []).map(
-      ({ type, ...props }, trackIndex) => {
+    const tracks = (data?.tracks).map(
+      ({ name, type, ...props }, trackIndex) => {
         const id = `track-${trackIndex}`;
 
         let track;
 
         switch (type) {
           case ETrackType.Audio:
-            track = <AudioTrack {...props} />;
+            track = <AudioTrack type={type} name={name} />;
             break;
           case ETrackType.Midi:
-            track = <MidiTrack {...props} />;
+            track = <MidiTrack type={type} name={name} {...props} />;
             break;
           case ETrackType.Time:
-            track = <TimeTrack {...props} />;
+            track = <TimeTrack />;
             break;
+          default:
+            console.warn(`Type: '${type}' doesn't exist in ETrackType`);
         }
 
         return (
@@ -99,7 +105,6 @@ export default function Home() {
               <Mixer />
             </TabContent>
           </Tabs>
-          <PolySynth />
           <Piano />
         </div>
         <div className="bg-cyan-400 flex flex-col 0"></div>
@@ -112,20 +117,16 @@ export default function Home() {
       {toneReady && !isLoading && !error ? (
         <App />
       ) : (
-        <Dialog
-          className="flex flex-col shadow-2xl p-4 w-22 absolute top-0 left-0 right-0 bottom-0"
-          id="start"
-          open
-        >
-          <p className="p-4">Web Audio API erlauben, Audio abzuspielen?</p>
+        <Dialog className={styles.dialog} id="start" open>
+          <p className="p-4">{t("dialog.allowAudio")}</p>
           <button
-            className="flex items-center justify-center p-4 bg-green-600 text-white"
+            className={styles.button.primary}
             onClick={async () => {
               await Tone.start();
               setToneReady(true);
             }}
           >
-            OK
+            {t("ok")}
           </button>
         </Dialog>
       )}
