@@ -92,6 +92,15 @@ export default function Home() {
             <ol className="flex-1">{<>{Tracks()}</>}</ol>
           </SortableContext>
           {/*<SalamanderGrandPianoV3 />*/}
+          <p className="bg-white p-4 border border-gray-100 mb-8">
+            <h1 className="text-lg font-bold">Chord progression</h1>
+            <br />
+            Tonic <span className="p-2 bg-gray-200">C</span> Progression:{" "}
+            <span className="p-2 bg-gray-200">I V vi IV</span>&nbsp;
+            <span>
+              = <b>{useMusicTheory({ tonic: "C" }).getChords("I V vi IV")}</b>
+            </span>
+          </p>
           <Tabs>
             <TabMenu
               items={[
@@ -101,7 +110,6 @@ export default function Home() {
               ]}
             ></TabMenu>
             <TabContent>
-              <p>{useMusicTheory({ tonic: "C" }).getChords("I V vi IV")}</p>
               <Mixer />
             </TabContent>
           </Tabs>

@@ -14,7 +14,7 @@ const semanticColors = {
     [ETrackType.Time]: { bg: colors.gray },
   },
   transparent: {
-    white50: `${colors.white}50`,
+    white50: `[${colors.white}50]`,
   },
 };
 
@@ -23,7 +23,7 @@ const styles = {
     primary: "flex items-center justify-center p-4 bg-green-600 text-white",
   },
   bg: {
-    pad: `bg-[${semanticColors.transparent.white50}]`,
+    pad: `bg-${semanticColors.transparent.white50}`,
     padActive: "bg-orange-400",
   },
   dialog:
