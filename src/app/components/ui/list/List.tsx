@@ -20,7 +20,7 @@ export default function List({ active = 1, items }: IListProps) {
       {items.map(({ Icon, text }, itemIndex) => (
         <li
           className={cn(
-            active === itemIndex ? "border-none bg-gray-100" : "bg-slate-200",
+            active === itemIndex ? "border-none bg-white" : "bg-slate-200",
             "p-4 border-b border-b-slate-200"
           )}
           key={`li-${itemIndex}`}

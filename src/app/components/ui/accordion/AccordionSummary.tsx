@@ -1,10 +1,15 @@
+import cn from "classnames";
 import { MouseEvent, type ReactNode } from "react";
 
 interface IAccordionSummaryProps {
   children: ReactNode;
+  className?: string;
 }
 
-export default function AccordionSummary({ children }: IAccordionSummaryProps) {
+export default function AccordionSummary({
+  children,
+  className = "",
+}: IAccordionSummaryProps) {
   function toggleAccordion(event: MouseEvent<HTMLElement>) {
     event.stopPropagation();
     // const { target } = event;
@@ -12,7 +17,7 @@ export default function AccordionSummary({ children }: IAccordionSummaryProps) {
   }
 
   return (
-    <summary className="list-none" onClick={toggleAccordion}>
+    <summary className={cn("list-none", className)} onClick={toggleAccordion}>
       {children}
     </summary>
   );
