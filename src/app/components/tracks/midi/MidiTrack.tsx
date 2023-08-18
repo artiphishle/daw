@@ -88,8 +88,7 @@ export default function MidiTrack({ name, plugins = [] }: IMidiTrackConfig) {
                 <div
                   className={cn(
                     "flex-1 mr-1 text-white",
-                    styles.bg.pad,
-                    notes.length && (playedNote ? styles.bg.padActive : "")
+                    styles.bg[playedNote ? "padActive" : "pad"]
                   )}
                   onClick={events.togglePad}
                   key={`pad-${padIndex}}`}
