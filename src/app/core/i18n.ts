@@ -1,6 +1,8 @@
 enum ELanguage {
   De = "de",
   En = "en",
+  Fr = "fr",
+  It = "it",
 }
 
 interface II18n {
@@ -15,13 +17,35 @@ const l = ELanguage.En;
 // Define translations
 const i18n: II18n = {
   de: {
-    stereoOut: "Stereo Ausgang",
+    all: "Alle",
+    "dialog.allowAudio": "Web Audio API erlauben, Sound abzuspielen?",
+    ok: "OK",
+    stereoOut: "Stereo out",
     untitled: "Unbenannt",
     volume: "Lautstärke",
   },
   en: {
+    all: "All",
+    "dialog.allowAudio": "Allow Web Audio API to play audio?",
+    ok: "OK",
     stereoOut: "Stereo out",
     untitled: "Untitled",
+    volume: "Volume",
+  },
+  fr: {
+    all: "Tous",
+    "dialog.allowAudio": "",
+    ok: "OK",
+    stereoOut: "Stereo out",
+    untitled: "Sans titre",
+    volume: "Volume",
+  },
+  it: {
+    all: "Tutti",
+    "dialog.allowAudio": "",
+    ok: "OK",
+    stereoOut: "Stereo out",
+    untitled: "Senza titolo",
     volume: "Volume",
   },
 };

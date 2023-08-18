@@ -1,14 +1,15 @@
 interface IMidiChannel {
-  [key: string]: string;
+  key: string;
+  name: string;
 }
 
 const midiChannels: IMidiChannel[] = [];
 
-midiChannels[35] = { B0: "Accoustic Bass Drum" };
-
-midiChannels[36] = { C1: "Bass Drum 1" };
-midiChannels[37] = { "C#1": "Side Stick" };
-midiChannels[38] = { D1: "Accoustic Snare" };
+midiChannels[35] = { key: "B0", name: "Accoustic Bass Drum" };
+midiChannels[36] = { key: "C1", name: "Bass Drum 1" };
+// midiChannels[37] = { "C#1": "Side Stick" };
+midiChannels[38] = { key: "D1", name: "Accoustic Snare" };
+/*
 midiChannels[39] = { "D#1": "Hand Clap" };
 midiChannels[40] = { E1: "Electric Snare" };
 midiChannels[41] = { F1: "Low Floor Tom" };
@@ -55,5 +56,5 @@ midiChannels[78] = { "F#4": "Mute Cuica" };
 midiChannels[79] = { G4: "Open Cuica" };
 midiChannels[80] = { "G#4": "Mute Triangle" };
 midiChannels[81] = { A4: "Open Triangle" };
-
+*/
 export default midiChannels;
