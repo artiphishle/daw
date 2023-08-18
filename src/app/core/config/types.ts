@@ -11,4 +11,5 @@ interface IConfig {
   transport: { bpm: number; clef: string; measureCount: number };
 }
 
+export type { TTrackConfig };
 export type { IConfig };
