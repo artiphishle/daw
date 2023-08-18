@@ -31,26 +31,15 @@ export default function Mixer() {
       label: "Audio",
       text: "text-purple-800",
     },
-    // TODO effect track?
-    [ETrackType.Effect]: {
-      bg: "bg-orange-100",
-      text: "text-orange-800",
-      label: "FX",
-    },
     [ETrackType.Midi]: {
       bg: "bg-orange-100",
       text: "text-orange-600",
       label: "Midi",
     },
-    [ETrackType.StepSequencer]: {
-      bg: "bg-grey-900",
-      text: "text-300",
-      label: "StepSequencer",
-    },
   };
 
   return (
-    <div className="py-4 bg-grey-100 flex justify-between w-full">
+    <div className="py-4 bg-white flex justify-between w-full">
       <div className="flex">
         {data?.tracks.map((track, trackIndex) => {
           if (track.type === ETrackType.Time) return;

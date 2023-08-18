@@ -1,14 +1,8 @@
 "use client";
 
-import * as Tone from "tone";
-import {
-  Attributes,
-  createElement,
-  FunctionComponent,
-  useEffect,
-  useState,
-} from "react";
+import { useEffect, useState } from "react";
 import { BeerIcon, CogIcon, FilesIcon } from "lucide-react";
+import * as Tone from "tone";
 
 import { DndContext } from "@dnd-kit/core";
 import {
@@ -16,49 +10,67 @@ import {
   verticalListSortingStrategy,
 } from "@dnd-kit/sortable";
 
-import Mixer from "./components/Mixer";
+import useConfig from "@/app/core/config/useConfig";
+import useMusicTheory from "@/app/core/hooks/useMusicTheory";
+
+import Mixer from "@/app/components/Mixer";
+import Piano from "@/app/components/instruments/keys/Piano";
+import SortableItem from "@/app/components/SortableItem";
 import Toolbar from "@/app/components/Toolbar";
 
-import useConfig, { TRACK_MAP } from "./core/config/useConfig";
+import Tabs from "@/app/components/ui/tabs/Tabs";
+import TabMenu from "@/app/components/ui/tabs/TabMenu";
+import TabContent from "@/app/components/ui/tabs/TabContent";
+import Dialog from "@/app/components/ui/dialog/Dialog";
 
-import Piano from "./components/instruments/keys/Piano";
-import SortableItem from "./components/SortableItem";
-
-import Adsr from "./components/ui/audio/envelope/adsr/Adsr";
-import Tabs from "./components/ui/tabs/Tabs";
-import TabMenu from "./components/ui/tabs/TabMenu";
-import TabContent from "./components/ui/tabs/TabContent";
-import Dialog from "./components/ui/dialog/Dialog";
+import AudioTrack from "./components/tracks/audio/AudioTrack";
+import MidiTrack from "./components/tracks/midi/MidiTrack";
+import TimeTrack from "./components/tracks/time/TimeTrack";
 import { ETrackType } from "./components/tracks/types";
-import useMusicTheory from "./core/hooks/useMusicTheory";
-import PolySynth from "./components/instruments/synths/PolySynth";
+import t from "./core/i18n";
+import { styles } from "./components/tracks/styles";
 
 export default function Home() {
+  // TODO load project or preset
+  const config = undefined;
+
   const [toneReady, setToneReady] = useState(false);
   const [trackIds, setTrackIds] = useState<string[]>([]);
-  const { data = { tracks: [] }, error, isLoading } = useConfig();
+  const { data = { tracks: [] }, error, isLoading } = useConfig(config);
 
   useEffect(() => {
     if (isLoading || error || !toneReady) return;
     setTrackIds(data?.tracks.map((_, trackIndex) => `track-${trackIndex}`));
   }, [data?.tracks, isLoading, error, toneReady]);
 
-  function createTrack(type: ETrackType, config: Attributes) {
-    const Track = TRACK_MAP.get(type) as FunctionComponent;
-    return createElement(Track, { ...config });
-  }
-
   function Tracks() {
-    const tracks = (data?.tracks || []).map(({ type, config }, trackIndex) => {
-      const attrs = { ...config } as Attributes;
-      const id = `track-${trackIndex}`;
+    const tracks = (data?.tracks).map(
+      ({ name, type, ...props }, trackIndex) => {
+        const id = `track-${trackIndex}`;
 
-      return (
-        <SortableItem id={id} key={id}>
-          {createTrack(type, { ...attrs })}
-        </SortableItem>
-      );
-    });
+        let track;
+
+        switch (type) {
+          case ETrackType.Audio:
+            track = <AudioTrack type={type} name={name} />;
+            break;
+          case ETrackType.Midi:
+            track = <MidiTrack type={type} name={name} {...props} />;
+            break;
+          case ETrackType.Time:
+            track = <TimeTrack />;
+            break;
+          default:
+            console.warn(`Type: '${type}' doesn't exist in ETrackType`);
+        }
+
+        return (
+          <SortableItem id={id} key={id}>
+            {track}
+          </SortableItem>
+        );
+      }
+    );
     return tracks;
   }
 
@@ -80,6 +92,15 @@ export default function Home() {
             <ol className="flex-1">{<>{Tracks()}</>}</ol>
           </SortableContext>
           {/*<SalamanderGrandPianoV3 />*/}
+          <p className="bg-white p-4 border border-gray-100 mb-8">
+            <h1 className="text-lg font-bold">Chord progression</h1>
+            <br />
+            Tonic <span className="p-2 bg-gray-200">C</span> Progression:{" "}
+            <span className="p-2 bg-gray-200">I V vi IV</span>&nbsp;
+            <span>
+              = <b>{useMusicTheory({ tonic: "C" }).getChords("I V vi IV")}</b>
+            </span>
+          </p>
           <Tabs>
             <TabMenu
               items={[
@@ -89,11 +110,9 @@ export default function Home() {
               ]}
             ></TabMenu>
             <TabContent>
-              <p>{useMusicTheory({ tonic: "C" }).getChords("I V vi IV")}</p>
               <Mixer />
             </TabContent>
           </Tabs>
-          <PolySynth />
           <Piano />
         </div>
         <div className="bg-cyan-400 flex flex-col 0"></div>
@@ -106,20 +125,16 @@ export default function Home() {
       {toneReady && !isLoading && !error ? (
         <App />
       ) : (
-        <Dialog
-          className="flex flex-col shadow-2xl p-4 w-22 absolute top-0 left-0 right-0 bottom-0"
-          id="start"
-          open
-        >
-          <p className="p-4">Web Audio API erlauben, Audio abzuspielen?</p>
+        <Dialog className={styles.dialog} id="start" open>
+          <p className="p-4">{t("dialog.allowAudio")}</p>
           <button
-            className="flex items-center justify-center p-4 bg-green-600 text-white"
+            className={styles.button.primary}
             onClick={async () => {
               await Tone.start();
               setToneReady(true);
             }}
           >
-            OK
+            {t("ok")}
           </button>
         </Dialog>
       )}
