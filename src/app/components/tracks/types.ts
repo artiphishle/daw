@@ -1,3 +1,5 @@
+import { UniqueIdentifier } from "@dnd-kit/core";
+
 enum ETrackType {
   Audio,
   Midi,
@@ -5,6 +7,7 @@ enum ETrackType {
 }
 
 interface ITrack {
+  id: UniqueIdentifier;
   name: string;
   type: ETrackType;
 }

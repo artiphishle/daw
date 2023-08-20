@@ -33,8 +33,8 @@ export default function MidiTrack({ name, plugins = [] }: IMidiTrackConfig) {
     return notes.filter(({ time }) => timeIndex === time)[0];
   }
 
-  const baseDrum = useBaseDrum();
-  const snareDrum = useSnareDrum();
+  // const baseDrum = useBaseDrum();
+  // const snareDrum = useSnareDrum();
 
   function Template({ notes = [], name, nested = false }: ITemplateProps) {
     const [measureCount] = useState(MEASURE_COUNT);
@@ -68,7 +68,7 @@ export default function MidiTrack({ name, plugins = [] }: IMidiTrackConfig) {
             .map((_, padIndex) => {
               const playedNote = isPlayed(notes, padIndex);
 
-              if (playedNote) {
+              /* if (playedNote) {
                 const { key, duration } = playedNote;
                 const time =
                   (playedNote.time as number) * Time("8n").toSeconds();
@@ -78,7 +78,7 @@ export default function MidiTrack({ name, plugins = [] }: IMidiTrackConfig) {
                 } else if (key === "D1") {
                   snareDrum.triggerAttackRelease(duration, time);
                 }
-              }
+              }*/
 
               return (
                 <div
