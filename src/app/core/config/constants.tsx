@@ -9,6 +9,7 @@ import {
 import type { IAudioTrackConfig } from "@/app/components/tracks/audio/types";
 import type { IMixerConfig } from "@/app/components/Mixer";
 import midiChannels from "@/app/components/tracks/midi/constants/channels.midi.constants";
+import { TTrackConfig } from "./types";
 
 const DEFAULT_BPM = 120;
 const DEFAULT_CLEF = "C";
@@ -23,6 +24,7 @@ const DEFAULT_MIXER: IMixerConfig = {
 };
 
 const DEFAULT_AUDIO_TRACK: IAudioTrackConfig = {
+  id: "track-audio-0",
   name: t("untitled"),
   type: ETrackType.Audio,
 };
@@ -45,17 +47,19 @@ const DEFAULT_MIDI_DRUM_PLUGIN: IMidiPlugin = {
   ],
 };
 const DEFAULT_MIDI_TRACK: IMidiTrackConfig = {
+  id: "track-midi",
   name: t("untitled"),
   type: ETrackType.Midi,
 };
 const DEFAULT_MIDI_DRUM_TRACK: IMidiTrackConfig = {
   ...DEFAULT_MIDI_TRACK,
+  id: "track-midi-drums",
   name: "Drums",
   plugins: [DEFAULT_MIDI_DRUM_PLUGIN],
 };
 
-const DEFAULT_TRACKS = [
-  { name: "", type: ETrackType.Time },
+const DEFAULT_TRACKS: TTrackConfig[] = [
+  { id: "track-time", name: "", type: ETrackType.Time },
   { ...DEFAULT_MIDI_TRACK },
   { ...DEFAULT_MIDI_DRUM_TRACK },
   { ...DEFAULT_AUDIO_TRACK },
