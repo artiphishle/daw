@@ -1,7 +1,8 @@
 "use client";
 import { useState } from "react";
 import { BeerIcon, CogIcon, FilesIcon } from "lucide-react";
-import { DndContext } from "@dnd-kit/core";
+import { closestCenter, DndContext, type DragEndEvent } from "@dnd-kit/core";
+import { arrayMove } from "@dnd-kit/sortable";
 import { start } from "tone";
 
 import t from "@/app/core/i18n";
@@ -26,7 +27,6 @@ export default function Home() {
   // TODO load project or preset
   const _config = undefined;
   const [toneReady, setToneReady] = useState(false);
-  const { config = { tracks: [] } } = useConfig(_config);
 
   function ChordProgression() {
     enum EProgression {
@@ -74,19 +74,39 @@ export default function Home() {
     );
   }
   function App() {
+    const { arranger } = useConfig(_config);
+    const { tracks, setTracks } = arranger;
+
     const tabItems = [
       { Icon: FilesIcon, text: "Audio Browser F5" },
       { Icon: BeerIcon, text: "Mixer F3" },
       { Icon: CogIcon, text: "Einstellungen " },
     ];
 
+    const events = {
+      on: {
+        dragEnd: (event: DragEndEvent) => {
+          const { active, over } = event;
+          console.log("active/over", active.id, over?.id);
+          if (active.id === over?.id) return;
+
+          const oldIndex = tracks.findIndex(({ id }) => id === active.id);
+          const newIndex = tracks.findIndex(({ id }) => id === over?.id);
+          return setTracks(arrayMove(tracks, oldIndex, newIndex));
+        },
+      },
+    };
+
     return (
-      <DndContext>
+      <DndContext
+        collisionDetection={closestCenter}
+        onDragEnd={events.on.dragEnd}
+      >
         <main className={generalStyles.main}>
           <div className="flex flex-col flex-1 justify-between">
             <Toolbar />
             <News />
-            <Arranger tracks={config.tracks} />
+            <Arranger tracks={tracks} />
             <ChordProgression />
             <Tabs>
               <TabMenu items={tabItems} />
