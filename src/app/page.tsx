@@ -80,13 +80,9 @@ export default function Home() {
       { Icon: CogIcon, text: "Einstellungen " },
     ];
 
-    const styles = {
-      main: "relative h-full flex flex-1 justify-between",
-    };
-
     return (
       <DndContext>
-        <main className={styles.main}>
+        <main className={generalStyles.main}>
           <div className="flex flex-col flex-1 justify-between">
             <Toolbar />
             <News />
