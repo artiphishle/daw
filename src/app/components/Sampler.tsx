@@ -1,9 +1,7 @@
-"use client";
-
 import useConfig from "../core/config/useConfig";
 
 export default function StepSequencer() {
-  const { data, error, isLoading } = useConfig();
+  const { config } = useConfig();
 
-  return <div></div>;
+  return <div>TODO Sampler</div>;
 }
