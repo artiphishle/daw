@@ -1,5 +1,3 @@
-"use client";
-
 import { MembraneSynth } from "tone";
 
 export default function useBaseDrum() {

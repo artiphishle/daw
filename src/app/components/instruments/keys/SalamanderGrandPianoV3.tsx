@@ -1,5 +1,3 @@
-"use client";
-
 import { MouseEvent, useEffect, useState } from "react";
 import { Buffer, Destination, Reverb, Sampler } from "tone";
 

@@ -1,8 +1,9 @@
-import * as Tone from "tone";
+import { PolySynth, Synth } from "tone";
+
 import useMidiKeys from "@/app/hooks/useMidiKeys";
 
-export default function PolySynth() {
-  const polySynth = new Tone.PolySynth(Tone.Synth, {
+export default function PollySynth() {
+  const polySynth = new PolySynth(Synth, {
     detune: -1.4,
   }).toDestination();
 
