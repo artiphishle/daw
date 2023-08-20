@@ -1,13 +1,15 @@
 import { useEffect, useState } from "react";
 import { Destination } from "tone";
 
-import useConfig from "../core/config/useConfig";
-import t from "../core/i18n";
+import useConfig from "@/app/core/config/useConfig";
+import t from "@/app/core/i18n";
 
-import { ETrackType } from "./tracks/types";
+import { ETrackType } from "@/app/components/tracks/types";
 
 export default function Mixer() {
-  const { config } = useConfig();
+  const { arranger } = useConfig();
+  const { tracks, setTracks } = arranger;
+
   const [audioVolume, setAudioVolume] = useState(0);
   const [midiVolume, setMidiVolume] = useState(0);
   const [masterVolume, setMasterVolume] = useState(0);
@@ -38,7 +40,7 @@ export default function Mixer() {
   return (
     <div className="py-4 bg-white flex justify-between w-full">
       <div className="flex">
-        {config?.tracks.map((track, trackIndex) => {
+        {tracks.map((track, trackIndex) => {
           if (track.type === ETrackType.Time) return;
 
           return (
