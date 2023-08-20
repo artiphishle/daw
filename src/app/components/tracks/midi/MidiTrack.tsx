@@ -1,19 +1,19 @@
 import { type MouseEvent, useState } from "react";
-import * as Tone from "tone";
 import { ListMusicIcon } from "lucide-react";
+import { Time } from "tone";
 import cn from "classnames";
 
 import Accordion from "@/app/components/ui/accordion/Accordion";
 
 import { styles } from "@/app/components/tracks/styles";
 import midiChannels from "@/app/components/tracks/midi/constants/channels.midi.constants";
+
 import { ETrackType } from "@/app/components/tracks/types";
 import type {
   IMidiTrackConfig,
   INote,
 } from "@/app/components/tracks/midi/types";
-import useBaseDrum from "../../instruments/drums/baseDrum/hooks/useBaseDrum";
-import useSnareDrum from "../../instruments/drums/snareDrum/hooks/useSnareDrum";
+import { useBaseDrum, useSnareDrum } from "@/app/components/instruments";
 
 /**
  * TODO put this into config
@@ -69,18 +69,14 @@ export default function MidiTrack({ name, plugins = [] }: IMidiTrackConfig) {
               const playedNote = isPlayed(notes, padIndex);
 
               if (playedNote) {
-                if (playedNote.key === "C1") {
-                  baseDrum.triggerAttackRelease(
-                    playedNote.key,
-                    playedNote.duration,
-                    (playedNote.time as number) * Tone.Time("8n").toSeconds()
-                  );
-                }
-                if (playedNote.key === "D1") {
-                  snareDrum.triggerAttackRelease(
-                    playedNote.duration,
-                    (playedNote.time as number) * Tone.Time("8n").toSeconds()
-                  );
+                const { key, duration } = playedNote;
+                const time =
+                  (playedNote.time as number) * Time("8n").toSeconds();
+
+                if (key === "C1") {
+                  baseDrum.triggerAttackRelease(key, duration, time);
+                } else if (key === "D1") {
+                  snareDrum.triggerAttackRelease(duration, time);
                 }
               }
 
