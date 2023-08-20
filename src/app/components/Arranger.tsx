@@ -5,13 +5,10 @@ import {
 
 import Locator from "@/app/components/Locator";
 import SortableItem from "@/app/components/SortableItem";
+import { AudioTrack, MidiTrack, TimeTrack } from "@/app/components/tracks";
 
-import AudioTrack from "@/app/components/tracks/audio/AudioTrack";
-import MidiTrack from "@/app/components/tracks/midi/MidiTrack";
-import TimeTrack from "@/app/components/tracks/time/TimeTrack";
-
-import { ETrackType } from "./tracks/types";
-import { TTrackConfig } from "../core/config/types";
+import { ETrackType } from "@/app/components/tracks/types";
+import type { TTrackConfig } from "@/app/core/config/types";
 
 interface IArrangerProps {
   tracks?: TTrackConfig[];
@@ -21,7 +18,7 @@ export default function Arranger({ tracks: _tracks = [] }: IArrangerProps) {
   function Tracks() {
     const tracks = _tracks.map(({ name, type, ...props }, trackIndex) => {
       const id = `track-${trackIndex}`;
-
+      const Track = { Audio: AudioTrack, Midi: MidiTrack, Time: TimeTrack };
       let track;
 
       switch (type) {
@@ -47,11 +44,11 @@ export default function Arranger({ tracks: _tracks = [] }: IArrangerProps) {
     return tracks;
   }
   return (
-    <section className="relative">
+    <div className="relative">
       <SortableContext items={[]} strategy={verticalListSortingStrategy}>
         <ol className="flex-1">{<>{Tracks()}</>}</ol>
       </SortableContext>
       <Locator />
-    </section>
+    </div>
   );
 }

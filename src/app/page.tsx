@@ -1,9 +1,8 @@
 "use client";
-
 import { useState } from "react";
 import { BeerIcon, CogIcon, FilesIcon } from "lucide-react";
 import { DndContext } from "@dnd-kit/core";
-import * as Tone from "tone";
+import { start } from "tone";
 
 import t from "@/app/core/i18n";
 
@@ -11,6 +10,7 @@ import useConfig from "@/app/core/config/useConfig";
 import useMusicTheory from "@/app/core/hooks/useMusicTheory";
 
 import { styles } from "@/app/components/tracks/styles";
+import generalStyles from "@/app/core/config/styles";
 
 import Arranger from "@/app/components/Arranger";
 import Mixer from "@/app/components/Mixer";
@@ -24,19 +24,26 @@ import Dialog from "@/app/components/ui/dialog/Dialog";
 
 export default function Home() {
   // TODO load project or preset
-  const config = undefined;
+  const _config = undefined;
   const [toneReady, setToneReady] = useState(false);
-  const { data = { tracks: [] }, error, isLoading } = useConfig(config);
+  const { config = { tracks: [] } } = useConfig(_config);
 
   function ChordProgression() {
+    enum EProgression {
+      IVviIV = "I V vi IV",
+    }
+
     return (
       <section className="bg-white p-4 border border-gray-100 mb-8">
-        <h1 className="text-lg font-bold">Chord progression</h1>
+        <h2 className={generalStyles.headings.h2}>{t("chordProgression")}</h2>
         <p>
-          Tonic <span className="p-2 bg-gray-200">C</span> Progression:{" "}
+          Tonic <span className="p-2 bg-gray-200">C</span> {t("progression")}:{" "}
           <span className="p-2 bg-gray-200">I V vi IV</span>&nbsp;
           <span>
-            = <b>{useMusicTheory({ tonic: "C" }).getChords("I V vi IV")}</b>
+            ={" "}
+            <b>
+              {useMusicTheory({ tonic: "C" }).getChords(EProgression.IVviIV)}
+            </b>
           </span>
         </p>
       </section>
@@ -49,7 +56,7 @@ export default function Home() {
         <button
           className={styles.button.primary}
           onClick={async () => {
-            await Tone.start();
+            await start();
             setToneReady(true);
           }}
         >
@@ -83,7 +90,7 @@ export default function Home() {
           <div className="flex flex-col flex-1 justify-between">
             <Toolbar />
             <News />
-            <Arranger tracks={data?.tracks} />
+            <Arranger tracks={config.tracks} />
             <ChordProgression />
             <Tabs>
               <TabMenu items={tabItems} />
@@ -99,5 +106,5 @@ export default function Home() {
     );
   }
 
-  return <>{toneReady && !isLoading && !error ? <App /> : <StartDialog />}</>;
+  return <>{toneReady ? <App /> : <StartDialog />}</>;
 }
