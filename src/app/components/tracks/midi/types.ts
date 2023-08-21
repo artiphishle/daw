@@ -4,15 +4,19 @@ import type { ITrack } from "../types";
 enum EMidiPluginType {
   Drums,
 }
-
+/*
 interface INote {
   key: string;
   duration: Time;
   time: Time;
 }
+*/
+type TToneSequenceNote = "x" | null;
+type TMidiDrumSequence = Record<string, TToneSequenceNote[]>;
 interface IMidiChannel {
   id: number;
-  notes?: INote[];
+  // notes?: INote[];
+  notes: TToneSequenceNote[];
 }
 interface IMidiPlugin {
   type?: EMidiPluginType.Drums;
@@ -23,4 +27,5 @@ interface IMidiTrackConfig extends ITrack {
 }
 
 export { EMidiPluginType };
-export type { IMidiChannel, IMidiPlugin, IMidiTrackConfig, INote };
+export type { IMidiChannel, IMidiPlugin, IMidiTrackConfig };
+export type { TToneSequenceNote, TMidiDrumSequence };

@@ -4,15 +4,16 @@ import type { Time as TTime } from "tone/build/esm/core/type/Units";
 import cn from "classnames";
 
 import { DEFAULT_OFFSET_LEFT } from "@/app/core/config/constants";
-import useConfig from "@/app/core/config/useConfig";
 
 import { EUnit } from "@/app/types";
 
 interface ILocatorProps {
   className?: string;
+  transport: any;
 }
 
-export default function Locator({ className = "" }: ILocatorProps) {
+export default function Locator({ className = "", transport }: ILocatorProps) {
+  const { measureCount, position, setPosition } = transport;
   const fn = {
     get: {
       measure: {
@@ -20,13 +21,8 @@ export default function Locator({ className = "" }: ILocatorProps) {
       },
     },
   };
-  const { config } = useConfig();
-  const measureCount = config?.transport.measureCount || 1;
   const measureWidth = fn.get.measure.width();
 
-  const [position, setPosition] = useState(
-    Time(Transport.position).toBarsBeatsSixteenths()
-  );
   const [left, setLeft] = useState(DEFAULT_OFFSET_LEFT);
 
   useEffect(() => {
@@ -47,7 +43,8 @@ export default function Locator({ className = "" }: ILocatorProps) {
       setPosition(Time(Transport.position).toBarsBeatsSixteenths());
     }, "16n");
     loop.start(0);
-    loop.stop(`${config?.transport.measureCount}m`);
+    loop.stop(`${measureCount}m`);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const styles = {

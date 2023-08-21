@@ -3,6 +3,8 @@ import t from "../i18n";
 import { ETrackType } from "@/app/components/tracks/types";
 import {
   EMidiPluginType,
+  TMidiDrumSequence,
+  TToneSequenceNote,
   type IMidiPlugin,
   type IMidiTrackConfig,
 } from "@/app/components/tracks/midi/types";
@@ -29,20 +31,39 @@ const DEFAULT_AUDIO_TRACK: IAudioTrackConfig = {
   type: ETrackType.Audio,
 };
 
+// 's' means # (sharp), and 'o' is normal
+const C_1 = midiChannels[36].key; // C1
+const D_1 = midiChannels[38].key; // D1
+const Fs1 = midiChannels[42].key; // F#1
+const _ = null;
+const x = "x";
+
+const drums: TMidiDrumSequence = {
+  /**
+   *    16 tones, let's assume duration: '8n'
+   *    = 16x8n = 8x4n = 4x2n = 2x1n = 2x1m (1 measure = 1 full note afaik)
+   *
+   *    1  .  .  .  2  .  .  .  3  .  .  .  4  .  .  .
+   *       2  3  4     2  3  4     2  3  4     2  3  4   */
+  C_1: [x, x, _, _, _, _, x, _, x, _, x, _, _, _, _, _], // Ch36: BD BaseDrum
+  D_1: [_, _, _, _, x, _, _, _, _, _, _, _, x, _, _, _], // Ch38: SD SnareDrum
+  Fs1: [_, x, x, x, _, x, x, x, _, x, x, x, _, x, x, x], // Ch42: CH ClosedHihat
+};
+
 const DEFAULT_MIDI_DRUM_PLUGIN: IMidiPlugin = {
   type: EMidiPluginType.Drums,
   channels: [
     {
       id: 36,
-      notes: [0, 4, 8, 12, 16, 20, 24, 28, 32, 36, 40, 44, 48, 52, 56, 60].map(
-        (time) => ({ time, key: midiChannels[36].key, duration: "8n" })
-      ),
+      notes: drums.C_1,
     },
     {
       id: 38,
-      notes: [2, 6, 10, 14, 18, 22, 26, 30, 34, 38, 42, 46, 50, 54, 58, 62].map(
-        (time) => ({ time, key: midiChannels[38].key, duration: "8n" })
-      ),
+      notes: drums.D_1,
+    },
+    {
+      id: 42,
+      notes: drums.Fs1,
     },
   ],
 };
@@ -60,9 +81,9 @@ const DEFAULT_MIDI_DRUM_TRACK: IMidiTrackConfig = {
 
 const DEFAULT_TRACKS: TTrackConfig[] = [
   { id: "track-time", name: "", type: ETrackType.Time },
-  { ...DEFAULT_MIDI_TRACK },
+  // { ...DEFAULT_MIDI_TRACK },
   { ...DEFAULT_MIDI_DRUM_TRACK },
-  { ...DEFAULT_AUDIO_TRACK },
+  { ...DEFAULT_AUDIO_TRACK, name: "Example.wav" },
 ];
 
 export {

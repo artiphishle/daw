@@ -12,9 +12,10 @@ import type { TTrackConfig } from "@/app/core/config/types";
 
 interface IArrangerProps {
   tracks: TTrackConfig[];
+  transport: any;
 }
 
-export default function Arranger({ tracks }: IArrangerProps) {
+export default function Arranger({ tracks, transport }: IArrangerProps) {
   function getTrack(trackConfig: TTrackConfig) {
     const { type } = trackConfig;
     switch (type) {
@@ -54,7 +55,7 @@ export default function Arranger({ tracks }: IArrangerProps) {
       <SortableContext items={tracks} strategy={verticalListSortingStrategy}>
         <ol className="flex-1">{<>{Tracks(tracks)}</>}</ol>
       </SortableContext>
-      <Locator />
+      <Locator transport={transport} />
     </div>
   );
 }
