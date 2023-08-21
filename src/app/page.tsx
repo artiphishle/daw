@@ -16,12 +16,15 @@ import generalStyles from "@/app/core/config/styles";
 import Arranger from "@/app/components/Arranger";
 import Mixer from "@/app/components/Mixer";
 import Piano from "@/app/components/instruments/keys/Piano";
-import Toolbar from "@/app/components/Toolbar";
+import Navbar from "@/app/components/Navbar";
 
 import Tabs from "@/app/components/ui/tabs/Tabs";
 import TabMenu from "@/app/components/ui/tabs/TabMenu";
 import TabContent from "@/app/components/ui/tabs/TabContent";
 import Dialog from "@/app/components/ui/dialog/Dialog";
+import useTransporter from "./core/hooks/useTransporter";
+import { ITransporterProps } from "./components/Transporter";
+import Sheet from "./components/sheets/Sheet";
 
 export default function Home() {
   // TODO load project or preset
@@ -74,6 +77,9 @@ export default function Home() {
     );
   }
   function App() {
+    const transport: ITransporterProps = useTransporter({
+      loop: { start: 0, end: "8m" },
+    });
     const { arranger } = useConfig(_config);
     const { tracks, setTracks } = arranger;
 
@@ -104,9 +110,10 @@ export default function Home() {
       >
         <main className={generalStyles.main}>
           <div className="flex flex-col flex-1 justify-between">
-            <Toolbar />
+            <Navbar transport={transport} />
             <News />
-            <Arranger tracks={tracks} />
+            <Arranger tracks={tracks} transport={transport} />
+            <Sheet />
             <ChordProgression />
             <Tabs>
               <TabMenu items={tabItems} />
@@ -116,7 +123,6 @@ export default function Home() {
             </Tabs>
             <Piano />
           </div>
-          <div className="bg-cyan-400 flex flex-col 0"></div>
         </main>
       </DndContext>
     );
