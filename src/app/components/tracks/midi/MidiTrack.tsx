@@ -1,6 +1,6 @@
-import { type MouseEvent, useState } from "react";
+import { type MouseEvent, useState, useEffect } from "react";
 import { ListMusicIcon } from "lucide-react";
-import { Time } from "tone";
+import { Sequence } from "tone";
 import cn from "classnames";
 
 import Accordion from "@/app/components/ui/accordion/Accordion";
@@ -11,7 +11,7 @@ import midiChannels from "@/app/components/tracks/midi/constants/channels.midi.c
 import { ETrackType } from "@/app/components/tracks/types";
 import type {
   IMidiTrackConfig,
-  INote,
+  TToneSequenceNote,
 } from "@/app/components/tracks/midi/types";
 import { useBaseDrum, useSnareDrum } from "@/app/components/instruments";
 
@@ -23,22 +23,24 @@ const MEASURE_COUNT = 8;
 const QUANTIZATION = 8;
 
 interface ITemplateProps {
-  notes?: INote[];
+  notes?: TToneSequenceNote[];
   name: string;
   nested?: boolean;
 }
 
 export default function MidiTrack({ name, plugins = [] }: IMidiTrackConfig) {
-  function isPlayed(notes: INote[], timeIndex: number) {
-    return notes.filter(({ time }) => timeIndex === time)[0];
-  }
-
-  // const baseDrum = useBaseDrum();
-  // const snareDrum = useSnareDrum();
+  const baseDrum = useBaseDrum();
+  const snareDrum = useSnareDrum();
 
   function Template({ notes = [], name, nested = false }: ITemplateProps) {
     const [measureCount] = useState(MEASURE_COUNT);
     const [quantization] = useState(QUANTIZATION);
+
+    useEffect(() => {
+      const sequence = new Sequence((time, value) => {
+        console.log(time, value, name);
+      }, notes);
+    }, []);
 
     const events = {
       togglePad: function (event: MouseEvent<HTMLDivElement>) {
@@ -63,36 +65,20 @@ export default function MidiTrack({ name, plugins = [] }: IMidiTrackConfig) {
           </div>
         </div>
         <div className={`p-1 flex w-full border-r border-orange-200`}>
-          {new Array(measureCount * quantization)
-            .fill("")
-            .map((_, padIndex) => {
-              const playedNote = isPlayed(notes, padIndex);
-
-              /* if (playedNote) {
-                const { key, duration } = playedNote;
-                const time =
-                  (playedNote.time as number) * Time("8n").toSeconds();
-
-                if (key === "C1") {
-                  baseDrum.triggerAttackRelease(key, duration, time);
-                } else if (key === "D1") {
-                  snareDrum.triggerAttackRelease(duration, time);
-                }
-              }*/
-
-              return (
-                <div
-                  className={cn(
-                    "flex-1 mr-1 text-white",
-                    styles.bg[playedNote ? "padActive" : "pad"]
-                  )}
-                  onClick={events.togglePad}
-                  key={`pad-${padIndex}}`}
-                >
-                  {playedNote ? playedNote.key : ""}
-                </div>
-              );
-            })}
+          {notes.map((note, padIndex) => {
+            return (
+              <div
+                className={cn(
+                  "flex-1 mr-1 text-white",
+                  styles.bg[!!note ? "padActive" : "pad"]
+                )}
+                onClick={events.togglePad}
+                key={`pad-${padIndex}}`}
+              >
+                {note || ""}
+              </div>
+            );
+          })}
         </div>
       </div>
     );

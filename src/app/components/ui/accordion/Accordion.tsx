@@ -1,6 +1,5 @@
-import { type ReactNode } from "react";
-import AccordionDetails from "./AccordionDetails";
-import AccordionSummary from "./AccordionSummary";
+import AccordionDetails from "@/app/components/ui/accordion/AccordionDetails";
+import AccordionSummary from "@/app/components/ui/accordion/AccordionSummary";
 
 interface IAccordionProps {
   summary: JSX.Element;
