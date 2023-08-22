@@ -9,7 +9,7 @@ interface IListItem {
   children?: ReactNode;
 }
 
-interface IListProps {
+interface IList {
   items: IListItem[];
   active?: number;
   // TODO <li> className... change that
@@ -21,12 +21,13 @@ export default function List({
   items,
   active = 1,
   className = { li: "", liActive: "" },
-}: IListProps) {
+}: IList) {
   return (
     <ul className="flex">
-      {items.map(({ children, Icon, text }, itemIndex) => {
+      {items.map(({ Icon, text }, itemIndex) => {
         const isActive = active === itemIndex;
         const cnNonActive = isActive ? className.liActive : className.li;
+
         return (
           <li
             className={cn({ active: isActive }, cnNonActive)}
@@ -35,8 +36,6 @@ export default function List({
             <div className="flex gap-1">
               {Icon && <Icon />}
               {text && <span>{text}</span>}
-              {children && children}
-              {}
             </div>
           </li>
         );

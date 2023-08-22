@@ -1,9 +1,8 @@
 "use client";
 import { useState } from "react";
-import { BeerIcon, CogIcon, FilesIcon } from "lucide-react";
+import { start } from "tone";
 import { closestCenter, DndContext, type DragEndEvent } from "@dnd-kit/core";
 import { arrayMove } from "@dnd-kit/sortable";
-import { start } from "tone";
 
 import t from "@/app/core/i18n";
 
@@ -17,10 +16,9 @@ import Arranger from "@/app/components/Arranger";
 import Mixer from "@/app/components/Mixer";
 import Piano from "@/app/components/instruments/keys/Piano";
 import Navbar from "@/app/components/Navbar";
+import Tabs, { ITabs } from "@/app/components/ui/tabs/Tabs";
 
-import Tabs from "@/app/components/ui/tabs/Tabs";
-import TabMenu from "@/app/components/ui/tabs/TabMenu";
-import TabContent from "@/app/components/ui/tabs/TabContent";
+import { DEFAULT_TRACKS } from "./core/config/constants";
 import Dialog from "@/app/components/ui/dialog/Dialog";
 import useTransporter from "./core/hooks/useTransporter";
 import { ITransporterProps } from "./components/Transporter";
@@ -83,12 +81,6 @@ export default function Home() {
     const { arranger } = useConfig(_config);
     const { tracks, setTracks } = arranger;
 
-    const tabItems = [
-      { Icon: FilesIcon, text: "Audio Browser F5" },
-      { Icon: BeerIcon, text: "Mixer F3" },
-      { Icon: CogIcon, text: "Einstellungen " },
-    ];
-
     const events = {
       on: {
         dragEnd: (event: DragEndEvent) => {
@@ -103,25 +95,45 @@ export default function Home() {
       },
     };
 
+    const tabsProps: ITabs = {
+      activeIndex: 0,
+      items: [
+        {
+          children: <span>Arranger</span>,
+          id: "tabs-arranger",
+          href: "#",
+          order: 1,
+          panel: (
+            <>
+              <Arranger tracks={DEFAULT_TRACKS} transport={transport} />
+              <ChordProgression />
+              <Mixer />
+              <Piano />
+            </>
+          ),
+          title: "Arranger",
+        },
+        {
+          children: <span>Sheet</span>,
+          id: "tabs-sheet",
+          href: "#",
+          order: 2,
+          panel: <Sheet />,
+          title: "Sheet",
+        },
+      ],
+    };
+
     return (
       <DndContext
         collisionDetection={closestCenter}
         onDragEnd={events.on.dragEnd}
       >
         <main className={generalStyles.main}>
-          <div className="flex flex-col flex-1 justify-between">
+          <div className="flex flex-col flex-1">
             <Navbar transport={transport} />
             <News />
-            <Arranger tracks={tracks} transport={transport} />
-            <Sheet />
-            <ChordProgression />
-            <Tabs>
-              <TabMenu items={tabItems} />
-              <TabContent>
-                <Mixer />
-              </TabContent>
-            </Tabs>
-            <Piano />
+            <Tabs {...tabsProps} />
           </div>
         </main>
       </DndContext>

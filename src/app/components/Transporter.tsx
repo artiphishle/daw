@@ -1,13 +1,5 @@
-import {
-  type ChangeEventHandler,
-  Dispatch,
-  SetStateAction,
-  MouseEventHandler,
-  MouseEvent,
-  ChangeEvent,
-  ReactElement,
-} from "react";
-import { LucideIcon, PauseIcon, PlayIcon } from "lucide-react";
+import { Dispatch, SetStateAction, MouseEvent, ChangeEvent } from "react";
+import { PauseIcon, PlayIcon } from "lucide-react";
 import { Transport } from "tone";
 
 import t from "@/app/core/i18n";
