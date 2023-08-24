@@ -1,5 +1,5 @@
 import { MouseEvent } from "react";
-import useVerdisA from "../components/instruments/synths/hooks/useVerdisA";
+import useVerdisA from "../core/instruments/synths/hooks/useVerdisA";
 
 export default function useMidiKeys({ instrument, octaves = 1 }: any) {
   const keys = ["C", "D", "E", "F", "G", "A", "B"];

@@ -1,21 +1,24 @@
+import { ReactNode } from "react";
 import {
   SortableContext,
   verticalListSortingStrategy,
 } from "@dnd-kit/sortable";
 
-import Locator from "@/app/components/Locator";
 import SortableItem from "@/app/components/SortableItem";
-import { AudioTrack, MidiTrack, TimeTrack } from "@/app/components/tracks";
+import { AudioTrack, MidiTrack, TimeTrack } from "@/app/core/tracks";
 
-import { ETrackType } from "@/app/components/tracks/types";
+import { ETrackType } from "@/app/core/tracks/types";
 import type { TTrackConfig } from "@/app/core/config/types";
+import type { ITransport } from "@/app/components";
 
-interface IArrangerProps {
+export interface IArranger {
+  children?: ReactNode;
   tracks: TTrackConfig[];
-  transport: any;
+  setTracks: (tracks: TTrackConfig[]) => void;
+  transport?: ITransport;
 }
 
-export default function Arranger({ tracks, transport }: IArrangerProps) {
+export default function Arranger({ children, tracks, transport }: IArranger) {
   function getTrack(trackConfig: TTrackConfig) {
     const { type } = trackConfig;
     switch (type) {
@@ -55,7 +58,7 @@ export default function Arranger({ tracks, transport }: IArrangerProps) {
       <SortableContext items={tracks} strategy={verticalListSortingStrategy}>
         <ol className="flex-1">{<>{Tracks(tracks)}</>}</ol>
       </SortableContext>
-      <Locator transport={transport} />
+      {children && children}
     </div>
   );
 }

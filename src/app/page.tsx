@@ -1,55 +1,54 @@
 "use client";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { start } from "tone";
 import { closestCenter, DndContext, type DragEndEvent } from "@dnd-kit/core";
 import { arrayMove } from "@dnd-kit/sortable";
 
+import { DEFAULT_MIXER } from "@/app/core/config/constants";
 import t from "@/app/core/i18n";
+import useAudioConverter from "./core/tracks/midi/useAudioConverter";
+// import AudioToMidi from "./core/tracks/midi/AudioToMidi";
 
 import useConfig from "@/app/core/config/useConfig";
-import useMusicTheory from "@/app/core/hooks/useMusicTheory";
-
-import { styles } from "@/app/components/tracks/styles";
 import generalStyles from "@/app/core/config/styles";
+import { styles } from "@/app/core/tracks/styles";
 
-import Arranger from "@/app/components/Arranger";
-import Mixer from "@/app/components/Mixer";
-import Piano from "@/app/components/instruments/keys/Piano";
-import Navbar from "@/app/components/Navbar";
-import Tabs, { ITabs } from "@/app/components/ui/tabs/Tabs";
+import Piano from "@/app/core/instruments/keys/Piano";
 
-import { DEFAULT_TRACKS } from "./core/config/constants";
-import Dialog from "@/app/components/ui/dialog/Dialog";
-import useTransporter from "./core/hooks/useTransporter";
-import { ITransporterProps } from "./components/Transporter";
-import Sheet from "./components/sheets/Sheet";
+import {
+  Arranger,
+  Locator,
+  Mixer,
+  Navbar,
+  News,
+  Progression,
+  Sheet,
+} from "@/app/components";
+
+import { Dialog, Tabs, type ITabs } from "@/app/ui";
+import { PanSongParsed } from "./test/unit/PanSong.parsed";
+// import { PanSongParsed } from "./test/unit/PanSong.parsed";
 
 export default function Home() {
-  // TODO load project or preset
   const _config = undefined;
   const [toneReady, setToneReady] = useState(false);
 
-  function ChordProgression() {
-    enum EProgression {
-      IVviIV = "I V vi IV",
-    }
+  const { audioToAbc } = useAudioConverter();
+  const [abcParsed, setAbcParsed] = useState<string>("");
 
-    return (
-      <section className="bg-white p-4 border border-gray-100 mb-8">
-        <h2 className={generalStyles.headings.h2}>{t("chordProgression")}</h2>
-        <p>
-          Tonic <span className="p-2 bg-gray-200">C</span> {t("progression")}:{" "}
-          <span className="p-2 bg-gray-200">I V vi IV</span>&nbsp;
-          <span>
-            ={" "}
-            <b>
-              {useMusicTheory({ tonic: "C" }).getChords(EProgression.IVviIV)}
-            </b>
-          </span>
-        </p>
-      </section>
-    );
-  }
+  useEffect(() => {
+    if (!toneReady) return;
+    (async function () {
+      try {
+        // TODO stream it & not run always at start up
+        // const notes = await AudioToMidi();
+        setAbcParsed(await audioToAbc(PanSongParsed));
+      } catch (error) {
+        console.error(error);
+      }
+    })();
+  }, [toneReady]);
+
   function StartDialog() {
     return (
       <Dialog className={styles.dialog} id="start" open>
@@ -66,19 +65,9 @@ export default function Home() {
       </Dialog>
     );
   }
-  function News() {
-    return (
-      <p className="text-xl p-4">
-        <span className="font-black">NEWS:</span>&nbsp; Verdi&apos;s A (432Hz),
-        Progressions, Sortable tracks
-      </p>
-    );
-  }
+
   function App() {
-    const transport: ITransporterProps = useTransporter({
-      loop: { start: 0, end: "8m" },
-    });
-    const { arranger } = useConfig(_config);
+    const { arranger, transport } = useConfig(_config);
     const { tracks, setTracks } = arranger;
 
     const events = {
@@ -105,9 +94,16 @@ export default function Home() {
           order: 1,
           panel: (
             <>
-              <Arranger tracks={DEFAULT_TRACKS} transport={transport} />
-              <ChordProgression />
-              <Mixer />
+              <Arranger
+                tracks={tracks}
+                setTracks={setTracks}
+                transport={transport}
+              >
+                <Locator transport={transport} />
+              </Arranger>
+
+              <Progression />
+              <Mixer {...DEFAULT_MIXER} />
               <Piano />
             </>
           ),
@@ -118,7 +114,7 @@ export default function Home() {
           id: "tabs-sheet",
           href: "#",
           order: 2,
-          panel: <Sheet />,
+          panel: <>{abcParsed && <Sheet markdown={abcParsed} />},</>,
           title: "Sheet",
         },
       ],

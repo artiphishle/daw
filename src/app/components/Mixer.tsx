@@ -4,9 +4,16 @@ import { Destination } from "tone";
 import useConfig from "@/app/core/config/useConfig";
 import t from "@/app/core/i18n";
 
-import { ETrackType } from "@/app/components/tracks/types";
+import { ETrackType } from "@/app/core/tracks/types";
 
-export default function Mixer() {
+export interface IMixer {
+  visibility: {
+    [ETrackType.Audio]: true;
+    [ETrackType.Midi]: true;
+  };
+}
+
+export default function Mixer({ visibility }: IMixer) {
   const { arranger } = useConfig();
   const { tracks, setTracks } = arranger;
 
@@ -64,9 +71,3 @@ export default function Mixer() {
     </div>
   );
 }
-
-interface IMixerConfig {
-  visibility: { [type in ETrackType as string]: boolean };
-}
-
-export type { IMixerConfig };
