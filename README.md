@@ -16,17 +16,26 @@ npm i && npm run dev
 
 ## Collaboration
 
-🙏 Thank you! Contact me: [@LinkedIn](https://www.linkedin.com/in/faebster/)
+---
+
+## 🙏 Thank you!<br>
+
+### \\/\\/r|te /\\/\\e: [@LinkedIn](https://www.linkedin.com/in/faebster/)
+
+---
 
 ## Changelog
 
 ### August 2023
 
-#### Day 23
+#### Day 24
 
+**Jest Setup** using Rust compiler
+**Locator & Transport** play/stop
 **Audio to MIDI** detect instruments & notes using [basic-pitch](https://github.com/spotify/basic-pitch-ts)
+**Music sheet generation from audio file (e.g. .mp3, .wav, ...)**
 
-<img width="706" alt="DAW 20230823" src="./public/screenshots/daw_202300823.png">
+## <img width="706" alt="DAW 20230824" src="./public/screenshots/daw_20230824.png">
 
 ---
 
