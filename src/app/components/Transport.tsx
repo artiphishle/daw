@@ -9,7 +9,6 @@ export enum ETransportState {
   Started = "started",
   Stopped = "stopped",
 }
-
 export interface ITransport {
   bpm: number;
   setBpm: Dispatch<SetStateAction<number>>;
@@ -32,6 +31,12 @@ export interface ITransport {
   };
 }
 
+function formatPosition(position: string) {
+  const splitPosition = position.split(":");
+  return `${splitPosition[0]}:${splitPosition[1]}:${parseFloat(
+    splitPosition[2]
+  ).toFixed(3)}`;
+}
 export default function Transport({ bpm, position, events }: ITransport) {
   const PlayOrPauseIcon = () =>
     ToneTransport.state === ETransportState.Started ? (
@@ -43,7 +48,7 @@ export default function Transport({ bpm, position, events }: ITransport) {
   return (
     <div className="flex py-1 px-4">
       <div className="flex gap-2">
-        <div>{position}</div>
+        <div>{formatPosition(position)}</div>
         <div className="flex items-center text-white px-4 mx-2 border-r border-r-[#555]">
           <PlayOrPauseIcon />
         </div>

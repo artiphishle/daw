@@ -6,14 +6,18 @@ import { DEFAULT_OFFSET_LEFT } from "@/app/core/config/constants";
 import { EUnit } from "@/app/types";
 import type { Time as TTime } from "tone/build/esm/core/type/Units";
 import { type ITransport } from "@/app/components";
+import { Transport } from "tone";
+import useConfig from "../core/config/useConfig";
 
 interface ILocator {
+  // transport: ITransport;
   className?: string;
-  transport: ITransport;
 }
 
-export default function Locator({ className = "", transport }: ILocator) {
-  const { measureCount, position, setPosition } = transport;
+export default function Locator({ className = "" }: ILocator) {
+  // const { measureCount, position, setPosition } = transport;
+  const { arranger, transport } = useConfig();
+  const { measureCount, quantization, position } = transport;
   const [left, setLeft] = useState(DEFAULT_OFFSET_LEFT);
 
   function getMeasureWidth() {
@@ -33,9 +37,7 @@ export default function Locator({ className = "", transport }: ILocator) {
     const newLeft = newMeasureLeft + newQuarterLeft;
     if (newLeft !== left) setLeft(newLeft);
     console.log("[Locator] position:", position, newLeft);
-  }, [measureWidth, left, position]);
-
-  useEffect(() => {}, [position]);
+  }, [measureWidth, left, Transport.position]);
 
   const styles = {
     locator: "bg-black w-[1px] absolute top-0 bottom-0",
