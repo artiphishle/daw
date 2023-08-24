@@ -1,77 +1,54 @@
-import { Loop, Time, Transport } from "tone";
-import type { Time as TTime } from "tone/build/esm/core/type/Units";
-
-import { ChangeEvent, useEffect, useState } from "react";
 import { PauseIcon, PlayIcon } from "lucide-react";
+import { Transport as ToneTransport } from "tone";
 
-import useConfig from "@/app/core/config/useConfig";
 import t from "@/app/core/i18n";
+import { ChangeEvent, Dispatch, MouseEvent, SetStateAction } from "react";
 
-export default function Transporter() {
-  const { config } = useConfig();
-  const [bpm, setBpm] = useState(config?.transport.bpm);
-  const [isPlaying, setIsPlaying] = useState(false);
-  const [position, setPosition] = useState(
-    Time(Transport.position).toBarsBeatsSixteenths()
-  );
-  const [timeSignature] = useState(Transport.timeSignature);
-  const [timer, setTimer] = useState<NodeJS.Timer>();
+export enum ETransportState {
+  Paused = "paused",
+  Started = "started",
+  Stopped = "stopped",
+}
+export interface ITransport {
+  bpm: number;
+  setBpm: Dispatch<SetStateAction<number>>;
 
-  Transport.loop = true;
-  Transport.loopStart = 0;
-  Transport.loopEnd = `${config?.transport.measureCount}m`;
+  clef: string;
+  setClef: Dispatch<SetStateAction<string>>;
 
-  const loop = new Loop((time: number) => {
-    setPosition(Time(Transport.position).toBarsBeatsSixteenths());
-  }, "8n");
-  loop.start(0);
-  loop.stop(`${config?.transport.measureCount}m`);
+  measureCount: number;
+  setMeasureCount: Dispatch<SetStateAction<number>>;
 
-  // BPM change
-  useEffect(() => {
-    if (!bpm) return;
-    Transport.bpm.value = bpm;
-    console.info("Change", "bpm:", Transport.bpm.value);
-  }, [bpm]);
+  position: string;
+  setPosition: Dispatch<SetStateAction<string>>;
 
-  const interval = {
-    start: () =>
-      setTimer(
-        setInterval(() => {
-          setPosition(Time(Transport.position).toBarsBeatsSixteenths());
-        }, config?.transport.measureCount)
-      ),
-    stop: (timer: NodeJS.Timer) => {
-      clearInterval(timer);
-      setTimer(undefined);
-    },
+  quantization: number;
+  setQuantization: Dispatch<SetStateAction<number>>;
+
+  events: {
+    onBpmChange: (event: ChangeEvent<HTMLInputElement>) => void;
+    onToggle: (event: MouseEvent<SVGSVGElement>) => void;
   };
+}
 
-  const events = {
-    changeBpm: (event: ChangeEvent<HTMLInputElement>) =>
-      setBpm(parseInt(event.target.value)),
-    // TODO 'pause' not supported, only 'play' and 'stop'
-    togglePlay: (time: TTime = Transport.now()) => {
-      const bbs = Time(time).toBarsBeatsSixteenths();
-      console.info(`[Transporter] togglePlay("${bbs}")`);
-
-      isPlaying ? Transport.stop(time) : Transport.start(time);
-      Transport.position = Time(0).toBarsBeatsSixteenths();
-      setIsPlaying((isPlaying) => !isPlaying);
-    },
-  };
-
+function formatPosition(position: string) {
+  const splitPosition = position.split(":");
+  return `${splitPosition[0]}:${splitPosition[1]}:${parseFloat(
+    splitPosition[2]
+  ).toFixed(3)}`;
+}
+export default function Transport({ bpm, position, events }: ITransport) {
   const PlayOrPauseIcon = () =>
-    isPlaying ? (
-      <PauseIcon onClick={() => events.togglePlay()} />
+    ToneTransport.state === ETransportState.Started ? (
+      <PauseIcon onClick={events.onToggle} />
     ) : (
-      <PlayIcon onClick={() => events.togglePlay()} />
+      <PlayIcon onClick={events.onToggle} />
     );
 
   return (
     <div className="flex py-1 px-4">
       <div className="flex gap-2">
-        <div>{position}</div>
+        <div>{formatPosition(position)}</div>
         <div className="flex items-center text-white px-4 mx-2 border-r border-r-[#555]">
           <PlayOrPauseIcon />
         </div>
@@ -82,13 +59,13 @@ export default function Transporter() {
           <input
             className="w-8 ml-2 bg-transparent"
             id="bpm"
-            onChange={events.changeBpm}
+            onChange={events.onBpmChange}
             value={bpm}
           />
         </div>
         <div className="flex items-center">
           <div className="text-xs mr-2">{t("beat")}:</div>
-          <div>{timeSignature}/4</div>
+          <div>4/4</div>
         </div>
       </div>
     </div>

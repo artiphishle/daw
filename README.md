@@ -1,45 +1,62 @@
 # DAW
 
-Digital Audio Workstation
+**D**igital **A**udio **W**orkstation using [Tone.js](https://github.com/Tonejs/Tone.js)
+
+<span style='background:#aaffbb;color:#333;padding:8px 20px;'>🎼 open-source! ...sounds good?</span>
 
 ## Quickstart
+
+Assuming you have [Node.js](https://nodejs.org) installed...
 
 ```bash
 npm i && npm run dev
 ```
 
-Visit: [localhost:3000](http://localhost:3000)
+🥁 [localhost:3000](http://localhost:3000)
+
+## Collaboration
+
+---
+
+## 🙏 Thank you!<br>
+
+### \\/\\/r|te /\\/\\e: [@LinkedIn](https://www.linkedin.com/in/faebster/)
+
+---
 
 ## Changelog
 
-### 2023
+### August 2023
 
-#### August – 22
+#### Day 24
 
-##### Arranger
+**Jest Setup** using Rust compiler
+**Locator & Transport** play/stop
+**Audio to MIDI** detect instruments & notes using [basic-pitch](https://github.com/spotify/basic-pitch-ts)
+**Music sheet generation from audio file (e.g. .mp3, .wav, ...)**
 
-- `Transport.position()` visualized while playback
+## <img width="706" alt="DAW 20230824" src="./public/screenshots/daw_20230824.png">
 
-##### Sheets
+---
 
-- Music sheets generation using `abcjs`
+#### Day 22
 
-##### Pfui ! (Perfect & Futuristic UI)
+**Arranger** DnD tracks
+**Locator** visualize transport position
+**MultiLanguage** de, en, fr, it
+**Sheets** generate sheets of music using [abcjs](https://github.com/paulrosen/abcjs)
+**pfui (pretty futuristic UI's)** Tabs
 
-That's my personal framework emerging while creating apps...
+<img width="706" alt="DAW 20230822" src="./public/screenshots/daw_202300822.png">
 
-New components: Accordion, Anchor, List, Message, Nav, Tabs
+---
 
-<img width="706" alt="Screenshot 2023-08-22 at 17 51 00" src="./public/screenshots/daw_202300822.png">
+#### Day 09
 
-##### August – 09
+**Tone.js** basic synths & fx, transport (playback), etc.
+**Tonal.js** detect progression of tonic with roman number input
+**AdioKeys** Use the keyboard as a MIDI controller
+**pfui (pretty futuristic UI's)** Accordion, Anchor, Dialog, List, Message, Nav
+**useVerdisA** hook to tune synths to `A4: 432hz`
 
-Just started using Tone.js, built on top of the Web Audio API
-
-##### Tone.js & Tonal.js
-
-- First WIP layout
-- Playback, BPM change, instrument hooks
-- Tracks (Arranger)
-
-<img width="706" alt="Screenshot 2023-08-09 at 23 52 40" src="https://github.com/scha-ch/daw/assets/137318798/cbb2d401-43c3-4af1-849a-2417bde99eb8">
+<img width="706" alt="DAW 20230809" src="./public/screenshots/daw_202300809.png">
