@@ -26,7 +26,7 @@ import {
 } from "@/app/components";
 
 import { Dialog, Tabs, type ITabs } from "@/app/ui";
-import { PanSongParsed } from "./test/unit/PanSong.parsed";
+import data from "./components/sheet.data";
 // import { PanSongParsed } from "./test/unit/PanSong.parsed";
 
 export default function Home() {
@@ -42,7 +42,7 @@ export default function Home() {
       try {
         // TODO stream it & not run always at start up
         // const notes = await AudioToMidi();
-        setAbcParsed(await audioToAbc(PanSongParsed));
+        // setAbcParsed(await audioToAbc(PanSongParsed));
       } catch (error) {
         console.error(error);
       }
@@ -114,7 +114,7 @@ export default function Home() {
           id: "tabs-sheet",
           href: "#",
           order: 2,
-          panel: <>{abcParsed && <Sheet markdown={abcParsed} />},</>,
+          panel: <>{<Sheet markdown={data[2]} />},</>,
           title: "Sheet",
         },
       ],

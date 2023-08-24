@@ -33,7 +33,7 @@ export default function useAudioConverter() {
   */
 
   async function audioToAbc(notes: NoteEventTime[]) {
-    let sheet = `X:1\nT:Pan Flute Song\nM:C\nL:1/8`;
+    let sheet = `X:1\nT:Pan Flute Song\nK:C\nL:1/8\n`;
     let totalDuration = 0;
 
     notes.forEach((note) => {
@@ -41,6 +41,12 @@ export default function useAudioConverter() {
       const notation = Time(note.durationSeconds).toNotation();
 
       totalDuration += note.durationSeconds;
+
+      if (totalDuration >= 4 * Time("4n").toSeconds()) {
+        sheet += "|";
+        totalDuration = 0;
+      }
+      sheet += `${noteName.slice(0, -1)}`;
 
       console.log("[Sheet] noteName:", noteName);
       console.log("[Sheet] notation:", notation);
