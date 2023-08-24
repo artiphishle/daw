@@ -9,7 +9,6 @@ import {
   DEFAULT_MEASURE_COUNT,
   DEFAULT_QUANTIZATION,
   DEFAULT_MIXER,
-  DEFAULT_POSITION,
   DEFAULT_TRACKS,
 } from "@/app/core/config/constants";
 
@@ -26,26 +25,28 @@ interface IConfig {
 }
 
 export default function useConfig(loadProjectOrPreset?: IConfig) {
+  // Transport position
+  const getPosition = (time: TTime = Transport.position) =>
+    Time(time).toBarsBeatsSixteenths();
+
   const [bpm, setBpm] = useState(DEFAULT_BPM);
   const [tracks, setTracks] = useState(DEFAULT_TRACKS);
   const [measureCount, setMeasureCount] = useState(DEFAULT_MEASURE_COUNT);
   const [quantization, setQuantization] = useState(DEFAULT_QUANTIZATION);
   const [clef, setClef] = useState(DEFAULT_CLEF);
-  const [position, setPosition] = useState(DEFAULT_POSITION);
-
-  // Transport position
-  const getPosition = (time: TTime = Transport.position) =>
-    Time(time).toBarsBeatsSixteenths();
+  const [position, setPosition] = useState(getPosition());
 
   // Transport position init
   useEffect(() => {
-    const loop = new Loop((time) => {
-      setPosition(getPosition());
-    }, "16n");
-    loop.start(0);
-    loop.stop(`${measureCount}m`);
+    Transport.loop = true;
+    Transport.loopStart = getPosition();
+    Transport.loopEnd = `${measureCount}m`;
+
+    new Loop((time) => setPosition(getPosition(Transport.position)), "16n")
+      .start(0)
+      .stop(`${measureCount}m`);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [position]);
 
   // BPM change
   useEffect(() => {
@@ -72,7 +73,9 @@ export default function useConfig(loadProjectOrPreset?: IConfig) {
       events: {
         onBpmChange: (event: ChangeEvent<HTMLInputElement>) =>
           setBpm(parseInt(event.target.value)),
-        onToggle: (_: MouseEvent<SVGSVGElement>) => Transport.toggle(),
+        onToggle: (_: MouseEvent<SVGSVGElement>) => {
+          Transport.toggle();
+        },
       },
     },
   };

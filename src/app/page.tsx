@@ -47,7 +47,7 @@ export default function Home() {
         console.error(error);
       }
     })();
-  }, [toneReady]);
+  }, [audioToAbc, toneReady]);
 
   function StartDialog() {
     return (
@@ -99,7 +99,7 @@ export default function Home() {
                 setTracks={setTracks}
                 transport={transport}
               >
-                <Locator transport={transport} />
+                <Locator />
               </Arranger>
 
               <Progression />
