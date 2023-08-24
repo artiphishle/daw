@@ -2,8 +2,9 @@ import { MenuIcon } from "lucide-react";
 
 import t from "@/app/core/i18n";
 import generalStyles from "@/app/core/config/styles";
-import List from "./ui/list/List";
-import Transporter from "@/app/components/Transporter";
+
+import { Transport, type ITransport } from "@/app/components";
+import { List } from "@/app/ui";
 
 const styles = {
   navbar: {
@@ -13,15 +14,18 @@ const styles = {
   },
 };
 
-export default function Navbar({ transport }: any) {
-  const children = <Transporter {...transport} />;
+interface INavbar {
+  transport: ITransport;
+}
+
+export default function Navbar({ transport }: INavbar) {
+  const children = <Transport {...transport} />;
   return (
     <div className={styles.navbar.ui}>
       <div className={styles.navbar.uiInner}>
         <MenuIcon className={styles.navbar.icon} />
         <h1 className={generalStyles.headings.h1}>{t("daw")}</h1>
       </div>
-      {/* TODO add UI:nav (with List in it) */}
       <nav>
         <List items={[{ children }]} />
       </nav>

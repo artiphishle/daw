@@ -1,3 +1,11 @@
+/**
+ * @typedef TOptional
+ */
+type TOptional<T> = T | null;
+
+/**
+ * @enum EUnit
+ */
 enum EUnit {
   Em = "em",
   Percent = "%",
@@ -5,5 +13,5 @@ enum EUnit {
   Px = "px",
   Rem = "rem",
 }
-
+export type { TOptional };
 export { EUnit };
