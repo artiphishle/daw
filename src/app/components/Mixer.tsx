@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
 import { Destination } from "tone";
 
-import useConfig from "@/app/core/config/useConfig";
 import t from "@/app/core/i18n";
 
 import { ETrackType } from "@/app/core/tracks/types";
+import useProjectSettings from "../hooks/useProjectSettings";
 
 export interface IMixer {
   visibility: {
@@ -13,10 +13,7 @@ export interface IMixer {
   };
 }
 
-export default function Mixer({ visibility }: IMixer) {
-  const { arranger } = useConfig();
-  const { tracks, setTracks } = arranger;
-
+export default function Mixer() {
   const [audioVolume, setAudioVolume] = useState(0);
   const [midiVolume, setMidiVolume] = useState(0);
   const [masterVolume, setMasterVolume] = useState(0);
@@ -25,6 +22,11 @@ export default function Mixer({ visibility }: IMixer) {
     // TODO useChannel hook for dynamic channeling
     Destination.volume.value = masterVolume;
   }, [audioVolume, midiVolume, masterVolume]);
+
+  const { projectSettings, isLoading, error } = useProjectSettings();
+  if (isLoading) return <div>Loading...</div>;
+  if (error || !projectSettings) return <div>Error: {error}</div>;
+  const { tracks } = projectSettings;
 
   function Db() {
     return <div className="py-2 h-20"></div>;

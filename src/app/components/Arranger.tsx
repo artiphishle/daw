@@ -1,4 +1,4 @@
-import { ReactNode } from "react";
+import { type ReactNode, useState } from "react";
 import {
   SortableContext,
   verticalListSortingStrategy,
@@ -9,16 +9,18 @@ import { AudioTrack, MidiTrack, TimeTrack } from "@/app/core/tracks";
 
 import { ETrackType } from "@/app/core/tracks/types";
 import type { TTrackConfig } from "@/app/core/config/types";
-import type { ITransport } from "@/app/components";
+import useProjectSettings from "../hooks/useProjectSettings";
 
 export interface IArranger {
   children?: ReactNode;
-  tracks: TTrackConfig[];
-  setTracks: (tracks: TTrackConfig[]) => void;
-  transport?: ITransport;
 }
 
-export default function Arranger({ children, tracks, transport }: IArranger) {
+export default function Arranger({ children }: IArranger) {
+  const { projectSettings, isLoading, error } = useProjectSettings();
+  if (isLoading) return <div>Loading...</div>;
+  if (error || !projectSettings) return <div>Error: {error}</div>;
+  const { tracks } = projectSettings;
+
   function getTrack(trackConfig: TTrackConfig) {
     const { type } = trackConfig;
     switch (type) {

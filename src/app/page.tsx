@@ -6,10 +6,9 @@ import { arrayMove } from "@dnd-kit/sortable";
 
 import { DEFAULT_MIXER } from "@/app/core/config/constants";
 import t from "@/app/core/i18n";
-import useAudioConverter from "./core/tracks/midi/useAudioConverter";
+import useAudioConverter from "@/app/core/tracks/midi/useAudioConverter";
 // import AudioToMidi from "./core/tracks/midi/AudioToMidi";
 
-import useConfig from "@/app/core/config/useConfig";
 import generalStyles from "@/app/core/config/styles";
 import { styles } from "@/app/core/tracks/styles";
 
@@ -27,12 +26,11 @@ import {
 
 import { Dialog, Tabs, type ITabs } from "@/app/ui";
 import data from "./components/sheet.data";
+import useProjectSettings from "./hooks/useProjectSettings";
 // import { PanSongParsed } from "./test/unit/PanSong.parsed";
 
 export default function Home() {
-  const _config = undefined;
   const [toneReady, setToneReady] = useState(false);
-
   const { audioToAbc } = useAudioConverter();
   const [abcParsed, setAbcParsed] = useState<string>("");
 
@@ -67,8 +65,13 @@ export default function Home() {
   }
 
   function App() {
-    const { arranger, transport } = useConfig(_config);
-    const { tracks, setTracks } = arranger;
+    const { projectSettings, isLoading, error } = useProjectSettings();
+
+    if (isLoading) return <p>Loading...</p>;
+    if (error || !projectSettings) return <p>Error: {error.message}</p>;
+
+    console.info("[page] projectSettings", projectSettings);
+    const { tracks } = projectSettings;
 
     const events = {
       on: {
@@ -79,7 +82,8 @@ export default function Home() {
 
           const oldIndex = tracks.findIndex(({ id }) => id === active.id);
           const newIndex = tracks.findIndex(({ id }) => id === over?.id);
-          return setTracks(arrayMove(tracks, oldIndex, newIndex));
+
+          return arrayMove(tracks, oldIndex, newIndex);
         },
       },
     };
@@ -94,16 +98,12 @@ export default function Home() {
           order: 1,
           panel: (
             <>
-              <Arranger
-                tracks={tracks}
-                setTracks={setTracks}
-                transport={transport}
-              >
+              <Arranger>
                 <Locator />
               </Arranger>
 
               <Progression />
-              <Mixer {...DEFAULT_MIXER} />
+              <Mixer />
               <Piano />
             </>
           ),
@@ -127,7 +127,7 @@ export default function Home() {
       >
         <main className={generalStyles.main}>
           <div className="flex flex-col flex-1">
-            <Navbar transport={transport} />
+            <Navbar />
             <News />
             <Tabs {...tabsProps} />
           </div>
