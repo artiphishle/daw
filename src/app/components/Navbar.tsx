@@ -14,12 +14,10 @@ const styles = {
   },
 };
 
-interface INavbar {
-  transport: ITransport;
-}
+interface INavbar {}
 
-export default function Navbar({ transport }: INavbar) {
-  const children = <Transport {...transport} />;
+export default function Navbar({}: INavbar) {
+  const children = <Transport />;
   return (
     <div className={styles.navbar.ui}>
       <div className={styles.navbar.uiInner}>

@@ -1,34 +1,29 @@
+import { type ChangeEvent, type MouseEvent } from "react";
 import { PauseIcon, PlayIcon } from "lucide-react";
-import { Transport as ToneTransport } from "tone";
+
+import { Loop, Time, Transport as ToneTransport } from "tone";
+import type { Time as TTime } from "tone/build/esm/core/type/Units";
 
 import t from "@/app/core/i18n";
-import { ChangeEvent, Dispatch, MouseEvent, SetStateAction } from "react";
+import useProjectSettings from "@/app/hooks/useProjectSettings";
 
 export enum ETransportState {
   Paused = "paused",
   Started = "started",
   Stopped = "stopped",
 }
-export interface ITransport {
-  bpm: number;
-  setBpm: Dispatch<SetStateAction<number>>;
 
-  clef: string;
-  setClef: Dispatch<SetStateAction<string>>;
+function loopItTodo(measureCount: number) {
+  const getPosition = (time: TTime = ToneTransport.position) =>
+    Time(time).toBarsBeatsSixteenths();
+  const updatePosition = () =>
+    // mutate({ position: getPosition(Transport.position) }),
+    console.log("todo update position");
 
-  measureCount: number;
-  setMeasureCount: Dispatch<SetStateAction<number>>;
-
-  position: string;
-  setPosition: Dispatch<SetStateAction<string>>;
-
-  quantization: number;
-  setQuantization: Dispatch<SetStateAction<number>>;
-
-  events: {
-    onBpmChange: (event: ChangeEvent<HTMLInputElement>) => void;
-    onToggle: (event: MouseEvent<SVGSVGElement>) => void;
-  };
+  ToneTransport.loop = true;
+  ToneTransport.loopStart = getPosition();
+  ToneTransport.loopEnd = `${measureCount}m`;
+  new Loop(updatePosition, "16n").start(0).stop(`${measureCount}m`);
 }
 
 function formatPosition(position: string) {
@@ -37,7 +32,24 @@ function formatPosition(position: string) {
     splitPosition[2]
   ).toFixed(3)}`;
 }
-export default function Transport({ bpm, position, events }: ITransport) {
+
+export default function Transport() {
+  const { projectSettings, updateProjectSettings, isLoading, error } =
+    useProjectSettings();
+  if (isLoading) return <div>Loading...</div>;
+  if (error || !projectSettings) return <div>Error: {error}</div>;
+  const { bpm, position } = projectSettings;
+
+  const events = {
+    onBpmChange: (event: ChangeEvent<HTMLInputElement>) =>
+      // TODO Partial<IConfig> instead of any
+      updateProjectSettings({ bpm: parseInt(event.target.value) } as any),
+
+    onToggle: (_: MouseEvent<SVGSVGElement>) => {
+      ToneTransport.toggle();
+    },
+  };
+
   const PlayOrPauseIcon = () =>
     ToneTransport.state === ETransportState.Started ? (
       <PauseIcon onClick={events.onToggle} />
