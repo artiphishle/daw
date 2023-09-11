@@ -3,7 +3,7 @@ import { MenuIcon } from "lucide-react";
 import t from "@/app/core/i18n";
 import generalStyles from "@/app/core/config/styles";
 
-import { Transport, type ITransport } from "@/app/components";
+import { Transport } from "@/app/components";
 import { List } from "@/app/ui";
 
 const styles = {
