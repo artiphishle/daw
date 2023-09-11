@@ -4,10 +4,9 @@ import Mixer from "./Mixer";
 import Navbar from "./Navbar";
 import News from "./News";
 import Progression from "./Progression";
-import Sampler from "./Sampler"; // TODO put to instruments
 import Sheet from "./Sheet";
 import Toolbar from "./Toolbar";
-import Transport, { type ITransport } from "./Transport";
+import Transport from "./Transport";
 
 import Draggable from "./Draggable";
 import Droppable from "./Droppable";
@@ -20,10 +19,8 @@ export {
   Navbar,
   News,
   Progression,
-  Sampler,
   Sheet,
   Toolbar,
   Transport,
-  type ITransport,
 };
 export { Draggable, Droppable, SortableItem };

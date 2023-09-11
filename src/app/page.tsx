@@ -1,10 +1,6 @@
 "use client";
 import { useEffect, useState } from "react";
 import { start } from "tone";
-import { closestCenter, DndContext, type DragEndEvent } from "@dnd-kit/core";
-import { arrayMove } from "@dnd-kit/sortable";
-
-import { DEFAULT_MIXER } from "@/app/core/config/constants";
 import t from "@/app/core/i18n";
 import useAudioConverter from "@/app/core/tracks/midi/useAudioConverter";
 // import AudioToMidi from "./core/tracks/midi/AudioToMidi";
@@ -16,7 +12,6 @@ import Piano from "@/app/core/instruments/keys/Piano";
 
 import {
   Arranger,
-  Locator,
   Mixer,
   Navbar,
   News,
@@ -26,7 +21,6 @@ import {
 
 import { Dialog, Tabs, type ITabs } from "@/app/ui";
 import data from "./components/sheet.data";
-import useProjectSettings from "./hooks/useProjectSettings";
 // import { PanSongParsed } from "./test/unit/PanSong.parsed";
 
 export default function Home() {
@@ -65,29 +59,6 @@ export default function Home() {
   }
 
   function App() {
-    const { projectSettings, isLoading, error } = useProjectSettings();
-
-    if (isLoading) return <p>Loading...</p>;
-    if (error || !projectSettings) return <p>Error: {error.message}</p>;
-
-    console.info("[page] projectSettings", projectSettings);
-    const { tracks } = projectSettings;
-
-    const events = {
-      on: {
-        dragEnd: (event: DragEndEvent) => {
-          const { active, over } = event;
-          console.log("active/over", active.id, over?.id);
-          if (active.id === over?.id) return;
-
-          const oldIndex = tracks.findIndex(({ id }) => id === active.id);
-          const newIndex = tracks.findIndex(({ id }) => id === over?.id);
-
-          return arrayMove(tracks, oldIndex, newIndex);
-        },
-      },
-    };
-
     const tabsProps: ITabs = {
       activeIndex: 0,
       items: [
@@ -98,10 +69,7 @@ export default function Home() {
           order: 1,
           panel: (
             <>
-              <Arranger>
-                <Locator />
-              </Arranger>
-
+              <Arranger />
               <Progression />
               <Mixer />
               <Piano />
@@ -121,18 +89,13 @@ export default function Home() {
     };
 
     return (
-      <DndContext
-        collisionDetection={closestCenter}
-        onDragEnd={events.on.dragEnd}
-      >
-        <main className={generalStyles.main}>
-          <div className="flex flex-col flex-1">
-            <Navbar />
-            <News />
-            <Tabs {...tabsProps} />
-          </div>
-        </main>
-      </DndContext>
+      <main className={generalStyles.main}>
+        <div className="flex flex-col flex-1 content-between">
+          <Navbar />
+          <News />
+          <Tabs {...tabsProps} />
+        </div>
+      </main>
     );
   }
 

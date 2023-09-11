@@ -3,24 +3,18 @@ import { ListMusicIcon } from "lucide-react";
 import { Sequence } from "tone";
 import cn from "classnames";
 
+import midiChannels from "@/app/core/tracks/midi/constants/channels.midi.constants";
+import { styles } from "@/app/core/tracks/styles";
+
+import useProjectSettings from "@/app/hooks/useProjectSettings";
+import { useBaseDrum, useSnareDrum } from "@/app/core/instruments";
 import { Accordion } from "@/app/ui";
 
-import { styles } from "@/app/core/tracks/styles";
-import midiChannels from "@/app/core/tracks/midi/constants/channels.midi.constants";
-
-import { ETrackType } from "@/app/core/tracks/types";
+import { ETrackType, ITrack } from "@/app/core/tracks/types";
 import type {
-  IMidiTrackConfig,
+  IMidiPlugin,
   TToneSequenceNote,
 } from "@/app/core/tracks/midi/types";
-import { useBaseDrum, useSnareDrum } from "@/app/core/instruments";
-
-/**
- * TODO put this into config
- * @description It's the global project setting of how many measures are shown in the arrangement
- */
-const MEASURE_COUNT = 8;
-const QUANTIZATION = 8;
 
 interface ITemplateProps {
   notes?: TToneSequenceNote[];
@@ -28,19 +22,17 @@ interface ITemplateProps {
   nested?: boolean;
 }
 
-export default function MidiTrack({ name, plugins = [] }: IMidiTrackConfig) {
+export interface IMidiTrack extends ITrack {
+  plugins?: IMidiPlugin[];
+}
+
+export default function MidiTrack({ name, plugins = [] }: IMidiTrack) {
+  const { projectSettings } = useProjectSettings();
   const baseDrum = useBaseDrum();
   const snareDrum = useSnareDrum();
 
   function Template({ notes = [], name, nested = false }: ITemplateProps) {
-    const [measureCount] = useState(MEASURE_COUNT);
-    const [quantization] = useState(QUANTIZATION);
-
-    useEffect(() => {
-      const sequence = new Sequence((time, value) => {
-        console.log(time, value, name);
-      }, notes);
-    }, []);
+    // const sequence = new Sequence((time, value) => {}, notes);
 
     const events = {
       togglePad: function (event: MouseEvent<HTMLDivElement>) {
