@@ -4,10 +4,11 @@ import cn from "classnames";
 import { styles } from "@/app/core/tracks/styles";
 import { Accordion } from "@/app/ui";
 
-import { ETrackType } from "@/app/core/tracks/types";
-import type { IAudioTrackConfig } from "@/app/core/tracks/audio/types";
+import { ETrackType, type ITrack } from "@/app/core/tracks/types";
 
-export default function AudioTrack({ name }: IAudioTrackConfig) {
+export interface IAudioTrack extends ITrack {}
+
+export default function AudioTrack({ name }: IAudioTrack) {
   const Template = () => (
     <div className={cn(styles.track.row(ETrackType.Audio), "bg-purple-300")}>
       <div className={styles.track.column1(ETrackType.Audio)}>

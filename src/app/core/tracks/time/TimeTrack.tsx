@@ -1,13 +1,18 @@
 import { useState } from "react";
 import { TimerIcon } from "lucide-react";
+
 import { styles } from "../styles";
-import { ETrackType } from "../types";
+import { ETrackType, type ITrack } from "../types";
+import useProjectSettings from "@/app/hooks/useProjectSettings";
 
-// TODO from config
-const MEASURE_COUNT = 8;
+export interface ITimeTrack extends ITrack {}
 
-export default function TimeTrack() {
-  const [measureCount] = useState(MEASURE_COUNT);
+export default function TimeTrack({}: ITimeTrack) {
+  const { projectSettings } = useProjectSettings();
+
+  if (!projectSettings) return null;
+  const { measureCount } = projectSettings;
+
   return (
     <div className="flex flex-1 bg-white items-center">
       <div className={styles.track.column1(ETrackType.Time)}>
@@ -17,10 +22,13 @@ export default function TimeTrack() {
         </div>
       </div>
       <div className="flex w-full">
-        {new Array(measureCount).fill("").map((_, i) => (
-          <div className="flex flex-1 items-center" key={i}>
+        {new Array(measureCount).fill("").map((_, measureIndex) => (
+          <div
+            className="flex flex-1 items-center"
+            key={`time-track-measure-${measureIndex}`}
+          >
             <div className="text-gray-500 text-xs border-r border-r-gray-200 flex-1 p-1">
-              {i + 1}
+              {measureIndex + 1}
             </div>
           </div>
         ))}

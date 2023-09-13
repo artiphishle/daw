@@ -1,21 +1,20 @@
 "use client";
 import { useEffect, useState } from "react";
 import { start } from "tone";
-import t from "@/app/core/i18n";
-import useAudioConverter from "@/app/core/tracks/midi/useAudioConverter";
-// import AudioToMidi from "./core/tracks/midi/AudioToMidi";
 
+import t from "@/app/core/i18n";
 import generalStyles from "@/app/core/config/styles";
 import { styles } from "@/app/core/tracks/styles";
-
+import useAudioConverter from "@/app/core/tracks/midi/useAudioConverter";
 import Piano from "@/app/core/instruments/keys/Piano";
+// import AudioToMidi from "@/app/core/tracks/midi/AudioToMidi";
 
 import {
   Arranger,
   Mixer,
   Navbar,
-  News,
   Progression,
+  Settings,
   Sheet,
 } from "@/app/components";
 
@@ -85,14 +84,21 @@ export default function Home() {
           panel: <>{<Sheet markdown={data[2]} />},</>,
           title: "Sheet",
         },
+        {
+          children: <span>Settings</span>,
+          id: "tabs-settings",
+          href: "#",
+          order: 3,
+          panel: <Settings />,
+          title: "Settings",
+        },
       ],
     };
 
     return (
       <main className={generalStyles.main}>
-        <div className="flex flex-col flex-1 content-between">
+        <div className="flex flex-col flex-1">
           <Navbar />
-          <News />
           <Tabs {...tabsProps} />
         </div>
       </main>

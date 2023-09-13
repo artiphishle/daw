@@ -12,7 +12,7 @@ import useProjectSettings from "@/app/hooks/useProjectSettings";
 import Locator from "@/app/components/Locator";
 
 import { ETrackType } from "@/app/core/tracks/types";
-import type { TTrackConfig } from "@/app/core/config/types";
+import type { TTrack } from "@/app/core/config/types";
 
 export default function Arranger() {
   const { projectSettings, updateProjectSettings } = useProjectSettings();
@@ -20,7 +20,7 @@ export default function Arranger() {
   const events = {
     dragEnd: (event: DragEndEvent) => {
       const { active, over } = event;
-      console.log("active/over", active.id, over?.id);
+      console.info("[Arranger] active/over", active.id, over?.id);
       if (active.id === over?.id) return;
 
       const oldIndex = tracks.findIndex(({ id }) => id === active.id);
@@ -32,7 +32,7 @@ export default function Arranger() {
     },
   };
 
-  function getTrack(trackConfig: TTrackConfig) {
+  function getTrack(trackConfig: TTrack) {
     const { type } = trackConfig;
     switch (type) {
       case ETrackType.Audio:
@@ -40,13 +40,13 @@ export default function Arranger() {
       case ETrackType.Midi:
         return <MidiTrack {...trackConfig} />;
       case ETrackType.Time:
-        return <TimeTrack />;
+        return <TimeTrack {...trackConfig} />;
       default:
         return <div>Track type doesn&apos;t exist: &apos;{type}&apos;</div>;
     }
   }
 
-  function Tracks(tracks: TTrackConfig[]) {
+  function Tracks(tracks: TTrack[]) {
     return tracks.map((trackConfig) => {
       const id = trackConfig.id as string;
       const { type } = trackConfig;

@@ -17,7 +17,7 @@ export interface ITabs {
 }
 
 export default function Tabs({ activeIndex = 0, items }: ITabs) {
-  const [tabItems, setTabItems] = useState(items);
+  const [tabItems] = useState(items);
   const [activeTabIndex, setActiveTabIndex] = useState(activeIndex);
 
   const events = {
@@ -41,9 +41,9 @@ export default function Tabs({ activeIndex = 0, items }: ITabs) {
       />
       {tabItems.map(({ id, panel }, itemIndex) => {
         const isActive = activeTabIndex === itemIndex;
-        return (
+        return isActive ? (
           <TabsPanel Content={panel} id={id} isActive={isActive} key={id} />
-        );
+        ) : null;
       })}
     </section>
   );
