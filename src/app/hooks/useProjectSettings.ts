@@ -19,7 +19,8 @@ export default function useProjectSettings() {
       method: "PATCH",
       body: JSON.stringify(patch),
     });
-    mutate("/api/project/settings");
+
+    mutate(EEndpoint.ProjectSettings);
   };
 
   return { projectSettings, isLoading, error, updateProjectSettings };

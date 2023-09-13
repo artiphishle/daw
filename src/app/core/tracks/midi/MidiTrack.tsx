@@ -11,13 +11,11 @@ import { useBaseDrum, useSnareDrum } from "@/app/core/instruments";
 import { Accordion } from "@/app/ui";
 
 import { ETrackType, ITrack } from "@/app/core/tracks/types";
-import type {
-  IMidiPlugin,
-  TToneSequenceNote,
-} from "@/app/core/tracks/midi/types";
+import type { IMidiPlugin, TMidiChannel } from "@/app/core/tracks/midi/types";
+import useHiHat from "../../instruments/drums/hiHat/hooks/useHiHat";
 
 interface ITemplateProps {
-  notes?: TToneSequenceNote[];
+  notes?: TMidiChannel;
   name: string;
   nested?: boolean;
 }
@@ -27,12 +25,22 @@ export interface IMidiTrack extends ITrack {
 }
 
 export default function MidiTrack({ name, plugins = [] }: IMidiTrack) {
-  const { projectSettings } = useProjectSettings();
+  // const { projectSettings } = useProjectSettings();
   const baseDrum = useBaseDrum();
   const snareDrum = useSnareDrum();
+  const closedHihat = useHiHat({ open: false });
 
   function Template({ notes = [], name, nested = false }: ITemplateProps) {
-    // const sequence = new Sequence((time, value) => {}, notes);
+    const sequence = new Sequence(
+      (time, note) => {
+        if (!note) return;
+        if (note === "C1") return baseDrum.triggerAttackRelease(note, time);
+        if (note === "D1") return snareDrum.triggerAttackRelease("8n", time);
+        if (note === "F#1") return closedHihat.triggerAttackRelease(time);
+      },
+      notes,
+      "2n"
+    ).start(0);
 
     const events = {
       togglePad: function (event: MouseEvent<HTMLDivElement>) {
@@ -81,14 +89,18 @@ export default function MidiTrack({ name, plugins = [] }: IMidiTrack) {
   function Details() {
     return (
       <>
-        {plugins[0].channels.map(({ notes, id }, channelIndex) => (
-          <Template
-            notes={notes}
-            key={`channel-${id}-${channelIndex}`}
-            name={midiChannels[id].name}
-            nested={true}
-          />
-        ))}
+        {plugins[0].channels.map((channel, channelIndex) => {
+          if (!channel) return;
+
+          return (
+            <Template
+              notes={channel}
+              key={`channel-${channelIndex}`}
+              name={midiChannels[channelIndex].name}
+              nested={true}
+            />
+          );
+        })}
       </>
     );
   }

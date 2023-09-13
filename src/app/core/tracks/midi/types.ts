@@ -1,21 +1,14 @@
-import type { ITrack } from "@/app/core/tracks/types";
+import { Note } from "tone/build/esm/core/type/NoteUnits";
 
 enum EMidiPluginType {
   Drums,
 }
 
-type TToneSequenceNote = "x" | null;
-type TMidiDrumSequence = Record<string, TToneSequenceNote[]>;
-
-interface IMidiChannel {
-  id: number;
-  notes: TToneSequenceNote[];
-}
+type TMidiChannel = Array<Note | null>;
 interface IMidiPlugin {
   type?: EMidiPluginType.Drums;
-  channels: IMidiChannel[];
+  channels: TMidiChannel[];
 }
 
 export { EMidiPluginType };
-export type { IMidiChannel, IMidiPlugin };
-export type { TToneSequenceNote, TMidiDrumSequence };
+export type { TMidiChannel, IMidiPlugin };

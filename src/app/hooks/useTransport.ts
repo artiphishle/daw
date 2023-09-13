@@ -19,9 +19,7 @@ export default function useTransport({ loopFn }: IUseTransportProps) {
   const measureCount = DEFAULT_MEASURE_COUNT; // TODO don't hardcode this
   const repeat = () => loopFn && loopFn(pos.format(pos.get()));
 
-  Transport.loop = true;
-  Transport.loopStart = 0;
-  Transport.loopEnd = `${measureCount}m`;
+  const loop = new Loop(repeat, "16n").start();
 
-  new Loop(repeat, "16n").start(0).stop(`${measureCount}m`);
+  return { loop };
 }

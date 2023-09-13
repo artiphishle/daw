@@ -1,8 +1,8 @@
 import { NextApiRequest, NextApiResponse } from "next";
 
-import { DEFAULT_PROJECT_SETTINGS } from "@/app/core/config/constants";
+import { DefaultPreset } from "./presets/DefaultPreset";
 
-let projectSettings = DEFAULT_PROJECT_SETTINGS;
+let projectSettings = DefaultPreset;
 
 export default function handler(req: NextApiRequest, res: NextApiResponse) {
   switch (req.method) {

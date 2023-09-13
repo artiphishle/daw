@@ -1,9 +1,9 @@
 import Arranger from "./Arranger";
 import Locator from "./Locator";
-import Mixer from "./Mixer";
+import Mixer, { type IMixer } from "./Mixer";
 import Navbar from "./Navbar";
-import News from "./News";
 import Progression from "./Progression";
+import Settings from "./Settings";
 import Sheet from "./Sheet";
 import Toolbar from "./Toolbar";
 import Transport from "./Transport";
@@ -17,10 +17,11 @@ export {
   Locator,
   Mixer,
   Navbar,
-  News,
   Progression,
+  Settings,
   Sheet,
   Toolbar,
   Transport,
 };
 export { Draggable, Droppable, SortableItem };
+export type { IMixer };

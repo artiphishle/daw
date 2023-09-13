@@ -14,10 +14,19 @@ export enum ETransportState {
 }
 
 export default function Transport() {
+  const [position, setPosition] = useState<string>();
+
+  const loopFn = (position: string) => setPosition(position);
+  useTransport({ loopFn });
+
   const { projectSettings, updateProjectSettings } = useProjectSettings();
-  const bpm = projectSettings?.bpm;
-  const pos = projectSettings?.position;
-  const [position, setPosition] = useState(pos);
+  if (!projectSettings) return null;
+
+  const { bpm, measureCount, position: _position } = projectSettings;
+  ToneTransport.bpm.value = bpm;
+  ToneTransport.loop = true;
+  ToneTransport.loopStart = 0;
+  ToneTransport.loopEnd = `${measureCount}m`;
 
   const events = {
     onBpmChange: (event: ChangeEvent<HTMLInputElement>) =>
@@ -37,12 +46,6 @@ export default function Transport() {
       <PlayIcon onClick={events.onToggle} />
     );
 
-  const loopFn = (position: string) => {
-    setPosition(position);
-  };
-
-  useTransport({ loopFn });
-
   return (
     <div className="flex py-1 px-4">
       <div className="flex gap-2">
@@ -58,7 +61,7 @@ export default function Transport() {
             className="w-8 ml-2 bg-transparent"
             id="bpm"
             onChange={events.onBpmChange}
-            value={bpm || 0}
+            value={bpm}
           />
         </div>
         <div className="flex items-center">

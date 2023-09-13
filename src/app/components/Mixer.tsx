@@ -5,10 +5,9 @@ import { Destination } from "tone";
 import t from "@/app/core/i18n";
 import useProjectSettings from "@/app/hooks/useProjectSettings";
 import Volume from "@/app/components/Volume";
+import { ErrorMessage } from "@/app/ui";
 
 import { ETrackType } from "@/app/core/tracks/types";
-import { ErrorMessage } from "../ui";
-import { DEFAULT_PROJECT_SETTINGS } from "../core/config/constants";
 
 export interface IMixer {
   settings: {
@@ -22,9 +21,9 @@ export interface IMixer {
 }
 
 export default function Mixer() {
-  const [audioVolume, setAudioVolume] = useState(0);
-  const [midiVolume, setMidiVolume] = useState(0);
-  const [masterVolume, setMasterVolume] = useState(0);
+  const [audioVolume] = useState(0);
+  const [midiVolume] = useState(0);
+  const [masterVolume] = useState(0);
 
   useEffect(() => {
     // TODO useChannel hook for dynamic channeling
@@ -41,7 +40,7 @@ export default function Mixer() {
   } = projectSettings;
 
   return (
-    <section className="py-4 bg-white flex justify-between w-full">
+    <section className="px-4 py-8 bg-[#333] flex justify-between w-full">
       <div className="flex">
         {isLoading ? (
           <Loader />
@@ -56,13 +55,13 @@ export default function Mixer() {
             return (
               <div
                 className={`p-4 mt-6 mr-2 justify-center ${
-                  settings?.[track.type].bg
-                } text-xs items-center ${settings?.[track.type].text}`}
+                  settings[track.type].bg
+                } text-xs items-center ${settings[track.type].text}`}
                 key={`mixer-track-${trackIndex}`}
               >
                 <div className={`px-2 `}>-0.02db</div>
                 <Volume />
-                <div>{settings?.[track.type]?.label}</div>
+                <div>{settings[track.type]?.label}</div>
               </div>
             );
           })
