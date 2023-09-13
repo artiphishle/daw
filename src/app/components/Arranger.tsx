@@ -1,25 +1,38 @@
-import { ReactNode } from "react";
+import { DndContext, DragEndEvent, closestCenter } from "@dnd-kit/core";
 import {
   SortableContext,
+  arrayMove,
   verticalListSortingStrategy,
 } from "@dnd-kit/sortable";
 
 import SortableItem from "@/app/components/SortableItem";
 import { AudioTrack, MidiTrack, TimeTrack } from "@/app/core/tracks";
+import useProjectSettings from "@/app/hooks/useProjectSettings";
+
+import Locator from "@/app/components/Locator";
 
 import { ETrackType } from "@/app/core/tracks/types";
-import type { TTrackConfig } from "@/app/core/config/types";
-import type { ITransport } from "@/app/components";
+import type { TTrack } from "@/app/core/config/types";
 
-export interface IArranger {
-  children?: ReactNode;
-  tracks: TTrackConfig[];
-  setTracks: (tracks: TTrackConfig[]) => void;
-  transport?: ITransport;
-}
+export default function Arranger() {
+  const { projectSettings, updateProjectSettings } = useProjectSettings();
+  const tracks = projectSettings?.tracks || [];
+  const events = {
+    dragEnd: (event: DragEndEvent) => {
+      const { active, over } = event;
+      console.info("[Arranger] active/over", active.id, over?.id);
+      if (active.id === over?.id) return;
 
-export default function Arranger({ children, tracks, transport }: IArranger) {
-  function getTrack(trackConfig: TTrackConfig) {
+      const oldIndex = tracks.findIndex(({ id }) => id === active.id);
+      const newIndex = tracks.findIndex(({ id }) => id === over?.id);
+      const sortedTracks = arrayMove(tracks, oldIndex, newIndex);
+      updateProjectSettings({ tracks: sortedTracks });
+
+      return sortedTracks;
+    },
+  };
+
+  function getTrack(trackConfig: TTrack) {
     const { type } = trackConfig;
     switch (type) {
       case ETrackType.Audio:
@@ -27,13 +40,13 @@ export default function Arranger({ children, tracks, transport }: IArranger) {
       case ETrackType.Midi:
         return <MidiTrack {...trackConfig} />;
       case ETrackType.Time:
-        return <TimeTrack />;
+        return <TimeTrack {...trackConfig} />;
       default:
         return <div>Track type doesn&apos;t exist: &apos;{type}&apos;</div>;
     }
   }
 
-  function Tracks(tracks: TTrackConfig[]) {
+  function Tracks(tracks: TTrack[]) {
     return tracks.map((trackConfig) => {
       const id = trackConfig.id as string;
       const { type } = trackConfig;
@@ -54,11 +67,13 @@ export default function Arranger({ children, tracks, transport }: IArranger) {
   }
 
   return (
-    <div className="relative">
-      <SortableContext items={tracks} strategy={verticalListSortingStrategy}>
-        <ol className="flex-1">{<>{Tracks(tracks)}</>}</ol>
-      </SortableContext>
-      {children && children}
-    </div>
+    <DndContext collisionDetection={closestCenter} onDragEnd={events.dragEnd}>
+      <div className="relative">
+        <SortableContext items={tracks} strategy={verticalListSortingStrategy}>
+          <ol className="flex-1">{<>{Tracks(tracks)}</>}</ol>
+        </SortableContext>
+        {projectSettings && <Locator projectSettings={projectSettings} />}
+      </div>
+    </DndContext>
   );
 }

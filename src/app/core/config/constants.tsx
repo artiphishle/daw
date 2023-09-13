@@ -1,99 +1,190 @@
-import t from "../i18n";
-
-import midiChannels from "@/app/core/tracks/midi/constants/channels.midi.constants";
+import t from "@/app/core/i18n";
 
 import { ETrackType } from "@/app/core/tracks/types";
 import {
   EMidiPluginType,
-  TMidiDrumSequence,
+  TMidiChannel,
   type IMidiPlugin,
-  type IMidiTrackConfig,
 } from "@/app/core/tracks/midi/types";
-import type { IAudioTrackConfig } from "@/app/core/tracks/audio/types";
 import type { IMixer } from "@/app/components/Mixer";
-import type { TTrackConfig } from "./types";
+import type { TTrack } from "./types";
+import type { IAudioTrack, IMidiTrack } from "../tracks";
 
 const DEFAULT_BPM = 120;
 const DEFAULT_CLEF = "C";
-const DEFAULT_OFFSET_LEFT = 185;
 const DEFAULT_MEASURE_COUNT = 8;
+const DEFAULT_NAME = t("untitled");
+const DEFAULT_OFFSET_LEFT = 185;
+const DEFAULT_POSITION = "0:0:0";
 const DEFAULT_QUANTIZATION = 8;
 
-// 's' means # (sharp), and 'o' is normal
-const C_1 = midiChannels[36].key; // C1
-const D_1 = midiChannels[38].key; // D1
-const Fs1 = midiChannels[42].key; // F#1
-const _ = null;
-const x = "x";
+const bd = [
+  "C1",
+  null,
+  "C1",
+  null,
+  "C1",
+  null,
+  "C1",
+  null,
+  "C1",
+  null,
+  "C1",
+  null,
+  "C1",
+  null,
+  "C1",
+  null,
+  "C1",
+  null,
+  "C1",
+  null,
+  "C1",
+  null,
+  "C1",
+  null,
+  "C1",
+  null,
+  "C1",
+  null,
+  "C1",
+  null,
+  "C1",
+  null,
+] as TMidiChannel;
+const sd = [
+  null,
+  "D1",
+  null,
+  "D1",
+  null,
+  "D1",
+  null,
+  "D1",
+  null,
+  "D1",
+  null,
+  "D1",
+  null,
+  "D1",
+  null,
+  "D1",
+  null,
+  "D1",
+  null,
+  "D1",
+  null,
+  "D1",
+  null,
+  "D1",
+  null,
+  "D1",
+  null,
+  "D1",
+  null,
+  "D1",
+  null,
+  "D1",
+] as TMidiChannel;
+const ch = [
+  "F#1",
+  "F#1",
+  "F#1",
+  "F#1",
+  "F#1",
+  "F#1",
+  "F#1",
+  "F#1",
+  "F#1",
+  "F#1",
+  "F#1",
+  "F#1",
+  "F#1",
+  "F#1",
+  "F#1",
+  "F#1",
+  "F#1",
+  "F#1",
+  "F#1",
+  "F#1",
+  "F#1",
+  "F#1",
+  "F#1",
+  "F#1",
+  "F#1",
+  "F#1",
+  "F#1",
+  "F#1",
+  "F#1",
+  "F#1",
+  "F#1",
+  "F#1",
+] as TMidiChannel;
 
-const drums: TMidiDrumSequence = {
-  /**
-   *    16 tones, let's assume duration: '8n'
-   *    = 16x8n = 8x4n = 4x2n = 2x1n = 2x1m (1 measure = 1 full note afaik)
-   *    1  .  .  .  2  .  .  .  3  .  .  .  4  .  .  .
-   *       2  3  4     2  3  4     2  3  4     2  3  4   */
-  C_1: [x, x, _, _, _, _, x, _, x, _, x, _, _, _, _, _], // Ch36: BD BaseDrum
-  D_1: [_, _, _, _, x, _, _, _, _, _, _, _, x, _, _, _], // Ch38: SD SnareDrum
-  Fs1: [_, x, x, x, _, x, x, x, _, x, x, x, _, x, x, x], // Ch42: CH ClosedHihat
-};
+const channels: TMidiChannel[] = [];
+channels[36] = bd;
+channels[38] = sd;
+channels[42] = ch;
 
 const DEFAULT_MIDI_DRUM_PLUGIN: IMidiPlugin = {
   type: EMidiPluginType.Drums,
-  channels: [
-    { id: 36, notes: drums.C_1 },
-    { id: 38, notes: drums.D_1 },
-    { id: 42, notes: drums.Fs1 },
-  ],
+  channels,
 };
 
-const DEFAULT_AUDIO_TRACK: IAudioTrackConfig = {
+const DEFAULT_AUDIO_TRACK: IAudioTrack = {
   id: "track-audio-0",
   name: t("untitled"),
   type: ETrackType.Audio,
 };
-
-const DEFAULT_MIDI_TRACK: IMidiTrackConfig = {
+const DEFAULT_MIDI_TRACK: IMidiTrack = {
   id: "track-midi",
-  name: t("untitled"),
+  name: "Default Midi",
   type: ETrackType.Midi,
 };
-
-const DEFAULT_MIDI_DRUM_TRACK: IMidiTrackConfig = {
+const DEFAULT_MIDI_DRUM_TRACK: IMidiTrack = {
   ...DEFAULT_MIDI_TRACK,
   id: "track-midi-drums",
   name: "Drums",
   plugins: [DEFAULT_MIDI_DRUM_PLUGIN],
 };
 
-const DEFAULT_TRACKS: TTrackConfig[] = [
+const DEFAULT_TRACKS: TTrack[] = [
   { id: "track-time", name: "", type: ETrackType.Time },
   { ...DEFAULT_MIDI_DRUM_TRACK },
+  { ...DEFAULT_MIDI_TRACK },
   { ...DEFAULT_AUDIO_TRACK, name: "Example.wav" },
 ];
 
 const DEFAULT_MIXER: IMixer = {
-  visibility: {
-    [ETrackType.Audio]: true,
-    [ETrackType.Midi]: true,
+  settings: {
+    [ETrackType.Audio]: {
+      bg: "bg-purple-100",
+      label: "Audio",
+      text: "text-purple-800",
+      visible: true,
+    },
+    [ETrackType.Midi]: {
+      bg: "bg-orange-100",
+      text: "text-orange-600",
+      label: "Midi",
+      visible: true,
+    },
   },
 };
 
-// Tracks
 export {
   DEFAULT_AUDIO_TRACK,
   DEFAULT_MIDI_TRACK,
   DEFAULT_MIDI_DRUM_TRACK,
   DEFAULT_TRACKS,
-};
-
-// Arranger
-export {
+  //
   DEFAULT_BPM,
   DEFAULT_CLEF,
+  DEFAULT_NAME,
   DEFAULT_OFFSET_LEFT,
+  DEFAULT_POSITION,
   DEFAULT_QUANTIZATION,
   DEFAULT_MEASURE_COUNT,
+  //
+  DEFAULT_MIXER,
 };
-
-// Mixer
-export { DEFAULT_MIXER };

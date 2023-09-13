@@ -1,73 +1,76 @@
 import { useEffect, useState } from "react";
+import { Loader } from "lucide-react";
 import { Destination } from "tone";
 
-import useConfig from "@/app/core/config/useConfig";
 import t from "@/app/core/i18n";
+import useProjectSettings from "@/app/hooks/useProjectSettings";
+import Volume from "@/app/components/Volume";
+import { ErrorMessage } from "@/app/ui";
 
 import { ETrackType } from "@/app/core/tracks/types";
 
 export interface IMixer {
-  visibility: {
-    [ETrackType.Audio]: true;
-    [ETrackType.Midi]: true;
+  settings: {
+    [k in Exclude<ETrackType, ETrackType.Time>]: {
+      bg: string;
+      text: string;
+      label: string;
+      visible: boolean;
+    };
   };
 }
 
-export default function Mixer({ visibility }: IMixer) {
-  const { arranger } = useConfig();
-  const { tracks, setTracks } = arranger;
-
-  const [audioVolume, setAudioVolume] = useState(0);
-  const [midiVolume, setMidiVolume] = useState(0);
-  const [masterVolume, setMasterVolume] = useState(0);
+export default function Mixer() {
+  const [audioVolume] = useState(0);
+  const [midiVolume] = useState(0);
+  const [masterVolume] = useState(0);
 
   useEffect(() => {
     // TODO useChannel hook for dynamic channeling
     Destination.volume.value = masterVolume;
   }, [audioVolume, midiVolume, masterVolume]);
 
-  function Db() {
-    return <div className="py-2 h-20"></div>;
-  }
+  const { projectSettings, isLoading, error } = useProjectSettings();
+  if (isLoading) return <Loader />;
+  if (!projectSettings) throw error;
 
-  // TODO not here
-  const settings = {
-    [ETrackType.Audio]: {
-      bg: "bg-purple-100",
-      label: "Audio",
-      text: "text-purple-800",
-    },
-    [ETrackType.Midi]: {
-      bg: "bg-orange-100",
-      text: "text-orange-600",
-      label: "Midi",
-    },
-  };
+  const {
+    tracks,
+    mixer: { settings },
+  } = projectSettings;
 
   return (
-    <div className="py-4 bg-white flex justify-between w-full">
+    <section className="px-4 py-8 bg-[#333] flex justify-between w-full">
       <div className="flex">
-        {tracks.map((track, trackIndex) => {
-          if (track.type === ETrackType.Time) return;
+        {isLoading ? (
+          <Loader />
+        ) : error ? (
+          <ErrorMessage message={error.message} />
+        ) : (
+          tracks.map((track, trackIndex) => {
+            if (track.type === ETrackType.Time) return;
 
-          return (
-            <div
-              className={`p-4 mt-6 mr-2 justify-center ${
-                settings[track.type].bg
-              } text-xs items-center ${settings[track.type].text}`}
-              key={`mixer-track-${trackIndex}`}
-            >
-              <div className={`px-2 `}>-0.02db</div>
-              <Db />
-              <div>{(settings[track.type] as any).label}</div>
-            </div>
-          );
-        })}
+            const trackTypeSettings = settings[track.type];
+
+            return (
+              <div
+                className={`p-4 mt-6 mr-2 justify-center ${
+                  settings[track.type].bg
+                } text-xs items-center ${settings[track.type].text}`}
+                key={`mixer-track-${trackIndex}`}
+              >
+                <div className={`px-2 `}>-0.02db</div>
+                <Volume />
+                <div>{settings[track.type]?.label}</div>
+              </div>
+            );
+          })
+        )}
       </div>
-      <div className="flex p-4 bg-gray-400 text-xs items-end">
-        <Db />
+      <div className="flex flex-col p-4 mt-6 bg-gray-400 text-xs items-end">
+        <Volume />
         <div>{t("stereoOut")}</div>
       </div>
-    </div>
+    </section>
   );
 }

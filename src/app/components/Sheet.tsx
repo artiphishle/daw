@@ -22,9 +22,9 @@ interface ISheet {
 
 export default function Sheet({
   markdown,
-  noteStyle = ENoteStyle.Normal,
-}: ISheet) {
-  const [noteStyl, setNoteStyl] = useState<ENoteStyle>(noteStyle);
+}: // noteStyle = ENoteStyle.Normal,
+ISheet) {
+  // const [noteStyl, setNoteStyl] = useState<ENoteStyle>(noteStyle);
   useEffect(() => {
     const sheet: TuneObjectArray = abcjs.renderAbc("paper", markdown);
 

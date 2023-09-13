@@ -1,43 +1,44 @@
+import { type ChangeEvent, type MouseEvent, useState } from "react";
 import { PauseIcon, PlayIcon } from "lucide-react";
+
 import { Transport as ToneTransport } from "tone";
 
 import t from "@/app/core/i18n";
-import { ChangeEvent, Dispatch, MouseEvent, SetStateAction } from "react";
+import useProjectSettings from "@/app/hooks/useProjectSettings";
+import useTransport from "../hooks/useTransport";
 
 export enum ETransportState {
   Paused = "paused",
   Started = "started",
   Stopped = "stopped",
 }
-export interface ITransport {
-  bpm: number;
-  setBpm: Dispatch<SetStateAction<number>>;
 
-  clef: string;
-  setClef: Dispatch<SetStateAction<string>>;
+export default function Transport() {
+  const [position, setPosition] = useState<string>();
 
-  measureCount: number;
-  setMeasureCount: Dispatch<SetStateAction<number>>;
+  const loopFn = (position: string) => setPosition(position);
+  useTransport({ loopFn });
 
-  position: string;
-  setPosition: Dispatch<SetStateAction<string>>;
+  const { projectSettings, updateProjectSettings } = useProjectSettings();
+  if (!projectSettings) return null;
 
-  quantization: number;
-  setQuantization: Dispatch<SetStateAction<number>>;
+  const { bpm, measureCount, position: _position } = projectSettings;
+  ToneTransport.bpm.value = bpm;
+  ToneTransport.loop = true;
+  ToneTransport.loopStart = 0;
+  ToneTransport.loopEnd = `${measureCount}m`;
 
-  events: {
-    onBpmChange: (event: ChangeEvent<HTMLInputElement>) => void;
-    onToggle: (event: MouseEvent<SVGSVGElement>) => void;
+  const events = {
+    onBpmChange: (event: ChangeEvent<HTMLInputElement>) =>
+      // TODO Partial<IConfig> instead of any
+      updateProjectSettings({ bpm: parseInt(event.target.value) } as any),
+
+    onToggle: (_: MouseEvent<SVGSVGElement>) => {
+      console.log("toggeling");
+      ToneTransport.toggle();
+    },
   };
-}
 
-function formatPosition(position: string) {
-  const splitPosition = position.split(":");
-  return `${splitPosition[0]}:${splitPosition[1]}:${parseFloat(
-    splitPosition[2]
-  ).toFixed(3)}`;
-}
-export default function Transport({ bpm, position, events }: ITransport) {
   const PlayOrPauseIcon = () =>
     ToneTransport.state === ETransportState.Started ? (
       <PauseIcon onClick={events.onToggle} />
@@ -48,7 +49,7 @@ export default function Transport({ bpm, position, events }: ITransport) {
   return (
     <div className="flex py-1 px-4">
       <div className="flex gap-2">
-        <div>{formatPosition(position)}</div>
+        <div>{position}</div>
         <div className="flex items-center text-white px-4 mx-2 border-r border-r-[#555]">
           <PlayOrPauseIcon />
         </div>

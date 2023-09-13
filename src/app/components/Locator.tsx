@@ -1,47 +1,43 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import cn from "classnames";
 
+import useTransport from "@/app/hooks/useTransport";
 import { DEFAULT_OFFSET_LEFT } from "@/app/core/config/constants";
 
 import { EUnit } from "@/app/types";
-import type { Time as TTime } from "tone/build/esm/core/type/Units";
-import { type ITransport } from "@/app/components";
-import { Transport } from "tone";
-import useConfig from "../core/config/useConfig";
+import type { IProjectSettings } from "../core/config/types";
 
 interface ILocator {
-  // transport: ITransport;
   className?: string;
+  projectSettings: IProjectSettings;
 }
 
-export default function Locator({ className = "" }: ILocator) {
-  // const { measureCount, position, setPosition } = transport;
-  const { arranger, transport } = useConfig();
-  const { measureCount, quantization, position } = transport;
+const styles = { locator: "bg-black w-[1px] absolute top-0 bottom-0" };
+const getMeasureWidth = (measureCount: number) =>
+  (window.innerWidth - DEFAULT_OFFSET_LEFT) / measureCount;
+
+export default function Locator({ className = "", projectSettings }: ILocator) {
   const [left, setLeft] = useState(DEFAULT_OFFSET_LEFT);
+  const [quarter, setQuarter] = useState(0);
+  const { measureCount } = projectSettings;
 
-  function getMeasureWidth() {
-    return (window.innerWidth - DEFAULT_OFFSET_LEFT) / measureCount;
-  }
-  const measureWidth = getMeasureWidth();
-
-  useEffect(() => {
+  function loopFn(position: string) {
     const splitPosition = position.toString().split(":");
-    const getMeasure = (time: TTime = position) => parseInt(splitPosition[0]);
-    const getQuarter = (time: TTime = position) => parseInt(splitPosition[1]);
 
-    const currentMeasure = getMeasure(position);
-    const currentQuarter = getQuarter(position);
+    const currentMeasure = parseInt(splitPosition[0]);
+    const currentQuarter = parseInt(splitPosition[1]);
+    if (currentQuarter === quarter) return;
+
+    const measureWidth = getMeasureWidth(measureCount);
     const newMeasureLeft = measureWidth * currentMeasure + DEFAULT_OFFSET_LEFT;
     const newQuarterLeft = (measureWidth / 4) * currentQuarter;
+    setQuarter(newQuarterLeft);
+
     const newLeft = newMeasureLeft + newQuarterLeft;
     if (newLeft !== left) setLeft(newLeft);
-    console.log("[Locator] position:", position, newLeft);
-  }, [measureWidth, left, Transport.position]);
+  }
 
-  const styles = {
-    locator: "bg-black w-[1px] absolute top-0 bottom-0",
-  };
+  useTransport({ loopFn });
 
   return (
     <div
