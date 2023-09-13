@@ -1,6 +1,6 @@
 import BaseDrum from "./baseDrum/BaseDrum";
 import SnareDrum from "./snareDrum/SnareDrum";
-import HiHat from "./hiHat/HiHat";
+import HiHat from "./cymbal/HiHat";
 import Tom, { ETom } from "./tom/Tom";
 
 export default function Drums() {
