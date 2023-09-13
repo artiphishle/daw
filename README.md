@@ -26,6 +26,16 @@ npm i && npm run dev
 
 ## Changelog
 
+### September 2023
+
+#### Day 13
+
+**Store project settings** using SWR
+
+**Arranger** playback (drums)
+
+<img width="706" alt="DAW 20230913" src="./public/screenshots/daw_20230913.png">
+
 ### August 2023
 
 #### Day 24
@@ -38,7 +48,7 @@ npm i && npm run dev
 
 **Music sheet generation from audio file (e.g. .mp3, .wav, ...)**
 
-## <img width="706" alt="DAW 20230824" src="./public/screenshots/daw_20230824.png">
+<img width="706" alt="DAW 20230824" src="./public/screenshots/daw_20230824.png">
 
 ---
 
