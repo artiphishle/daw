@@ -1,7 +1,18 @@
-import type { IAudioTrackConfig } from "@/app/core/tracks/audio/types";
-import type { IMidiTrackConfig } from "@/app/core/tracks/midi/types";
-import type { ITimeTrackConfig } from "@/app/core/tracks/time/types";
+import type { IAudioTrack, IMidiTrack, ITimeTrack } from "@/app/core/tracks";
+import type { IMixer } from "@/app/components";
 
-type TTrackConfig = IAudioTrackConfig | IMidiTrackConfig | ITimeTrackConfig;
+type TTrack = IAudioTrack | IMidiTrack | ITimeTrack;
 
-export type { TTrackConfig };
+interface IProjectSettings {
+  bpm: number;
+  clef: string;
+  measureCount: number;
+  mixer: IMixer;
+  name: string;
+  position: string;
+  quantization: number;
+  tracks: TTrack[];
+}
+
+export type { IProjectSettings };
+export type { TTrack };

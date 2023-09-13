@@ -1,5 +1,6 @@
 import Anchor from "./a/Anchor";
 
+import Avatar from "./avatar/Avatar";
 import ContextMenu from "./contextMenu/ContextMenu";
 import Dialog from "./dialog/Dialog";
 import List from "./list/List";
@@ -19,7 +20,7 @@ import {
 import Tabs, { type ITabs } from "./tabs/Tabs";
 import TabsPanel from "./tabs/TabsPanel";
 
-export { Anchor, ContextMenu, Dialog, List, Nav };
+export { Avatar, Anchor, ContextMenu, Dialog, List, Nav };
 export { Accordion, AccordionDetails, AccordionSummary };
 export { ErrorMessage, InfoMessage, LogMessage, SuccessMessage };
 export { Tabs, TabsPanel, type ITabs };

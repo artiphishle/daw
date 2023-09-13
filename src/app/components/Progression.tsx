@@ -8,7 +8,7 @@ enum EProgression {
 
 export default function Progression() {
   return (
-    <section className="bg-white p-4 border border-gray-100 mb-8">
+    <section className="bg-white p-8 border border-gray-100 mb-8">
       <h2 className={generalStyles.headings.h2}>{t("chordProgression")}</h2>
       <p>
         Tonic <span className="p-2 bg-gray-200">C</span> {t("progression")}:{" "}

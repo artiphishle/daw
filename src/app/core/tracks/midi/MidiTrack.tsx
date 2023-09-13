@@ -1,46 +1,46 @@
-import { type MouseEvent, useState, useEffect } from "react";
+import { type MouseEvent } from "react";
 import { ListMusicIcon } from "lucide-react";
 import { Sequence } from "tone";
 import cn from "classnames";
 
+import midiChannels from "@/app/core/tracks/midi/constants/channels.midi.constants";
+import { styles } from "@/app/core/tracks/styles";
+
+import { useBaseDrum, useSnareDrum } from "@/app/core/instruments";
 import { Accordion } from "@/app/ui";
 
-import { styles } from "@/app/core/tracks/styles";
-import midiChannels from "@/app/core/tracks/midi/constants/channels.midi.constants";
-
-import { ETrackType } from "@/app/core/tracks/types";
-import type {
-  IMidiTrackConfig,
-  TToneSequenceNote,
-} from "@/app/core/tracks/midi/types";
-import { useBaseDrum, useSnareDrum } from "@/app/core/instruments";
-
-/**
- * TODO put this into config
- * @description It's the global project setting of how many measures are shown in the arrangement
- */
-const MEASURE_COUNT = 8;
-const QUANTIZATION = 8;
+import { ETrackType, ITrack } from "@/app/core/tracks/types";
+import type { IMidiPlugin, TMidiChannel } from "@/app/core/tracks/midi/types";
+import useHiHat from "../../instruments/drums/cymbal/hooks/useHiHat";
 
 interface ITemplateProps {
-  notes?: TToneSequenceNote[];
+  notes?: TMidiChannel;
   name: string;
   nested?: boolean;
 }
 
-export default function MidiTrack({ name, plugins = [] }: IMidiTrackConfig) {
+export interface IMidiTrack extends ITrack {
+  plugins?: IMidiPlugin[];
+}
+
+export default function MidiTrack({ name, plugins = [] }: IMidiTrack) {
+  // const { projectSettings } = useProjectSettings();
   const baseDrum = useBaseDrum();
   const snareDrum = useSnareDrum();
+  const closedHihat = useHiHat({ open: false });
 
   function Template({ notes = [], name, nested = false }: ITemplateProps) {
-    const [measureCount] = useState(MEASURE_COUNT);
-    const [quantization] = useState(QUANTIZATION);
-
-    useEffect(() => {
-      const sequence = new Sequence((time, value) => {
-        console.log(time, value, name);
-      }, notes);
-    }, []);
+    new Sequence(
+      (time, note) => {
+        if (!note) return;
+        // TODO support all notes from midiChannels
+        if (note === "C1") return baseDrum.triggerAttackRelease(note, time);
+        if (note === "D1") return snareDrum.triggerAttackRelease("8n", time);
+        if (note === "F#1") return closedHihat.triggerAttackRelease("8n", time);
+      },
+      notes,
+      "4n"
+    ).start(0);
 
     const events = {
       togglePad: function (event: MouseEvent<HTMLDivElement>) {
@@ -89,14 +89,18 @@ export default function MidiTrack({ name, plugins = [] }: IMidiTrackConfig) {
   function Details() {
     return (
       <>
-        {plugins[0].channels.map(({ notes, id }, channelIndex) => (
-          <Template
-            notes={notes}
-            key={`channel-${id}-${channelIndex}`}
-            name={midiChannels[id].name}
-            nested={true}
-          />
-        ))}
+        {plugins[0].channels.map((channel, channelIndex) => {
+          if (!channel) return;
+
+          return (
+            <Template
+              notes={channel}
+              key={`channel-${channelIndex}`}
+              name={midiChannels[channelIndex].name}
+              nested={true}
+            />
+          );
+        })}
       </>
     );
   }

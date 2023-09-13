@@ -1,13 +1,12 @@
 import Arranger from "./Arranger";
 import Locator from "./Locator";
-import Mixer from "./Mixer";
+import Mixer, { type IMixer } from "./Mixer";
 import Navbar from "./Navbar";
-import News from "./News";
 import Progression from "./Progression";
-import Sampler from "./Sampler"; // TODO put to instruments
+import Settings from "./Settings";
 import Sheet from "./Sheet";
 import Toolbar from "./Toolbar";
-import Transport, { type ITransport } from "./Transport";
+import Transport from "./Transport";
 
 import Draggable from "./Draggable";
 import Droppable from "./Droppable";
@@ -18,12 +17,11 @@ export {
   Locator,
   Mixer,
   Navbar,
-  News,
   Progression,
-  Sampler,
+  Settings,
   Sheet,
   Toolbar,
   Transport,
-  type ITransport,
 };
 export { Draggable, Droppable, SortableItem };
+export type { IMixer };

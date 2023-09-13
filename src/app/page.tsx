@@ -1,27 +1,20 @@
 "use client";
 import { useEffect, useState } from "react";
 import { start } from "tone";
-import { closestCenter, DndContext, type DragEndEvent } from "@dnd-kit/core";
-import { arrayMove } from "@dnd-kit/sortable";
 
-import { DEFAULT_MIXER } from "@/app/core/config/constants";
 import t from "@/app/core/i18n";
-import useAudioConverter from "./core/tracks/midi/useAudioConverter";
-// import AudioToMidi from "./core/tracks/midi/AudioToMidi";
-
-import useConfig from "@/app/core/config/useConfig";
 import generalStyles from "@/app/core/config/styles";
 import { styles } from "@/app/core/tracks/styles";
-
+import useAudioConverter from "@/app/core/tracks/midi/useAudioConverter";
 import Piano from "@/app/core/instruments/keys/Piano";
+// import AudioToMidi from "@/app/core/tracks/midi/AudioToMidi";
 
 import {
   Arranger,
-  Locator,
   Mixer,
   Navbar,
-  News,
   Progression,
+  Settings,
   Sheet,
 } from "@/app/components";
 
@@ -30,9 +23,7 @@ import data from "./components/sheet.data";
 // import { PanSongParsed } from "./test/unit/PanSong.parsed";
 
 export default function Home() {
-  const _config = undefined;
   const [toneReady, setToneReady] = useState(false);
-
   const { audioToAbc } = useAudioConverter();
   const [abcParsed, setAbcParsed] = useState<string>("");
 
@@ -67,23 +58,6 @@ export default function Home() {
   }
 
   function App() {
-    const { arranger, transport } = useConfig(_config);
-    const { tracks, setTracks } = arranger;
-
-    const events = {
-      on: {
-        dragEnd: (event: DragEndEvent) => {
-          const { active, over } = event;
-          console.log("active/over", active.id, over?.id);
-          if (active.id === over?.id) return;
-
-          const oldIndex = tracks.findIndex(({ id }) => id === active.id);
-          const newIndex = tracks.findIndex(({ id }) => id === over?.id);
-          return setTracks(arrayMove(tracks, oldIndex, newIndex));
-        },
-      },
-    };
-
     const tabsProps: ITabs = {
       activeIndex: 0,
       items: [
@@ -94,16 +68,9 @@ export default function Home() {
           order: 1,
           panel: (
             <>
-              <Arranger
-                tracks={tracks}
-                setTracks={setTracks}
-                transport={transport}
-              >
-                <Locator />
-              </Arranger>
-
+              <Arranger />
               <Progression />
-              <Mixer {...DEFAULT_MIXER} />
+              <Mixer />
               <Piano />
             </>
           ),
@@ -117,22 +84,24 @@ export default function Home() {
           panel: <>{<Sheet markdown={data[2]} />},</>,
           title: "Sheet",
         },
+        {
+          children: <span>Settings</span>,
+          id: "tabs-settings",
+          href: "#",
+          order: 3,
+          panel: <Settings />,
+          title: "Settings",
+        },
       ],
     };
 
     return (
-      <DndContext
-        collisionDetection={closestCenter}
-        onDragEnd={events.on.dragEnd}
-      >
-        <main className={generalStyles.main}>
-          <div className="flex flex-col flex-1">
-            <Navbar transport={transport} />
-            <News />
-            <Tabs {...tabsProps} />
-          </div>
-        </main>
-      </DndContext>
+      <main className={generalStyles.main}>
+        <div className="flex flex-col flex-1">
+          <Navbar />
+          <Tabs {...tabsProps} />
+        </div>
+      </main>
     );
   }
 
