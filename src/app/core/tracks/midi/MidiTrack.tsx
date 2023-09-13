@@ -1,4 +1,4 @@
-import { type MouseEvent, useState, useEffect } from "react";
+import { type MouseEvent } from "react";
 import { ListMusicIcon } from "lucide-react";
 import { Sequence } from "tone";
 import cn from "classnames";
@@ -6,13 +6,12 @@ import cn from "classnames";
 import midiChannels from "@/app/core/tracks/midi/constants/channels.midi.constants";
 import { styles } from "@/app/core/tracks/styles";
 
-import useProjectSettings from "@/app/hooks/useProjectSettings";
 import { useBaseDrum, useSnareDrum } from "@/app/core/instruments";
 import { Accordion } from "@/app/ui";
 
 import { ETrackType, ITrack } from "@/app/core/tracks/types";
 import type { IMidiPlugin, TMidiChannel } from "@/app/core/tracks/midi/types";
-import useHiHat from "../../instruments/drums/hiHat/hooks/useHiHat";
+import useHiHat from "../../instruments/drums/cymbal/hooks/useHiHat";
 
 interface ITemplateProps {
   notes?: TMidiChannel;
@@ -31,15 +30,16 @@ export default function MidiTrack({ name, plugins = [] }: IMidiTrack) {
   const closedHihat = useHiHat({ open: false });
 
   function Template({ notes = [], name, nested = false }: ITemplateProps) {
-    const sequence = new Sequence(
+    new Sequence(
       (time, note) => {
         if (!note) return;
+        // TODO support all notes from midiChannels
         if (note === "C1") return baseDrum.triggerAttackRelease(note, time);
         if (note === "D1") return snareDrum.triggerAttackRelease("8n", time);
-        if (note === "F#1") return closedHihat.triggerAttackRelease(time);
+        if (note === "F#1") return closedHihat.triggerAttackRelease("8n", time);
       },
       notes,
-      "2n"
+      "4n"
     ).start(0);
 
     const events = {
