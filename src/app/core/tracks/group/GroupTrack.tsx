@@ -1,4 +1,4 @@
-import { GroupIcon } from "lucide-react";
+import { GripVerticalIcon, GroupIcon } from "lucide-react";
 import cn from "classnames";
 
 import { styles } from "@/app/core/tracks/styles";

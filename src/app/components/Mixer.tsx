@@ -9,6 +9,7 @@ import { ETrackType } from "@/app/core/tracks/types";
 import { Destination, Meter as ToneMeter } from "tone";
 import classNames from "classnames";
 import { useState } from "react";
+import Fader from "../ui/audio/fader/Fader";
 
 export interface IMixer {
   settings: {
@@ -23,7 +24,6 @@ export interface IMixer {
 
 export default function Mixer() {
   const { projectSettings, isLoading, error } = useProjectSettings();
-  const [meters, setMeters] = useState<{ [id: string]: ToneMeter }>({});
   if (isLoading) return <Loader />;
   if (!projectSettings) throw error;
 
@@ -40,6 +40,9 @@ export default function Mixer() {
     master: "h-full flex flex-col justify-end bg-cyan-100",
     mixbus: "h-full flex flex-col justify-end bg-cyan-200",
   };
+
+  const masterMeter = new ToneMeter();
+  Destination.connect(masterMeter);
 
   return (
     <section className={styles.mixer}>
@@ -111,8 +114,7 @@ export default function Mixer() {
 
         <div className={`${styles.track} content-end text-xs`}>
           <div className={`${styles.trackInner} ${styles.master}`}>
-            <div>{-Infinity}</div>
-            <div>Meter</div>
+            <Meter meter={masterMeter} />
             <div>&nbsp;</div>
             <div>{t("master")}</div>
           </div>

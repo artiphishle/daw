@@ -1,11 +1,16 @@
 import { NoiseSynth } from "tone";
 
 export default function useSnareDrum() {
-  const snareDrum = new NoiseSynth({
-    noise: { type: "white" },
-    envelope: { attack: 0, decay: 0.2, sustain: 0.1, release: 0.2 },
+  const options = {
+    type: "white",
     volume: -24,
-  });
+    envelope: {
+      attack: 0,
+      decay: 0.2,
+      sustain: 0.2,
+      release: 0.2,
+    },
+  };
 
-  return snareDrum;
+  return new NoiseSynth(options);
 }
