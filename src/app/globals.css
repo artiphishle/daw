@@ -1,0 +1,482 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --foreground-rgb: 0, 0, 0;
+  --background-start-rgb: 214, 219, 220;
+  --background-end-rgb: 255, 255, 255;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --foreground-rgb: 255, 255, 255;
+    --background-start-rgb: 0, 0, 0;
+    --background-end-rgb: 0, 0, 0;
+  }
+}
+
+body {
+  color: rgb(var(--foreground-rgb));
+  background: linear-gradient(
+      to bottom,
+      transparent,
+      rgb(var(--background-end-rgb))
+    )
+    rgb(var(--background-start-rgb));
+}
+
+/**
+ * Form
+ */
+input[type="range"][orient="vertical"] {
+  -webkit-appearance: slider-vertical;
+  width: 16px;
+  height: 175px;
+  padding: 0 5px;
+}
+
+.vertical {
+  width: 175px;
+  height: 16px;
+  transform: rotate(-90deg);
+  transform-origin: left;
+  position: absolute;
+  left: 50%;
+  bottom: -1em;
+}
+
+.vertical-wrapper {
+  display: inline-block;
+  width: 16px;
+  height: 175px;
+  position: relative;
+  padding: 0 5px;
+}
+
+/**
+ * Animated SnareDrum
+ */
+.drum {
+  --drum-yellow: #e9c46a;
+  --drum-dark-yellow: #cf9b1f;
+  --drum-light-red: #ef233c;
+  --drum-dark-red: #6a040f;
+  --drum-white: #edf6f9;
+  --drum-top: #cec2ab;
+  --drum-stick: #887880;
+  --drum-yellow: #e9c46a;
+  --drum-dark-yellow: #cf9b1f;
+  --drum-light-red: #ef233c;
+  --drum-dark-red: #6a040f;
+  --drum-white: #edf6f9;
+  --drum-top: #cec2ab;
+  --drum-stick: #887880;
+
+  position: relative;
+  width: 16rem;
+  height: 17rem;
+  transform: rotate(5deg) scale(0.4);
+}
+
+.drum .side {
+  position: absolute;
+  top: 6rem;
+}
+
+.drum .side__bottom {
+  position: absolute;
+  top: 3rem;
+  width: 16rem;
+  height: 8rem;
+  background-color: var(--drum-yellow);
+  border-radius: 0 0 50% 50% / 0 0 2rem 2rem;
+}
+
+.drum .side__bottom::before {
+  content: "";
+  display: block;
+  position: absolute;
+  top: -3rem;
+  width: 16rem;
+  height: 9rem;
+  background-color: var(--drum-dark-red);
+  border-radius: 0 0 50% 50% / 0 0 2rem 2rem;
+}
+
+.drum .side__bottom::after {
+  content: "";
+  display: block;
+  position: absolute;
+  top: -3.2rem;
+  width: 16rem;
+  height: 9rem;
+  background-color: var(--drum-light-red);
+  border-radius: 0 0 50% 50% / 0 0 2rem 2rem;
+}
+
+.drum .side__top {
+  position: absolute;
+  width: 16rem;
+  height: 3rem;
+}
+
+.drum .side__top::before {
+  content: "";
+  display: block;
+  position: absolute;
+  width: 16rem;
+  height: 3rem;
+  background-color: var(--drum-dark-red);
+  border-radius: 0 0 50% 50% / 0 0 2rem 2rem;
+}
+
+.drum .side__top::after {
+  content: "";
+  display: block;
+  position: absolute;
+  top: -1.2rem;
+  width: 16rem;
+  height: 4rem;
+  background-color: var(--drum-yellow);
+  border-radius: 0 0 50% 50% / 0 0 2rem 2rem;
+}
+
+.drum .side .pattern {
+  position: absolute;
+  height: 9rem;
+  border-right: 0.4rem solid var(--drum-yellow);
+}
+
+.drum .side .pattern::after,
+.drum .side .pattern.pattern-6::before {
+  content: "";
+  display: block;
+  width: 1.2rem;
+  height: 1.2rem;
+  margin-left: -0.4rem;
+  position: absolute;
+  background-color: var(--drum-white);
+  border-radius: 50%;
+}
+
+.drum .side .pattern.pattern-1 {
+  transform: translateX(1.6rem) translateY(0.6rem) rotate(-20deg);
+}
+.drum .side .pattern.pattern-1::after {
+  top: 0.3rem;
+}
+
+.drum .side .pattern.pattern-2 {
+  transform: translateX(4.4rem) translateY(0.6rem) rotate(20deg);
+}
+.drum .side .pattern.pattern-2::after {
+  top: 7.6rem;
+  left: -0.2rem;
+}
+
+.drum .side .pattern.pattern-3 {
+  transform: translateX(6.3rem) translateY(0.6rem) rotate(-20deg);
+}
+.drum .side .pattern.pattern-3::after {
+  top: 1.3rem;
+  left: -0.05rem;
+}
+
+.drum .side .pattern.pattern-4 {
+  transform: translateX(9.3rem) translateY(0.6rem) rotate(20deg);
+}
+.drum .side .pattern.pattern-4::after {
+  top: 8rem;
+  left: -0.1rem;
+}
+
+.drum .side .pattern.pattern-5 {
+  transform: translateX(11.3rem) translateY(0.6rem) rotate(-20deg);
+}
+.drum .side .pattern.pattern-5::after {
+  top: 1.3rem;
+  left: -0.1rem;
+}
+
+.drum .side .pattern.pattern-6 {
+  transform: translateX(14rem) translateY(0.6rem) rotate(20deg);
+}
+.drum .side .pattern.pattern-6::before {
+  top: 7.6rem;
+  left: -0.1rem;
+}
+.drum .side .pattern.pattern-6::after {
+  top: 0.4rem;
+}
+
+.drum .top {
+  position: absolute;
+  top: 2rem;
+  width: 16rem;
+  height: 5rem;
+  background-color: var(--drum-dark-yellow);
+  border-radius: 50% / 2rem;
+  overflow: hidden;
+}
+
+.drum .top::before {
+  content: "";
+  display: block;
+  position: absolute;
+  top: 1rem;
+  width: 16rem;
+  height: 4rem;
+  background-color: var(--drum-top);
+  border-radius: 50% / 2rem;
+}
+
+.drum .top::after {
+  content: "";
+  display: block;
+  position: absolute;
+  top: -0.1rem;
+  left: -0.5rem;
+  box-sizing: border-box;
+  width: 17rem;
+  height: 5.5rem;
+  border-radius: 50%;
+  border: 0.4rem solid var(--drum-yellow);
+}
+
+.drum .drum-stick {
+  position: absolute;
+  z-index: 5;
+  width: 12rem;
+  height: 0.6rem;
+  background: var(--drum-stick);
+  border-radius: 50% 20% 20% 50% / 50%;
+  transform-origin: 90% 50%;
+}
+
+.drum .drum-stick::before {
+  content: "";
+  display: block;
+  position: absolute;
+  width: 0.8rem;
+  height: 0.6rem;
+  background: var(--drum-stick);
+  border-radius: 50%;
+}
+
+.drum .drum-stick.drum-stick--left {
+  left: -14rem;
+  top: -1rem;
+  transform: rotate(-170deg);
+  animation: anim-drum-stick-left 0.3s infinite;
+}
+
+.drum .drum-stick.drum-stick--right {
+  left: 9rem;
+  top: -1rem;
+  transform: rotate(-30deg);
+  animation: anim-drum-stick-right 0.3s infinite;
+}
+
+.drum .drum-stick-shadow {
+  position: absolute;
+  top: 4rem;
+  width: 3rem;
+  height: 1.5rem;
+  background: radial-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0) 50%);
+  border-radius: 50%;
+}
+
+.drum .drum-stick-shadow.drum-stick-shadow--left {
+  left: 4.5rem;
+  animation: anim-drum-shadow-left 0.3s infinite;
+}
+
+.drum .drum-stick-shadow.drum-stick-shadow--left {
+  left: 4.5rem;
+  animation: anim-drum-shadow-left 0.3s infinite;
+}
+
+.drum .drum-stick-shadow.drum-stick-shadow--right {
+  left: 9rem;
+  animation: anim-drum-shadow-right 0.3s infinite;
+}
+
+@keyframes anim-drum-stick-left {
+  0% {
+    transform: rotate(-170deg) translateX(1rem);
+  }
+  50% {
+    transform: rotate(-150deg) translateX(0);
+  }
+  100% {
+    transform: rotate(-170deg) translateX(1rem);
+  }
+}
+
+@keyframes anim-drum-shadow-left {
+  0% {
+    transform: scale(1.6);
+    opacity: 0.3;
+  }
+  50% {
+    transform: scale(0.6);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1.6);
+    opacity: 0.3;
+  }
+}
+
+@keyframes anim-drum-stick-right {
+  0% {
+    transform: rotate(-30deg) translateX(0);
+  }
+  50% {
+    transform: rotate(-10deg) translateX(1rem);
+  }
+  100% {
+    transform: rotate(-30deg) translateX(0);
+  }
+}
+
+@keyframes anim-drum-shadow-right {
+  0% {
+    transform: scale(0.6);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.6);
+    opacity: 0.3;
+  }
+  100% {
+    transform: scale(0.6);
+    opacity: 1;
+  }
+}
+
+/**
+ * ADSR Envelope Plugin
+ */
+* {
+  box-sizing: border-box;
+}
+.defs {
+  position: absolute;
+  width: 0;
+  height: 0;
+  opacity: 0;
+}
+.fl-studio-envelope {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 600px;
+  padding: 20px;
+  overflow: hidden;
+  background: #363c40;
+  border: 2px solid #272d31;
+  box-shadow: 0 10px 70px rgba(0, 0, 0, 0.6);
+  transform: translate(-50%, -50%);
+}
+.fl-studio-envelope__visualizer {
+  height: 200px;
+  background: #21272b;
+  border: 2px solid #191f23;
+}
+.fl-studio-envelope__visualizer .envelope-visualizer {
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+.fl-studio-envelope__controls,
+.fl-studio-envelope__tension {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.fl-studio-envelope__controls {
+  padding: 30px 0 0;
+}
+.fl-studio-envelope__control {
+  flex: 1 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.fl-studio-envelope__label {
+  flex: 0 0 auto;
+  display: inline-block;
+  padding: 10px 0;
+  width: 80px;
+  color: #c1c5c5;
+  font-size: 10px;
+  font-family: "Helvetica", sans-serif;
+  font-weight: 700;
+  text-align: center;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+.fl-studio-envelope__knob {
+  flex: 0 0 auto;
+}
+.fl-studio-envelope__knob.envelope-knob {
+  width: 80px;
+  height: 80px;
+}
+.fl-studio-envelope__knob.tension-knob {
+  padding: 10px;
+  width: 80px;
+  height: 80px;
+}
+.fl-studio-envelope__knob .knob-input__visual {
+  overflow: visible;
+}
+.fl-studio-envelope__knob .dial {
+  transform-origin: 20px 20px;
+  transition: all 600ms cubic-bezier(0.39, 0.575, 0.565, 1);
+}
+.fl-studio-envelope__knob .dial-highlight {
+  opacity: 0;
+  transition: all 300ms cubic-bezier(0.39, 0.575, 0.565, 1);
+}
+.fl-studio-envelope__knob:hover .dial,
+.fl-studio-envelope__knob.drag-active .dial {
+  transform: scale(0.9);
+  filter: brightness(10.2);
+  transition: all 300ms cubic-bezier(0.39, 0.575, 0.565, 1);
+}
+.fl-studio-envelope__knob:hover .dial-highlight,
+.fl-studio-envelope__knob.drag-active .dial-highlight {
+  opacity: 0.05;
+}
+.fl-studio-envelope__knob .focus-indicator {
+  opacity: 0;
+  transition: all 300ms cubic-bezier(0.39, 0.575, 0.565, 1);
+}
+.fl-studio-envelope__knob.focus-active .focus-indicator {
+  opacity: 0.8;
+}
+.knob-input {
+  position: relative;
+}
+.knob-input__visual {
+  pointer-events: none;
+  width: 100%;
+  height: 100%;
+}
+.knob-input__input {
+  cursor: grab;
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  transform: rotate(-90deg);
+}
+body.knob-input__drag-active,
+body.knob-input__drag-active * {
+  cursor: grabbing !important;
+}
