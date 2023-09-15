@@ -6,9 +6,13 @@ import {
 } from "@dnd-kit/sortable";
 
 import SortableItem from "@/app/components/SortableItem";
-import { AudioTrack, MidiTrack, TimeTrack } from "@/app/core/tracks";
+import {
+  AudioTrack,
+  GroupTrack,
+  MidiTrack,
+  TimeTrack,
+} from "@/app/core/tracks";
 import useProjectSettings from "@/app/hooks/useProjectSettings";
-
 import Locator from "@/app/components/Locator";
 
 import { ETrackType } from "@/app/core/tracks/types";
@@ -16,7 +20,9 @@ import type { TTrack } from "@/app/core/config/types";
 
 export default function Arranger() {
   const { projectSettings, updateProjectSettings } = useProjectSettings();
-  const tracks = projectSettings?.tracks || [];
+  if (!projectSettings) return null;
+  const { tracks } = projectSettings;
+
   const events = {
     dragEnd: (event: DragEndEvent) => {
       const { active, over } = event;
@@ -37,6 +43,8 @@ export default function Arranger() {
     switch (type) {
       case ETrackType.Audio:
         return <AudioTrack {...trackConfig} />;
+      case ETrackType.Group:
+        return <GroupTrack {...trackConfig} />;
       case ETrackType.Midi:
         return <MidiTrack {...trackConfig} />;
       case ETrackType.Time:

@@ -6,7 +6,6 @@ import t from "@/app/core/i18n";
 import generalStyles from "@/app/core/config/styles";
 import { styles } from "@/app/core/tracks/styles";
 import useAudioConverter from "@/app/core/tracks/midi/useAudioConverter";
-import Piano from "@/app/core/instruments/keys/Piano";
 // import AudioToMidi from "@/app/core/tracks/midi/AudioToMidi";
 
 import {
@@ -20,12 +19,13 @@ import {
 
 import { Dialog, Tabs, type ITabs } from "@/app/ui";
 import data from "./components/sheet.data";
+import PollySynth from "./core/instruments/synths/PollySynth";
+import SnareDrum from "./core/instruments/drums/snareDrum/SnareDrum";
 // import { PanSongParsed } from "./test/unit/PanSong.parsed";
 
 export default function Home() {
   const [toneReady, setToneReady] = useState(false);
   const { audioToAbc } = useAudioConverter();
-  const [abcParsed, setAbcParsed] = useState<string>("");
 
   useEffect(() => {
     if (!toneReady) return;
@@ -69,9 +69,7 @@ export default function Home() {
           panel: (
             <>
               <Arranger />
-              <Progression />
               <Mixer />
-              <Piano />
             </>
           ),
           title: "Arranger",
@@ -91,6 +89,23 @@ export default function Home() {
           order: 3,
           panel: <Settings />,
           title: "Settings",
+        },
+        {
+          children: <span>Test</span>,
+          id: "tabs-test",
+          href: "#",
+          order: 4,
+          panel: (
+            <section className="bg-white">
+              <Progression />
+              <PollySynth />
+              <div className="p-8">
+                <h2 className={generalStyles.headings.h2}>Visualization</h2>
+                <SnareDrum className="-mt-100" />
+              </div>
+            </section>
+          ),
+          title: "Testing",
         },
       ],
     };

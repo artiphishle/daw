@@ -1,6 +1,6 @@
-import { FMSynth, type FMSynthOptions } from "tone";
+import { FMSynth } from "tone";
 
-export default function useFmSynth(props: FMSynthOptions) {
+export default function useFmSynth() {
   // const amSynth = new FMSynth(props);
   const fmSynth = new FMSynth({
     detune: 0,
@@ -19,7 +19,7 @@ export default function useFmSynth(props: FMSynthOptions) {
       sustain: 1,
       release: 0.5,
     },
-  }).toDestination();
+  });
 
   return fmSynth;
 }
