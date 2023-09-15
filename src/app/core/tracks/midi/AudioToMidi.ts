@@ -13,7 +13,7 @@ export default async function AudioToMidi() {
   const toneAudioBuffer = (await Buffer.fromUrl("/PanSong.mp3")).toMono();
   const audioBuffer = toneAudioBuffer.get()!;
 
-  console.log("[AudioToMidi] audioBuffer:", audioBuffer);
+  // console.log("[AudioToMidi] audioBuffer:", audioBuffer);
 
   const basicPitch = new BasicPitch("/model.json");
   const frames: number[][] = [];
