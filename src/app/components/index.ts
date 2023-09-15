@@ -7,6 +7,7 @@ import Settings from "./Settings";
 import Sheet from "./Sheet";
 import Toolbar from "./Toolbar";
 import Transport from "./Transport";
+import Meter from "./Meter";
 
 import Draggable from "./Draggable";
 import Droppable from "./Droppable";
@@ -22,6 +23,7 @@ export {
   Sheet,
   Toolbar,
   Transport,
+  Meter,
 };
 export { Draggable, Droppable, SortableItem };
 export type { IMixer };

@@ -24,7 +24,7 @@ export default function AccordionDetails({
       console.log("NOT TOGGLEABLE");
       event.preventDefault();
       event.stopPropagation();
-    } else console.log("togglimi");
+    } else console.log("TOGGLEABLE");
   };
 
   return (

@@ -8,7 +8,9 @@ import {
 } from "@/app/core/tracks/midi/types";
 import type { IMixer } from "@/app/components/Mixer";
 import type { TTrack } from "./types";
-import type { IAudioTrack, IMidiTrack } from "../tracks";
+import type { IAudioTrack, IGroupTrack, IMidiTrack } from "../tracks";
+import PollySynth from "@/app/core/instruments/synths/PollySynth";
+import { EInstrument } from "@/app/hooks/useProjectSettings";
 
 const DEFAULT_BPM = 120;
 const DEFAULT_CLEF = "C";
@@ -134,25 +136,68 @@ const DEFAULT_MIDI_DRUM_PLUGIN: IMidiPlugin = {
 const DEFAULT_AUDIO_TRACK: IAudioTrack = {
   id: "track-audio-0",
   name: t("untitled"),
+  routing: {
+    input: {
+      label: "audio.wav",
+      onClick: () => alert("soon"),
+    },
+    output: "mixbus",
+  },
   type: ETrackType.Audio,
 };
 const DEFAULT_MIDI_TRACK: IMidiTrack = {
   id: "track-midi",
-  name: "Default Midi",
+  name: "Bass",
+  routing: {
+    input: {
+      label: "BassSynth",
+      onClick: () => alert("soon"),
+      instrument: EInstrument.BassSynth,
+    },
+    output: "mixbus",
+  },
   type: ETrackType.Midi,
 };
 const DEFAULT_MIDI_DRUM_TRACK: IMidiTrack = {
   ...DEFAULT_MIDI_TRACK,
   id: "track-midi-drums",
   name: "Drums",
+  routing: {
+    input: {
+      label: "MidiDrums",
+      onClick: () => alert("soon"),
+    },
+    output: "mixbus",
+  },
   plugins: [DEFAULT_MIDI_DRUM_PLUGIN],
+};
+const DEFAULT_GROUP_MIXBUS: IGroupTrack = {
+  id: "track-group-mixbus",
+  name: "Mixbus",
+  routing: {
+    input: {
+      label: "All",
+      onClick: () => alert("soon"),
+    },
+    output: "master",
+  },
+  type: ETrackType.Group,
 };
 
 const DEFAULT_TRACKS: TTrack[] = [
-  { id: "track-time", name: "", type: ETrackType.Time },
+  {
+    id: "track-time",
+    name: "",
+    routing: {
+      input: { label: "None", onClick: () => {} },
+      output: null,
+    },
+    type: ETrackType.Time,
+  },
   { ...DEFAULT_MIDI_DRUM_TRACK },
   { ...DEFAULT_MIDI_TRACK },
-  { ...DEFAULT_AUDIO_TRACK, name: "Example.wav" },
+  { ...DEFAULT_AUDIO_TRACK, name: "Example" },
+  { ...DEFAULT_GROUP_MIXBUS },
 ];
 
 const DEFAULT_MIXER: IMixer = {
@@ -161,6 +206,12 @@ const DEFAULT_MIXER: IMixer = {
       bg: "bg-purple-100",
       label: "Audio",
       text: "text-purple-800",
+      visible: true,
+    },
+    [ETrackType.Group]: {
+      bg: "bg-white",
+      label: "Group",
+      text: "text-black",
       visible: true,
     },
     [ETrackType.Midi]: {
