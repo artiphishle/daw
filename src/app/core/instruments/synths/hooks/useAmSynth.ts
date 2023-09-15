@@ -1,6 +1,6 @@
-import { AMSynth, type AMSynthOptions } from "tone";
+import { AMSynth } from "tone";
 
-export default function useAmSynth(props: AMSynthOptions) {
+export default function useAmSynth() {
   // const amSynth = new AMSynth(props);
   const amSynth = new AMSynth({
     detune: 0,
@@ -19,7 +19,7 @@ export default function useAmSynth(props: AMSynthOptions) {
       sustain: 1,
       release: 0.5,
     },
-  }).toDestination();
+  });
 
   return amSynth;
 }

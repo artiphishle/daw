@@ -9,8 +9,9 @@ export default function PollySynth() {
 
   const MidiKeys = () => useMidiKeys({ octaves: 7, instrument: polySynth });
 
+  // TODO should be 'absolute' if DnD
   return (
-    <div className="handle absolute flex-col top-[450px] left-[50px] bg-blue-300 p-2">
+    <div className="handle flex-col bg-blue-300 p-2">
       <h3 className="mb-2 font-black">Verdis ASynth</h3>
       <MidiKeys />
     </div>
