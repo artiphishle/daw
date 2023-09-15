@@ -1,5 +1,5 @@
 import { type MouseEvent } from "react";
-import { ListMusicIcon } from "lucide-react";
+import { GripVerticalIcon, ListMusicIcon } from "lucide-react";
 import { Sequence } from "tone";
 import cn from "classnames";
 

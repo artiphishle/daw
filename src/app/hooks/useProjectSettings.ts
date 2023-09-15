@@ -55,9 +55,23 @@ export default function useProjectSettings() {
   } = useSWR(EEndpoint.ProjectSettings, fetcher);
 
   const updateProjectSettings = async (patch: Partial<IProjectSettings>) => {
+    // DESELECTOR (cannot serialize instruments)
+    const readyPatch = patch.tracks
+      ? patch.tracks.map((track) => {
+          const { instrument } = track.routing.input;
+          if (!instrument) return track;
+          switch (instrument) {
+            case EInstrument.BassSynth:
+              let deselectedTrack = { ...track };
+              deselectedTrack.routing.input.instrument = EInstrument.BassSynth;
+              return deselectedTrack;
+          }
+        })
+      : patch;
+
     await fetch(EEndpoint.ProjectSettings, {
       method: "PATCH",
-      body: JSON.stringify(patch),
+      body: JSON.stringify(readyPatch),
     });
 
     mutate(EEndpoint.ProjectSettings);
