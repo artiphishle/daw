@@ -1,14 +1,10 @@
-import { useState } from "react";
+import useProjectSettings from "@/app/hooks/useProjectSettings";
 import { Chord, Progression } from "tonal";
 
-interface IUseMusicTheoryProps {
-  tonic: string;
-}
-
-export default function useMusicTheory({
-  tonic: _tonic,
-}: IUseMusicTheoryProps) {
-  const [tonic, setTonic] = useState(_tonic);
+export default function useMusicTheory() {
+  const { projectSettings } = useProjectSettings();
+  if (!projectSettings) return null;
+  const { clef: tonic } = projectSettings;
 
   /**
    * detects chord by notes

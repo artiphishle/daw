@@ -34,7 +34,6 @@ export default function Transport() {
       updateProjectSettings({ bpm: parseInt(event.target.value) } as any),
 
     onToggle: (_: MouseEvent<SVGSVGElement>) => {
-      console.log("toggeling");
       ToneTransport.toggle();
     },
   };

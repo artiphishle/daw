@@ -4,17 +4,15 @@ const colors = {
   gray: "gray",
   orange: "orange",
   purple: "purple",
-  white: "#ffffff",
+  white: "white",
 };
 
 const semanticColors = {
   track: {
     [ETrackType.Audio]: { bg: colors.purple },
+    [ETrackType.Group]: { bg: colors.white },
     [ETrackType.Midi]: { bg: colors.orange },
     [ETrackType.Time]: { bg: colors.gray },
-  },
-  transparent: {
-    white50: `[${colors.white}50]`,
   },
 };
 
@@ -23,7 +21,7 @@ const styles = {
     primary: "flex items-center justify-center p-4 bg-green-600 text-white",
   },
   bg: {
-    pad: `bg-${semanticColors.transparent.white50}`,
+    pad: `bg-${colors.white}`,
     padActive: "bg-orange-400",
   },
   dialog:

@@ -23,7 +23,7 @@
 import { MembraneSynth } from "tone";
 
 export default function useBaseDrum() {
-  const baseDrum = new MembraneSynth().toDestination();
+  const baseDrum = new MembraneSynth({ volume: -24 });
 
   return baseDrum;
 }

@@ -13,7 +13,6 @@ export default function AccordionDetails({
   const [yAfter, setYAfter] = useState<number>(0);
 
   const onDragStart = (event: MouseEvent) => {
-    console.log("START", event.clientY);
     setY(event.clientY);
   };
   const onDragEnd = (event: MouseEvent) => setYAfter(event.clientY);
@@ -24,7 +23,7 @@ export default function AccordionDetails({
       console.log("NOT TOGGLEABLE");
       event.preventDefault();
       event.stopPropagation();
-    } else console.log("togglimi");
+    } else console.log("TOGGLEABLE");
   };
 
   return (

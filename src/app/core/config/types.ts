@@ -1,7 +1,12 @@
-import type { IAudioTrack, IMidiTrack, ITimeTrack } from "@/app/core/tracks";
+import type {
+  IAudioTrack,
+  IGroupTrack,
+  IMidiTrack,
+  ITimeTrack,
+} from "@/app/core/tracks";
 import type { IMixer } from "@/app/components";
 
-type TTrack = IAudioTrack | IMidiTrack | ITimeTrack;
+type TTrack = IAudioTrack | IGroupTrack | IMidiTrack | ITimeTrack;
 
 interface IProjectSettings {
   bpm: number;
