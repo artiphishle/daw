@@ -27,6 +27,34 @@ body {
 }
 
 /**
+ * Form
+ */
+input[type="range"][orient="vertical"] {
+  -webkit-appearance: slider-vertical;
+  width: 16px;
+  height: 175px;
+  padding: 0 5px;
+}
+
+.vertical {
+  width: 175px;
+  height: 16px;
+  transform: rotate(-90deg);
+  transform-origin: left;
+  position: absolute;
+  left: 50%;
+  bottom: -1em;
+}
+
+.vertical-wrapper {
+  display: inline-block;
+  width: 16px;
+  height: 175px;
+  position: relative;
+  padding: 0 5px;
+}
+
+/**
  * Animated SnareDrum
  */
 .drum {
