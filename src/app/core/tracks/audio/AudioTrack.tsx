@@ -1,4 +1,4 @@
-import { ActivityIcon } from "lucide-react";
+import { ActivityIcon, GripVerticalIcon } from "lucide-react";
 import cn from "classnames";
 
 import { styles } from "@/app/core/tracks/styles";
