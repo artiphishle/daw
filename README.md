@@ -16,17 +16,18 @@ npm i && npm run dev
 
 ## Collaboration
 
----
-
-## 🙏 Thank you!<br>
-
-### \\/\\/r|te /\\/\\e: [@LinkedIn](https://www.linkedin.com/in/faebster/)
-
----
+Please write me: [@LinkedIn](https://www.linkedin.com/in/faebster/)
 
 ## Changelog
 
 ### September 2023
+
+#### Day 15
+
+**Mixer** Volume meter, ready to add inserts/sends
+**SWR** Instruments are now loaded with projectSettings
+
+<img width="706" alt="DAW 20230915" src="./public/screenshots/daw_20230915.png">
 
 #### Day 13
 
