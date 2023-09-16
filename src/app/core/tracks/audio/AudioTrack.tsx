@@ -22,7 +22,7 @@ export default function AudioTrack({ name, url }: IAudioTrack) {
           {name}
         </div>
       </div>
-      <div className="p-1 flex w-8">
+      <div className="p-1 flex w-full">
         <WaveForm url={url} />
       </div>
     </div>

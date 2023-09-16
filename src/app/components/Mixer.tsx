@@ -1,4 +1,6 @@
+import { Destination, Meter as ToneMeter } from "tone";
 import { Loader } from "lucide-react";
+import classNames from "classnames";
 
 import t from "@/app/core/i18n";
 import useProjectSettings from "@/app/hooks/useProjectSettings";
@@ -6,10 +8,6 @@ import { Meter } from "@/app/components";
 import { Accordion } from "@/app/ui";
 
 import { ETrackType } from "@/app/core/tracks/types";
-import { Destination, Meter as ToneMeter } from "tone";
-import classNames from "classnames";
-import { useState } from "react";
-import Fader from "../ui/audio/fader/Fader";
 
 export interface IMixer {
   settings: {

@@ -2,14 +2,17 @@ import t from "@/app/core/i18n";
 
 import { EInstrument } from "@/app/hooks/useProjectSettings";
 import { ETrackType } from "@/app/core/tracks/types";
-import {
-  EMidiPluginType,
-  TMidiChannel,
-  type IMidiPlugin,
-} from "@/app/core/tracks/midi/types";
 import type { IMixer } from "@/app/components/Mixer";
-import type { TTrack } from "./types";
-import type { IAudioTrack, IGroupTrack, IMidiTrack } from "../tracks";
+import type {
+  IAudioTrack,
+  IGroupTrack,
+  IMidiTrack,
+  ITimeTrack,
+} from "../tracks";
+
+/**
+ * GENERAL
+ */
 
 const DEFAULT_BPM = 120;
 const DEFAULT_CLEF = "C";
@@ -19,160 +22,210 @@ const DEFAULT_OFFSET_LEFT = 185;
 const DEFAULT_POSITION = "0:0:0";
 const DEFAULT_QUANTIZATION = 8;
 
-const bd = [
-  "C1",
-  null,
-  "C1",
-  null,
-  "C1",
-  null,
-  "C1",
-  null,
-  "C1",
-  null,
-  "C1",
-  null,
-  "C1",
-  null,
-  "C1",
-  null,
-  "C1",
-  null,
-  "C1",
-  null,
-  "C1",
-  null,
-  "C1",
-  null,
-  "C1",
-  null,
-  "C1",
-  null,
-  "C1",
-  null,
-  "C1",
-  null,
-] as TMidiChannel;
-const sd = [
-  null,
-  "D1",
-  null,
-  "D1",
-  null,
-  "D1",
-  null,
-  "D1",
-  null,
-  "D1",
-  null,
-  "D1",
-  null,
-  "D1",
-  null,
-  "D1",
-  null,
-  "D1",
-  null,
-  "D1",
-  null,
-  "D1",
-  null,
-  "D1",
-  null,
-  "D1",
-  null,
-  "D1",
-  null,
-  "D1",
-  null,
-  "D1",
-] as TMidiChannel;
-const ch = [
-  "F#1",
-  "F#1",
-  "F#1",
-  "F#1",
-  "F#1",
-  "F#1",
-  "F#1",
-  "F#1",
-  "F#1",
-  "F#1",
-  "F#1",
-  "F#1",
-  "F#1",
-  "F#1",
-  "F#1",
-  "F#1",
-  "F#1",
-  "F#1",
-  "F#1",
-  "F#1",
-  "F#1",
-  "F#1",
-  "F#1",
-  "F#1",
-  "F#1",
-  "F#1",
-  "F#1",
-  "F#1",
-  "F#1",
-  "F#1",
-  "F#1",
-  "F#1",
-] as TMidiChannel;
+/**
+ * TRACKS
+ */
 
-const channels: TMidiChannel[] = [];
-channels[36] = bd;
-channels[38] = sd;
-channels[42] = ch;
-
-const DEFAULT_MIDI_DRUM_PLUGIN: IMidiPlugin = {
-  type: EMidiPluginType.Drums,
-  channels,
+// TIME
+const DEFAULT_TRACK_TIME: ITimeTrack = {
+  id: "track-time",
+  name: "",
+  routing: {
+    input: { label: "None", onClick: () => {} },
+    output: null,
+  },
+  type: ETrackType.Time,
 };
 
+// AUDIO
 const DEFAULT_AUDIO_TRACK: IAudioTrack = {
   id: "audio-test",
-  name: "Test Sample",
-  url: "/SalamanderGP-V3_48khz24bit/A0v1.wav",
+  name: "Halloween",
+  url: "/halloween.mp3",
   routing: {
     input: {
-      label: "audio.wav",
+      label: "Audio",
       onClick: () => alert("soon"),
     },
     output: "mixbus",
   },
   type: ETrackType.Audio,
 };
-const DEFAULT_MIDI_TRACK: IMidiTrack = {
-  id: "track-midi",
+
+// DRUMS
+const DEFAULT_MIDI_BD_TRACK: IMidiTrack = {
+  id: "track-midi-bd",
+  name: "BD",
+  routing: {
+    input: {
+      label: EInstrument.BaseDrum,
+      notes: [
+        "C1",
+        undefined,
+        "C1",
+        undefined,
+        "C1",
+        undefined,
+        "C1",
+        undefined,
+        "C1",
+        undefined,
+        "C1",
+        undefined,
+        "C1",
+        undefined,
+        "C1",
+        undefined,
+        "C1",
+        undefined,
+        "C1",
+        undefined,
+        "C1",
+        undefined,
+        "C1",
+        undefined,
+        "C1",
+        undefined,
+        "C1",
+        undefined,
+        "C1",
+        undefined,
+        "C1",
+        undefined,
+      ],
+      onClick: () => alert("BaseDrum"),
+      instrument: EInstrument.BaseDrum,
+    },
+    output: "drums",
+  },
+  type: ETrackType.Midi,
+};
+const DEFAULT_MIDI_SD_TRACK: IMidiTrack = {
+  id: "track-midi-sd",
+  name: "SD",
+  routing: {
+    input: {
+      label: EInstrument.SnareDrum,
+      notes: [
+        undefined,
+        "D1",
+        undefined,
+        "D1",
+        undefined,
+        "D1",
+        undefined,
+        "D1",
+        undefined,
+        "D1",
+        undefined,
+        "D1",
+        undefined,
+        "D1",
+        undefined,
+        "D1",
+        undefined,
+        "D1",
+        undefined,
+        "D1",
+        undefined,
+        "D1",
+        undefined,
+        "D1",
+        undefined,
+        "D1",
+        undefined,
+        "D1",
+        undefined,
+        "D1",
+        undefined,
+        "D1",
+      ],
+      onClick: () => alert("SnareDrum"),
+      instrument: EInstrument.SnareDrum,
+    },
+    output: "drums",
+  },
+  type: ETrackType.Midi,
+};
+const DEFAULT_MIDI_CHH_TRACK: IMidiTrack = {
+  id: "track-midi-chh",
+  name: "CHH",
+  routing: {
+    input: {
+      label: EInstrument.ClosedHiHat,
+      notes: new Array(32).fill("F#1").map((n) => n),
+      onClick: () => alert("SnareDrum"),
+      instrument: EInstrument.SnareDrum,
+    },
+    output: "drums",
+  },
+  type: ETrackType.Midi,
+};
+
+// BASS
+const DEFAULT_MIDI_BASS_TRACK: IMidiTrack = {
+  id: "track-midi-bass",
   name: "Bass",
   routing: {
     input: {
-      label: "BassSynth",
+      label: EInstrument.BassSynth,
       onClick: () => alert("soon"),
       instrument: EInstrument.BassSynth,
+      notes: [
+        "C2",
+        "E2",
+        "G2",
+        undefined,
+        "C2",
+        "E2",
+        "G2",
+        undefined,
+        "C2",
+        "E2",
+        "G2",
+        undefined,
+        "C2",
+        "E2",
+        "G2",
+        undefined,
+        "C2",
+        "E2",
+        "G2",
+        undefined,
+        "C2",
+        "E2",
+        "G2",
+        undefined,
+        "C2",
+        "E2",
+        "G2",
+        undefined,
+        "C2",
+        "E2",
+        "G2",
+        undefined,
+      ],
     },
     output: "mixbus",
   },
   type: ETrackType.Midi,
 };
-const DEFAULT_MIDI_DRUM_TRACK: IMidiTrack = {
-  ...DEFAULT_MIDI_TRACK,
-  id: "track-midi-drums",
+
+// GROUP
+const DEFAULT_GROUP_DRUMS: IGroupTrack = {
+  id: "drums",
+  type: ETrackType.Group,
   name: "Drums",
   routing: {
     input: {
-      label: "MidiDrums",
-      onClick: () => alert("soon"),
+      label: "Drums",
+      onClick: () => alert("Group: Drums"),
     },
     output: "mixbus",
   },
-  plugins: [DEFAULT_MIDI_DRUM_PLUGIN],
 };
 const DEFAULT_GROUP_MIXBUS: IGroupTrack = {
-  id: "track-group-mixbus",
+  id: "mixbus",
   name: "Mixbus",
   routing: {
     input: {
@@ -184,22 +237,7 @@ const DEFAULT_GROUP_MIXBUS: IGroupTrack = {
   type: ETrackType.Group,
 };
 
-const DEFAULT_TRACKS: TTrack[] = [
-  {
-    id: "track-time",
-    name: "",
-    routing: {
-      input: { label: "None", onClick: () => {} },
-      output: null,
-    },
-    type: ETrackType.Time,
-  },
-  { ...DEFAULT_MIDI_DRUM_TRACK },
-  { ...DEFAULT_MIDI_TRACK },
-  { ...DEFAULT_AUDIO_TRACK },
-  { ...DEFAULT_GROUP_MIXBUS },
-];
-
+// MIXER
 const DEFAULT_MIXER: IMixer = {
   settings: {
     [ETrackType.Audio]: {
@@ -224,11 +262,6 @@ const DEFAULT_MIXER: IMixer = {
 };
 
 export {
-  DEFAULT_AUDIO_TRACK,
-  DEFAULT_MIDI_TRACK,
-  DEFAULT_MIDI_DRUM_TRACK,
-  DEFAULT_TRACKS,
-  //
   DEFAULT_BPM,
   DEFAULT_CLEF,
   DEFAULT_NAME,
@@ -236,6 +269,16 @@ export {
   DEFAULT_POSITION,
   DEFAULT_QUANTIZATION,
   DEFAULT_MEASURE_COUNT,
+  //
+  DEFAULT_TRACK_TIME,
+  DEFAULT_AUDIO_TRACK,
+  DEFAULT_MIDI_BD_TRACK,
+  DEFAULT_MIDI_SD_TRACK,
+  DEFAULT_MIDI_CHH_TRACK,
+  DEFAULT_MIDI_BASS_TRACK,
+  //
+  DEFAULT_GROUP_DRUMS,
+  DEFAULT_GROUP_MIXBUS,
   //
   DEFAULT_MIXER,
 };

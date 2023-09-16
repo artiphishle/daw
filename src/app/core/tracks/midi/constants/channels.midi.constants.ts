@@ -1,9 +1,9 @@
-interface IMidiChannel {
+export interface IMidiDrumMap {
   key: string;
   name: string;
 }
 
-const midiChannels: IMidiChannel[] = [];
+const midiChannels: IMidiDrumMap[] = [];
 
 midiChannels[35] = { key: "B0", name: "Accoustic Bass Drum" };
 midiChannels[36] = { key: "C1", name: "Bass Drum 1" };

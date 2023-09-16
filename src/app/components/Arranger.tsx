@@ -9,15 +9,13 @@ import SortableItem from "@/app/components/SortableItem";
 import {
   AudioTrack,
   GroupTrack,
-  IAudioTrack,
   MidiTrack,
   TimeTrack,
 } from "@/app/core/tracks";
 import useProjectSettings from "@/app/hooks/useProjectSettings";
-import Locator from "@/app/components/Locator";
 
-import { ETrackType } from "@/app/core/tracks/types";
-import type { TTrack } from "@/app/core/config/types";
+import { ETrackType, ITrack } from "@/app/core/tracks/types";
+import Locator from "./Locator";
 
 export default function Arranger() {
   const { projectSettings, updateProjectSettings } = useProjectSettings();
@@ -38,36 +36,36 @@ export default function Arranger() {
     },
   };
 
-  function getTrack(trackConfig: TTrack) {
-    const { type } = trackConfig;
+  function getTrack(track: ITrack) {
+    const { type } = track;
     switch (type) {
       case ETrackType.Audio:
-        return <AudioTrack {...(trackConfig as IAudioTrack)} />;
+        const url = track.url as string;
+        return <AudioTrack url={url} {...track} />;
       case ETrackType.Group:
-        return <GroupTrack {...trackConfig} />;
+        return <GroupTrack {...track} />;
       case ETrackType.Midi:
-        return <MidiTrack {...trackConfig} />;
+        return <MidiTrack {...track} />;
       case ETrackType.Time:
-        return <TimeTrack {...trackConfig} />;
+        return <TimeTrack {...track} />;
       default:
         return <div>Track type doesn&apos;t exist: &apos;{type}&apos;</div>;
     }
   }
 
-  function Tracks(tracks: TTrack[]) {
-    return tracks.map((trackConfig) => {
-      const { id, type } = trackConfig;
+  function Tracks(tracks: ITrack[]) {
+    return tracks.map((track) => {
+      const { id, type } = track;
 
       if (type === ETrackType.Time || type === ETrackType.Group)
         return (
           <li id={id as string} key={id}>
-            {getTrack(trackConfig)}
+            {getTrack(track)}
           </li>
         );
-
       return (
         <SortableItem id={id as string} key={id}>
-          {getTrack(trackConfig)}
+          {getTrack(track)}
         </SortableItem>
       );
     });

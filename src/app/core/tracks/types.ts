@@ -12,6 +12,7 @@ interface ITrackRouting {
   input: {
     instrument?: any;
     label: string;
+    notes?: (string | undefined)[];
     onClick: (event: MouseEvent<HTMLDivElement>) => void;
   };
   output: string | null;
@@ -21,7 +22,6 @@ interface ITrackRouting {
 interface ITrack {
   url?: string;
   id: UniqueIdentifier;
-  instrument?: any;
   name: string;
   routing: ITrackRouting;
   type: ETrackType;

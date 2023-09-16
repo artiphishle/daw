@@ -1,53 +1,71 @@
 import useSWR, { useSWRConfig, type Fetcher } from "swr";
 
-import { useBassSynth } from "@/app/core/instruments";
+import {
+  useBaseDrum,
+  useBassSynth,
+  useHiHat,
+  useSnareDrum,
+} from "@/app/core/instruments";
 
 import { EEndpoint } from "@/pages/api/constants";
 import type { IProjectSettings } from "@/app/core/config/types";
 
 export enum EInstrument {
+  BaseDrum = "BaseDrum",
+  SnareDrum = "SnareDrum",
+  ClosedHiHat = "ClosedHiHat",
+
   BassSynth = "BassSynth",
-  PollySynth = "PollySynth",
-  FMSynth = "FMSynth",
-  AMSynth = "AMSynth",
-  DuoSynth = "DuoSynth",
-  MembraneSynth = "MembraneSynth",
-  MetalSynth = "MetalSynth",
-  MonoSynth = "MonoSynth",
-  NoiseSynth = "NoiseSynth",
-  PluckSynth = "PluckSynth",
-  Sampler = "Sampler",
-  Synth = "Synth",
+  // PollySynth = "PollySynth",
+  // FMSynth = "FMSynth",
+  // AMSynth = "AMSynth",
+  // DuoSynth = "DuoSynth",
+  // MembraneSynth = "MembraneSynth",
+  // MetalSynth = "MetalSynth",
+  // MonoSynth = "MonoSynth",
+  // NoiseSynth = "NoiseSynth",
+  // PluckSynth = "PluckSynth",
+  // Sampler = "Sampler",
+  // Synth = "Synth",
 }
 
+// TODO Put api into: /app/api/
 export default function useProjectSettings() {
   // TODO dynamically load instruments
-  const bassSynth = useBassSynth();
+  const INSTRUMENT = {
+    BaseDrum: () => useBaseDrum(),
+    SnareDrum: () => useSnareDrum(),
+    ClosedHiHat: () => useHiHat({ open: false }),
+    BassSynth: () => useBassSynth(),
+  };
 
-  const { mutate } = useSWRConfig();
+  /**
+   * FETCH
+   */
   const fetcher: Fetcher<IProjectSettings, EEndpoint> = (endpoint: EEndpoint) =>
     fetch(endpoint).then((res) => {
       return new Promise(async (resolve) => {
-        const { tracks, ...rest } = (await res.json()) as IProjectSettings;
+        const projectSettings = (await res.json()) as IProjectSettings;
+        const { tracks, ...rest } = projectSettings;
         const mutatedTracks = tracks.map((track) => {
-          const { instrument, label, onClick } = track.routing.input;
-          if (!instrument) return track;
+          const {
+            instrument: instrumentString,
+            label,
+            notes,
+            onClick,
+          } = track.routing.input;
+          if (!instrumentString) return track;
 
-          switch (instrument) {
-            case EInstrument.BassSynth:
-              const mutatedRouting = {
-                ...track.routing,
-                input: { label, onClick, instrument: bassSynth },
-              };
-              return { ...track, routing: mutatedRouting };
-            default:
-              return track;
-          }
+          const selInstr = INSTRUMENT[instrumentString as EInstrument]();
+          const selRouting = {
+            ...track.routing,
+            input: { instrument: selInstr, label, notes, onClick },
+          };
+          return { ...track, routing: selRouting };
         });
         resolve({ ...rest, tracks: mutatedTracks });
       });
     });
-
   const {
     data: projectSettings,
     isLoading,
@@ -56,6 +74,10 @@ export default function useProjectSettings() {
     revalidateOnFocus: false, // would make Wavesurfer audio file disappear
   });
 
+  /**
+   * UPdATE
+   */
+  const { mutate } = useSWRConfig();
   const updateProjectSettings = async (patch: Partial<IProjectSettings>) => {
     // DESELECTOR (cannot serialize instruments)
     const readyPatch = patch.tracks
@@ -78,6 +100,5 @@ export default function useProjectSettings() {
 
     mutate(EEndpoint.ProjectSettings);
   };
-
   return { projectSettings, isLoading, error, updateProjectSettings };
 }

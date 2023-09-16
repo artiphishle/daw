@@ -1,7 +1,7 @@
 import React, { type ReactNode } from "react";
+import { GripVerticalIcon } from "lucide-react";
 import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
-import { GripVerticalIcon } from "lucide-react";
 
 interface ISortableItemProps {
   children: ReactNode;

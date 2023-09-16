@@ -4,7 +4,7 @@ enum EMidiPluginType {
   Drums,
 }
 
-type TMidiChannel = Array<Note | null>;
+type TMidiChannel = (Note | undefined)[];
 interface IMidiPlugin {
   type?: EMidiPluginType.Drums;
   channels: TMidiChannel[];
