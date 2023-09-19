@@ -1,14 +1,12 @@
-import type { IMixer } from "@/app/components";
 import type { Note } from "tone/build/esm/core/type/NoteUnits";
 import type { ITrack } from "@/app/core/tracks/Track";
 
-type TNote = Note | undefined;
+type TNote = Note | null;
 
 interface IProjectSettings {
   bpm: number;
   clef: string;
   measureCount: number;
-  mixer: IMixer;
   name: string;
   position: string;
   quantization: number;

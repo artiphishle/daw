@@ -15,6 +15,8 @@ export default function Arranger() {
   if (!projectSettings) return null;
   const { tracks } = projectSettings;
 
+  console.log("traaaacks", tracks);
+
   const events = {
     dragEnd: (event: DragEndEvent) => {
       const { active, over } = event;

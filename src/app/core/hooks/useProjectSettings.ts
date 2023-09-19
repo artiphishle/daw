@@ -78,20 +78,17 @@ export default function useProjectSettings() {
     // DESELECTOR (cannot serialize instruments)
     const readyPatch = patch.tracks
       ? patch.tracks.map((track) => {
-          const { instrument } = track.routing.input;
+          const { instrument, label } = track.routing.input;
           if (!instrument) return track;
-          switch (instrument) {
-            case EInstrument.BassSynth:
-              let deselectedTrack = { ...track };
-              deselectedTrack.routing.input.instrument = EInstrument.BassSynth;
-              return deselectedTrack;
-          }
+          let deselectedTrack = { ...track };
+          deselectedTrack.routing.input.instrument = label;
+          return deselectedTrack;
         })
       : patch;
 
     await fetch(EEndpoint.ProjectSettings, {
       method: "PATCH",
-      body: JSON.stringify(readyPatch),
+      body: JSON.stringify(patch.tracks ? { tracks: readyPatch } : readyPatch),
     });
 
     mutate(EEndpoint.ProjectSettings);

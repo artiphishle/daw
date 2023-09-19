@@ -8,6 +8,7 @@ import { Meter } from "@/app/components";
 import { Accordion } from "@/app/ui";
 
 import { ETrackType } from "@/app/core/tracks/types";
+import { TrackColor } from "@/app/core/config/styles";
 
 export interface IMixer {
   settings: {
@@ -25,10 +26,7 @@ export default function Mixer() {
   if (isLoading) return <Loader />;
   if (!projectSettings) throw error;
 
-  const {
-    tracks,
-    mixer: { settings },
-  } = projectSettings;
+  const { tracks } = projectSettings;
 
   const styles = {
     mixer: "p-1 bg-[#333] flex justify-between w-full",
@@ -53,7 +51,11 @@ export default function Mixer() {
             input.instrument.chain(meter, Destination);
           }
 
-          const { bg, label, text } = settings[type];
+          const trackColor = TrackColor[type];
+          const bgColor =
+            type === ETrackType.Group ? "bg-white" : trackColor.bg;
+          const textColor = trackColor.text;
+
           const RoutingDetails = () => (
             <ol>
               <li className="text-center bg-white p-1">
@@ -72,38 +74,34 @@ export default function Mixer() {
               <li className="text-center bg-white p-1">empty</li>
             </ol>
           );
+          const details = [
+            { Details: RoutingDetails, label: "Routing" },
+            { Details: InsertDetails, label: "Inserts" },
+            { Details: SendDetails, label: "Sends" },
+          ];
 
           return (
             <section
               key={`mixer-track-${id}`}
-              className={classNames(`${styles.track} ${text}`, {
+              className={classNames(`${styles.track} ${textColor}`, {
                 "ml-auto": name === "Mixbus",
               })}
             >
-              <Accordion
-                open={true}
-                summary={
-                  <h2 className={`${styles.trackInner} ${bg}`}>Routing</h2>
-                }
-                details={<RoutingDetails />}
-              ></Accordion>
-              <Accordion
-                open={true}
-                summary={
-                  <h2 className={`${styles.trackInner} ${bg}`}>Inserts</h2>
-                }
-                details={<InsertDetails />}
-              />
-              <Accordion
-                open={true}
-                summary={
-                  <h2 className={`${styles.trackInner} ${bg}`}>Sends</h2>
-                }
-                details={<SendDetails />}
-              />
-              <div className={`${styles.trackInner} ${bg}`}>
+              {details.map(({ Details, label }, detailsIndex) => (
+                <Accordion
+                  key={`mixer-track-${id}-accordion-${detailsIndex}`}
+                  open={true}
+                  summary={
+                    <h2 className={classNames(styles.trackInner, bgColor)}>
+                      {label}
+                    </h2>
+                  }
+                  details={<Details />}
+                />
+              ))}
+              <div className={`${styles.trackInner} ${bgColor}`}>
                 <Meter meter={meter} />
-                <div>{label}</div>
+                <div>{type}</div>
                 <div>{name}</div>
               </div>
             </section>

@@ -1,4 +1,4 @@
-import { Sequence } from "tone";
+import { Sequence, type Sequence as TSequence } from "tone";
 import classNames from "classnames";
 
 import {
@@ -13,12 +13,9 @@ import WaveForm from "@/app/core/tracks/audio/WaveForm";
 
 import { EInstrument } from "@/app/core/hooks/useProjectSettings";
 import { ETrackType } from "@/app/core/tracks/types";
-import type { TNote } from "@/app/core/config/types";
+import type { IProjectSettings, TNote } from "@/app/core/config/types";
 import type { MouseEvent, ReactNode } from "react";
 
-interface INote {
-  note?: TNote;
-}
 interface ITrackConfig {
   Icon: TIcon;
   draw: (args: { [k: string]: any }) => ReactNode;
@@ -46,38 +43,76 @@ const groupConfig: ITrackConfig = {
     return <div />;
   },
 };
+
+function play(instrument: any, label: string, notes: TNote[]) {
+  return new Sequence(
+    (time, note) => {
+      if (!note) return;
+      const isNoise = [EInstrument.SnareDrum, EInstrument.ClosedHiHat].includes(
+        label as EInstrument
+      );
+
+      return isNoise
+        ? instrument.triggerAttackRelease("8n", time)
+        : instrument.triggerAttackRelease(note, "8n", time);
+    },
+    notes,
+    "4n"
+  ).start(0);
+}
 const midiConfig: ITrackConfig = {
   Icon: MidiIcon,
-  draw: ({ notes }) => {
-    function Note({ note }: INote) {
+  draw: ({ id: trackId, projectSettings, updateProjectSettings }) => {
+    let seq: TSequence;
+    const { tracks } = projectSettings as IProjectSettings;
+    const [track] = tracks.filter((track) => track.id === trackId);
+    const notes = track.routing.input.notes;
+
+    const onToggle = async (event: MouseEvent<HTMLDivElement>) => {
+      seq.dispose();
+
+      const currentTrack = event.target as HTMLDivElement;
+      const [track] = tracks.filter((track) => track.id === currentTrack.id);
+      const noteIndex = parseInt(currentTrack.getAttribute("data-noteindex")!);
+      let newNotes = track.routing.input.notes;
+      newNotes[noteIndex] = newNotes[noteIndex] ? null : "C1";
+
+      const newTracks = tracks.map((track) => {
+        if (track.id !== trackId) return track;
+        let newTrack = { ...track };
+        newTrack.routing.input.notes = newNotes;
+        return newTrack;
+      });
+      await updateProjectSettings({ tracks: newTracks });
+      play(track.routing.input.instrument, track.routing.input.label, newNotes);
+    };
+    const { instrument, label } = track.routing.input;
+    seq = play(instrument, label, notes);
+
+    function Note(props: { note: TNote; noteIndex: number }) {
+      const { note, noteIndex } = props;
+
       const css = styles.notes;
       return (
-        <div className={classNames(css.main, note ? css.bgActive : css.bg)}>
+        <div
+          id={trackId}
+          onClick={onToggle}
+          className={classNames(css.main, note ? css.bgActive : css.bg)}
+          data-noteindex={noteIndex}
+        >
           {note || ""}
         </div>
       );
     }
+
     return (notes as TNote[]).map((note, noteIndex) => (
-      <Note note={note} key={`note-${noteIndex}-${note}`} />
+      <Note
+        note={note}
+        noteIndex={noteIndex}
+        key={`note-${noteIndex}-${note}`}
+      />
     ));
   },
-  play: ({ instrument, label, notes }) =>
-    (() =>
-      new Sequence(
-        (time, note) => {
-          if (!note) return;
-          const isNoise = [
-            EInstrument.SnareDrum,
-            EInstrument.ClosedHiHat,
-          ].includes(label as EInstrument);
-
-          return isNoise
-            ? instrument.triggerAttackRelease("8n", time)
-            : instrument.triggerAttackRelease(note, "8n", time);
-        },
-        notes,
-        "4n"
-      ).start(0))(),
 };
 
 const timeConfig: ITrackConfig = {

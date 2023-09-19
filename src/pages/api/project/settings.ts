@@ -10,10 +10,13 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
       return res.status(200).json(projectSettings);
 
     case "PATCH":
-      projectSettings = {
-        ...projectSettings,
-        ...JSON.parse(req.body),
-      };
+      projectSettings = Object.assign(
+        {},
+        {
+          ...projectSettings,
+          ...JSON.parse(req.body),
+        }
+      );
       return res.status(200).json(projectSettings);
 
     default:

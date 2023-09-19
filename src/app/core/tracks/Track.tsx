@@ -18,32 +18,31 @@ export interface ITrack {
   url?: string;
 }
 
-function Track({
-  id,
-  url,
-  routing: { input },
-  name = t("untitled"),
-  type,
-}: ITrack) {
-  const { Icon, draw, play } = useTrackConfig(type)!;
-  const { projectSettings } = useProjectSettings();
+function Track(track: ITrack) {
+  const { id, url, name = t("untitled"), type } = track;
+  const { Icon, draw } = useTrackConfig(type)!;
+  const { projectSettings, updateProjectSettings } = useProjectSettings();
   if (!projectSettings) return null;
 
   const { measureCount } = projectSettings;
-  const { instrument, label, notes } = input;
   const css = styles.track;
   const cssLi = css.row(type);
   const isSortable = ![ETrackType.Time, ETrackType.Group].includes(type);
-
-  play && play({ instrument, label, notes });
-
   const Tpl = () => (
     <>
       <div className={css.col1.main(type)}>
         <Icon className={css.icon(type)} />
         <div className={css.col1.name}>{name}</div>
       </div>
-      <div className={css.col2.main}>{draw({ measureCount, notes, url })}</div>
+      <div className={css.col2.main}>
+        {draw({
+          measureCount,
+          projectSettings,
+          id,
+          url,
+          updateProjectSettings,
+        })}
+      </div>
     </>
   );
 

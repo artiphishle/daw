@@ -2,11 +2,13 @@ import { useState, type ReactNode, MouseEvent, ReactEventHandler } from "react";
 
 interface IAccordionDetailsProps {
   children: ReactNode;
+  className?: string;
   open?: boolean;
 }
 
 export default function AccordionDetails({
   children,
+  className = "",
   open = false,
 }: IAccordionDetailsProps) {
   const [y, setY] = useState<number>(0);
@@ -28,6 +30,7 @@ export default function AccordionDetails({
 
   return (
     <details
+      className={className}
       onMouseDown={onDragStart}
       onMouseUp={onDragEnd}
       onToggle={onToggle}
