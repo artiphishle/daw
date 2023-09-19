@@ -1,9 +1,9 @@
-import { useState } from "react";
-import { TimerIcon } from "lucide-react";
+import styles from "@/app/core/config/styles";
+import useProjectSettings from "@/app/core/hooks/useProjectSettings";
 
-import { styles } from "../styles";
-import { ETrackType, type ITrack } from "../types";
-import useProjectSettings from "@/app/hooks/useProjectSettings";
+import { ETrackType } from "@/app/core/tracks/types";
+import type { ITrack } from "@/app/core/tracks/Track";
+import { TimeIcon } from "../../config/icons";
 
 export interface ITimeTrack extends ITrack {}
 
@@ -15,8 +15,8 @@ export default function TimeTrack({}: ITimeTrack) {
 
   return (
     <div className="flex flex-1 bg-white items-center">
-      <div className={styles.track.column1(ETrackType.Time)}>
-        <TimerIcon className="w-10" />
+      <div className={styles.track.col1.main(ETrackType.Time)}>
+        <TimeIcon className="w-10" />
         <div className="whitespace-nowrap w-28 overflow-x-hidden text-ellipsis">
           &nbsp;
         </div>

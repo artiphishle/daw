@@ -1,21 +1,20 @@
 import { GroupIcon } from "lucide-react";
 import cn from "classnames";
 
-import { styles } from "@/app/core/tracks/styles";
+import styles from "@/app/core/config/styles";
+import useProjectSettings from "@/app/core/hooks/useProjectSettings";
 
-import { ETrackType, type ITrack } from "../types";
-import useProjectSettings from "@/app/hooks/useProjectSettings";
+import { ETrackType } from "../types";
+import type { ITrack } from "../Track";
 
-export interface IGroupTrack extends ITrack {}
-
-export default function GroupTrack({ name }: IGroupTrack) {
+export default function GroupTrack({ name }: ITrack) {
   const { projectSettings } = useProjectSettings();
   if (!projectSettings) return null;
   const { tracks } = projectSettings;
 
   return (
     <div className={cn(styles.track.row(ETrackType.Group), "bg-white")}>
-      <div className={styles.track.column1(ETrackType.Group)}>
+      <div className={styles.track.col1.main(ETrackType.Group)}>
         <GroupIcon className={styles.track.icon(ETrackType.Audio)} />
         <div className="whitespace-nowrap w-28 overflow-x-hidden text-ellipsis">
           {name}

@@ -3,13 +3,11 @@ import { ListMusicIcon } from "lucide-react";
 import { Sequence } from "tone";
 import cn from "classnames";
 
-import { styles } from "@/app/core/tracks/styles";
+import styles from "@/app/core/config/styles";
 
-import { ETrackType, type ITrack } from "@/app/core/tracks/types";
-import { EInstrument } from "@/app/hooks/useProjectSettings";
-import type { Note } from "tone/build/esm/core/type/NoteUnits";
-
-type TNote = Array<Note | undefined>;
+import { ETrackType } from "@/app/core/tracks/types";
+import { EInstrument } from "@/app/core/hooks/useProjectSettings";
+import type { ITrack } from "../Track";
 
 export default function MidiTrack({
   name,
@@ -35,26 +33,24 @@ export default function MidiTrack({
   const events = {
     togglePad: function (event: MouseEvent<HTMLDivElement>) {
       const pad = event.target as HTMLDivElement;
-      pad.classList.toggle(styles.bg.pad);
-      pad.classList.toggle(styles.bg.padActive);
+      pad.classList.toggle(styles.notes.bg);
+      pad.classList.toggle(styles.notes.bgActive);
     },
   };
 
   return (
     <div className={cn(styles.track.row(ETrackType.Midi), "bg-orange-200")}>
-      <div className={styles.track.column1(ETrackType.Midi)}>
+      <div className={styles.track.col1.main(ETrackType.Midi)}>
         <ListMusicIcon className={styles.track.icon(ETrackType.Midi)} />
-        <div className="whitespace-nowrap w-28 overflow-x-hidden text-ellipsis">
-          {name}
-        </div>
+        <div className={styles.track.col1.name}>{name}</div>
       </div>
-      <div className={`p-1 flex w-full border-r border-orange-200`}>
+      <div className={styles.track.col2.main}>
         {notes.map((note, padIndex) => {
           return (
             <div
               className={cn(
-                "flex-1 mr-1 text-white text-center cursor-pointer text-[0.6rem]",
-                styles.bg[!!note ? "padActive" : "pad"]
+                styles.notes.main,
+                styles.notes[!!note ? "bgActive" : "bg"]
               )}
               onClick={events.togglePad}
               key={`pad-${padIndex}}`}

@@ -4,9 +4,9 @@ import { start } from "tone";
 
 import t from "@/app/core/i18n";
 import generalStyles from "@/app/core/config/styles";
-import { styles } from "@/app/core/tracks/styles";
-import useAudioConverter from "@/app/core/tracks/midi/useAudioConverter";
-// import AudioToMidi from "@/app/core/tracks/midi/AudioToMidi";
+import styles from "@/app/core/config/styles";
+
+import useConverter from "./core/hooks/useConverter";
 
 import {
   Arranger,
@@ -18,21 +18,27 @@ import {
 } from "@/app/components";
 
 import { Dialog, Tabs, type ITabs } from "@/app/ui";
-import data from "./components/sheet.data";
+import data from "@/app/components/sheet.data";
 import PollySynth from "./core/instruments/synths/PollySynth";
 import SnareDrum from "./core/instruments/drums/snareDrum/SnareDrum";
 // import { PanSongParsed } from "./test/unit/PanSong.parsed";
 
 export default function Home() {
   const [toneReady, setToneReady] = useState(false);
-  const { audioToAbc } = useAudioConverter();
+  const { audioToAbc, audioToMidi } = useConverter();
+  (async function () {
+    try {
+      // TODO stream it & not run always at start up
+      const notes = await audioToMidi({ audio: "/halloween.mp3" });
+    } catch (error) {
+      console.error(error);
+    }
+  });
 
   useEffect(() => {
     if (!toneReady) return;
     (async function () {
       try {
-        // TODO stream it & not run always at start up
-        // const notes = await AudioToMidi();
         // setAbcParsed(await audioToAbc(PanSongParsed));
       } catch (error) {
         console.error(error);
@@ -120,5 +126,5 @@ export default function Home() {
     );
   }
 
-  return <>{toneReady ? <App /> : <StartDialog />}</>;
+  return toneReady ? <App /> : <StartDialog />;
 }

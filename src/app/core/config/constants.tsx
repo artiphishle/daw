@@ -1,14 +1,9 @@
 import t from "@/app/core/i18n";
 
-import { EInstrument } from "@/app/hooks/useProjectSettings";
+import { EInstrument } from "@/app/core/hooks/useProjectSettings";
 import { ETrackType } from "@/app/core/tracks/types";
 import type { IMixer } from "@/app/components/Mixer";
-import type {
-  IAudioTrack,
-  IGroupTrack,
-  IMidiTrack,
-  ITimeTrack,
-} from "../tracks";
+import type { ITrack } from "../tracks/Track";
 
 /**
  * GENERAL
@@ -27,24 +22,33 @@ const DEFAULT_QUANTIZATION = 8;
  */
 
 // TIME
-const DEFAULT_TRACK_TIME: ITimeTrack = {
+const DEFAULT_TRACK_TIME: ITrack = {
   id: "track-time",
   name: "",
   routing: {
-    input: { label: "None", onClick: () => {} },
+    input: {
+      id: "track-time-01",
+      instrument: null,
+      label: "None",
+      notes: [],
+      onClick: () => {},
+    },
     output: null,
   },
   type: ETrackType.Time,
 };
 
 // AUDIO
-const DEFAULT_AUDIO_TRACK: IAudioTrack = {
+const DEFAULT_AUDIO_TRACK: ITrack = {
   id: "audio-test",
   name: "Halloween",
   url: "/halloween.mp3",
   routing: {
     input: {
+      id: "track-audio-halloween",
+      instrument: null,
       label: "Audio",
+      notes: [],
       onClick: () => alert("soon"),
     },
     output: "mixbus",
@@ -53,11 +57,12 @@ const DEFAULT_AUDIO_TRACK: IAudioTrack = {
 };
 
 // DRUMS
-const DEFAULT_MIDI_BD_TRACK: IMidiTrack = {
+const DEFAULT_MIDI_BD_TRACK: ITrack = {
   id: "track-midi-bd",
   name: "BD",
   routing: {
     input: {
+      id: "track-midi-bd-01",
       label: EInstrument.BaseDrum,
       notes: [
         "C1",
@@ -100,11 +105,12 @@ const DEFAULT_MIDI_BD_TRACK: IMidiTrack = {
   },
   type: ETrackType.Midi,
 };
-const DEFAULT_MIDI_SD_TRACK: IMidiTrack = {
+const DEFAULT_MIDI_SD_TRACK: ITrack = {
   id: "track-midi-sd",
   name: "SD",
   routing: {
     input: {
+      id: "",
       label: EInstrument.SnareDrum,
       notes: [
         undefined,
@@ -147,15 +153,16 @@ const DEFAULT_MIDI_SD_TRACK: IMidiTrack = {
   },
   type: ETrackType.Midi,
 };
-const DEFAULT_MIDI_CHH_TRACK: IMidiTrack = {
+const DEFAULT_MIDI_CHH_TRACK: ITrack = {
   id: "track-midi-chh",
   name: "CHH",
   routing: {
     input: {
+      id: "",
       label: EInstrument.ClosedHiHat,
       notes: new Array(32).fill("F#1").map((n) => n),
       onClick: () => alert("SnareDrum"),
-      instrument: EInstrument.SnareDrum,
+      instrument: EInstrument.ClosedHiHat,
     },
     output: "drums",
   },
@@ -163,46 +170,48 @@ const DEFAULT_MIDI_CHH_TRACK: IMidiTrack = {
 };
 
 // BASS
-const DEFAULT_MIDI_BASS_TRACK: IMidiTrack = {
+const DEFAULT_MIDI_BASS_TRACK: ITrack = {
   id: "track-midi-bass",
   name: "Bass",
   routing: {
     input: {
+      id: "",
       label: EInstrument.BassSynth,
       onClick: () => alert("soon"),
       instrument: EInstrument.BassSynth,
       notes: [
-        "C2",
-        "E2",
-        "G2",
+        undefined,
+        undefined,
+        undefined,
         undefined,
         "C2",
+        undefined,
+        undefined,
+        undefined,
         "E2",
+        undefined,
+        undefined,
+        undefined,
         "G2",
         undefined,
-        "C2",
-        "E2",
-        "G2",
+        undefined,
+        undefined,
+
+        undefined,
+        undefined,
+        undefined,
         undefined,
         "C2",
+        undefined,
+        undefined,
+        undefined,
         "E2",
+        undefined,
+        undefined,
+        undefined,
         "G2",
         undefined,
-        "C2",
-        "E2",
-        "G2",
         undefined,
-        "C2",
-        "E2",
-        "G2",
-        undefined,
-        "C2",
-        "E2",
-        "G2",
-        undefined,
-        "C2",
-        "E2",
-        "G2",
         undefined,
       ],
     },
@@ -212,24 +221,30 @@ const DEFAULT_MIDI_BASS_TRACK: IMidiTrack = {
 };
 
 // GROUP
-const DEFAULT_GROUP_DRUMS: IGroupTrack = {
+const DEFAULT_GROUP_DRUMS: ITrack = {
   id: "drums",
   type: ETrackType.Group,
   name: "Drums",
   routing: {
     input: {
+      id: "",
+      instrument: null,
       label: "Drums",
+      notes: [],
       onClick: () => alert("Group: Drums"),
     },
     output: "mixbus",
   },
 };
-const DEFAULT_GROUP_MIXBUS: IGroupTrack = {
+const DEFAULT_GROUP_MIXBUS: ITrack = {
   id: "mixbus",
   name: "Mixbus",
   routing: {
     input: {
+      id: "",
+      instrument: null,
       label: "All",
+      notes: [],
       onClick: () => alert("soon"),
     },
     output: "master",

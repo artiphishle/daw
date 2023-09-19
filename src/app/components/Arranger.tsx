@@ -5,17 +5,10 @@ import {
   verticalListSortingStrategy,
 } from "@dnd-kit/sortable";
 
-import SortableItem from "@/app/components/SortableItem";
-import {
-  AudioTrack,
-  GroupTrack,
-  MidiTrack,
-  TimeTrack,
-} from "@/app/core/tracks";
-import useProjectSettings from "@/app/hooks/useProjectSettings";
+import useProjectSettings from "@/app/core/hooks/useProjectSettings";
 
-import { ETrackType, ITrack } from "@/app/core/tracks/types";
-import Locator from "./Locator";
+import { Locator } from "@/app/components";
+import Track from "@/app/core/tracks/Track";
 
 export default function Arranger() {
   const { projectSettings, updateProjectSettings } = useProjectSettings();
@@ -36,7 +29,8 @@ export default function Arranger() {
     },
   };
 
-  function getTrack(track: ITrack) {
+  /*
+  function Track(track: ITrack) {
     const { type } = track;
     switch (type) {
       case ETrackType.Audio:
@@ -52,33 +46,20 @@ export default function Arranger() {
         return <div>Track type doesn&apos;t exist: &apos;{type}&apos;</div>;
     }
   }
-
-  function Tracks(tracks: ITrack[]) {
-    return tracks.map((track) => {
-      const { id, type } = track;
-
-      if (type === ETrackType.Time || type === ETrackType.Group)
-        return (
-          <li id={id as string} key={id}>
-            {getTrack(track)}
-          </li>
-        );
-      return (
-        <SortableItem id={id as string} key={id}>
-          {getTrack(track)}
-        </SortableItem>
-      );
-    });
-  }
+  */
 
   return (
-    <DndContext collisionDetection={closestCenter} onDragEnd={events.dragEnd}>
-      <div className="relative">
+    <div className="relative">
+      <DndContext collisionDetection={closestCenter} onDragEnd={events.dragEnd}>
         <SortableContext items={tracks} strategy={verticalListSortingStrategy}>
-          <ol className="flex-1">{<>{Tracks(tracks)}</>}</ol>
+          <ol className="flex-1 bg-white">
+            {tracks.map((track, trackIndex) => (
+              <Track key={`track-${trackIndex}`} {...track} />
+            ))}
+          </ol>
         </SortableContext>
-        {projectSettings && <Locator projectSettings={projectSettings} />}
-      </div>
-    </DndContext>
+      </DndContext>
+      {projectSettings && <Locator projectSettings={projectSettings} />}
+    </div>
   );
 }

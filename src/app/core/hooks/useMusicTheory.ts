@@ -1,4 +1,4 @@
-import useProjectSettings from "@/app/hooks/useProjectSettings";
+import useProjectSettings from "@/app/core/hooks/useProjectSettings";
 import { Chord, Progression } from "tonal";
 
 export default function useMusicTheory() {

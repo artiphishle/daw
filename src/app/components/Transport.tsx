@@ -4,8 +4,8 @@ import { PauseIcon, PlayIcon } from "lucide-react";
 import { Transport as ToneTransport } from "tone";
 
 import t from "@/app/core/i18n";
-import useProjectSettings from "@/app/hooks/useProjectSettings";
-import useTransport from "../hooks/useTransport";
+import useProjectSettings from "@/app/core/hooks/useProjectSettings";
+import useTransport from "../core/hooks/useTransport";
 
 export enum ETransportState {
   Paused = "paused",

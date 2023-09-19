@@ -1,6 +1,7 @@
 import { type MouseEvent, useState } from "react";
 
 import { Nav, TabsPanel } from "@/app/ui";
+import classNames from "classnames";
 
 export interface ITabsItem {
   children: JSX.Element;
@@ -14,9 +15,16 @@ export interface ITabsItem {
 export interface ITabs {
   activeIndex: number;
   items: ITabsItem[];
+  className?: string;
+  vertical?: boolean;
 }
 
-export default function Tabs({ activeIndex = 0, items }: ITabs) {
+export default function Tabs({
+  activeIndex = 0,
+  items,
+  className = "",
+  vertical = false,
+}: ITabs) {
   const [tabItems] = useState(items);
   const [activeTabIndex, setActiveTabIndex] = useState(activeIndex);
 
@@ -32,7 +40,13 @@ export default function Tabs({ activeIndex = 0, items }: ITabs) {
   };
 
   return (
-    <section>
+    <section
+      className={classNames(
+        className,
+        "flex flex-1",
+        vertical ? "" : "flex-col"
+      )}
+    >
       <Nav
         activeIndex={activeTabIndex}
         items={tabItems}

@@ -9,7 +9,7 @@ export interface ITabsPanel {
 export default function TabPanel({ isActive, id, Content }: ITabsPanel) {
   return (
     <section
-      className={isActive ? "" : "hidden"}
+      className={isActive ? "flex flex-col flex-1 justify-between" : "hidden"}
       id={`${id}-panel`}
       role="tabpanel"
       aria-labelledby={`${id}`}

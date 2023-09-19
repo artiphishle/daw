@@ -48,18 +48,14 @@ export default function useProjectSettings() {
         const projectSettings = (await res.json()) as IProjectSettings;
         const { tracks, ...rest } = projectSettings;
         const mutatedTracks = tracks.map((track) => {
-          const {
-            instrument: instrumentString,
-            label,
-            notes,
-            onClick,
-          } = track.routing.input;
+          const { instrument: instrumentString, ...inputRest } =
+            track.routing.input;
           if (!instrumentString) return track;
 
           const selInstr = INSTRUMENT[instrumentString as EInstrument]();
           const selRouting = {
             ...track.routing,
-            input: { instrument: selInstr, label, notes, onClick },
+            input: { instrument: selInstr, ...inputRest },
           };
           return { ...track, routing: selRouting };
         });

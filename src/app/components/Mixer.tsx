@@ -3,7 +3,7 @@ import { Loader } from "lucide-react";
 import classNames from "classnames";
 
 import t from "@/app/core/i18n";
-import useProjectSettings from "@/app/hooks/useProjectSettings";
+import useProjectSettings from "@/app/core/hooks/useProjectSettings";
 import { Meter } from "@/app/components";
 import { Accordion } from "@/app/ui";
 

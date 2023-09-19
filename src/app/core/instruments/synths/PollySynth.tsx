@@ -1,6 +1,6 @@
 import { PolySynth, Synth } from "tone";
 
-import useMidiKeys from "@/app/hooks/useMidiKeys";
+import useMidiKeys from "@/app/core/hooks/useMidiKeys";
 
 export default function PollySynth() {
   const polySynth = new PolySynth(Synth, {

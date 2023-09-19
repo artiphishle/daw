@@ -1,7 +1,7 @@
 import t from "@/app/core/i18n";
 import generalStyles from "@/app/core/config/styles";
 import useMusicTheory from "@/app/core/hooks/useMusicTheory";
-import useProjectSettings from "../hooks/useProjectSettings";
+import useProjectSettings from "../core/hooks/useProjectSettings";
 
 enum EProgression {
   IVviIV = "I V vi IV",

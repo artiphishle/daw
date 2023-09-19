@@ -1,5 +1,8 @@
 import type { IMixer } from "@/app/components";
-import type { ITrack } from "../tracks/types";
+import type { Note } from "tone/build/esm/core/type/NoteUnits";
+import type { ITrack } from "@/app/core/tracks/Track";
+
+type TNote = Note | undefined;
 
 interface IProjectSettings {
   bpm: number;
@@ -12,4 +15,5 @@ interface IProjectSettings {
   tracks: ITrack[];
 }
 
+export type { TNote };
 export type { IProjectSettings };

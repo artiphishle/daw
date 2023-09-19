@@ -1,5 +1,6 @@
-import { UniqueIdentifier } from "@dnd-kit/core";
 import { type MouseEvent } from "react";
+import type { TNote } from "../config/types";
+import type { UniqueIdentifier } from "@dnd-kit/core";
 
 enum ETrackType {
   Audio = "audio",
@@ -8,24 +9,17 @@ enum ETrackType {
   Time = "time",
 }
 
+interface IRoutingInput {
+  id: UniqueIdentifier;
+  instrument: any;
+  label: string;
+  notes: TNote[];
+  onClick: (event: MouseEvent<HTMLDivElement>) => void;
+}
 interface ITrackRouting {
-  input: {
-    instrument?: any;
-    label: string;
-    notes?: (string | undefined)[];
-    onClick: (event: MouseEvent<HTMLDivElement>) => void;
-  };
+  input: IRoutingInput;
   output: string | null;
 }
 
-// TODO TimeTrack shouldn't have 'routing'
-interface ITrack {
-  url?: string;
-  id: UniqueIdentifier;
-  name: string;
-  routing: ITrackRouting;
-  type: ETrackType;
-}
-
 export { ETrackType };
-export type { ITrack };
+export type { ITrackRouting };
