@@ -1,4 +1,4 @@
-import { Sequence, type Sequence as TSequence } from "tone";
+import { Sequence, Transport, type Sequence as TSequence } from "tone";
 import classNames from "classnames";
 
 import {
@@ -52,9 +52,12 @@ function play(instrument: any, label: string, notes: TNote[]) {
         label as EInstrument
       );
 
+      if (typeof instrument === "string")
+        throw new Error(`Instrument is a string: ${instrument}`);
+
       return isNoise
-        ? instrument.triggerAttackRelease("8n", time)
-        : instrument.triggerAttackRelease(note, "8n", time);
+        ? instrument?.triggerAttackRelease("8n", time)
+        : instrument?.triggerAttackRelease(note, "8n", time);
     },
     notes,
     "4n"
@@ -66,8 +69,7 @@ const midiConfig: ITrackConfig = {
     let seq: TSequence;
     const { tracks } = projectSettings as IProjectSettings;
     const [track] = tracks.filter((track) => track.id === trackId);
-    const notes = track.routing.input.notes;
-
+    const { instrument, label, notes } = track.routing.input;
     const onToggle = async (event: MouseEvent<HTMLDivElement>) => {
       seq.dispose();
 
@@ -86,7 +88,6 @@ const midiConfig: ITrackConfig = {
       await updateProjectSettings({ tracks: newTracks });
       play(track.routing.input.instrument, track.routing.input.label, newNotes);
     };
-    const { instrument, label } = track.routing.input;
     seq = play(instrument, label, notes);
 
     function Note(props: { note: TNote; noteIndex: number }) {

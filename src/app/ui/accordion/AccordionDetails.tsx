@@ -26,6 +26,7 @@ export default function AccordionDetails({
       event.preventDefault();
       event.stopPropagation();
       console.log("[Arranger]: toggleable");
+    }
   };
 
   return (
