@@ -3,7 +3,7 @@ import useProjectSettings from "@/app/core/hooks/useProjectSettings";
 
 import { ETrackType } from "@/app/core/tracks/types";
 import type { ITrack } from "@/app/core/tracks/Track";
-import { TimeIcon } from "../../config/icons";
+import { TimeIcon } from "@/app/core/config/icons";
 
 export interface ITimeTrack extends ITrack {}
 

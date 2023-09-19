@@ -5,7 +5,7 @@ import useTransport from "@/app/core/hooks/useTransport";
 import { DEFAULT_OFFSET_LEFT } from "@/app/core/config/constants";
 
 import { EUnit } from "@/app/types";
-import type { IProjectSettings } from "../core/config/types";
+import type { IProjectSettings } from "@/app/core/config/types";
 
 interface ILocator {
   className?: string;

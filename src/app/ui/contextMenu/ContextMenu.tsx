@@ -1,5 +1,5 @@
 import { type MouseEvent } from "react";
-import List, { type IListItem } from "../list/List";
+import List, { type IListItem } from "@/app/ui/list/List";
 
 interface IContextMenuProps {
   items: IListItem[];

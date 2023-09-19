@@ -2,7 +2,7 @@ import t from "@/app/core/i18n";
 
 import { EInstrument } from "@/app/core/hooks/useProjectSettings";
 import { ETrackType } from "@/app/core/tracks/types";
-import type { ITrack } from "../tracks/Track";
+import type { ITrack } from "@/app/core/tracks/Track";
 
 /**
  * GENERAL

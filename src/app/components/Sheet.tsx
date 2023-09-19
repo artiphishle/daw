@@ -4,7 +4,7 @@ import { Midi } from "@tonejs/midi";
 import abcjs, { type TuneObjectArray } from "abcjs";
 import "abcjs/abcjs-audio.css";
 
-import { PanSongParsed as notes } from "../test/unit/PanSong.parsed";
+import { PanSongParsed as notes } from "@/app/test/unit/PanSong.parsed";
 import type { NoteEventTime as INoteEventTime } from "@spotify/basic-pitch/types";
 
 export enum ENoteStyle {

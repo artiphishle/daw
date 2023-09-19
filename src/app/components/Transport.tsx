@@ -5,7 +5,7 @@ import { Transport as ToneTransport } from "tone";
 
 import t from "@/app/core/i18n";
 import useProjectSettings from "@/app/core/hooks/useProjectSettings";
-import useTransport from "../core/hooks/useTransport";
+import useTransport from "@/app/core/hooks/useTransport";
 
 export enum ETransportState {
   Paused = "paused",

@@ -4,8 +4,8 @@ import cn from "classnames";
 import styles from "@/app/core/config/styles";
 import useProjectSettings from "@/app/core/hooks/useProjectSettings";
 
-import { ETrackType } from "../types";
-import type { ITrack } from "../Track";
+import { ETrackType } from "@/app/core/tracks/types";
+import type { ITrack } from "@/app/core/tracks/Track";
 
 export default function GroupTrack({ name }: ITrack) {
   const { projectSettings } = useProjectSettings();

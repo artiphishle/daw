@@ -22,10 +22,10 @@ export default function AccordionDetails({
   // TODO investigate <Details> toggle event, and how to avoid open accordion when dragging
   const onToggle: ReactEventHandler<HTMLDetailsElement> = (event) => {
     if (Math.abs(y - yAfter) > 10) {
-      console.log("NOT TOGGLEABLE");
+      console.log("[Arranger]: not toggleable");
       event.preventDefault();
       event.stopPropagation();
-    } else console.log("TOGGLEABLE");
+      console.log("[Arranger]: toggleable");
   };
 
   return (

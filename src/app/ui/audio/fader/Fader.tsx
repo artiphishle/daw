@@ -1,4 +1,4 @@
-import RangeInput from "../../form/range/Range";
+import RangeInput from "@/app/ui/form/range/Range";
 
 export default function Fader() {
   const props = {

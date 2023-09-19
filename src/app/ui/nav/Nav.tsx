@@ -1,7 +1,6 @@
 import classNames from "classnames";
 import { MouseEvent, useState } from "react";
-import Anchor, { type IAnchor } from "../a/Anchor";
-import { ITabsItem } from "../tabs/Tabs";
+import Anchor, { type IAnchor } from "@/app/ui/a/Anchor";
 
 export interface INav {
   items: IAnchor[];

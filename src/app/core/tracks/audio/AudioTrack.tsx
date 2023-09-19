@@ -5,7 +5,7 @@ import styles from "@/app/core/config/styles";
 import WaveForm from "@/app/core/tracks/audio/WaveForm";
 
 import { ETrackType } from "@/app/core/tracks/types";
-import type { ITrack } from "../Track";
+import type { ITrack } from "@/app/core/tracks/Track";
 
 export interface IAudioTrack extends ITrack {
   url: string;

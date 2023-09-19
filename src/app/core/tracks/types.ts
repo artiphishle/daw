@@ -1,5 +1,5 @@
 import { type MouseEvent } from "react";
-import type { TNote } from "../config/types";
+import type { TNote } from "@/app/core/config/types";
 import type { UniqueIdentifier } from "@dnd-kit/core";
 
 enum ETrackType {

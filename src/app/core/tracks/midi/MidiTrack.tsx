@@ -7,7 +7,7 @@ import styles from "@/app/core/config/styles";
 
 import { ETrackType } from "@/app/core/tracks/types";
 import { EInstrument } from "@/app/core/hooks/useProjectSettings";
-import type { ITrack } from "../Track";
+import type { ITrack } from "@/app/core/tracks/Track";
 
 export default function MidiTrack({
   name,
