@@ -1,6 +1,5 @@
-import { type MouseEvent } from "react";
+import type { MouseEvent } from "react";
 import type { TNote } from "@/app/core/config/types";
-import type { UniqueIdentifier } from "@dnd-kit/core";
 
 enum ETrackType {
   Audio = "audio",
@@ -10,7 +9,6 @@ enum ETrackType {
 }
 
 interface IRoutingInput {
-  id: UniqueIdentifier;
   instrument: any;
   label: string;
   notes: TNote[];
