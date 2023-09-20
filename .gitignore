@@ -1,0 +1,27 @@
+# Project
+public/samples/
+
+# NPM
+npm-debug.log*
+node_modules/
+
+# Next.js
+.*.env
+.next/
+.swc/
+.vercel
+build/
+next-env.d.ts
+out/
+
+# Jest
+coverage/
+
+# OSX
+.DS_Store
+*.pem
+
+
+# TypeScript
+*.tsbuildinfo
+
