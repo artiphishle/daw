@@ -48,6 +48,7 @@ export default function Tabs({
       )}
     >
       <Nav
+        className={vertical ? "flex-col py-8 bg-[#333]" : ""}
         activeIndex={activeTabIndex}
         items={tabItems}
         role="tablist"

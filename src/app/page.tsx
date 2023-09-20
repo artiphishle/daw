@@ -21,6 +21,7 @@ import { Dialog, Tabs, type ITabs } from "@/app/ui";
 import data from "@/app/components/sheet.data";
 import PollySynth from "./core/instruments/synths/PollySynth";
 import SnareDrum from "./core/instruments/drums/snareDrum/SnareDrum";
+import { CogIcon, GridIcon, HopIcon, InfinityIcon } from "lucide-react";
 // import { PanSongParsed } from "./test/unit/PanSong.parsed";
 
 export default function Home() {
@@ -65,10 +66,17 @@ export default function Home() {
 
   function App() {
     const tabsProps: ITabs = {
+      // vertical: true,
       activeIndex: 0,
       items: [
         {
-          children: <span>Arranger</span>,
+          children: (
+            <div className="flex">
+              <GridIcon className="w-[24px] h-[24px] mr-1" />
+              <span>Arranger</span>
+            </div>
+          ),
+
           id: "tabs-arranger",
           href: "#",
           order: 1,
@@ -81,15 +89,25 @@ export default function Home() {
           title: "Arranger",
         },
         {
-          children: <span>Sheet</span>,
+          children: (
+            <div className="flex">
+              <HopIcon className="w-[24px] h-[24px]" />
+              <span className="hidden">Sheets</span>
+            </div>
+          ),
           id: "tabs-sheet",
           href: "#",
           order: 2,
-          panel: <>{<Sheet markdown={data[2]} />},</>,
+          panel: <>{<Sheet markdown={data[2]} />}</>,
           title: "Sheet",
         },
         {
-          children: <span>Settings</span>,
+          children: (
+            <div className="flex">
+              <CogIcon className="w-[24px] h-[24px]" />
+              <span className="hidden">Settings</span>
+            </div>
+          ),
           id: "tabs-settings",
           href: "#",
           order: 3,
@@ -97,7 +115,12 @@ export default function Home() {
           title: "Settings",
         },
         {
-          children: <span>Test</span>,
+          children: (
+            <div className="flex">
+              <InfinityIcon className="w-[24px] h-[24px]" />
+              <span className="hidden">Tests</span>
+            </div>
+          ),
           id: "tabs-test",
           href: "#",
           order: 4,

@@ -23,7 +23,10 @@ export default function Nav({
     <nav className={`flex items-center ${className}`} {...props}>
       {navItems.map(({ href, id, children, order }, aIndex) => {
         const isActive = activeIndex === aIndex;
-        const styles = classNames(className, isActive ? "bg-white" : "");
+        const styles = classNames(
+          className,
+          isActive ? "bg-white" : "bg-[#f1f1f280] mr-1 py-1"
+        );
         return (
           <Anchor
             className={styles}
