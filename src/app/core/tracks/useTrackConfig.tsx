@@ -1,4 +1,4 @@
-import { Sequence, Transport, type Sequence as TSequence } from "tone";
+import { Sequence, type Sequence as TSequence } from "tone";
 import classNames from "classnames";
 
 import {
@@ -9,7 +9,7 @@ import {
   type TIcon,
 } from "@/app/core/config/icons";
 import styles from "@/app/core/config/styles";
-import WaveForm from "@/app/core/tracks/audio/WaveForm";
+import WaveForm from "@/app/core/tracks/WaveForm";
 
 import { EInstrument } from "@/app/core/hooks/useProjectSettings";
 import { ETrackType } from "@/app/core/tracks/types";

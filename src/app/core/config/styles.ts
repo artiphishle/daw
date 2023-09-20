@@ -27,7 +27,7 @@ const TrackColor = {
     border: "text-orange-300",
   },
   [ETrackType.Group]: {
-    bg: "bg-white",
+    bg: "bg-green-100",
     text: "text-gray-800",
     border: "bg-gray-300",
   },
@@ -52,10 +52,11 @@ const styles = {
     "flex flex-col shadow-2xl p-4 w-22 absolute top-0 left-0 right-0 bottom-0",
   notes: {
     main: "flex flex-1 justify-center items-center mr-1 text-white text-center cursor-pointer text-[0.6rem]",
-    bg: `bg-orange-100`,
+    bg: `bg-transparent`,
     bgActive: `bg-orange-300`,
   },
   track: {
+    active: "font-bold bg-white text-black border border-2 border-black",
     col1: {
       main: (trackType: ETrackType) =>
         `flex justify-between items-center px-4 py-1 border-r border-r-${TrackColor[trackType].border}`,

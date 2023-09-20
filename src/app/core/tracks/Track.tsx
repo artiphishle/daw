@@ -8,9 +8,11 @@ import { SortableItem } from "@/app/components";
 
 import { ETrackType, ITrackRouting } from "@/app/core/tracks/types";
 import type { UniqueIdentifier } from "@dnd-kit/core";
+import classNames from "classnames";
 
 // TODO not every 'input' has notes, instrument, etc.
 export interface ITrack {
+  className?: string;
   id: UniqueIdentifier;
   routing: ITrackRouting;
   name: string;
@@ -19,14 +21,14 @@ export interface ITrack {
 }
 
 function Track(track: ITrack) {
-  const { id, url, name = t("untitled"), type } = track;
+  const { id, url, className = "", name = t("untitled"), type } = track;
   const { Icon, draw } = useTrackConfig(type)!;
   const { projectSettings, updateProjectSettings } = useProjectSettings();
   if (!projectSettings) return null;
 
   const { measureCount } = projectSettings;
   const css = styles.track;
-  const cssLi = css.row(type);
+  const cssLi = classNames(css.row(type), className);
   const isSortable = ![ETrackType.Time, ETrackType.Group].includes(type);
   const Tpl = () => (
     <>
@@ -45,7 +47,6 @@ function Track(track: ITrack) {
       </div>
     </>
   );
-
   return isSortable ? (
     <SortableItem className={cssLi} id={id}>
       <Tpl />

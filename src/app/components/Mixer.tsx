@@ -26,15 +26,17 @@ export default function Mixer() {
   if (isLoading) return <Loader />;
   if (!projectSettings) throw error;
 
-  const { tracks } = projectSettings;
+  const { tracks, activeTrackId } = projectSettings;
 
   const styles = {
-    mixer: "p-1 bg-[#333] flex justify-between w-full",
+    mixer: "p-1 flex justify-between w-full",
     mixerInner: "flex w-full",
-    track: "p-4 mr-2 justify-center text-xs items-center",
-    trackInner: "px-4 py-1 mt-1",
+    track: "bg-white border py-8 mr-2 justify-center text-xs items-center",
+    trackInner: "px-4 py-1",
     master: "h-full flex flex-col justify-end bg-cyan-100",
     mixbus: "h-full flex flex-col justify-end bg-cyan-200",
+    active: "text-black border-2 border-orange-800 font-bold",
+    inactive: "border-2 border-gray-200",
   };
 
   const masterMeter = new ToneMeter();
@@ -50,18 +52,14 @@ export default function Mixer() {
           if (input.instrument) {
             input.instrument.chain(meter, Destination);
           }
-
-          const trackColor = TrackColor[type];
-          const bgColor =
-            type === ETrackType.Group ? "bg-white" : trackColor.bg;
-          const textColor = trackColor.text;
+          const { bg, text } = TrackColor[type];
 
           const RoutingDetails = () => (
             <ol>
-              <li className="text-center bg-white p-1">
+              <li className="text-center p-1">
                 <div onClick={input.onClick}>{input.label}</div>
               </li>
-              <li className="text-center bg-white p-1">{output}</li>
+              <li className="text-center p-1">{output}</li>
             </ol>
           );
           const InsertDetails = () => (
@@ -83,23 +81,28 @@ export default function Mixer() {
           return (
             <section
               key={`mixer-track-${id}`}
-              className={classNames(`${styles.track} ${textColor}`, {
-                "ml-auto": name === "Mixbus",
-              })}
+              className={classNames(
+                `${styles.track} ${text}
+                ${styles[activeTrackId === id ? "active" : "inactive"]}
+                `,
+                {
+                  "ml-auto": name === "Mixbus",
+                }
+              )}
             >
               {details.map(({ Details, label }, detailsIndex) => (
                 <Accordion
                   key={`mixer-track-${id}-accordion-${detailsIndex}`}
                   open={true}
                   summary={
-                    <h2 className={classNames(styles.trackInner, bgColor)}>
+                    <h2 className={classNames(styles.trackInner, bg)}>
                       {label}
                     </h2>
                   }
                   details={<Details />}
                 />
               ))}
-              <div className={`${styles.trackInner} ${bgColor}`}>
+              <div className={`${styles.trackInner} ${bg}`}>
                 <Meter meter={meter} />
                 <div>{type}</div>
                 <div>{name}</div>
@@ -108,7 +111,9 @@ export default function Mixer() {
           );
         })}
 
-        <div className={`${styles.track} content-end text-xs`}>
+        <div
+          className={`${styles.track} bg-[cornflowerblue] content-end text-xs`}
+        >
           <div className={`${styles.trackInner} ${styles.master}`}>
             <Meter meter={masterMeter} />
             <div>&nbsp;</div>
