@@ -1,7 +1,7 @@
 import t from "@/app/core/i18n";
-import generalStyles from "@/app/core/config/styles";
+import styles from "@/app/core/config/styles";
 import useMusicTheory from "@/app/core/hooks/useMusicTheory";
-import useProjectSettings from "@/app/core/hooks/useProjectSettings";
+import useProjectContext from "@/app/core/hooks/useProjectContext";
 
 enum EProgression {
   IVviIV = "I V vi IV",
@@ -10,14 +10,14 @@ enum EProgression {
 export default function Progression() {
   const chords = useMusicTheory()?.getChords(EProgression.IVviIV);
 
-  const { projectSettings } = useProjectSettings();
-  if (!projectSettings) return null;
+  const { ProjectContext } = useProjectContext();
+  if (!ProjectContext) return null;
 
-  const { clef } = projectSettings;
+  const { clef } = ProjectContext;
 
   return (
     <section className="bg-white p-8 mb-8">
-      <h2 className={generalStyles.headings.h2}>{t("chordProgression")}</h2>
+      <h2 className={styles.headings.h2}>{t("chordProgression")}</h2>
       <p>
         Tonic <span className="p-2 bg-gray-200">{clef}</span> {t("progression")}
         : <span className="p-2 bg-gray-200">I V vi IV</span>

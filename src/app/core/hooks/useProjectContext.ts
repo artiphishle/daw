@@ -8,7 +8,7 @@ import {
 } from "@/app/core/instruments";
 
 import { EEndpoint } from "@/pages/api/constants";
-import type { IProjectSettings } from "@/app/core/config/types";
+import type { IProjectContext } from "@/app/core/config/types";
 
 export enum EInstrument {
   BaseDrum = "BaseDrum",
@@ -30,7 +30,7 @@ export enum EInstrument {
 }
 
 // TODO Put api into: /app/api/
-export default function useProjectSettings() {
+export default function useProjectContext() {
   // TODO dynamically load instruments
   const INSTRUMENT = {
     BaseDrum: () => useBaseDrum(),
@@ -42,11 +42,11 @@ export default function useProjectSettings() {
   /**
    * FETCH
    */
-  const fetcher: Fetcher<IProjectSettings, EEndpoint> = (endpoint: EEndpoint) =>
+  const fetcher: Fetcher<IProjectContext, EEndpoint> = (endpoint: EEndpoint) =>
     fetch(endpoint).then((res) => {
       return new Promise(async (resolve) => {
-        const projectSettings = (await res.json()) as IProjectSettings;
-        const { tracks, ...rest } = projectSettings;
+        const ProjectContext = (await res.json()) as IProjectContext;
+        const { tracks, ...rest } = ProjectContext;
         const mutatedTracks = tracks.map((track) => {
           const { instrument: instrumentString, ...inputRest } =
             track.routing.input;
@@ -63,10 +63,10 @@ export default function useProjectSettings() {
       });
     });
   const {
-    data: projectSettings,
+    data: ProjectContext,
     isLoading,
     error,
-  } = useSWR(EEndpoint.ProjectSettings, fetcher, {
+  } = useSWR(EEndpoint.ProjectContext, fetcher, {
     revalidateOnFocus: false, // would make Wavesurfer audio file disappear
   });
 
@@ -74,7 +74,7 @@ export default function useProjectSettings() {
    * UPdATE
    */
   const { mutate } = useSWRConfig();
-  const updateProjectSettings = async (patch: Partial<IProjectSettings>) => {
+  const updateProjectContext = async (patch: Partial<IProjectContext>) => {
     // DESELECTOR (cannot serialize instruments)
     const readyPatch = patch.tracks
       ? patch.tracks.map((track) => {
@@ -86,12 +86,12 @@ export default function useProjectSettings() {
         })
       : patch;
 
-    await fetch(EEndpoint.ProjectSettings, {
+    await fetch(EEndpoint.ProjectContext, {
       method: "PATCH",
       body: JSON.stringify(patch.tracks ? { tracks: readyPatch } : readyPatch),
     });
 
-    mutate(EEndpoint.ProjectSettings);
+    mutate(EEndpoint.ProjectContext);
   };
-  return { projectSettings, isLoading, error, updateProjectSettings };
+  return { ProjectContext, isLoading, error, updateProjectContext };
 }

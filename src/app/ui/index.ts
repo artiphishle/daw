@@ -3,6 +3,7 @@ import Anchor from "./a/Anchor";
 import Avatar from "./avatar/Avatar";
 import ContextMenu from "./contextMenu/ContextMenu";
 import Dialog from "./dialog/Dialog";
+import Grid from "./grid/Grid";
 import List from "./list/List";
 import Nav from "./nav/Nav";
 
@@ -20,7 +21,7 @@ import {
 import Tabs, { type ITabs } from "./tabs/Tabs";
 import TabsPanel from "./tabs/TabsPanel";
 
-export { Avatar, Anchor, ContextMenu, Dialog, List, Nav };
+export { Avatar, Anchor, ContextMenu, Dialog, Grid, List, Nav };
 export { Accordion, AccordionDetails, AccordionSummary };
 export { ErrorMessage, InfoMessage, LogMessage, SuccessMessage };
 export { Tabs, TabsPanel, type ITabs };

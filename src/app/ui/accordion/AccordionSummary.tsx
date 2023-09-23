@@ -10,5 +10,9 @@ export default function AccordionSummary({
   children,
   className = "",
 }: IAccordionSummaryProps) {
-  return <summary className={cn("list-none", className)}>{children}</summary>;
+  return (
+    <summary className={cn("cursor-pointer list-none", className)}>
+      {children}
+    </summary>
+  );
 }
