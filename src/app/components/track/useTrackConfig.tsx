@@ -9,11 +9,11 @@ import {
   type TIcon,
 } from "@/app/core/config/icons";
 import styles from "@/app/core/config/styles";
-import WaveForm from "@/app/core/tracks/WaveForm";
+import WaveForm from "@/app/components/track/WaveForm";
 
-import { EInstrument } from "@/app/core/hooks/useProjectSettings";
-import { ETrackType } from "@/app/core/tracks/types";
-import type { IProjectSettings, TNote } from "@/app/core/config/types";
+import { EInstrument } from "@/app/core/hooks/useProjectContext";
+import { ETrackType } from "@/app/components/track/types";
+import type { IProjectContext, TNote } from "@/app/core/config/types";
 import type { MouseEvent, ReactNode } from "react";
 
 interface ITrackConfig {
@@ -30,7 +30,6 @@ interface ITrackConfig {
     notes: TNote[];
   }) => void;
 }
-
 const audioConfig: ITrackConfig = {
   Icon: AudioIcon,
   draw: ({ url }) => {
@@ -64,9 +63,9 @@ function play(instrument: any, label: string, notes: TNote[]) {
 }
 const midiConfig: ITrackConfig = {
   Icon: MidiIcon,
-  draw: ({ id: trackId, projectSettings, updateProjectSettings }) => {
+  draw: ({ id: trackId, ProjectContext, updateProjectContext }) => {
     let seq: TSequence;
-    const { tracks } = projectSettings as IProjectSettings;
+    const { tracks } = ProjectContext as IProjectContext;
     const [track] = tracks.filter((track) => track.id === trackId);
     const { instrument, label, notes } = track.routing.input;
     const onToggle = (event: MouseEvent<HTMLDivElement>) => {
@@ -83,7 +82,7 @@ const midiConfig: ITrackConfig = {
         newTrack.routing.input.notes = newNotes;
         return newTrack;
       });
-      updateProjectSettings({ tracks: newTracks });
+      updateProjectContext({ tracks: newTracks });
     };
     seq = play(instrument, label, notes);
 

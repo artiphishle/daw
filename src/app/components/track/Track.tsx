@@ -1,14 +1,15 @@
+import classNames from "classnames";
 import propTypes from "prop-types";
 
 import t from "@/app/core/i18n";
 import styles from "@/app/core/config/styles";
-import useTrackConfig from "@/app/core/tracks/useTrackConfig";
-import useProjectSettings from "@/app/core/hooks/useProjectSettings";
+import useTrackConfig from "@/app/components/track/useTrackConfig";
+import useProjectContext from "@/app/core/hooks/useProjectContext";
 import { SortableItem } from "@/app/components";
 
-import { ETrackType, ITrackRouting } from "@/app/core/tracks/types";
+import { ETrackType, ITrackRouting } from "@/app/components/track/types";
 import type { UniqueIdentifier } from "@dnd-kit/core";
-import classNames from "classnames";
+import { createContext } from "react";
 
 // TODO not every 'input' has notes, instrument, etc.
 export interface ITrack {
@@ -19,30 +20,40 @@ export interface ITrack {
   type: ETrackType;
   url?: string;
 }
+const TrackContext = createContext({
+  volume: 0,
+  pan: 0,
+  mute: false,
+  solo: false,
+  effectsChain: null,
+  onInstrumentsUpdate: null,
+  onAddToEffectsChain: null,
+  onRemoveFromEffectsChain: null,
+});
 
 function Track(track: ITrack) {
-  const { id, url, className = "", name = t("untitled"), type } = track;
+  const { id, url, className = "", name, type } = track;
   const { Icon, draw } = useTrackConfig(type)!;
-  const { projectSettings, updateProjectSettings } = useProjectSettings();
-  if (!projectSettings) return null;
+  const { ProjectContext, updateProjectContext } = useProjectContext();
+  if (!ProjectContext) return null;
 
-  const { measureCount } = projectSettings;
+  const { measureCount } = ProjectContext;
   const css = styles.track;
   const cssLi = classNames(css.row(type), className);
   const isSortable = ![ETrackType.Time, ETrackType.Group].includes(type);
   const Tpl = () => (
     <>
-      <div className={css.col1.main(type)}>
+      <div className={classNames(css.col1.main(type), className)}>
         <Icon className={css.icon(type)} />
         <div className={css.col1.name}>{name}</div>
       </div>
       <div className={css.col2.main}>
         {draw({
           measureCount,
-          projectSettings,
+          ProjectContext,
           id,
           url,
-          updateProjectSettings,
+          updateProjectContext,
         })}
       </div>
     </>
@@ -52,7 +63,7 @@ function Track(track: ITrack) {
       <Tpl />
     </SortableItem>
   ) : (
-    <li className={cssLi}>
+    <li id={id as string} className={cssLi}>
       <Tpl />
     </li>
   );
@@ -68,4 +79,5 @@ Track.propDefaults = {
   name: t("untitled"),
 };
 
+export { TrackContext };
 export default Track;

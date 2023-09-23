@@ -1,8 +1,8 @@
 import t from "@/app/core/i18n";
 
-import { EInstrument } from "@/app/core/hooks/useProjectSettings";
-import { ETrackType } from "@/app/core/tracks/types";
-import type { ITrack } from "@/app/core/tracks/Track";
+import { EInstrument } from "@/app/core/hooks/useProjectContext";
+import { ETrackType } from "@/app/components/track/types";
+import type { ITrack } from "@/app/components/track/Track";
 
 /**
  * GENERAL
@@ -14,6 +14,8 @@ const DEFAULT_NAME = t("untitled");
 const DEFAULT_OFFSET_LEFT = 185;
 const DEFAULT_POSITION = "0:0:0";
 const DEFAULT_QUANTIZATION = 8;
+const DEFAULT_SWING = 0;
+const DEFAULT_SWING_SUBDIVISION = "8n";
 
 /**
  * TRACKS
@@ -28,7 +30,9 @@ const DEFAULT_TRACK_TIME: ITrack = {
       instrument: null,
       label: "None",
       notes: [],
-      onClick: () => {},
+      onClick: (event) => {
+        event.preventDefault();
+      },
     },
     output: null,
   },
@@ -45,7 +49,10 @@ const DEFAULT_AUDIO_TRACK: ITrack = {
       instrument: null,
       label: "Audio",
       notes: [],
-      onClick: () => alert("AudioTrack: Halloween"),
+      onClick: (event) => {
+        event.preventDefault();
+        alert("AudioTrack: Halloween");
+      },
     },
     output: "mixbus",
   },
@@ -94,7 +101,10 @@ const DEFAULT_MIDI_BD_TRACK: ITrack = {
         "C1",
         null,
       ],
-      onClick: () => alert("BaseDrum"),
+      onClick: (event) => {
+        event.preventDefault();
+        alert("BaseDrum");
+      },
       instrument: EInstrument.BaseDrum,
     },
     output: "drums",
@@ -141,7 +151,10 @@ const DEFAULT_MIDI_SD_TRACK: ITrack = {
         null,
         "D1",
       ],
-      onClick: () => alert("MidiTrack: SnareDrum"),
+      onClick: (event) => {
+        event.preventDefault();
+        alert("MidiTrack: SnareDrum");
+      },
       instrument: EInstrument.SnareDrum,
     },
     output: "drums",
@@ -155,7 +168,10 @@ const DEFAULT_MIDI_CHH_TRACK: ITrack = {
     input: {
       label: EInstrument.ClosedHiHat,
       notes: new Array(32).fill("F#1").map((n) => n),
-      onClick: () => alert("MidiTrack: ClosedHiHat"),
+      onClick: (event) => {
+        event.preventDefault();
+        alert("MidiTrack: ClosedHiHat");
+      },
       instrument: EInstrument.ClosedHiHat,
     },
     output: "drums",
@@ -171,7 +187,10 @@ const DEFAULT_MIDI_BASS_TRACK: ITrack = {
     input: {
       instrument: EInstrument.BassSynth,
       label: EInstrument.BassSynth,
-      onClick: () => alert("MidiTrack: BassSynth"),
+      onClick: (event) => {
+        event.preventDefault();
+        alert("MidiTrack: BassSynth");
+      },
       notes: [
         null,
         null,
@@ -223,7 +242,10 @@ const DEFAULT_GROUP_DRUMS: ITrack = {
       instrument: null,
       label: "Drums",
       notes: [],
-      onClick: () => alert("Group: Drums"),
+      onClick: (event) => {
+        event.preventDefault();
+        alert("Group: Drums");
+      },
     },
     output: "mixbus",
   },
@@ -236,7 +258,10 @@ const DEFAULT_GROUP_MIXBUS: ITrack = {
       instrument: null,
       label: "All",
       notes: [],
-      onClick: () => alert("Group: Mixbus"),
+      onClick: (event) => {
+        event.preventDefault();
+        alert("Group: Mixbus");
+      },
     },
     output: "master",
   },
@@ -246,11 +271,13 @@ export {
   DEFAULT_ACTIVE_TRACK_ID,
   DEFAULT_BPM,
   DEFAULT_CLEF,
+  DEFAULT_MEASURE_COUNT,
   DEFAULT_NAME,
   DEFAULT_OFFSET_LEFT,
   DEFAULT_POSITION,
   DEFAULT_QUANTIZATION,
-  DEFAULT_MEASURE_COUNT,
+  DEFAULT_SWING,
+  DEFAULT_SWING_SUBDIVISION,
   //
   DEFAULT_TRACK_TIME,
   DEFAULT_AUDIO_TRACK,

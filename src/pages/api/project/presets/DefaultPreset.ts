@@ -15,8 +15,8 @@ import {
   DEFAULT_TRACK_TIME,
 } from "@/app/core/config/constants";
 
-import type { IProjectSettings } from "@/app/core/config/types";
-import type { ITrack } from "@/app/core/tracks/Track";
+import type { IProjectContext } from "@/app/core/config/types";
+import type { ITrack } from "@/app/components/track/Track";
 
 const tracks: ITrack[] = [
   DEFAULT_TRACK_TIME,
@@ -28,7 +28,7 @@ const tracks: ITrack[] = [
   DEFAULT_GROUP_DRUMS,
   DEFAULT_GROUP_MIXBUS,
 ];
-const DefaultPreset: IProjectSettings = {
+const DefaultPreset: IProjectContext = {
   tracks,
   activeTrackId: tracks[1].id,
   bpm: DEFAULT_BPM,
@@ -37,6 +37,8 @@ const DefaultPreset: IProjectSettings = {
   name: DEFAULT_NAME,
   position: DEFAULT_POSITION,
   quantization: DEFAULT_QUANTIZATION,
+  swing: 0,
+  swingSubdivision: "8n",
 };
 
 export { DefaultPreset };

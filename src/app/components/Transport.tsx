@@ -4,7 +4,7 @@ import { PauseIcon, PlayIcon } from "lucide-react";
 import { Transport as ToneTransport } from "tone";
 
 import t from "@/app/core/i18n";
-import useProjectSettings from "@/app/core/hooks/useProjectSettings";
+import useProjectContext from "@/app/core/hooks/useProjectContext";
 import useTransport from "@/app/core/hooks/useTransport";
 
 export enum ETransportState {
@@ -19,10 +19,10 @@ export default function Transport() {
   const loopFn = (position: string) => setPosition(position);
   useTransport({ loopFn });
 
-  const { projectSettings, updateProjectSettings } = useProjectSettings();
-  if (!projectSettings) return null;
+  const { ProjectContext, updateProjectContext } = useProjectContext();
+  if (!ProjectContext) return null;
 
-  const { bpm, measureCount, position: _position } = projectSettings;
+  const { bpm, measureCount, position: _position } = ProjectContext;
   ToneTransport.bpm.value = bpm;
   ToneTransport.loop = true;
   ToneTransport.loopStart = 0;
@@ -31,7 +31,7 @@ export default function Transport() {
   const events = {
     onBpmChange: (event: ChangeEvent<HTMLInputElement>) =>
       // TODO Partial<IConfig> instead of any
-      updateProjectSettings({ bpm: parseInt(event.target.value) } as any),
+      updateProjectContext({ bpm: parseInt(event.target.value) } as any),
 
     onToggle: (_: MouseEvent<SVGSVGElement>) => {
       ToneTransport.toggle();

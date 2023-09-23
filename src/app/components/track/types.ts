@@ -12,7 +12,7 @@ interface IRoutingInput {
   instrument: any;
   label: string;
   notes: TNote[];
-  onClick: (event: MouseEvent<HTMLDivElement>) => void;
+  onClick: (event: MouseEvent<HTMLAnchorElement>) => void;
 }
 interface ITrackRouting {
   input: IRoutingInput;

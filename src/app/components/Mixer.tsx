@@ -1,14 +1,15 @@
 import { Destination, Meter as ToneMeter } from "tone";
-import { Loader } from "lucide-react";
+import { GroupIcon, Loader } from "lucide-react";
 import classNames from "classnames";
 
 import t from "@/app/core/i18n";
-import useProjectSettings from "@/app/core/hooks/useProjectSettings";
+import useProjectContext from "@/app/core/hooks/useProjectContext";
 import { Meter } from "@/app/components";
 import { Accordion } from "@/app/ui";
 
-import { ETrackType } from "@/app/core/tracks/types";
-import { TrackColor } from "@/app/core/config/styles";
+import { ETrackType } from "@/app/components/track/types";
+import styles, { TrackColor } from "@/app/core/config/styles";
+import { AudioIcon, MidiIcon } from "../core/config/icons";
 
 export interface IMixer {
   settings: {
@@ -21,30 +22,21 @@ export interface IMixer {
   };
 }
 
+const css = styles.mixer;
+
 export default function Mixer() {
-  const { projectSettings, isLoading, error } = useProjectSettings();
+  const { ProjectContext, isLoading, error } = useProjectContext();
   if (isLoading) return <Loader />;
-  if (!projectSettings) throw error;
+  if (!ProjectContext) throw error;
 
-  const { tracks, activeTrackId } = projectSettings;
-
-  const styles = {
-    mixer: "p-1 flex justify-between w-full",
-    mixerInner: "flex w-full",
-    track: "bg-white border py-8 mr-2 justify-center text-xs items-center",
-    trackInner: "px-4 py-1",
-    master: "h-full flex flex-col justify-end bg-cyan-100",
-    mixbus: "h-full flex flex-col justify-end bg-cyan-200",
-    active: "text-black border-2 border-orange-800 font-bold",
-    inactive: "border-2 border-gray-200",
-  };
+  const { tracks, activeTrackId } = ProjectContext;
 
   const masterMeter = new ToneMeter();
   Destination.connect(masterMeter);
 
   return (
-    <section className={styles.mixer}>
-      <div className={styles.mixerInner}>
+    <section className={classNames(css.main)}>
+      <div className={css.inner}>
         {tracks.map(({ id, routing: { input, output }, type, name }) => {
           if (type === ETrackType.Time) return;
           const meter = new ToneMeter();
@@ -57,7 +49,9 @@ export default function Mixer() {
           const RoutingDetails = () => (
             <ol>
               <li className="text-center p-1">
-                <div onClick={input.onClick}>{input.label}</div>
+                <a href="#" onClick={input.onClick}>
+                  {input.label}
+                </a>
               </li>
               <li className="text-center p-1">{output}</li>
             </ol>
@@ -73,51 +67,60 @@ export default function Mixer() {
             </ol>
           );
           const details = [
-            { Details: RoutingDetails, label: "Routing" },
-            { Details: InsertDetails, label: "Inserts" },
-            { Details: SendDetails, label: "Sends" },
+            { Details: RoutingDetails, label: "Routing", type },
+            { Details: InsertDetails, label: "Inserts", type },
+            { Details: SendDetails, label: "Sends", type },
           ];
+
+          function getTrackTypeIcon(type: ETrackType) {
+            const className = "w-[16px] h-[16px] mr-1";
+            switch (type) {
+              case ETrackType.Audio:
+                return <AudioIcon className={className} />;
+              case ETrackType.Group:
+                return <GroupIcon className={className} />;
+              case ETrackType.Midi:
+                return <MidiIcon className={className} />;
+              default:
+                return <></>;
+            }
+          }
 
           return (
             <section
               key={`mixer-track-${id}`}
               className={classNames(
-                `${styles.track} ${text}
-                ${styles[activeTrackId === id ? "active" : "inactive"]}
-                `,
-                {
-                  "ml-auto": name === "Mixbus",
-                }
+                `${css.track.main} ${text}`,
+                css.track[activeTrackId === id ? "active" : "inactive"],
+                bg,
+                { "ml-auto": name === "Mixbus" }
               )}
             >
-              {details.map(({ Details, label }, detailsIndex) => (
+              {details.map(({ Details, label, type }, detailsIndex) => (
                 <Accordion
                   key={`mixer-track-${id}-accordion-${detailsIndex}`}
-                  open={true}
                   summary={
-                    <h2 className={classNames(styles.trackInner, bg)}>
-                      {label}
-                    </h2>
+                    <h2 className={classNames(css.track.inner)}>{label}</h2>
                   }
                   details={<Details />}
                 />
               ))}
-              <div className={`${styles.trackInner} ${bg}`}>
-                <Meter meter={meter} />
-                <div>{type}</div>
-                <div>{name}</div>
+              <Meter meter={meter} />
+              <div className={css.track.inner}>
+                {getTrackTypeIcon(type)}
+                <span>{name}</span>
               </div>
             </section>
           );
         })}
 
-        <div
-          className={`${styles.track} bg-[cornflowerblue] content-end text-xs`}
-        >
-          <div className={`${styles.trackInner} ${styles.master}`}>
+        <div className={`${css.track} bg-[cornflowerblue] content-end text-xs`}>
+          <div className={`${css.track.master}`}>
             <Meter meter={masterMeter} />
-            <div>&nbsp;</div>
-            <div>{t("master")}</div>
+            <div className={css.track.inner}>
+              <MidiIcon className="w-[16px] h-[16px] mr-1" />
+              <span>{t("master")}</span>
+            </div>
           </div>
         </div>
       </div>

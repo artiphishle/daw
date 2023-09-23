@@ -3,10 +3,10 @@ import { useEffect, useState } from "react";
 import { start } from "tone";
 
 import t from "@/app/core/i18n";
-import generalStyles from "@/app/core/config/styles";
 import styles from "@/app/core/config/styles";
+import data from "@/app/components/sheet.data";
 
-import useConverter from "./core/hooks/useConverter";
+import useConverter from "@/app/core/hooks/useConverter";
 
 import {
   Arranger,
@@ -18,10 +18,10 @@ import {
 } from "@/app/components";
 
 import { Dialog, Tabs, type ITabs } from "@/app/ui";
-import data from "@/app/components/sheet.data";
-import PollySynth from "./core/instruments/synths/PollySynth";
-import SnareDrum from "./core/instruments/drums/snareDrum/SnareDrum";
+import PollySynth from "@/app/core/instruments/synths/PollySynth";
+import SnareDrum from "@/app/core/instruments/drums/snareDrum/SnareDrum";
 import { CogIcon, GridIcon, HopIcon, InfinityIcon } from "lucide-react";
+import PianoRoll from "./components/PianoRoll";
 // import { PanSongParsed } from "./test/unit/PanSong.parsed";
 
 export default function Home() {
@@ -126,10 +126,11 @@ export default function Home() {
           order: 4,
           panel: (
             <section className="bg-white">
+              <PianoRoll />
               <Progression />
               <PollySynth />
               <div className="p-8">
-                <h2 className={generalStyles.headings.h2}>Visualization</h2>
+                <h2 className={styles.headings.h2}>Visualization</h2>
                 <SnareDrum className="-mt-100" />
               </div>
             </section>
@@ -140,7 +141,7 @@ export default function Home() {
     };
 
     return (
-      <main className={generalStyles.main}>
+      <main className={styles.main}>
         <div className="flex flex-col flex-1">
           <Navbar />
           <Tabs {...tabsProps} />
