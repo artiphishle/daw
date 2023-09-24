@@ -6,12 +6,12 @@ import {
   DEFAULT_TRACK_TIME,
 } from "@/app/core/config/constants";
 
-import type { IProjectSettings } from "@/app/core/config/types";
-import type { ITrack } from "@/app/core/tracks/Track";
+import type { IProjectContext } from "@/app/core/config/types";
+import type { ITrack } from "@/app/components/track/Track";
 
 const tracks: ITrack[] = [DEFAULT_TRACK_TIME, DEFAULT_AUDIO_TRACK];
 
-const DeathcorePreset: IProjectSettings = {
+const DeathcorePreset: IProjectContext = {
   tracks,
   activeTrackId: tracks[1].id,
   bpm: 0,
@@ -20,6 +20,8 @@ const DeathcorePreset: IProjectSettings = {
   name: "Metal – Deathcore",
   position: DEFAULT_POSITION,
   quantization: DEFAULT_QUANTIZATION,
+  swing: 0,
+  swingSubdivision: "8n",
 };
 
 export { DeathcorePreset };
