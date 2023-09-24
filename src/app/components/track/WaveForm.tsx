@@ -10,8 +10,8 @@ export default function WaveForm({ url }: IWaveForm) {
     const waveSurfer = WaveSurfer.create({
       url,
       container: "#wave",
-      waveColor: "rgb(200, 0, 200)",
-      progressColor: "rgb(100, 0, 100)",
+      waveColor: "#9333EA", // purple-600
+      progressColor: "#6B21A8", // purple-800
       height: 24,
     });
 

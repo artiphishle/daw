@@ -15,14 +15,14 @@ export interface ITabsItem {
 export interface ITabs {
   activeIndex: number;
   items: ITabsItem[];
-  className?: string;
+  className?: { main?: string; nav?: string; panel?: string };
   vertical?: boolean;
 }
 
 export default function Tabs({
   activeIndex = 0,
   items,
-  className = "",
+  className = {},
   vertical = false,
 }: ITabs) {
   const [tabItems] = useState(items);
@@ -42,13 +42,16 @@ export default function Tabs({
   return (
     <section
       className={classNames(
-        className,
+        className.main || "",
         "flex flex-1",
         vertical ? "" : "flex-col"
       )}
     >
       <Nav
-        className={vertical ? "flex-col py-8 bg-[#333]" : ""}
+        className={classNames(
+          vertical ? "flex-col py-8 bg-[#333]" : "",
+          className.nav || ""
+        )}
         activeIndex={activeTabIndex}
         items={tabItems}
         role="tablist"
@@ -57,7 +60,13 @@ export default function Tabs({
       {tabItems.map(({ id, panel }, itemIndex) => {
         const isActive = activeTabIndex === itemIndex;
         return isActive ? (
-          <TabsPanel Content={panel} id={id} isActive={isActive} key={id} />
+          <TabsPanel
+            className={className.panel || ""}
+            Content={panel}
+            id={id}
+            isActive={isActive}
+            key={id}
+          />
         ) : null;
       })}
     </section>

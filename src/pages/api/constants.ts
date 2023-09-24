@@ -1,3 +1,3 @@
 export enum EEndpoint {
-  ProjectSettings = "/api/project/settings",
+  ProjectContext = "/api/project/settings",
 }
