@@ -1,16 +1,16 @@
-@startuml ProjectSettings
+@startuml ProjectContext
 
 title Project Settings
 
-database ProjectSettings
+database ProjectContext
 entity Arranger
 entity Transport
 
-note over ProjectSettings, Transport: User changes quantization
-Transport->ProjectSettings: setQ("16n")
+note over ProjectContext, Transport: User changes quantization
+Transport->ProjectContext: setQ("16n")
 
-note over ProjectSettings,Arranger: Arranger is notified & updates UI
-ProjectSettings->Arranger: next({q: "16n"})
+note over ProjectContext,Arranger: Arranger is notified & updates UI
+ProjectContext->Arranger: next({q: "16n"})
 Arranger->Arranger: render()
 
 @enduml

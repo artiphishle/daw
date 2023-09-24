@@ -11,15 +11,15 @@ import {
 } from "@dnd-kit/sortable";
 
 import styles from "@/app/core/config/styles";
-import useProjectSettings from "@/app/core/hooks/useProjectSettings";
+import useProjectContext from "@/app/core/hooks/useProjectContext";
 import { Locator } from "@/app/components";
-import Track from "@/app/core/tracks/Track";
+import Track from "@/app/components/track/Track";
 
 export default function Arranger() {
-  const { projectSettings, updateProjectSettings } = useProjectSettings();
+  const { projectContext, updateProjectContext } = useProjectContext();
 
-  if (!projectSettings) return null;
-  const { tracks, activeTrackId } = projectSettings;
+  if (!projectContext) return null;
+  const { tracks, activeTrackId } = projectContext;
 
   const events = {
     dragEnd: (event: DragEndEvent) => {
@@ -29,7 +29,7 @@ export default function Arranger() {
       const oldIndex = tracks.findIndex(({ id }) => id === active.id);
       const newIndex = tracks.findIndex(({ id }) => id === over?.id);
       const sortedTracks = arrayMove(tracks, oldIndex, newIndex);
-      updateProjectSettings({ tracks: sortedTracks });
+      updateProjectContext({ tracks: sortedTracks });
 
       return sortedTracks;
     },
@@ -52,7 +52,7 @@ export default function Arranger() {
           </ol>
         </SortableContext>
       </DndContext>
-      {projectSettings && <Locator projectSettings={projectSettings} />}
+      {projectContext && <Locator projectContext={projectContext} />}
     </div>
   );
 }

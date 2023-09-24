@@ -4,22 +4,22 @@ import cn from "classnames";
 import useTransport from "@/app/core/hooks/useTransport";
 import { DEFAULT_OFFSET_LEFT } from "@/app/core/config/constants";
 
-import { EUnit } from "@/app/types";
-import type { IProjectSettings } from "@/app/core/config/types";
+import { EUnit } from "@/app/types/utility";
+import type { IProjectContext } from "@/app/core/config/types";
 
 interface ILocator {
   className?: string;
-  projectSettings: IProjectSettings;
+  projectContext: IProjectContext;
 }
 
 const styles = { locator: "bg-black w-[1px] absolute top-0 bottom-0" };
 const getMeasureWidth = (measureCount: number) =>
   (window.innerWidth - DEFAULT_OFFSET_LEFT) / measureCount;
 
-export default function Locator({ className = "", projectSettings }: ILocator) {
+export default function Locator({ className = "", projectContext }: ILocator) {
   const [left, setLeft] = useState(DEFAULT_OFFSET_LEFT);
   const [quarter, setQuarter] = useState(0);
-  const { measureCount } = projectSettings;
+  const { measureCount } = projectContext;
 
   function loopFn(position: string) {
     const splitPosition = position.toString().split(":");
