@@ -31,25 +31,6 @@ export default function Collabo() {
 
 ---
 
-## 🎼PFUI
-
-**P**retty **F**uturistic **UI**
-
-A UI framework that emerges while implementing other projects.
-It will be extracted at some point into its own repository.
-
-|     | UI        | Elements                                       |
-| --- | --------- | ---------------------------------------------- |
-| ⚓️ | Anchor    | `HTMLAnchorElement`                            |
-| 🗣️  | Dialog    | `HTMLDialogElement`                            |
-| 🧾  | List      | `HTMLOListElement`<br/>`HTMLUListElement`      |
-| 🪗  | Accordion | `HTMLDetailsElement`<br/>`HTMLSummaryElement`  |
-| ✉️  | Message   | `Error`<br/>`Info`<br/>`Warning`<br/>`Success` |
-| 🪧  | Nav       | `HTMLNavElement`                               |
-| 🗂️  | Tabs      | `*List*`<br/>`HTMLSectionElement`              |
-
----
-
 ## 🎼Changelog
 
 ### 🍃 September 2023
@@ -61,7 +42,7 @@ It will be extracted at some point into its own repository.
 #### 15th
 
 - **Mixer** Volume meter, ready to add inserts/sends
-- **SWR** Instruments are now loaded with projectSettings
+- **SWR** Instruments are now loaded with ProjectContext
 
 #### 13th
 

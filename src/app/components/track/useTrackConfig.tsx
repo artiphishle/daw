@@ -1,4 +1,4 @@
-import { Sequence, type Sequence as TSequence } from "tone";
+import { Time, Transport } from "tone";
 import classNames from "classnames";
 
 import {
@@ -9,12 +9,15 @@ import {
   type TIcon,
 } from "@/app/core/config/icons";
 import styles from "@/app/core/config/styles";
-import WaveForm from "@/app/core/tracks/WaveForm";
+import WaveForm from "@/app/components/track/WaveForm";
 
-import { EInstrument } from "@/app/core/hooks/useProjectSettings";
-import { ETrackType } from "@/app/core/tracks/types";
-import type { IProjectSettings, TNote } from "@/app/core/config/types";
-import type { MouseEvent, ReactNode } from "react";
+import { EInstrument } from "@/app/core/hooks/useProjectContext";
+import { ETrackType, type IMidiEvent } from "@/app/components/track/types";
+import type { IProjectContext } from "@/app/core/config/types";
+import { useState, type MouseEvent, type ReactNode } from "react";
+import type { Note as TNote } from "tone/build/esm/core/type/NoteUnits";
+import { DEFAULT_OFFSET_LEFT } from "@/app/core/config/constants";
+import { EUnit } from "@/app/types/utility";
 
 interface ITrackConfig {
   Icon: TIcon;
@@ -30,7 +33,6 @@ interface ITrackConfig {
     notes: TNote[];
   }) => void;
 }
-
 const audioConfig: ITrackConfig = {
   Icon: AudioIcon,
   draw: ({ url }) => {
@@ -43,79 +45,74 @@ const groupConfig: ITrackConfig = {
     return <div />;
   },
 };
-function play(instrument: any, label: string, notes: TNote[]) {
-  return new Sequence(
-    (time, note) => {
-      if (!note) return;
+function play(instrument: any, label: string, events: IMidiEvent[]) {
+  function repeat(currentTime: number) {
+    events.forEach(({ note, duration, time }) => {
+      const t = Time(time).valueOf() + currentTime;
+      const d = duration.valueOf();
+      if (typeof instrument === "string")
+        throw new Error(`Instrument is a string: ${instrument}`);
       const isNoise = [EInstrument.SnareDrum, EInstrument.ClosedHiHat].includes(
         label as EInstrument
       );
-
-      if (typeof instrument === "string")
-        throw new Error(`Instrument is a string: ${instrument}`);
-
       return isNoise
-        ? instrument?.triggerAttackRelease("8n", time)
-        : instrument?.triggerAttackRelease(note, "8n", time);
-    },
-    notes,
-    "4n"
-  ).start(0);
+        ? instrument.triggerAttackRelease(d, t)
+        : instrument.triggerAttackRelease(note, d, t);
+    });
+  }
+  Transport.scheduleRepeat(repeat, "2m");
 }
+
 const midiConfig: ITrackConfig = {
   Icon: MidiIcon,
-  draw: ({ id: trackId, projectSettings, updateProjectSettings }) => {
-    let seq: TSequence;
-    const { tracks } = projectSettings as IProjectSettings;
+  draw: ({
+    id: trackId,
+    measureCount,
+    quantization,
+    projectContext,
+    updateProjectContext,
+    windowWidth,
+  }) => {
+    const { tracks } = projectContext as IProjectContext;
     const [track] = tracks.filter((track) => track.id === trackId);
-    const { instrument, label, notes } = track.routing.input;
+    const { instrument, label, events } = track.routing.input;
     const onToggle = (event: MouseEvent<HTMLDivElement>) => {
-      seq.dispose();
+      /*
       const currentTrack = event.target as HTMLDivElement;
       const [track] = tracks.filter((track) => track.id === currentTrack.id);
       const noteIndex = parseInt(currentTrack.getAttribute("data-noteindex")!);
-      let newNotes = track.routing.input.notes;
-      newNotes[noteIndex] = newNotes[noteIndex] ? null : "C1";
-
-      const newTracks = tracks.map((track) => {
-        if (track.id !== trackId) return track;
-        let newTrack = { ...track };
-        newTrack.routing.input.notes = newNotes;
-        return newTrack;
-      });
-      updateProjectSettings({ tracks: newTracks });
+      updateProjectContext({ tracks: newTracks });
+      */
     };
-    seq = play(instrument, label, notes);
+    /* seq = */ play(instrument, label, events);
+    const css = styles.notes;
+    const TOTAL_TICKS = 768 * measureCount;
+    const TICK_IN_PX = windowWidth / TOTAL_TICKS;
 
-    function Note(props: { note: TNote; noteIndex: number }) {
-      const { note, noteIndex } = props;
+    return events.map(({ note, duration, time }: IMidiEvent, eventIndex) => {
+      const left = `${parseInt(time) * TICK_IN_PX}${EUnit.Px}`;
+      const width = `${parseInt(duration) * TICK_IN_PX}${EUnit.Px}`;
 
-      const css = styles.notes;
       return (
         <div
-          id={trackId}
+          key={`midi-event-${eventIndex}`}
           onClick={onToggle}
           className={classNames(css.main, note ? css.bgActive : css.bg)}
-          data-noteindex={noteIndex}
+          data-noteindex={eventIndex}
+          style={{ left, width, position: "absolute", top: 0, bottom: 0 }}
         >
-          {note || ""}
+          {note}
         </div>
       );
-    }
-
-    return (notes as TNote[]).map((note, noteIndex) => (
-      <Note
-        note={note}
-        noteIndex={noteIndex}
-        key={`note-${noteIndex}-${note}`}
-      />
-    ));
+    });
   },
 };
 const timeConfig: ITrackConfig = {
   Icon: TimeIcon,
   draw: ({ measureCount }) => {
     const mc = measureCount as number;
+
+    // Support 4x'16n' notes for now (TODO '32n' at least)
     return (
       <div className="flex w-full">
         {new Array(measureCount).fill("").map((_, measureIndex) => (

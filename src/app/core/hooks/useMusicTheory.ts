@@ -1,10 +1,10 @@
-import useProjectSettings from "@/app/core/hooks/useProjectSettings";
+import useProjectContext from "@/app/core/hooks/useProjectContext";
 import { Chord, Progression } from "tonal";
 
 export default function useMusicTheory() {
-  const { projectSettings } = useProjectSettings();
-  if (!projectSettings) return null;
-  const { clef: tonic } = projectSettings;
+  const { projectContext } = useProjectContext();
+  if (!projectContext) return null;
+  const { clef: tonic } = projectContext;
 
   /**
    * detects chord by notes

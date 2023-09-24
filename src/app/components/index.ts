@@ -5,7 +5,9 @@ import Navbar from "./Navbar";
 import Progression from "./Progression";
 import Settings from "./Settings";
 import Sheet from "./Sheet";
+import Song from "./_Song";
 import Toolbar from "./Toolbar";
+import Track from "./track/Track";
 import Transport from "./Transport";
 import Meter from "./Meter";
 
@@ -21,7 +23,9 @@ export {
   Progression,
   Settings,
   Sheet,
+  Song,
   Toolbar,
+  Track,
   Transport,
   Meter,
 };

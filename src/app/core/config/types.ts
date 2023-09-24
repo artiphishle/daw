@@ -1,10 +1,9 @@
 import type { Note } from "tone/build/esm/core/type/NoteUnits";
-import type { ITrack } from "@/app/core/tracks/Track";
-import { UniqueIdentifier } from "@dnd-kit/core";
+import type { Subdivision as TSubdivision } from "tone/build/esm/core/type/Units";
+import type { UniqueIdentifier } from "@dnd-kit/core";
+import type { ITrack } from "@/app/components/track/Track";
 
-type TNote = Note | null;
-
-interface IProjectSettings {
+interface IProjectContext {
   activeTrackId: UniqueIdentifier;
   bpm: number;
   clef: string;
@@ -12,8 +11,9 @@ interface IProjectSettings {
   name: string;
   position: string;
   quantization: number;
+  swing: number;
+  swingSubdivision: TSubdivision;
   tracks: ITrack[];
 }
 
-export type { TNote };
-export type { IProjectSettings };
+export type { IProjectContext };
