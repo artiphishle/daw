@@ -1,5 +1,9 @@
 import type { MouseEvent } from "react";
-import type { TNote } from "@/app/core/config/types";
+import type {
+  Note as TNote,
+  Ticks as TTicks,
+  Ticks,
+} from "tone/build/esm/core/type/Units";
 
 enum ETrackType {
   Audio = "audio",
@@ -8,10 +12,15 @@ enum ETrackType {
   Time = "time",
 }
 
+interface IMidiEvent {
+  duration: string; // in ticks, e.g. "48i"
+  note: TNote;
+  time: string; // in ticks, e.g. "48i"
+}
 interface IRoutingInput {
   instrument: any;
   label: string;
-  notes: TNote[];
+  events: IMidiEvent[];
   onClick: (event: MouseEvent<HTMLAnchorElement>) => void;
 }
 interface ITrackRouting {
@@ -20,4 +29,4 @@ interface ITrackRouting {
 }
 
 export { ETrackType };
-export type { ITrackRouting };
+export type { IMidiEvent, ITrackRouting };

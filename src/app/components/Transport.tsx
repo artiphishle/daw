@@ -19,10 +19,10 @@ export default function Transport() {
   const loopFn = (position: string) => setPosition(position);
   useTransport({ loopFn });
 
-  const { ProjectContext, updateProjectContext } = useProjectContext();
-  if (!ProjectContext) return null;
+  const { projectContext, updateProjectContext } = useProjectContext();
+  if (!projectContext) return null;
 
-  const { bpm, measureCount, position: _position } = ProjectContext;
+  const { bpm, measureCount, position: _position } = projectContext;
   ToneTransport.bpm.value = bpm;
   ToneTransport.loop = true;
   ToneTransport.loopStart = 0;

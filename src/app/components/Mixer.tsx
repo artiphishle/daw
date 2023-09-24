@@ -25,11 +25,11 @@ export interface IMixer {
 const css = styles.mixer;
 
 export default function Mixer() {
-  const { ProjectContext, isLoading, error } = useProjectContext();
+  const { projectContext, isLoading, error } = useProjectContext();
   if (isLoading) return <Loader />;
-  if (!ProjectContext) throw error;
+  if (!projectContext) throw error;
 
-  const { tracks, activeTrackId } = ProjectContext;
+  const { tracks, activeTrackId } = projectContext;
 
   const masterMeter = new ToneMeter();
   Destination.connect(masterMeter);

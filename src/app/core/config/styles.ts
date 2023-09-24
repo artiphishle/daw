@@ -81,7 +81,7 @@ const styles = {
       name: "whitespace-nowrap w-28 overflow-x-hidden text-ellipsis",
     },
     col2: {
-      main: `flex w-full border-r border-${EColor.Orange}-300`,
+      main: `relative flex w-full border-r border-${EColor.Orange}-300`,
     },
     icon: (trackType: ETrackType) => `fill-${TrackColor[trackType]}-400 w-10`,
     row: (trackType: ETrackType) =>

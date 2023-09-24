@@ -3,8 +3,6 @@ import type { Subdivision as TSubdivision } from "tone/build/esm/core/type/Units
 import type { UniqueIdentifier } from "@dnd-kit/core";
 import type { ITrack } from "@/app/components/track/Track";
 
-type TNote = Note | null;
-
 interface IProjectContext {
   activeTrackId: UniqueIdentifier;
   bpm: number;
@@ -18,5 +16,4 @@ interface IProjectContext {
   tracks: ITrack[];
 }
 
-export type { TNote };
 export type { IProjectContext };

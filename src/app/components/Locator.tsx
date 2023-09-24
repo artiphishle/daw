@@ -9,17 +9,17 @@ import type { IProjectContext } from "@/app/core/config/types";
 
 interface ILocator {
   className?: string;
-  ProjectContext: IProjectContext;
+  projectContext: IProjectContext;
 }
 
 const styles = { locator: "bg-black w-[1px] absolute top-0 bottom-0" };
 const getMeasureWidth = (measureCount: number) =>
   (window.innerWidth - DEFAULT_OFFSET_LEFT) / measureCount;
 
-export default function Locator({ className = "", ProjectContext }: ILocator) {
+export default function Locator({ className = "", projectContext }: ILocator) {
   const [left, setLeft] = useState(DEFAULT_OFFSET_LEFT);
   const [quarter, setQuarter] = useState(0);
-  const { measureCount } = ProjectContext;
+  const { measureCount } = projectContext;
 
   function loopFn(position: string) {
     const splitPosition = position.toString().split(":");

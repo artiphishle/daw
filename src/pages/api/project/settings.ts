@@ -2,22 +2,22 @@ import { NextApiRequest, NextApiResponse } from "next";
 
 import { DefaultPreset } from "./presets/DefaultPreset";
 
-let ProjectContext = DefaultPreset;
+let projectContext = DefaultPreset;
 
 export default function handler(req: NextApiRequest, res: NextApiResponse) {
   switch (req.method) {
     case "GET":
-      return res.status(200).json(ProjectContext);
+      return res.status(200).json(projectContext);
 
     case "PATCH":
-      ProjectContext = Object.assign(
+      projectContext = Object.assign(
         {},
         {
-          ...ProjectContext,
+          ...projectContext,
           ...JSON.parse(req.body),
         }
       );
-      return res.status(200).json(ProjectContext);
+      return res.status(200).json(projectContext);
 
     default:
       return res.status(405).end();

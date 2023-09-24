@@ -10,10 +10,10 @@ enum EProgression {
 export default function Progression() {
   const chords = useMusicTheory()?.getChords(EProgression.IVviIV);
 
-  const { ProjectContext } = useProjectContext();
-  if (!ProjectContext) return null;
+  const { projectContext } = useProjectContext();
+  if (!projectContext) return null;
 
-  const { clef } = ProjectContext;
+  const { clef } = projectContext;
 
   return (
     <section className="bg-white p-8 mb-8">
