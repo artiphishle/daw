@@ -1,4 +1,5 @@
-import { Time, Transport } from "tone";
+import { Time, ToneAudioBuffer, Transport } from "tone";
+import { analyze } from "web-audio-beat-detector";
 import classNames from "classnames";
 
 import {
@@ -13,11 +14,10 @@ import WaveForm from "@/app/components/track/WaveForm";
 
 import { EInstrument } from "@/app/core/hooks/useProjectContext";
 import { ETrackType, type IMidiEvent } from "@/app/components/track/types";
-import type { IProjectContext } from "@/app/core/config/types";
-import { useState, type MouseEvent, type ReactNode } from "react";
-import type { Note as TNote } from "tone/build/esm/core/type/NoteUnits";
-import { DEFAULT_OFFSET_LEFT } from "@/app/core/config/constants";
 import { EUnit } from "@/app/types/utility";
+import type { IProjectContext } from "@/app/core/config/types";
+import type { MouseEvent, ReactNode } from "react";
+import type { Note as TNote } from "tone/build/esm/core/type/NoteUnits";
 
 interface ITrackConfig {
   Icon: TIcon;
@@ -36,6 +36,16 @@ interface ITrackConfig {
 const audioConfig: ITrackConfig = {
   Icon: AudioIcon,
   draw: ({ url }) => {
+    (async function () {
+      try {
+        const buffer = await new ToneAudioBuffer().load(url);
+        const tempo = await analyze(buffer.get()!);
+        console.info("[BPM Detection]", url.split("/").pop(), tempo);
+      } catch (error) {
+        console.error(error);
+      }
+    })();
+
     return <WaveForm url={url as string} />;
   },
 };
