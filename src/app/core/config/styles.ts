@@ -42,6 +42,8 @@ const styles = {
   // Native HTML elements
   button: {
     primary: `flex items-center justify-center p-4 bg-green-500 text-white`,
+    navbar:
+      "mr-1 w-11 h-11 p-2 bg-[#333] rounded-xs cursor-pointer hover:bg-[#222]",
   },
   dialog:
     "flex flex-col shadow-2xl p-4 w-22 absolute top-0 left-0 right-0 bottom-0",
@@ -58,14 +60,14 @@ const styles = {
     icon: "w-8 h-8 mr-2",
   },
   mixer: {
-    main: "p-1 flex justify-between w-full",
+    main: "bg-[#fff] p-1 pt-4 flex justify-between w-full",
     inner: "flex w-full",
     track: {
       main: "border mr-2 justify-center text-xs items-center",
       inner: "flex px-4 py-1 border-b border-white",
       master: "h-full flex flex-col justify-end bg-cyan-100",
-      active: "text-black border-2 border-orange-800 font-bold",
-      inactive: "border-2 border-gray-200",
+      active: "text-black border border-orange-800 font-bold",
+      inactive: "border border-gray-400",
     },
   },
   notes: {
