@@ -1,5 +1,5 @@
 import { Destination, Meter as ToneMeter } from "tone";
-import { GroupIcon, Loader } from "lucide-react";
+import { GroupIcon, Loader, Volume1Icon } from "lucide-react";
 import classNames from "classnames";
 
 import t from "@/app/core/i18n";
@@ -10,6 +10,9 @@ import { Accordion } from "@/app/ui";
 import { ETrackType } from "@/app/components/track/types";
 import styles, { TrackColor } from "@/app/core/config/styles";
 import { AudioIcon, MidiIcon } from "../core/config/icons";
+import { useState } from "react";
+import { useWindowWidth } from "@react-hook/window-size";
+import { EUnit } from "../types/utility";
 
 export interface IMixer {
   settings: {
@@ -26,6 +29,7 @@ const css = styles.mixer;
 
 export default function Mixer() {
   const { projectContext, isLoading, error } = useProjectContext();
+  const windowWidth = useWindowWidth();
   if (isLoading) return <Loader />;
   if (!projectContext) throw error;
 
@@ -71,7 +75,6 @@ export default function Mixer() {
             { Details: InsertDetails, label: "Inserts", type },
             { Details: SendDetails, label: "Sends", type },
           ];
-
           function getTrackTypeIcon(type: ETrackType) {
             const className = "w-[16px] h-[16px] mr-1";
             switch (type) {
@@ -87,7 +90,7 @@ export default function Mixer() {
           }
 
           return (
-            <section
+            <div
               key={`mixer-track-${id}`}
               className={classNames(
                 `${css.track.main} ${text}`,
@@ -95,6 +98,9 @@ export default function Mixer() {
                 bg,
                 { "ml-auto": name === "Mixbus" }
               )}
+              style={{
+                width: `calc(${windowWidth / tracks.length + 1}px - 0.5rem)`,
+              }}
             >
               {details.map(({ Details, label, type }, detailsIndex) => (
                 <Accordion
@@ -110,7 +116,7 @@ export default function Mixer() {
                 {getTrackTypeIcon(type)}
                 <span>{name}</span>
               </div>
-            </section>
+            </div>
           );
         })}
 
