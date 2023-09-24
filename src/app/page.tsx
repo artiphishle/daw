@@ -22,6 +22,7 @@ import PollySynth from "@/app/core/instruments/synths/PollySynth";
 import SnareDrum from "@/app/core/instruments/drums/snareDrum/SnareDrum";
 import { CogIcon, GridIcon, HopIcon, InfinityIcon } from "lucide-react";
 import PianoRoll from "./components/PianoRoll";
+import Browser from "./components/Browser";
 // import { PanSongParsed } from "./test/unit/PanSong.parsed";
 
 export default function Home() {
@@ -84,6 +85,14 @@ export default function Home() {
           order: 2,
           panel: <PianoRoll />,
           title: "PianoRoll",
+        },
+        {
+          children: <div>Browser</div>,
+          href: "#",
+          id: "tabs-browser",
+          order: 3,
+          panel: <Browser />,
+          title: "Browser",
         },
       ],
     };
