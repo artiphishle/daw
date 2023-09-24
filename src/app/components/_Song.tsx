@@ -13,16 +13,16 @@ interface ISong {
 }
 export default function Song({ children }: ISong) {
   const [isPlaying, setIsPlaying] = useState(false);
-  const { ProjectContext } = useProjectContext();
+  const { projectContext } = useProjectContext();
 
   useEffect(() => {
-    if (!ProjectContext) return;
-    const { bpm, swing, swingSubdivision } = ProjectContext;
+    if (!projectContext) return;
+    const { bpm, swing, swingSubdivision } = projectContext;
 
     Transport.bpm.value = bpm;
     Transport.swing = swing;
     Transport.swingSubdivision = swingSubdivision;
-  }, [ProjectContext]);
+  }, [projectContext]);
 
   useEffect(() => {
     Transport[isPlaying ? "stop" : "start"]();

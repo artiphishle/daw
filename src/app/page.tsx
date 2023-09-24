@@ -65,9 +65,36 @@ export default function Home() {
   }
 
   function App() {
+    const tabs2Props: ITabs = {
+      activeIndex: 0,
+      className: { main: "justify-end" },
+      items: [
+        {
+          children: <div>Mixer</div>,
+          href: "#",
+          id: "tabs-mixer",
+          order: 1,
+          panel: <Mixer />,
+          title: "Mixer",
+        },
+        {
+          children: <div>PianoRoll</div>,
+          href: "#",
+          id: "tabs-pianoRoll",
+          order: 2,
+          panel: <PianoRoll />,
+          title: "PianoRoll",
+        },
+      ],
+    };
     const tabsProps: ITabs = {
       // vertical: true,
       activeIndex: 0,
+      className: {
+        main: "",
+        nav: "",
+        panel: "flex-1",
+      },
       items: [
         {
           children: (
@@ -83,7 +110,9 @@ export default function Home() {
           panel: (
             <>
               <Arranger />
-              <Mixer />
+              <Tabs {...tabs2Props}>
+                <Mixer />
+              </Tabs>
             </>
           ),
           title: "Arranger",
@@ -126,7 +155,6 @@ export default function Home() {
           order: 4,
           panel: (
             <section className="bg-white">
-              <PianoRoll />
               <Progression />
               <PollySynth />
               <div className="p-8">

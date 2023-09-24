@@ -5,17 +5,19 @@ interface IGrid {
   className?: string;
   cols: number;
   data: string[];
+  style?: any;
 }
 
-const getTwHack = (num: number) => `grid-cols-${num}`;
-
-function Grid({ className = "", cols, data }: IGrid) {
+function Grid({ className = "", style = {}, cols, data }: IGrid) {
   return (
-    <div className={classNames(`grid grid-cols-${cols}`, className)}>
+    <div
+      className={classNames(`bg-white grid grid-cols-${cols}`, className)}
+      style={style}
+    >
       {data.map((cell, cellIndex) => (
         <div
           key={`grid-cell-${cellIndex}`}
-          className="border border-gray-300 border-opacity-50"
+          className="p-1 border-r border-b border-gray-300"
         >
           {cell}
         </div>

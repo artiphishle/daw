@@ -16,10 +16,10 @@ import { Locator } from "@/app/components";
 import Track from "@/app/components/track/Track";
 
 export default function Arranger() {
-  const { ProjectContext, updateProjectContext } = useProjectContext();
+  const { projectContext, updateProjectContext } = useProjectContext();
 
-  if (!ProjectContext) return null;
-  const { tracks, activeTrackId } = ProjectContext;
+  if (!projectContext) return null;
+  const { tracks, activeTrackId } = projectContext;
 
   const events = {
     dragEnd: (event: DragEndEvent) => {
@@ -52,7 +52,7 @@ export default function Arranger() {
           </ol>
         </SortableContext>
       </DndContext>
-      {ProjectContext && <Locator ProjectContext={ProjectContext} />}
+      {projectContext && <Locator projectContext={projectContext} />}
     </div>
   );
 }

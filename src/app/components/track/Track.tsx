@@ -1,5 +1,6 @@
-import classNames from "classnames";
+import { createContext, useEffect, useState } from "react";
 import propTypes from "prop-types";
+import classNames from "classnames";
 
 import t from "@/app/core/i18n";
 import styles from "@/app/core/config/styles";
@@ -9,7 +10,8 @@ import { SortableItem } from "@/app/components";
 
 import { ETrackType, ITrackRouting } from "@/app/components/track/types";
 import type { UniqueIdentifier } from "@dnd-kit/core";
-import { createContext } from "react";
+import { DEFAULT_OFFSET_LEFT } from "@/app/core/config/constants";
+import { useWindowWidth } from "@react-hook/window-size";
 
 // TODO not every 'input' has notes, instrument, etc.
 export interface ITrack {
@@ -20,24 +22,14 @@ export interface ITrack {
   type: ETrackType;
   url?: string;
 }
-const TrackContext = createContext({
-  volume: 0,
-  pan: 0,
-  mute: false,
-  solo: false,
-  effectsChain: null,
-  onInstrumentsUpdate: null,
-  onAddToEffectsChain: null,
-  onRemoveFromEffectsChain: null,
-});
-
 function Track(track: ITrack) {
   const { id, url, className = "", name, type } = track;
   const { Icon, draw } = useTrackConfig(type)!;
-  const { ProjectContext, updateProjectContext } = useProjectContext();
-  if (!ProjectContext) return null;
+  const windowWidth = useWindowWidth();
+  const { projectContext, updateProjectContext } = useProjectContext();
+  if (!projectContext) return null;
 
-  const { measureCount } = ProjectContext;
+  const { measureCount, quantization } = projectContext;
   const css = styles.track;
   const cssLi = classNames(css.row(type), className);
   const isSortable = ![ETrackType.Time, ETrackType.Group].includes(type);
@@ -50,9 +42,11 @@ function Track(track: ITrack) {
       <div className={css.col2.main}>
         {draw({
           measureCount,
-          ProjectContext,
+          quantization,
+          projectContext,
           id,
           url,
+          windowWidth: windowWidth - DEFAULT_OFFSET_LEFT,
           updateProjectContext,
         })}
       </div>
@@ -79,5 +73,4 @@ Track.propDefaults = {
   name: t("untitled"),
 };
 
-export { TrackContext };
 export default Track;

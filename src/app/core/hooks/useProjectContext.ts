@@ -45,8 +45,8 @@ export default function useProjectContext() {
   const fetcher: Fetcher<IProjectContext, EEndpoint> = (endpoint: EEndpoint) =>
     fetch(endpoint).then((res) => {
       return new Promise(async (resolve) => {
-        const ProjectContext = (await res.json()) as IProjectContext;
-        const { tracks, ...rest } = ProjectContext;
+        const projectContext = (await res.json()) as IProjectContext;
+        const { tracks, ...rest } = projectContext;
         const mutatedTracks = tracks.map((track) => {
           const { instrument: instrumentString, ...inputRest } =
             track.routing.input;
@@ -63,7 +63,7 @@ export default function useProjectContext() {
       });
     });
   const {
-    data: ProjectContext,
+    data: projectContext,
     isLoading,
     error,
   } = useSWR(EEndpoint.ProjectContext, fetcher, {
@@ -93,5 +93,5 @@ export default function useProjectContext() {
 
     mutate(EEndpoint.ProjectContext);
   };
-  return { ProjectContext, isLoading, error, updateProjectContext };
+  return { projectContext, isLoading, error, updateProjectContext };
 }
