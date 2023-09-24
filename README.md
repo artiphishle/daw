@@ -27,13 +27,18 @@ export default function Collabo() {
 }
 ```
 
-#### We're [@here](https://github.com/scha-ch/daw/discussions) 🙋‍♂️ and [@there](https://www.linkedin.com/in/faebster/)
+We're [@here](https://github.com/scha-ch/daw/discussions) 🙋‍♂️ and [@there](https://www.linkedin.com/in/faebster/)
 
 ---
 
 ## 🎼Changelog
 
 ### 🍃 September 2023
+
+#### 24th
+
+- **BPM Detection** works, audio tracks are automatically analyzed
+- **MIDI Device** support for Chrome, more to follow (Tab 'Settings')
 
 #### 20th
 
