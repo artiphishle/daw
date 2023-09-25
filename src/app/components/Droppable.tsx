@@ -1,12 +1,20 @@
 import { type ReactNode } from "react";
+import PropTypes from "prop-types";
 import { useDroppable } from "@dnd-kit/core";
 
 interface IDroppableProps {
-  children: ReactNode;
+  id: string;
+  children?: ReactNode;
 }
 
-export default function Droppable({ children }: IDroppableProps) {
-  const { setNodeRef } = useDroppable({ id: "unique-id" });
-
-  return <div ref={setNodeRef}>{children}</div>;
+function Droppable({ children, id }: IDroppableProps) {
+  const { setNodeRef } = useDroppable({ id });
+  return <section ref={setNodeRef}>{children}</section>;
 }
+
+Droppable.propTypes = {
+  id: PropTypes.string.isRequired,
+  children: PropTypes.node,
+};
+
+export default Droppable;

@@ -1,4 +1,5 @@
 "use client";
+import { DndContext, DragEndEvent } from "@dnd-kit/core";
 import { useEffect, useState } from "react";
 import { start } from "tone";
 
@@ -10,6 +11,7 @@ import useConverter from "@/app/core/hooks/useConverter";
 
 import {
   Arranger,
+  Droppable,
   Mixer,
   Navbar,
   Progression,
@@ -18,11 +20,12 @@ import {
 } from "@/app/components";
 
 import { Dialog, Tabs, type ITabs } from "@/app/ui";
-import PollySynth from "@/app/core/instruments/synths/PollySynth";
 import SnareDrum from "@/app/core/instruments/drums/snareDrum/SnareDrum";
 import { CogIcon, GridIcon, HopIcon, InfinityIcon } from "lucide-react";
 import PianoRoll from "./components/PianoRoll";
 import Browser from "./components/Browser";
+import SamPlay from "./core/instruments/sampler/Sampler";
+import PollySynth from "./core/instruments/synths/PollySynth";
 // import { PanSongParsed } from "./test/unit/PanSong.parsed";
 
 export default function Home() {
@@ -163,29 +166,38 @@ export default function Home() {
           href: "#",
           order: 4,
           panel: (
-            <section className="bg-white">
-              <Progression />
-              <PollySynth />
-              <div className="p-8">
-                <h2 className={styles.headings.h2}>Visualization</h2>
-                <SnareDrum className="-mt-100" />
-              </div>
-            </section>
+            <Droppable id="dropzone-1">
+              <section className="bg-white">
+                <PollySynth />
+                <SamPlay />
+                <Progression />
+                <div className="p-8">
+                  <h2 className={styles.headings.h2}>Visualization</h2>
+                  <SnareDrum className="-mt-100" />
+                </div>
+              </section>
+            </Droppable>
           ),
           title: "Testing",
         },
       ],
     };
 
+    function dragEnd({ active }: DragEndEvent) {
+      console.log("active", active);
+    }
+
     return (
-      <main className={styles.main}>
-        <div className="flex flex-col flex-1">
-          <Navbar />
-          <Tabs {...tabsProps} />
-        </div>
-      </main>
+      <DndContext onDragEnd={dragEnd}>
+        <main className={styles.main}>
+          <div className="flex flex-col flex-1">
+            <Navbar />
+            <Tabs {...tabsProps} />
+          </div>
+        </main>
+        <Droppable id="drop-instruments"></Droppable>
+      </DndContext>
     );
   }
-
   return toneReady ? <App /> : <StartDialog />;
 }

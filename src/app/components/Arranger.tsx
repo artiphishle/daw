@@ -1,9 +1,4 @@
-import {
-  DndContext,
-  DragEndEvent,
-  UniqueIdentifier,
-  closestCenter,
-} from "@dnd-kit/core";
+import { DndContext, DragEndEvent, closestCenter } from "@dnd-kit/core";
 import {
   SortableContext,
   arrayMove,
@@ -12,7 +7,7 @@ import {
 
 import styles from "@/app/core/config/styles";
 import useProjectContext from "@/app/core/hooks/useProjectContext";
-import { Locator } from "@/app/components";
+import { Droppable, Locator } from "@/app/components";
 import Track from "@/app/components/track/Track";
 
 export default function Arranger() {
