@@ -1,8 +1,7 @@
 import t from "@/app/core/i18n";
 
 import { EInstrument } from "@/app/core/hooks/useProjectContext";
-import { ETrackType } from "@/app/components/track/types";
-import type { ITrack } from "@/app/components/track/Track";
+import { ETrackType, ITrack } from "@/app/types/daw";
 
 /**
  * GENERAL
@@ -21,21 +20,9 @@ const DEFAULT_SWING_SUBDIVISION = "8n";
  * TRACKS
  */
 
-// TIME
-const DEFAULT_TRACK_TIME: ITrack = {
+// TIME TODO: it's a normal component
+const DEFAULT_TRACK_TIME: Pick<ITrack, "id" | "type"> = {
   id: "track-time",
-  name: "",
-  routing: {
-    input: {
-      instrument: null,
-      label: "None",
-      events: [],
-      onClick: (event) => {
-        event.preventDefault();
-      },
-    },
-    output: null,
-  },
   type: ETrackType.Time,
 };
 
@@ -45,15 +32,7 @@ const DEFAULT_AUDIO_TRACK: ITrack = {
   name: "Halloween",
   url: "/halloween.mp3",
   routing: {
-    input: {
-      instrument: null,
-      label: "Audio",
-      events: [],
-      onClick: (event) => {
-        event.preventDefault();
-        alert("AudioTrack: Halloween");
-      },
-    },
+    input: { id: "track-audio-input", label: "Audio" },
     output: "mixbus",
   },
   type: ETrackType.Audio,
@@ -67,6 +46,7 @@ const DEFAULT_MIDI_BD_TRACK: ITrack = {
   name: "BD",
   routing: {
     input: {
+      id: EInstrument.BaseDrum,
       label: EInstrument.BaseDrum,
       events: [
         { note: "C1", duration: "48i", time: "0i" },
@@ -76,11 +56,6 @@ const DEFAULT_MIDI_BD_TRACK: ITrack = {
         { note: "C1", duration: "48i", time: `${TICKS_PER_16N * 16}i` },
         { note: "C1", duration: "48i", time: `${TICKS_PER_16N * 24}i` },
       ],
-      onClick: (event) => {
-        event.preventDefault();
-        alert("BaseDrum");
-      },
-      instrument: EInstrument.BaseDrum,
     },
     output: "drums",
   },
@@ -91,6 +66,7 @@ const DEFAULT_MIDI_SD_TRACK: ITrack = {
   name: "SD",
   routing: {
     input: {
+      id: EInstrument.SnareDrum,
       label: EInstrument.SnareDrum,
       events: [
         { note: "D1", duration: "24i", time: `${TICKS_PER_16N * 4}i` },
@@ -98,11 +74,6 @@ const DEFAULT_MIDI_SD_TRACK: ITrack = {
         { note: "D1", duration: "24i", time: `${TICKS_PER_16N * 20}i` },
         { note: "D1", duration: "24i", time: `${TICKS_PER_16N * 28}i` },
       ],
-      onClick: (event) => {
-        event.preventDefault();
-        alert("MidiTrack: SnareDrum");
-      },
-      instrument: EInstrument.SnareDrum,
     },
     output: "drums",
   },
@@ -148,11 +119,7 @@ const DEFAULT_MIDI_CHH_TRACK: ITrack = {
         { note: "F#1", duration: "24i", time: `${TICKS_PER_16N * 30}i` },
       ],
       label: EInstrument.ClosedHiHat,
-      onClick: (event) => {
-        event.preventDefault();
-        alert("MidiTrack: ClosedHiHat");
-      },
-      instrument: EInstrument.ClosedHiHat,
+      id: EInstrument.ClosedHiHat,
     },
     output: "drums",
   },
@@ -165,18 +132,30 @@ const DEFAULT_MIDI_BASS_TRACK: ITrack = {
   name: "Bass",
   routing: {
     input: {
-      instrument: EInstrument.BassSynth,
+      id: EInstrument.BassSynth,
       label: EInstrument.BassSynth,
-      onClick: (event) => {
-        event.preventDefault();
-        alert("MidiTrack: BassSynth");
-      },
       events: [
         { note: "A1", duration: `${4 * 48}i`, time: "0i" },
         { note: "D#2", duration: `${1 * 48}i`, time: `${TICKS_PER_16N * 14}i` },
         { note: "D2", duration: `${4 * 48}i`, time: `${TICKS_PER_16N * 16}i` },
         { note: "B#1", duration: `${1 * 48}i`, time: `${TICKS_PER_16N * 30}i` },
       ],
+    },
+    output: "mixbus",
+  },
+  type: ETrackType.Midi,
+};
+
+// SAMPLER
+const DEFAULT_MIDI_SAMPLER_TRACK: ITrack = {
+  id: "track-midi-sampler",
+  name: "Sampler",
+  routing: {
+    input: {
+      id: EInstrument.SamPlay,
+      urls: { C2: "/samples/808/kick.wav" },
+      label: EInstrument.SamPlay,
+      events: [{ note: "C3", duration: `${48}i`, time: "0i" }],
     },
     output: "mixbus",
   },
@@ -190,13 +169,8 @@ const DEFAULT_GROUP_DRUMS: ITrack = {
   name: "Drums",
   routing: {
     input: {
-      instrument: null,
+      id: "track-group-drums-input",
       label: "Drums",
-      events: [],
-      onClick: (event) => {
-        event.preventDefault();
-        alert("Group: Drums");
-      },
     },
     output: "mixbus",
   },
@@ -206,13 +180,9 @@ const DEFAULT_GROUP_MIXBUS: ITrack = {
   name: "Mixbus",
   routing: {
     input: {
-      instrument: null,
+      id: "mixbus-input",
       label: "All",
       events: [],
-      onClick: (event) => {
-        event.preventDefault();
-        alert("Group: Mixbus");
-      },
     },
     output: "master",
   },
@@ -236,6 +206,7 @@ export {
   DEFAULT_MIDI_SD_TRACK,
   DEFAULT_MIDI_CHH_TRACK,
   DEFAULT_MIDI_BASS_TRACK,
+  DEFAULT_MIDI_SAMPLER_TRACK,
   //
   DEFAULT_GROUP_DRUMS,
   DEFAULT_GROUP_MIXBUS,

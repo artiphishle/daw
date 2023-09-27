@@ -1,23 +1,30 @@
 import { Scale } from "tonal";
 
-import { Grid } from "@/app/ui";
-import useProjectContext from "@/app/core/hooks/useProjectContext";
 import { DEFAULT_OFFSET_LEFT } from "@/app/core/config/constants";
-import { useState } from "react";
+
+import useProjectContext from "@/app/core/hooks/useProjectContext";
+import { Grid } from "@/app/ui";
+
+import type { ITrack } from "../types/daw";
 
 export default function PianoRoll() {
-  const [currentStepIndex, setCurrentStepIndex] = useState(0);
+  // const [currentStepIndex, setCurrentStepIndex] = useState(0);
   const { projectContext } = useProjectContext();
-  if (!projectContext) return;
+  if (!projectContext) return null;
   const { clef, activeTrackId, tracks } = projectContext;
-  const track = tracks.find(({ id }) => id === activeTrackId);
-  const events = track?.routing.input.events || [];
+  const activeTrack: ITrack | undefined = tracks.find(
+    ({ id }) => id === activeTrackId
+  );
+  if (!activeTrack) {
+    console.error("[PianoRoll] No active track");
+    return null;
+  }
+  const events = activeTrack.routing.input.events || [];
 
   const scale2 = Scale.get(`${clef}2 major`).notes;
   const scale1 = Scale.get(`${clef}1 major`).notes;
   const scale = [...scale2.reverse(), ...scale1.reverse()];
-  const findRowIndex = (note: string) => scale.findIndex((n) => n === note);
-
+  // const findRowIndex = (note: string) => scale.findIndex((n) => n === note);
   const { measureCount, quantization } = projectContext;
   const gridColumnCount = quantization * measureCount;
   const rows = new Array(scale.length * gridColumnCount).fill("_");

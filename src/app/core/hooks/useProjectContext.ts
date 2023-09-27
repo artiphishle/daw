@@ -7,15 +7,15 @@ import {
   useSnareDrum,
 } from "@/app/core/instruments";
 
-import { EEndpoint } from "@/pages/api/constants";
 import type { IProjectContext } from "@/app/core/config/types";
+import { EEndpoint, ETrackType } from "@/app/types/daw";
 
 export enum EInstrument {
   BaseDrum = "BaseDrum",
   SnareDrum = "SnareDrum",
   ClosedHiHat = "ClosedHiHat",
-
   BassSynth = "BassSynth",
+  SamPlay = "SamPlay",
   // PollySynth = "PollySynth",
   // FMSynth = "FMSynth",
   // AMSynth = "AMSynth",
@@ -37,6 +37,7 @@ export default function useProjectContext() {
     SnareDrum: () => useSnareDrum(),
     ClosedHiHat: () => useHiHat({ open: false }),
     BassSynth: () => useBassSynth(),
+    SamPlay: () => useBassSynth(),
   };
 
   /**
@@ -48,16 +49,14 @@ export default function useProjectContext() {
         const projectContext = (await res.json()) as IProjectContext;
         const { tracks, ...rest } = projectContext;
         const mutatedTracks = tracks.map((track) => {
-          const { instrument: instrumentString, ...inputRest } =
-            track.routing.input;
-          if (!instrumentString) return track;
-
-          const selInstr = INSTRUMENT[instrumentString as EInstrument]();
-          const selRouting = {
+          if (track.type !== ETrackType.Midi) return track;
+          const { id, ...inputRest } = track.routing.input;
+          const instrument = INSTRUMENT[<EInstrument>id]();
+          const routing = {
             ...track.routing,
-            input: { instrument: selInstr, ...inputRest },
+            input: { ...inputRest, id, instrument },
           };
-          return { ...track, routing: selRouting };
+          return { ...track, routing };
         });
         resolve({ ...rest, tracks: mutatedTracks });
       });
@@ -78,10 +77,9 @@ export default function useProjectContext() {
     // DESELECTOR (cannot serialize instruments)
     const readyPatch = patch.tracks
       ? patch.tracks.map((track) => {
-          const { instrument, label } = track.routing.input;
-          if (!instrument) return track;
+          if (!track.routing?.input?.instrument) return track;
           let deselectedTrack = { ...track };
-          deselectedTrack.routing.input.instrument = label;
+          delete deselectedTrack.routing.input.instrument;
           return deselectedTrack;
         })
       : patch;
@@ -90,7 +88,6 @@ export default function useProjectContext() {
       method: "PATCH",
       body: JSON.stringify(patch.tracks ? { tracks: readyPatch } : readyPatch),
     });
-
     mutate(EEndpoint.ProjectContext);
   };
   return { projectContext, isLoading, error, updateProjectContext };

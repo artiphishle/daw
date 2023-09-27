@@ -3,17 +3,16 @@ import {
   DEFAULT_MEASURE_COUNT,
   DEFAULT_POSITION,
   DEFAULT_QUANTIZATION,
-  DEFAULT_TRACK_TIME,
 } from "@/app/core/config/constants";
 
 import type { IProjectContext } from "@/app/core/config/types";
-import type { ITrack } from "@/app/components/track/Track";
+import type { ITrack } from "@/app/types/daw";
 
-const tracks: ITrack[] = [DEFAULT_TRACK_TIME, DEFAULT_AUDIO_TRACK];
+const tracks: ITrack[] = [DEFAULT_AUDIO_TRACK];
 
 const DeathcorePreset: IProjectContext = {
   tracks,
-  activeTrackId: tracks[1].id,
+  activeTrackId: tracks[0].id,
   bpm: 0,
   clef: "C",
   measureCount: DEFAULT_MEASURE_COUNT,

@@ -8,29 +8,29 @@ import {
   DEFAULT_MIDI_BASS_TRACK,
   DEFAULT_MIDI_BD_TRACK,
   DEFAULT_MIDI_CHH_TRACK,
+  DEFAULT_MIDI_SAMPLER_TRACK,
   DEFAULT_MIDI_SD_TRACK,
   DEFAULT_NAME,
   DEFAULT_POSITION,
   DEFAULT_QUANTIZATION,
-  DEFAULT_TRACK_TIME,
 } from "@/app/core/config/constants";
 
 import type { IProjectContext } from "@/app/core/config/types";
-import type { ITrack } from "@/app/components/track/Track";
+import { ITrack } from "@/app/types/daw";
 
 const tracks: ITrack[] = [
-  DEFAULT_TRACK_TIME,
   DEFAULT_MIDI_BD_TRACK,
   DEFAULT_MIDI_SD_TRACK,
   DEFAULT_MIDI_CHH_TRACK,
   DEFAULT_MIDI_BASS_TRACK,
+  DEFAULT_MIDI_SAMPLER_TRACK,
   DEFAULT_AUDIO_TRACK,
   DEFAULT_GROUP_DRUMS,
   DEFAULT_GROUP_MIXBUS,
 ];
 const DefaultPreset: IProjectContext = {
   tracks,
-  activeTrackId: tracks[1].id,
+  activeTrackId: tracks[0].id,
   bpm: DEFAULT_BPM,
   clef: DEFAULT_CLEF,
   measureCount: DEFAULT_MEASURE_COUNT,
