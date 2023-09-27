@@ -1,6 +1,6 @@
 "use client";
 import { DndContext, DragEndEvent } from "@dnd-kit/core";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { start } from "tone";
 
 import t from "@/app/core/i18n";
@@ -24,13 +24,13 @@ import SnareDrum from "@/app/core/instruments/drums/snareDrum/SnareDrum";
 import { CogIcon, GridIcon, HopIcon, InfinityIcon } from "lucide-react";
 import PianoRoll from "./components/PianoRoll";
 import Browser from "./components/Browser";
-import SamPlay from "./core/instruments/sampler/Sampler";
 import PollySynth from "./core/instruments/synths/PollySynth";
 // import { PanSongParsed } from "./test/unit/PanSong.parsed";
 
 export default function Home() {
   const [toneReady, setToneReady] = useState(false);
   const { audioToAbc, audioToMidi } = useConverter();
+  const droppableInstrumentsRef = useRef(null);
   (async function () {
     try {
       // TODO stream it & not run always at start up
@@ -78,7 +78,7 @@ export default function Home() {
           href: "#",
           id: "tabs-mixer",
           order: 1,
-          panel: <Mixer />,
+          panel: <Mixer droppableInstrumentsRef={droppableInstrumentsRef} />,
           title: "Mixer",
         },
         {
@@ -122,9 +122,7 @@ export default function Home() {
           panel: (
             <>
               <Arranger />
-              <Tabs {...tabs2Props}>
-                <Mixer />
-              </Tabs>
+              <Tabs {...tabs2Props} />
             </>
           ),
           title: "Arranger",
@@ -169,10 +167,9 @@ export default function Home() {
             <Droppable id="dropzone-1">
               <section className="bg-white">
                 <PollySynth />
-                <SamPlay />
                 <Progression />
                 <div className="p-8">
-                  <h2 className={styles.headings.h2}>Visualization</h2>
+                  <h2 className={styles.headings.h2}>{t("visualization")}</h2>
                   <SnareDrum className="-mt-100" />
                 </div>
               </section>
@@ -183,8 +180,8 @@ export default function Home() {
       ],
     };
 
-    function dragEnd({ active }: DragEndEvent) {
-      console.log("active", active);
+    function dragEnd({ active, delta }: DragEndEvent) {
+      console.log("moved x/y", delta.x, delta.y);
     }
 
     return (
@@ -195,7 +192,7 @@ export default function Home() {
             <Tabs {...tabsProps} />
           </div>
         </main>
-        <Droppable id="drop-instruments"></Droppable>
+        <section ref={droppableInstrumentsRef} id="droppable-instruments" />
       </DndContext>
     );
   }

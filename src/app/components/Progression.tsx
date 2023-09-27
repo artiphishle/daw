@@ -3,12 +3,21 @@ import styles from "@/app/core/config/styles";
 import useMusicTheory from "@/app/core/hooks/useMusicTheory";
 import useProjectContext from "@/app/core/hooks/useProjectContext";
 
-enum EProgression {
-  IVviIV = "I V vi IV",
-}
+const PROGRESSION = [
+  "I vi IV V", // 50s Progression
+  "I V vi IV",
+  "I IV ii V", // Montgomery Ward bridge
+  "vi ii V I", // Circle Progression
+  "I V IV IV I V I V", // Eight-bar blues
+  "ii V I",
+  "I V vi iii IV I IV V", // Pachelbel's Canon
+  "i VII i V III VII i V i", // Passamezzo antico
+  "I IV I V I IV I V I", // Passamezzo moderno
+  "I I I I I I I I IV IV I I V IV I I", // Sixteen-bar blues
+];
 
 export default function Progression() {
-  const chords = useMusicTheory()?.getChords(EProgression.IVviIV);
+  const chords = useMusicTheory()?.getChords(PROGRESSION[0]);
 
   const { projectContext } = useProjectContext();
   if (!projectContext) return null;
@@ -20,7 +29,7 @@ export default function Progression() {
       <h2 className={styles.headings.h2}>{t("chordProgression")}</h2>
       <p>
         Tonic <span className="p-2 bg-gray-200">{clef}</span> {t("progression")}
-        : <span className="p-2 bg-gray-200">I V vi IV</span>
+        : <span className="p-2 bg-gray-200">{PROGRESSION[0]}</span>
         &nbsp;
         <span>
           = <b>{chords}</b>

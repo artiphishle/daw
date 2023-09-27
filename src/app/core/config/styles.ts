@@ -1,4 +1,4 @@
-import { ETrackType } from "@/app/components/track/types";
+import { ETrackType } from "@/app/types/daw";
 
 export enum EColor {
   Gray = "gray",

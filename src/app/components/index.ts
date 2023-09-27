@@ -1,6 +1,6 @@
 import Arranger from "./Arranger";
 import Locator from "./Locator";
-import Mixer, { type IMixer } from "./Mixer";
+import Mixer from "./Mixer";
 import Navbar from "./Navbar";
 import Progression from "./Progression";
 import Settings from "./Settings";
@@ -30,4 +30,3 @@ export {
   Meter,
 };
 export { Draggable, Droppable, SortableItem };
-export type { IMixer };
