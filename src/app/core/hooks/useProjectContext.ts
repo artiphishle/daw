@@ -4,18 +4,19 @@ import {
   useBaseDrum,
   useBassSynth,
   useHiHat,
+  useSampler,
   useSnareDrum,
 } from "@/app/core/instruments";
 
-import type { IProjectContext } from "@/app/core/config/types";
 import { EEndpoint, ETrackType } from "@/app/types/daw";
+import type { IProjectContext } from "@/app/core/config/types";
 
 export enum EInstrument {
   BaseDrum = "BaseDrum",
   SnareDrum = "SnareDrum",
   ClosedHiHat = "ClosedHiHat",
   BassSynth = "BassSynth",
-  SamPlay = "SamPlay",
+  Sampler = "Sampler",
   // PollySynth = "PollySynth",
   // FMSynth = "FMSynth",
   // AMSynth = "AMSynth",
@@ -25,7 +26,6 @@ export enum EInstrument {
   // MonoSynth = "MonoSynth",
   // NoiseSynth = "NoiseSynth",
   // PluckSynth = "PluckSynth",
-  // Sampler = "Sampler",
   // Synth = "Synth",
 }
 
@@ -33,11 +33,11 @@ export enum EInstrument {
 export default function useProjectContext() {
   // TODO dynamically load instruments
   const INSTRUMENT = {
-    BaseDrum: () => useBaseDrum(),
-    SnareDrum: () => useSnareDrum(),
-    ClosedHiHat: () => useHiHat({ open: false }),
-    BassSynth: () => useBassSynth(),
-    SamPlay: () => useBassSynth(),
+    BaseDrum: useBaseDrum,
+    SnareDrum: useSnareDrum,
+    ClosedHiHat: useHiHat,
+    BassSynth: useBassSynth,
+    Sampler: useSampler,
   };
 
   /**
@@ -49,12 +49,14 @@ export default function useProjectContext() {
         const projectContext = (await res.json()) as IProjectContext;
         const { tracks, ...rest } = projectContext;
         const mutatedTracks = tracks.map((track) => {
-          if (track.type !== ETrackType.Midi) return track;
-          const { id, ...inputRest } = track.routing.input;
-          const instrument = INSTRUMENT[<EInstrument>id]();
+          if (![ETrackType.Instrument, ETrackType.Sampler].includes(track.type))
+            return track;
+
+          const { id, options, ...inputRest } = track.routing.input;
+          const instrument = INSTRUMENT[<EInstrument>id](options);
           const routing = {
             ...track.routing,
-            input: { ...inputRest, id, instrument },
+            input: { ...inputRest, id, instrument, options },
           };
           return { ...track, routing };
         });

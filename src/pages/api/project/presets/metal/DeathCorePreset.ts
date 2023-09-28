@@ -1,5 +1,5 @@
 import {
-  DEFAULT_AUDIO_TRACK,
+  DEFAULT_TRACK_AUDIO,
   DEFAULT_MEASURE_COUNT,
   DEFAULT_POSITION,
   DEFAULT_QUANTIZATION,
@@ -8,7 +8,7 @@ import {
 import type { IProjectContext } from "@/app/core/config/types";
 import type { ITrack } from "@/app/types/daw";
 
-const tracks: ITrack[] = [DEFAULT_AUDIO_TRACK];
+const tracks: ITrack<any, any>[] = [DEFAULT_TRACK_AUDIO];
 
 const DeathcorePreset: IProjectContext = {
   tracks,

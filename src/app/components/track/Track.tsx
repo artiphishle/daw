@@ -10,22 +10,26 @@ import { SortableItem } from "@/app/components";
 import { useWindowWidth } from "@react-hook/window-size";
 import { ETrackType, type ITrack } from "@/app/types/daw";
 
-function Track(track: ITrack) {
-  const { id, url, className = "", name, type } = track;
-  const { Icon, draw } = useTrackConfig(type)!;
+function Track<O, I>(track: ITrack<O, I>) {
+  const { id, name, type, routing, className = "" } = track;
+  const { Icon, draw } = useTrackConfig(type);
 
   const windowWidth = useWindowWidth();
   const { projectContext, updateProjectContext } = useProjectContext();
   if (!projectContext) return null;
   const { measureCount, quantization } = projectContext;
 
-  const UNSORTABLE_TRACK_TYPES = [ETrackType.Time, ETrackType.Group];
+  const UNSORTABLE_TRACK_TYPES = [ETrackType.Group];
   const isSortable = !UNSORTABLE_TRACK_TYPES.includes(type);
 
   const css = styles.track;
   const cssLi = classNames(css.row(type), className);
+  const params = {
+    options: routing.input.options,
+    instrument: routing.input.instrument,
+  };
 
-  const Tpl = () => (
+  const Tpl = ({ options, instrument }: { options: O; instrument: I }) => (
     <>
       <div className={classNames(css.col1.main(type), className)}>
         <Icon className={css.icon(type)} />
@@ -37,9 +41,10 @@ function Track(track: ITrack) {
           quantization,
           projectContext,
           id,
-          url,
           windowWidth: windowWidth - DEFAULT_OFFSET_LEFT,
           updateProjectContext,
+          ...options,
+          instrument,
         })}
       </div>
     </>
@@ -47,11 +52,11 @@ function Track(track: ITrack) {
 
   return isSortable ? (
     <SortableItem className={cssLi} id={id}>
-      <Tpl />
+      <Tpl options={params.options} instrument={params.instrument} />
     </SortableItem>
   ) : (
     <li id={id as string} className={cssLi}>
-      <Tpl />
+      <Tpl options={params.options} instrument={params.instrument} />
     </li>
   );
 }

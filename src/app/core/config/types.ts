@@ -12,7 +12,7 @@ interface IProjectContext {
   quantization: number;
   swing: number;
   swingSubdivision: Subdivision;
-  tracks: ITrack[];
+  tracks: ITrack<any, any>[];
 }
 
 export type { IProjectContext };

@@ -1,11 +1,15 @@
 import type { UniqueIdentifier } from "@dnd-kit/core";
-import { MouseEvent, ReactNode } from "react";
+import type { MouseEvent, ReactNode } from "react";
 import type { Note } from "tone/build/esm/core/type/Units";
-import type {
-  Instrument,
-  InstrumentOptions,
-} from "tone/build/esm/instrument/Instrument";
 import type { TIcon } from "@/app/core/config/icons";
+
+/**
+ * Portals
+ */
+
+enum EPortal {
+  Instruments = "portal-instruments",
+}
 
 /**
  * API
@@ -21,7 +25,7 @@ enum EEndpoint {
 
 export interface IMixer {
   settings: {
-    [k in Exclude<ETrackType, ETrackType.Time>]: {
+    [k in ETrackType]: {
       bg: string;
       text: string;
       label: string;
@@ -37,8 +41,8 @@ export interface IMixer {
 enum ETrackType {
   Audio = "audio",
   Group = "group",
-  Midi = "midi",
-  Time = "time",
+  Instrument = "instrument",
+  Sampler = "sampler",
 }
 interface ITrackConfig {
   Icon: TIcon;
@@ -54,24 +58,24 @@ interface ITrackConfig {
     notes: Note[];
   }) => void;
 }
-interface ITrack {
-  className?: string;
+
+interface ITrack<O, I> {
   id: UniqueIdentifier;
-  routing: ITrackRouting;
   name: string;
+  routing: ITrackRouting<O, I>;
   type: ETrackType;
-  url?: string;
+  className?: string;
 }
-interface ITrackRouting {
-  input: IRoutingInput;
+interface ITrackRouting<O, I> {
+  input: IRoutingInput<O, I>;
   output?: string;
 }
-interface IRoutingInput {
+interface IRoutingInput<O, I> {
   id: UniqueIdentifier;
-  instrument?: Instrument<InstrumentOptions>;
+  instrument: I;
   label: string;
+  options: O;
   events?: IMidiEvent[];
-  urls?: Record<string, string>;
 }
 
 /**
@@ -84,5 +88,5 @@ interface IMidiEvent {
   time: string;
 }
 
-export { EEndpoint, ETrackType };
+export { EEndpoint, EPortal, ETrackType };
 export type { IMidiEvent, ITrack, ITrackConfig, ITrackRouting };
