@@ -20,10 +20,14 @@
  *   - Heel toe (youtube: Derrick Cope)
  */
 
-import { MembraneSynth } from "tone";
+import { MembraneSynth, type MembraneSynthOptions } from "tone";
+import { RecursivePartial } from "tone/build/esm/core/util/Interface";
 
-export default function useBaseDrum() {
-  const baseDrum = new MembraneSynth({ volume: -24 });
+export default function useBaseDrum({
+  volume = -24,
+  ...rest
+}: RecursivePartial<MembraneSynthOptions>) {
+  const baseDrum = new MembraneSynth({ volume, ...rest });
 
   return baseDrum;
 }

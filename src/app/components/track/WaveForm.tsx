@@ -1,7 +1,7 @@
 import { useEffect, useMemo } from "react";
 import WaveSurfer from "wavesurfer.js";
 
-interface IWaveForm {
+export interface IWaveForm {
   url: string;
 }
 

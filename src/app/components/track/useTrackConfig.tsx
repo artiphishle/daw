@@ -1,15 +1,8 @@
-import { Time, ToneAudioBuffer, Transport } from "tone";
+import { SamplerOptions, Time, ToneAudioBuffer, Transport } from "tone";
 import { analyze } from "web-audio-beat-detector";
 import classNames from "classnames";
 
-import { DEFAULT_OFFSET_LEFT } from "@/app/core/config/constants";
-
-import {
-  AudioIcon,
-  GroupIcon,
-  MidiIcon,
-  TimeIcon,
-} from "@/app/core/config/icons";
+import { AudioIcon, GroupIcon, MidiIcon } from "@/app/core/config/icons";
 import styles from "@/app/core/config/styles";
 import WaveForm from "@/app/components/track/WaveForm";
 
@@ -64,14 +57,14 @@ function play(
       );
 
       return isNoise
-        ? instrument.triggerAttackRelease(d, t)
-        : instrument.triggerAttackRelease(note, d, t);
+        ? (instrument as any).triggerAttackRelease(d, t)
+        : (instrument as any).triggerAttackRelease(note, d, t);
     });
   }
   Transport.scheduleRepeat(repeat, `${measureCount}m`);
 }
 
-const midiConfig: ITrackConfig = {
+const instrumentConfig: ITrackConfig = {
   Icon: MidiIcon,
   draw: ({ id: trackId, measureCount, projectContext, windowWidth }) => {
     const { tracks } = projectContext as IProjectContext;
@@ -110,38 +103,24 @@ const midiConfig: ITrackConfig = {
     );
   },
 };
-const timeConfig: ITrackConfig = {
-  Icon: TimeIcon,
-  draw: ({ measureCount }) => {
-    const mc = measureCount as number;
 
-    // Support 4x'16n' notes for now (TODO '32n' at least)
-    return (
-      <div className="flex w-full">
-        <div style={{ width: `${DEFAULT_OFFSET_LEFT}px` }}>
-          <TimeIcon />
-        </div>
-        {new Array(measureCount).fill("").map((_, measureIndex) => (
-          <div
-            className="flex flex-1 items-center px-1 py-2 border-r border-r-gray-200"
-            key={`time-track-measure-${measureIndex}`}
-          >
-            {measureIndex + 1}
-          </div>
-        ))}
-      </div>
-    );
+const samplerConfig: ITrackConfig = {
+  Icon: MidiIcon,
+  draw: () => {
+    return <div />;
   },
 };
+
 const trackConfig = new Map<ETrackType, ITrackConfig>([
   [ETrackType.Audio, audioConfig],
   [ETrackType.Group, groupConfig],
-  [ETrackType.Midi, midiConfig],
-  [ETrackType.Time, timeConfig],
+  [ETrackType.Instrument, instrumentConfig],
+  [ETrackType.Sampler, samplerConfig],
 ]);
 
 export default function useTrackConfig(type: ETrackType) {
-  return trackConfig.get(type);
+  const config = trackConfig.get(type);
+  if (!config || !config.draw || !config.Icon)
+    throw new Error(`[useTrackConfig] Track type ${type} not found`);
+  return config;
 }
-
-export { timeConfig };
