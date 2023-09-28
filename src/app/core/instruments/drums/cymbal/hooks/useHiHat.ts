@@ -1,17 +1,10 @@
-import { NoiseSynth } from "tone";
+import { NoiseSynth, NoiseSynthOptions } from "tone";
+import { RecursivePartial } from "tone/build/esm/core/util/Interface";
 
-interface IUseHiHat {
-  open?: boolean;
-}
-
-export default function useHiHat({ open = false }: IUseHiHat) {
-  return open
-    ? new NoiseSynth({
-        noise: { type: "white", fadeIn: 0.1 },
-        volume: -24,
-      })
-    : new NoiseSynth({
-        noise: { type: "white", fadeIn: 0.1 },
-        volume: -24,
-      });
+export default function useHiHat({
+  noise = { type: "white", fadeIn: 0.1 },
+  volume = -20,
+  ...rest
+}: RecursivePartial<NoiseSynthOptions>) {
+  return new NoiseSynth({ noise, volume, ...rest });
 }

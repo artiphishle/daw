@@ -1,7 +1,10 @@
 import Arranger from "./Arranger";
+import Browser from "./Browser";
 import Locator from "./Locator";
-import Mixer, { type IMixer } from "./Mixer";
+import Meter from "./Meter";
+import Mixer from "./Mixer";
 import Navbar from "./Navbar";
+import PianoRoll from "./PianoRoll";
 import Progression from "./Progression";
 import Settings from "./Settings";
 import Sheet from "./Sheet";
@@ -9,7 +12,6 @@ import Song from "./_Song";
 import Toolbar from "./Toolbar";
 import Track from "./track/Track";
 import Transport from "./Transport";
-import Meter from "./Meter";
 
 import Draggable from "./Draggable";
 import Droppable from "./Droppable";
@@ -17,9 +19,12 @@ import SortableItem from "./SortableItem";
 
 export {
   Arranger,
+  Browser,
   Locator,
+  Meter,
   Mixer,
   Navbar,
+  PianoRoll,
   Progression,
   Settings,
   Sheet,
@@ -27,7 +32,5 @@ export {
   Toolbar,
   Track,
   Transport,
-  Meter,
 };
 export { Draggable, Droppable, SortableItem };
-export type { IMixer };

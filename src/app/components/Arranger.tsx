@@ -7,14 +7,15 @@ import {
 
 import styles from "@/app/core/config/styles";
 import useProjectContext from "@/app/core/hooks/useProjectContext";
-import { Droppable, Locator } from "@/app/components";
+import { Locator } from "@/app/components";
 import Track from "@/app/components/track/Track";
+import Time from "./Time";
 
 export default function Arranger() {
   const { projectContext, updateProjectContext } = useProjectContext();
 
   if (!projectContext) return null;
-  const { tracks, activeTrackId } = projectContext;
+  const { tracks, activeTrackId, measureCount } = projectContext;
 
   const events = {
     dragEnd: (event: DragEndEvent) => {
@@ -31,10 +32,11 @@ export default function Arranger() {
   };
 
   return (
-    <div className="relative">
+    <div className={styles.arranger.main}>
       <DndContext collisionDetection={closestCenter} onDragEnd={events.dragEnd}>
         <SortableContext items={tracks} strategy={verticalListSortingStrategy}>
-          <ol className="flex-1 bg-white">
+          <ol className="flex-1 ">
+            <Time measureCount={measureCount} />
             {tracks.map((track, trackIndex) => (
               <Track
                 className={

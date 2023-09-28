@@ -60,7 +60,9 @@ export default function Transport() {
     onRecord: (_: MouseEvent<SVGSVGElement>) =>
       console.log("🎙️ Recording soon available"),
     onStart: (_: MouseEvent<SVGSVGElement>) => ToneTransport.start(),
-    onStop: (_: MouseEvent<SVGSVGElement>) => ToneTransport.stop(),
+    onStop: (_: MouseEvent<SVGSVGElement>) => {
+      ToneTransport.stop(0.5);
+    },
   };
 
   function TransportControl() {
