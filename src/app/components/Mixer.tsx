@@ -1,38 +1,26 @@
+import { useWindowWidth } from "@react-hook/window-size";
 import { Destination, Meter as ToneMeter } from "tone";
-import { GroupIcon, Loader, Volume1Icon } from "lucide-react";
 import classNames from "classnames";
 
 import t from "@/app/core/i18n";
+import styles, { TrackColor } from "@/app/core/config/styles";
+import { AudioIcon, GroupIcon, MidiIcon } from "@/app/core/config/icons";
 import useProjectContext from "@/app/core/hooks/useProjectContext";
 import { Meter } from "@/app/components";
-import { Accordion } from "@/app/ui";
+import { Accordion } from "@/ui";
 
-import { ETrackType } from "@/app/components/track/types";
-import styles, { TrackColor } from "@/app/core/config/styles";
-import { AudioIcon, MidiIcon } from "../core/config/icons";
-import { useState } from "react";
-import { useWindowWidth } from "@react-hook/window-size";
-import { EUnit } from "../types/utility";
+import { ETrackType } from "@/app/types/daw";
 
-export interface IMixer {
-  settings: {
-    [k in Exclude<ETrackType, ETrackType.Time>]: {
-      bg: string;
-      text: string;
-      label: string;
-      visible: boolean;
-    };
-  };
+interface IMixer {
+  openInstrument: () => void;
 }
 
-const css = styles.mixer;
-
-export default function Mixer() {
-  const { projectContext, isLoading, error } = useProjectContext();
+export default function Mixer({ openInstrument }: IMixer) {
+  const css = styles.mixer;
   const windowWidth = useWindowWidth();
-  if (isLoading) return <Loader />;
-  if (!projectContext) throw error;
 
+  const { projectContext } = useProjectContext();
+  if (!projectContext) return null;
   const { tracks, activeTrackId } = projectContext;
 
   const masterMeter = new ToneMeter();
@@ -41,20 +29,26 @@ export default function Mixer() {
   return (
     <section className={classNames(css.main)}>
       <div className={css.inner}>
-        {tracks.map(({ id, routing: { input, output }, type, name }) => {
-          if (type === ETrackType.Time) return;
+        {tracks.map((track, trackIndex) => {
+          const { id, routing, type, name } = track;
+          const { input, output } = routing;
+          const { instrument, label } = input;
+          const { bg, text } = TrackColor[type as ETrackType];
           const meter = new ToneMeter();
 
-          if (input.instrument) {
-            input.instrument.chain(meter, Destination);
-          }
-          const { bg, text } = TrackColor[type];
+          console.log(
+            "[Mixer]",
+            instrument ? "instrument" : "no instrument",
+            label,
+            label
+          );
+          instrument && instrument.chain(meter, Destination); // no 'Group'
 
           const RoutingDetails = () => (
             <ol>
               <li className="text-center p-1">
-                <a href="#" onClick={input.onClick}>
-                  {input.label}
+                <a href="#" onClick={openInstrument}>
+                  {label}
                 </a>
               </li>
               <li className="text-center p-1">{output}</li>
@@ -62,7 +56,7 @@ export default function Mixer() {
           );
           const InsertDetails = () => (
             <ol>
-              <li className="text-center bg-white p-1">empty</li>
+              <li className="text-center bg-white p-1">{t("empty")}</li>
             </ol>
           );
           const SendDetails = () => (
@@ -82,7 +76,7 @@ export default function Mixer() {
                 return <AudioIcon className={className} />;
               case ETrackType.Group:
                 return <GroupIcon className={className} />;
-              case ETrackType.Midi:
+              case ETrackType.Instrument:
                 return <MidiIcon className={className} />;
               default:
                 return <></>;
@@ -91,7 +85,7 @@ export default function Mixer() {
 
           return (
             <div
-              key={`mixer-track-${id}`}
+              key={`mixer-track-${id}-${trackIndex}`}
               className={classNames(
                 `${css.track.main} ${text}`,
                 css.track[activeTrackId === id ? "active" : "inactive"],
@@ -99,15 +93,13 @@ export default function Mixer() {
                 { "ml-auto": name === "Mixbus" }
               )}
               style={{
-                width: `calc(${windowWidth / tracks.length + 1}px - 0.5rem)`,
+                width: `calc(${windowWidth / (tracks.length + 1)}px - 0.5rem)`,
               }}
             >
-              {details.map(({ Details, label, type }, detailsIndex) => (
+              {details.map(({ Details, label }, detailsIndex) => (
                 <Accordion
-                  key={`mixer-track-${id}-accordion-${detailsIndex}`}
-                  summary={
-                    <h2 className={classNames(css.track.inner)}>{label}</h2>
-                  }
+                  key={`mixer-track-${id}-details-${detailsIndex}`}
+                  summary={<h2 className={css.track.inner}>{label}</h2>}
                   details={<Details />}
                 />
               ))}
@@ -120,7 +112,7 @@ export default function Mixer() {
           );
         })}
 
-        <div className={`${css.track} bg-[cornflowerblue] content-end text-xs`}>
+        <div className={`${css.track} content-end text-xs`}>
           <div className={`${css.track.master}`}>
             <Meter meter={masterMeter} />
             <div className={css.track.inner}>

@@ -1,7 +1,6 @@
-import type { Note } from "tone/build/esm/core/type/NoteUnits";
-import type { Subdivision as TSubdivision } from "tone/build/esm/core/type/Units";
+import type { Subdivision } from "tone/build/esm/core/type/Units";
 import type { UniqueIdentifier } from "@dnd-kit/core";
-import type { ITrack } from "@/app/components/track/Track";
+import type { ITrack } from "@/app/types/daw";
 
 interface IProjectContext {
   activeTrackId: UniqueIdentifier;
@@ -12,8 +11,8 @@ interface IProjectContext {
   position: string;
   quantization: number;
   swing: number;
-  swingSubdivision: TSubdivision;
-  tracks: ITrack[];
+  swingSubdivision: Subdivision;
+  tracks: ITrack<any, any>[];
 }
 
 export type { IProjectContext };

@@ -8,18 +8,12 @@ export interface ITabsPanel {
   className?: string;
 }
 
-export default function TabPanel({
-  isActive,
-  id,
-  Content,
-  className = "",
-}: ITabsPanel) {
+function TabsPanel({ isActive, id, Content, className }: ITabsPanel) {
+  if (!isActive) return null;
+
   return (
     <section
-      className={classNames(
-        isActive ? "flex flex-col justify-between" : "hidden",
-        className
-      )}
+      className={classNames("flex flex-col", className, { hidden: !isActive })}
       id={`${id}-panel`}
       role="tabpanel"
       aria-labelledby={`${id}`}
@@ -29,3 +23,5 @@ export default function TabPanel({
     </section>
   );
 }
+
+export { TabsPanel };
