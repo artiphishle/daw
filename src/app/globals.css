@@ -16,6 +16,14 @@
   }
 }
 
+html,
+body,
+main {
+  height: 100vh;
+  max-height: 100vh;
+  overflow: hidden;
+}
+
 body {
   color: rgb(var(--foreground-rgb));
   background: linear-gradient(
