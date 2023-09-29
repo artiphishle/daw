@@ -1,11 +1,19 @@
-import { readdirSync } from "fs";
+import { readdirSync, statSync } from "fs";
 import type { NextRequest } from "next/server";
 
 export async function GET(req: NextRequest) {
   try {
-    const publicSamples = readdirSync("./public/samples", "utf8").filter(
+    const root = readdirSync("./public/samples", "utf8").filter(
       (f) => !f.startsWith(".")
     );
-    return new Response(JSON.stringify(publicSamples));
+    const three = root.map((name) => {
+      const path = `./public/samples/${name}`;
+      if (!statSync(path).isDirectory()) return { name };
+      const items = readdirSync(path, "utf8")
+        .filter((f) => !f.startsWith("."))
+        .map((name) => ({ name }));
+      return { name, items };
+    });
+    return new Response(JSON.stringify(three));
   } catch (error) {}
 }
