@@ -6,7 +6,7 @@ export * from "./compound/message/Message";
 export * from "./element/nav/Nav";
 export * from "./element/ol/Ol";
 export * from "./element/section/Section";
-export * from "./tabs";
+export * from "./compound/tabs";
 export * from "./element/ul/Ul";
 
 // COMPOUNDS

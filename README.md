@@ -14,7 +14,7 @@ npm i && npm run dev
 
 ---
 
-## 🎼Collaboration
+## 🎼Contribution
 
 ```typescript
 /**
@@ -37,10 +37,7 @@ We're [@here](https://github.com/scha-ch/daw/discussions) 🙋‍♂️ and [@th
 
 #### 29th
 
-⚠️ Tabs are deactivated due to UI framework refactoring, will be back soon, also for every track in the mixer the 'Sampler' will load (the other synths exist only in hooks atm, will build real synth gui's next week.)
-
 - **Portals** The instruments are loaded at the same location via `usePortal` hook
-
 - **Refactoring** of the whole project (more soon, project 2 months young)
 - **Navbar Redesign** redesign & new: update measureCount & quantization
 - **Sampler playable** open the instrument via the 'routing' input field in the mixer

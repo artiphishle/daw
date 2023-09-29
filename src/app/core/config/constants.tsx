@@ -27,6 +27,14 @@ const DEFAULT_SWING = 0;
 const DEFAULT_SWING_SUBDIVISION = "8n";
 
 /**
+ * STATES
+ */
+const DEFAULT_STATES = {
+  tabTopActive: 0,
+  tabBtmActive: 0,
+};
+
+/**
  * TRACKS
  */
 
@@ -261,6 +269,8 @@ export {
   DEFAULT_QUANTIZATION,
   DEFAULT_SWING,
   DEFAULT_SWING_SUBDIVISION,
+  //
+  DEFAULT_STATES,
   //
   DEFAULT_TRACK_AUDIO,
   DEFAULT_TRACK_INSTRUMENT_BD,
