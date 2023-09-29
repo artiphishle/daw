@@ -1,4 +1,5 @@
 import {
+  DEFAULT_STATES,
   DEFAULT_BPM,
   DEFAULT_CLEF,
   DEFAULT_GROUP_DRUMS,
@@ -29,6 +30,7 @@ const tracks: ITrack<any, any>[] = [
   DEFAULT_GROUP_MIXBUS,
 ];
 const DefaultPreset: IProjectContext = {
+  states: DEFAULT_STATES,
   tracks,
   activeTrackId: tracks[5].id,
   bpm: DEFAULT_BPM,
