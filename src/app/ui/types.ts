@@ -12,6 +12,7 @@ import { AllHTMLAttributes, ReactNode } from "react";
 interface IA extends Readonly<AllHTMLAttributes<HTMLAnchorElement>> {
   readonly id: string;
   readonly order: number;
+  readonly isActive?: boolean;
   readonly classNameActive?: string;
 }
 // ol

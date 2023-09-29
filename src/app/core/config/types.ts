@@ -10,6 +10,7 @@ interface IProjectContext {
   name: string;
   position: string;
   quantization: number;
+  states: Record<string, number>;
   swing: number;
   swingSubdivision: Subdivision;
   tracks: ITrack<any, any>[];

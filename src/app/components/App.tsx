@@ -1,12 +1,13 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { CogIcon, GridIcon, HopIcon, InfinityIcon } from "lucide-react";
-import { DndContext, DragEndEvent } from "@dnd-kit/core";
+import { DndContext, DragEndEvent, UniqueIdentifier } from "@dnd-kit/core";
 import { Sampler as ToneSampler } from "tone";
 
 import t from "@/app/core/i18n";
 import styles from "@/app/core/config/styles";
 import { DEFAULT_OFFSET_LEFT } from "@/app/core/config/constants";
 
+import { useActiveState } from "@/ui/hooks/useActiveState";
 import useConverter from "@/app/core/hooks/useConverter";
 import useInstrument from "@/app/core/hooks/useInstrument";
 import useProjectContext from "@/app/core/hooks/useProjectContext";
@@ -27,12 +28,19 @@ import { PollySynth } from "@/app/core/instruments";
 import Sampler from "@/app/core/instruments/sampler/Sampler";
 import SnareDrum from "@/app/core/instruments/drums/snareDrum/SnareDrum";
 import { A, Nav, Tabs, TabsPanel } from "@/ui";
+import { ITrack } from "../types/daw";
 // import { PanSongParsed } from "./test/unit/PanSong.parsed";
 
 function App() {
   const { isOpen, Instrument, openInstrument, closeInstrument } =
     useInstrument();
   const { audioToAbc, audioToMidi } = useConverter();
+  const { active: tabTopActive, setActive: setTabTopActive } =
+    useActiveState<number>(-1);
+  const { active: tabBtmActive, setActive: setTabBtmActive } =
+    useActiveState<number>(-1);
+  const [tracks, setTracks] = useState<ITrack<any, any>[]>([]);
+  const [activeTrackId, setActiveTrackId] = useState<UniqueIdentifier>();
 
   (async function () {
     try {
@@ -51,9 +59,16 @@ function App() {
       }
     })();
   }, [audioToAbc]);
-  const { projectContext } = useProjectContext();
-  if (!projectContext) return null;
-  const { activeTrackId, tracks } = projectContext;
+
+  const { projectContext, updateProjectContext } = useProjectContext();
+
+  useEffect(() => {
+    if (!projectContext) return;
+    setTabTopActive(projectContext.states.tabTopActive);
+    setTabBtmActive(projectContext.states.tabBtmActive);
+    setTracks(projectContext.tracks);
+    setActiveTrackId(projectContext.activeTrackId);
+  }, [projectContext]);
 
   const tabsBottomItems = [
     {
@@ -103,6 +118,13 @@ function App() {
                   id={`tabs-btm-nav-${id}-${aIndex}`}
                   order={aIndex + 1}
                   key={`tabs-btm-nav-${id}-${aIndex}`}
+                  isActive={tabBtmActive === aIndex}
+                  onClick={() => {
+                    setTabBtmActive(aIndex);
+                    updateProjectContext({
+                      states: { tabTopActive, tabBtmActive: aIndex },
+                    });
+                  }}
                 >
                   {children}
                 </A>
@@ -111,7 +133,7 @@ function App() {
             {tabsBottomItems.map(({ id, panel }, panelIndex) => (
               <TabsPanel
                 id={`tabs-btm-${id}-${panelIndex}`}
-                isActive={id === "tabs-mixer"}
+                isActive={panelIndex === tabBtmActive}
                 key={`tabs-btm-panel-${id}-${panelIndex}`}
                 Content={panel}
               />
@@ -190,6 +212,12 @@ function App() {
                   id={`tabs-top-nav-${id}-${aIndex}`}
                   order={aIndex + 1}
                   key={`tabs-top-nav-${id}-${aIndex}`}
+                  onClick={() => {
+                    setTabTopActive(aIndex);
+                    updateProjectContext({
+                      states: { tabBtmActive, tabTopActive: aIndex },
+                    });
+                  }}
                 >
                   {children}
                 </A>
@@ -198,7 +226,7 @@ function App() {
             {tabsTopItems.map(({ id, panel }, panelIndex) => (
               <TabsPanel
                 id={`tabs-top-panel-${id}-${panelIndex}`}
-                isActive={id === "tabs-arranger"}
+                isActive={panelIndex === tabTopActive}
                 key={`tabs-top-panel-${id}-${panelIndex}`}
                 className="flex-1"
                 Content={panel}
