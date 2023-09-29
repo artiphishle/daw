@@ -18,7 +18,5 @@ coverage/
 .DS_Store
 *.pem
 
-
 # TypeScript
 *.tsbuildinfo
-
