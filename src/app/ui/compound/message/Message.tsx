@@ -2,7 +2,6 @@ import t from "@/app/core/i18n";
 
 enum EMessageType {
   Info = "info",
-  Log = "log",
   Error = "error",
   Success = "success",
 }
@@ -40,13 +39,10 @@ const InfoMessage = (props: IMessageProps) => {
   const p = { ...props, type: EMessageType.Info };
   return <Template {...p} />;
 };
-const LogMessage = (props: IMessageProps) => {
-  const p = { ...props, type: EMessageType.Log };
-  return <Template {...p} />;
-};
+
 const SuccessMessage = (props: IMessageProps) => {
   const p = { ...props, type: EMessageType.Success };
   return <Template {...p} />;
 };
 
-export { ErrorMessage, InfoMessage, LogMessage, SuccessMessage };
+export { ErrorMessage, InfoMessage, SuccessMessage };

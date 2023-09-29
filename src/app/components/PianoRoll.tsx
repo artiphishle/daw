@@ -46,7 +46,7 @@ export default function PianoRoll() {
             <div key={`pianoroll-note-${noteIndex}`}>{note}</div>
           ))}
         </Grid>
-        <Grid className="flex-1">
+        <Grid className="flex-1" cols={gridColumnCount}>
           {rows.map((row, rowIndex) => (
             <div key={`pianoroll-griditem-${rowIndex}`}>{row}</div>
           ))}

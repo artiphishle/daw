@@ -1,15 +1,17 @@
 import classNames from "classnames";
 import { Section } from "@/ui";
 
-import type { ReactNode } from "react";
+import { RefObject, type ReactNode } from "react";
+import { useActiveState } from "@/ui/hooks/useActiveState";
 
 enum ERole {
   Tablist = "tablist",
 }
 
 export interface ITabs {
-  readonly children: ReactNode;
+  readonly children: ReactNode | ReactNode[];
   readonly className?: string;
+  readonly initialActive?: number;
   readonly vertical?: boolean;
 }
 
@@ -17,6 +19,7 @@ function Tabs({
   children,
   className: _className,
   vertical = false,
+  initialActive = 0,
   ...rest
 }: ITabs) {
   const flexDir = vertical ? "flex-row" : "flex-col";

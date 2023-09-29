@@ -3,12 +3,12 @@ import { ReactNode } from "react";
 
 export interface ITabsPanel {
   id: string;
-  isActive: boolean;
+  isActive?: boolean;
   Content: ReactNode;
   className?: string;
 }
 
-function TabsPanel({ isActive, id, Content, className }: ITabsPanel) {
+function TabsPanel({ isActive = false, id, Content, className }: ITabsPanel) {
   if (!isActive) return null;
 
   return (
