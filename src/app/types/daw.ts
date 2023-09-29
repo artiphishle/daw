@@ -16,6 +16,7 @@ enum EPortal {
  */
 
 enum EEndpoint {
+  Browser = "/api/browser",
   ProjectContext = "/api/project/settings",
 }
 
