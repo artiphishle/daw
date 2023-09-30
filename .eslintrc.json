@@ -20,14 +20,7 @@
     "func-style": "off",
     "id-length": "off",
     "implicit-arrow-linebreak": "off",
-    "indent": [
-      "error",
-      2,
-      {
-        "SwitchCase": 1,
-        "ignoredNodes": ["ConditionalExpression"]
-      }
-    ],
+    "indent": "off",
     "line-comment-position": "off",
     "max-len": [
       "error",

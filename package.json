@@ -8,6 +8,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
+    "telemetry:disable": "npx next telemetry disable",
     "test": "jest"
   },
   "dependencies": {

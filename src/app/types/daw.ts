@@ -29,15 +29,6 @@ interface IMidiEvent {
 }
 
 /**
- * API
- */
-
-enum EEndpoint {
-  Browser = "/api/browser",
-  ProjectContext = "/api/project/settings",
-}
-
-/**
  * Mixer
  */
 
@@ -85,8 +76,12 @@ interface ITrack<O, I> {
 }
 
 /**
- * MIXER
+ * API Browser Tree
  */
+interface ITree {
+  name: string;
+  items?: ITree[];
+}
 
-export { EEndpoint, EPortal, ETrackType };
-export type { IMidiEvent, IMixer, ITrack, ITrackConfig, ITrackRouting };
+export { EPortal, ETrackType };
+export type { IMidiEvent, IMixer, ITrack, ITrackConfig, ITrackRouting, ITree };
