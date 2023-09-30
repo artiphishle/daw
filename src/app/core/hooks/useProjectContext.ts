@@ -45,7 +45,7 @@ export default function useProjectContext() {
   const typesWithInstrument = [ETrackType.Instrument, ETrackType.Sampler];
 
   /**
-   * FETCH
+   * Fetch (GET)
    */
   const fetcher: Fetcher<IProjectContext, EEndpoint.ProjectContext> = (
     endpoint: EEndpoint.ProjectContext
@@ -77,19 +77,17 @@ export default function useProjectContext() {
   });
 
   /**
-   * UPdATE
+   * Mutate (PATCH)
    */
   const { mutate } = useSWRConfig();
   const updateProjectContext = async (patch: Partial<IProjectContext>) => {
     // DESELECTOR (cannot serialize instruments)
     const readyPatch = patch.tracks?.map((track) => {
-      const instrument = track.routing?.input?.instrument;
-      if (!instrument) return track;
+      if (!track.routing.input.instrument) return track;
       const deselectedTrack = { ...track };
-      deselectedTrack.routing.input.instrument === null;
+      delete deselectedTrack.routing.input.instrument;
       return deselectedTrack;
     });
-
     await fetch(EEndpoint.ProjectContext, {
       method: "PATCH",
       body: JSON.stringify(patch.tracks ? { tracks: readyPatch } : readyPatch),
