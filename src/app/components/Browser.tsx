@@ -13,7 +13,6 @@ interface IThree {
 
 // TODO extract to other file and load samples from server
 function Three(three: IThree) {
-  console.log(three);
   return (
     <ul>
       <li className={liStyle}>
@@ -22,11 +21,9 @@ function Three(three: IThree) {
         <ul className="mt-6 -ml-16 pl-4 border-l border-gray-400">
           {[three].map(({ name, items = [] }, threeIndex) => (
             <li key={`browser-three-${threeIndex}`} className={liStyle}>
-              {name.includes(".")
-? (
+              {name.includes(".") ? (
                 <FileAudioIcon className={fileStyle} />
-              )
-: (
+              ) : (
                 <FolderIcon className={folderStyle} />
               )}
               {name}
@@ -51,7 +48,8 @@ function Browser() {
     isLoading,
     error,
   } = useSWR<IThree[], boolean, any>(EEndpoint.Browser, (endpoint: EEndpoint) =>
-    fetch(endpoint).then((res) => res.json()));
+    fetch(endpoint).then((res) => res.json())
+  );
 
   /*
    *UseEffect(() => {

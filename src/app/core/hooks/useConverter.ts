@@ -30,9 +30,12 @@ function audioToAbc(notes: NoteEventTime[]) {
     }
     sheet += `${noteName.slice(0, -1)}`;
 
-    console.log("[Sheet] noteName:", noteName);
-    console.log("[Sheet] notation:", notation);
-    console.log("[Sheet] total durations:", totalDuration);
+    console.log(
+      "[Sheet] note/notation/durations:",
+      noteName,
+      notation,
+      totalDuration
+    );
   });
   console.log("[Sheet] Abc:", sheet);
   return sheet;
