@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { MouseEvent, useEffect, useState } from "react";
 import { CogIcon, GridIcon, HopIcon, InfinityIcon } from "lucide-react";
 import { DndContext, DragEndEvent, UniqueIdentifier } from "@dnd-kit/core";
 import { Sampler as ToneSampler } from "tone";
@@ -35,10 +35,8 @@ function App() {
   const { isOpen, Instrument, openInstrument, closeInstrument } =
     useInstrument();
   const { audioToAbc, audioToMidi } = useConverter();
-  const { active: tabTopActive, setActive: setTabTopActive } =
-    useActiveState<number>(-1);
-  const { active: tabBtmActive, setActive: setTabBtmActive } =
-    useActiveState<number>(-1);
+  const [tabTopActive, setTabTopActive] = useState<number>();
+  const [tabBtmActive, setTabBtmActive] = useState<number>();
   const [tracks, setTracks] = useState<ITrack<any, any>[]>([]);
   const [activeTrackId, setActiveTrackId] = useState<UniqueIdentifier>();
 
@@ -123,10 +121,15 @@ function App() {
                   order={aIndex + 1}
                   key={`tabs-btm-nav-${id}-${aIndex}`}
                   isActive={tabBtmActive === aIndex}
-                  onClick={() => {
+                  onClick={(event: MouseEvent<HTMLAnchorElement>) => {
+                    event.preventDefault();
+
                     setTabBtmActive(aIndex);
                     updateProjectContext({
-                      states: { tabTopActive, tabBtmActive: aIndex },
+                      states: {
+                        tabTopActive: tabTopActive as number,
+                        tabBtmActive: aIndex,
+                      },
                     });
                   }}
                 >
@@ -219,7 +222,10 @@ function App() {
                   onClick={() => {
                     setTabTopActive(aIndex);
                     updateProjectContext({
-                      states: { tabBtmActive, tabTopActive: aIndex },
+                      states: {
+                        tabBtmActive: tabBtmActive as number,
+                        tabTopActive: aIndex,
+                      },
                     });
                   }}
                 >

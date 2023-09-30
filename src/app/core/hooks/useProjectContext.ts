@@ -8,7 +8,7 @@ import {
   useSnareDrum,
 } from "@/app/core/instruments";
 
-import { EEndpoint, ETrackType } from "@/app/types/daw";
+import { ETrackType } from "@/app/types/daw";
 import type { IProjectContext } from "@/app/core/config/types";
 
 export enum EInstrument {
@@ -32,6 +32,9 @@ export enum EInstrument {
    */
 }
 
+const typesWithInstrument = [ETrackType.Instrument, ETrackType.Sampler];
+const endpointProjectSettings = "/api/project/settings";
+
 // TODO Put api into: /app/api/
 export default function useProjectContext() {
   // TODO dynamically load instruments
@@ -42,38 +45,38 @@ export default function useProjectContext() {
     BassSynth: useBassSynth,
     Sampler: useSampler,
   };
-  const typesWithInstrument = [ETrackType.Instrument, ETrackType.Sampler];
 
   /**
    * Fetch (GET)
    */
-  const fetcher: Fetcher<IProjectContext, EEndpoint.ProjectContext> = (
-    endpoint: EEndpoint.ProjectContext
-  ) =>
-    fetch(endpoint).then(
+  const fetcher: Fetcher<IProjectContext, string> = (endpoint: string) =>
+    fetch(endpointProjectSettings).then(
       (res) =>
-        new Promise((resolve) => {
-          res.json().then((projectContext: IProjectContext) => {
-            const { tracks, ...rest } = projectContext;
-            const mutatedTracks = tracks.map((track) => {
-              if (!typesWithInstrument.includes(track.type)) return track;
+        // eslint-disable-next-line no-async-promise-executor
+        new Promise(async (resolve) => {
+          const projectContext = (await res.json()) as IProjectContext;
+          const { tracks, ...rest } = projectContext;
+          const mutatedTracks = tracks.map((track) => {
+            if (!typesWithInstrument.includes(track.type)) return track;
 
-              const { id, options, ...inputRest } = track.routing.input;
-              const instrument = INSTRUMENT[<EInstrument>id](options);
-              const input = { ...inputRest, id, instrument, options };
-              const routing = { ...track.routing, input };
-              return { ...track, routing };
-            });
-            resolve({ ...rest, tracks: mutatedTracks });
+            const { id, options, ...inputRest } = track.routing.input;
+            const instrument = INSTRUMENT[<EInstrument>id](options);
+            const routing = {
+              ...track.routing,
+              input: { ...inputRest, id, instrument, options },
+            };
+            return { ...track, routing };
           });
+          resolve({ ...rest, tracks: mutatedTracks });
         })
     );
+
   const {
     data: projectContext,
     isLoading,
     error,
-  } = useSWR(EEndpoint.ProjectContext, fetcher, {
-    revalidateOnFocus: false, // Would make Wavesurfer audio file disappear
+  } = useSWR(endpointProjectSettings, fetcher, {
+    revalidateOnFocus: false,
   });
 
   /**
@@ -82,17 +85,19 @@ export default function useProjectContext() {
   const { mutate } = useSWRConfig();
   const updateProjectContext = async (patch: Partial<IProjectContext>) => {
     // DESELECTOR (cannot serialize instruments)
-    const readyPatch = patch.tracks?.map((track) => {
-      if (!track.routing.input.instrument) return track;
-      const deselectedTrack = { ...track };
-      delete deselectedTrack.routing.input.instrument;
-      return deselectedTrack;
-    });
-    await fetch(EEndpoint.ProjectContext, {
+    const readyPatch = patch.tracks
+      ? patch.tracks?.map((track) => {
+          if (!track.routing.input.instrument) return track;
+          const deselectedTrack = { ...track };
+          delete deselectedTrack.routing.input.instrument;
+          return deselectedTrack;
+        })
+      : patch;
+    await fetch(endpointProjectSettings, {
       method: "PATCH",
       body: JSON.stringify(patch.tracks ? { tracks: readyPatch } : readyPatch),
     });
-    mutate(EEndpoint.ProjectContext);
+    mutate(endpointProjectSettings);
   };
   return { projectContext, isLoading, error, updateProjectContext };
 }

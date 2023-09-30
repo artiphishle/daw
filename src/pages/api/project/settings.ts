@@ -3,6 +3,9 @@ import { NextApiRequest, NextApiResponse } from "next";
 import { DefaultPreset } from "@/pages/api/project/presets/DefaultPreset";
 
 export default function handler(req: NextApiRequest, res: NextApiResponse) {
+  res.setHeader("Content-Type", "application/json");
+  console.log("body");
+  console.log(req.body);
   switch (req.method) {
     case "GET":
       return res.status(200).json(DefaultPreset);

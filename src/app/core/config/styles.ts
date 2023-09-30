@@ -51,6 +51,12 @@ const styles = {
     rounded: "rounded-full",
     icon: "w-8 h-8",
   },
+  browser: {
+    main: "w-4 h-4 mr-2",
+    fileStyle: "fill-green-200",
+    folderStyle: "fill-blue-200",
+    liStyle: "flex",
+  },
   navbar: {
     ui: "p-4 flex flex-row mb-6 w-full bg-black text-white items-center justify-between",
     uiInner: "flex px-4 py-2",

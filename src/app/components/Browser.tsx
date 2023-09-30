@@ -1,30 +1,30 @@
-import { FileAudioIcon, FolderIcon, FolderOpenIcon } from "lucide-react";
-import useSWR from "swr";
-import { EEndpoint } from "../types/daw";
+import {
+  FileAudioIcon,
+  FolderIcon,
+  FolderOpenIcon,
+  Loader,
+} from "lucide-react";
 
-const fileStyle = "w-4 h-4 mr-2 fill-green-200";
-const folderStyle = "w-4 h-4 mr-2 fill-blue-200";
-const liStyle = "flex";
+import styles from "@/app/core/config/styles";
+import { usePublicSampleDirectory } from "@/app/core/hooks/usePublicSampleDirectory";
 
-interface IThree {
-  name: string;
-  items?: IThree[];
-}
+import type { ITree } from "@/app/types/daw";
 
 // TODO extract to other file and load samples from server
-function Three(three: IThree) {
+function Three(three: ITree) {
+  const css = styles.browser;
   return (
     <ul>
-      <li className={liStyle}>
-        <FolderOpenIcon className={folderStyle} />
+      <li className={css.liStyle}>
+        <FolderOpenIcon className={css.folderStyle} />
         Samples
         <ul className="mt-6 -ml-16 pl-4 border-l border-gray-400">
           {[three].map(({ name, items = [] }, threeIndex) => (
-            <li key={`browser-three-${threeIndex}`} className={liStyle}>
+            <li key={`browser-three-${threeIndex}`} className={css.liStyle}>
               {name.includes(".") ? (
-                <FileAudioIcon className={fileStyle} />
+                <FileAudioIcon className={css.fileStyle} />
               ) : (
-                <FolderIcon className={folderStyle} />
+                <FolderIcon className={css.folderStyle} />
               )}
               {name}
               {items.length && (
@@ -43,22 +43,14 @@ function Three(three: IThree) {
 }
 
 function Browser() {
-  const {
-    data = [],
-    isLoading,
-    error,
-  } = useSWR<IThree[], boolean, any>(EEndpoint.Browser, (endpoint: EEndpoint) =>
-    fetch(endpoint).then((res) => res.json())
-  );
+  const { tree, isLoading, error } = usePublicSampleDirectory();
+  if (error) throw error;
+  if (!tree) return <Loader />;
 
-  /*
-   *UseEffect(() => {
-   *  if (data) console.log(data);
-   *}, [data]);
-   */
+  console.log(tree);
   return (
     <section className="flex bg-white pt-8 px-4 text-xs">
-      <div className="pr-8">{data?.length && <Three {...data[0]} />}</div>
+      <div className="pr-8">{tree.length && <Three {...tree[0]} />}</div>
       <div className="flex-1 bg-gray-50">Content</div>
     </section>
   );
