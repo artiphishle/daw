@@ -8,13 +8,11 @@ import { Grid } from "@/ui";
 import type { ITrack } from "../types/daw";
 
 export default function PianoRoll() {
-  // const [currentStepIndex, setCurrentStepIndex] = useState(0);
+  // Const [currentStepIndex, setCurrentStepIndex] = useState(0);
   const { projectContext } = useProjectContext();
   if (!projectContext) return null;
   const { clef, activeTrackId, tracks } = projectContext;
-  const activeTrack: ITrack<any, any> | undefined = tracks.find(
-    ({ id }) => id === activeTrackId
-  );
+  const activeTrack: ITrack<any, any> | undefined = tracks.find(({ id }) => id === activeTrackId);
   if (!activeTrack) {
     console.error("[PianoRoll] No active track");
     return null;
@@ -24,7 +22,7 @@ export default function PianoRoll() {
   const notes2 = Scale.get(`${clef}2 major`).notes;
   const notes1 = Scale.get(`${clef}1 major`).notes;
   const notes = [...notes2.reverse(), ...notes1.reverse()];
-  // const findRowIndex = (note: string) => scale.findIndex((n) => n === note);
+  // Const findRowIndex = (note: string) => scale.findIndex((n) => n === note);
   const { measureCount, quantization } = projectContext;
   const gridColumnCount = quantization * measureCount;
   const rows = new Array(notes.length * gridColumnCount).fill("_");

@@ -4,9 +4,7 @@ import t from "@/app/core/i18n";
 import styles from "@/app/core/config/styles";
 import { Transport } from "@/app/components";
 
-interface IToolbar {}
-
-export default function Toolbar({}: IToolbar) {
+export default function Toolbar() {
   return (
     <div className="flex flex-row mb-2 w-full bg-black text-white items-center justify-between">
       <div className="flex px-4 py-2">

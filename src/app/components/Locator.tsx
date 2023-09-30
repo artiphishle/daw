@@ -24,8 +24,8 @@ export default function Locator({ className = "", projectContext }: ILocator) {
   function loopFn(position: string) {
     const splitPosition = position.toString().split(":");
 
-    const currentMeasure = parseInt(splitPosition[0]);
-    const currentQuarter = parseInt(splitPosition[1]);
+    const currentMeasure = parseInt(splitPosition[0], 10);
+    const currentQuarter = parseInt(splitPosition[1], 10);
     if (currentQuarter === quarter) return;
 
     const measureWidth = getMeasureWidth(measureCount);

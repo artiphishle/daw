@@ -31,7 +31,7 @@ function Track<O, I>(track: ITrack<O, I>) {
 
   const Tpl = ({ options, instrument }: { options: O; instrument: I }) => (
     <>
-      <div className={classNames(css.col1.main(type), className)}>
+      <div className={classNames(css.col1.main, className)}>
         <Icon className={css.icon(type)} />
         <div className={css.col1.name}>{name}</div>
       </div>
@@ -52,11 +52,11 @@ function Track<O, I>(track: ITrack<O, I>) {
 
   return isSortable ? (
     <SortableItem className={cssLi} id={id}>
-      <Tpl options={params.options} instrument={params.instrument} />
+      <Tpl options={params.options} instrument={params.instrument!} />
     </SortableItem>
   ) : (
     <li id={id as string} className={cssLi}>
-      <Tpl options={params.options} instrument={params.instrument} />
+      <Tpl options={params.options} instrument={params.instrument!} />
     </li>
   );
 }

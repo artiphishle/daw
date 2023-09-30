@@ -14,6 +14,7 @@ import {
   DEFAULT_TRACK_INSTRUMENT_CHH,
   DEFAULT_TRACK_INSTRUMENT_SD,
   DEFAULT_TRACK_SAMPLER,
+  DEFAULT_TRACK_MASTER,
 } from "@/app/core/config/constants";
 
 import type { IProjectContext } from "@/app/core/config/types";
@@ -28,10 +29,9 @@ const tracks: ITrack<any, any>[] = [
   DEFAULT_TRACK_SAMPLER,
   DEFAULT_GROUP_DRUMS,
   DEFAULT_GROUP_MIXBUS,
+  DEFAULT_TRACK_MASTER,
 ];
 const DefaultPreset: IProjectContext = {
-  states: DEFAULT_STATES,
-  tracks,
   activeTrackId: tracks[5].id,
   bpm: DEFAULT_BPM,
   clef: DEFAULT_CLEF,
@@ -39,8 +39,10 @@ const DefaultPreset: IProjectContext = {
   name: DEFAULT_NAME,
   position: DEFAULT_POSITION,
   quantization: DEFAULT_QUANTIZATION,
+  states: DEFAULT_STATES,
   swing: 0,
   swingSubdivision: "8n",
+  tracks,
 };
 
 export { DefaultPreset };

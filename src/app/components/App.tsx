@@ -29,7 +29,7 @@ import Sampler from "@/app/core/instruments/sampler/Sampler";
 import SnareDrum from "@/app/core/instruments/drums/snareDrum/SnareDrum";
 import { A, Nav, Tabs, TabsPanel } from "@/ui";
 import { ITrack } from "../types/daw";
-// import { PanSongParsed } from "./test/unit/PanSong.parsed";
+// Import { PanSongParsed } from "./test/unit/PanSong.parsed";
 
 function App() {
   const { isOpen, Instrument, openInstrument, closeInstrument } =
@@ -42,23 +42,26 @@ function App() {
   const [tracks, setTracks] = useState<ITrack<any, any>[]>([]);
   const [activeTrackId, setActiveTrackId] = useState<UniqueIdentifier>();
 
-  (async function () {
+  const convertAudioToMidi = async () => {
     try {
       // TODO stream it & not run always at start up
       const notes = await audioToMidi({ audio: "/halloween.mp3" });
     } catch (error) {
       console.error(error);
     }
-  });
+  };
+
+  /* TODO
   useEffect(() => {
-    (async function () {
+    (async () => {
       try {
-        // setAbcParsed(await audioToAbc(PanSongParsed));
+        setAbcParsed(await audioToAbc(PanSongParsed));
       } catch (error) {
         console.error(error);
       }
     })();
   }, [audioToAbc]);
+  */
 
   const { projectContext, updateProjectContext } = useProjectContext();
 
@@ -68,6 +71,7 @@ function App() {
     setTabBtmActive(projectContext.states.tabBtmActive);
     setTracks(projectContext.tracks);
     setActiveTrackId(projectContext.activeTrackId);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [projectContext]);
 
   const tabsBottomItems = [

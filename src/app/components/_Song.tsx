@@ -25,7 +25,9 @@ export default function Song({ children }: ISong) {
   }, [projectContext]);
 
   useEffect(() => {
-    Transport[isPlaying ? "stop" : "start"]();
+    Transport[isPlaying
+? "stop"
+: "start"]();
   }, [isPlaying]);
 
   useEffect(() => {

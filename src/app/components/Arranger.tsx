@@ -26,8 +26,6 @@ export default function Arranger() {
       const newIndex = tracks.findIndex(({ id }) => id === over?.id);
       const sortedTracks = arrayMove(tracks, oldIndex, newIndex);
       updateProjectContext({ tracks: sortedTracks });
-
-      return sortedTracks;
     },
   };
 

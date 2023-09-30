@@ -23,15 +23,15 @@ export default function useRecorder() {
     });
 
     /*
-  button.onclick = () => wavesurfer.playPause();
-  wavesurfer.on("pause", () => (button.textContent = "Play"));
-  wavesurfer.on("play", () => (button.textContent = "Pause"));
-  
-  Object.assign(link, {
-    href: recordedUrl,
-    download: "recording." + blob.type.split(";")[0].split("/")[1] || "webm",
-    textContent: "Download recording",
-  });
-*/
+     *Button.onclick = () => wavesurfer.playPause();
+     *wavesurfer.on("pause", () => (button.textContent = "Play"));
+     *wavesurfer.on("play", () => (button.textContent = "Pause"));
+     *
+     *Object.assign(link, {
+     *  href: recordedUrl,
+     *  download: "recording." + blob.type.split(";")[0].split("/")[1] || "webm",
+     *  textContent: "Download recording",
+     *});
+     */
   }, []);
 }

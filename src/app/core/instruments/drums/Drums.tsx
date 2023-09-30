@@ -1,7 +1,6 @@
 import BaseDrum from "./baseDrum/BaseDrum";
 import SnareDrum from "./snareDrum/SnareDrum";
 import HiHat from "./cymbal/HiHat";
-import Tom, { ETom } from "./tom/Tom";
 
 export default function Drums() {
   return (
@@ -9,9 +8,6 @@ export default function Drums() {
       <BaseDrum />
       <SnareDrum />
       <HiHat />
-      <Tom kind={ETom.Hi} />
-      <Tom kind={ETom.Mid} />
-      <Tom kind={ETom.Lo} />
     </section>
   );
 }

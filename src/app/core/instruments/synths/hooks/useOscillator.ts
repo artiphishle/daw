@@ -1,5 +1,5 @@
-import { useRef } from "react";
 import { Oscillator } from "tone";
+import { useRef } from "react";
 
 export type Options = ConstructorParameters<typeof Oscillator>[0];
 

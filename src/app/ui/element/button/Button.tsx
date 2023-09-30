@@ -30,16 +30,18 @@ interface IButton extends AllHTMLAttributes<HTMLButtonElement> {
   variant?: EVariant;
 }
 
-function Button({
+const Button = ({
   value,
   className: _className,
   size = ESize.Md,
   type = EButtonType.Button,
   variant = EVariant.Normal,
   ...rest
-}: IButton) {
+}: IButton) => {
   const className = classNames(_className, `bg-[${variant}]`);
   const props = { ...rest, className };
 
   return <button {...props}>{value}</button>;
-}
+};
+
+export { Button };

@@ -7,24 +7,27 @@ export default function useMusicTheory() {
   const { clef: tonic } = projectContext;
 
   /**
-   * detects chord by notes
+   * Detects chord by notes
    */
   function detectChord(notes: string[]) {
     return Chord.detect(notes);
   }
 
   /**
-   * returns notes of chord progression
+   * Returns notes of chord progression
    * e.g. "C" , "I V vi IV" returns C G Am F
    */
   function getChords(progression: string | string[]) {
     const ROMAN_NUMS = ["i", "ii", "iii", "iv", "v", "vi", "vii"];
     const prog =
-      typeof progression === "string" ? progression.split(" ") : progression;
+      typeof progression === "string"
+? progression.split(" ")
+: progression;
 
     const mappedProgression = prog.map((roman: string) =>
-      ROMAN_NUMS.includes(roman) ? `${roman}m` : roman
-    );
+      (ROMAN_NUMS.includes(roman)
+? `${roman}m`
+: roman));
     return Progression.fromRomanNumerals(tonic, mappedProgression);
   }
 
