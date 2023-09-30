@@ -3,6 +3,9 @@ import {
   DEFAULT_MEASURE_COUNT,
   DEFAULT_POSITION,
   DEFAULT_QUANTIZATION,
+  DEFAULT_STATES,
+  DEFAULT_CLEF,
+  DEFAULT_BPM,
 } from "@/app/core/config/constants";
 
 import type { IProjectContext } from "@/app/core/config/types";
@@ -11,16 +14,17 @@ import type { ITrack } from "@/app/types/daw";
 const tracks: ITrack<any, any>[] = [DEFAULT_TRACK_AUDIO];
 
 const DeathcorePreset: IProjectContext = {
-  tracks,
   activeTrackId: tracks[0].id,
-  bpm: 0,
-  clef: "C",
+  bpm: DEFAULT_BPM,
+  clef: DEFAULT_CLEF,
   measureCount: DEFAULT_MEASURE_COUNT,
-  name: "Metal – Deathcore",
+  name: "Deathcore",
   position: DEFAULT_POSITION,
   quantization: DEFAULT_QUANTIZATION,
+  states: DEFAULT_STATES,
   swing: 0,
   swingSubdivision: "8n",
+  tracks,
 };
 
 export { DeathcorePreset };

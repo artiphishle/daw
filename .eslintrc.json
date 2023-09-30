@@ -1,3 +1,79 @@
 {
-  "extends": ["next/core-web-vitals"]
+  "extends": ["eslint:all", "next"],
+  "overrides": [
+    {
+      "files": ["**/*.test.ts", "**/*.test.tsx"],
+      "env": {
+        "jest": true
+      }
+    }
+  ],
+  "parser": "@typescript-eslint/parser",
+  "plugins": ["@typescript-eslint"],
+  "rules": {
+    "array-element-newline": "off",
+    "curly": "off",
+    "comma-dangle": ["error", "always-multiline"],
+    "dot-location": "off",
+    "function-call-argument-newline": "off",
+    "function-paren-newline": "off",
+    "func-style": "off",
+    "id-length": "off",
+    "implicit-arrow-linebreak": "off",
+    "indent": [
+      "error",
+      2,
+      {
+        "SwitchCase": 1,
+        "ignoredNodes": ["ConditionalExpression"]
+      }
+    ],
+    "line-comment-position": "off",
+    "max-len": [
+      "error",
+      {
+        "code": 300,
+        "ignoreComments": false,
+        "ignoreStrings": true,
+        "ignoreTemplateLiterals": false,
+        "ignoreRegExpLiterals": false
+      }
+    ],
+    "max-lines": "off",
+    "max-lines-per-function": ["error", 900],
+    "max-params": "off",
+    "max-statements": "off",
+    "multiline-comment-style": "off",
+    "multiline-ternary": "off",
+    "new-cap": "off",
+    "no-console": "off",
+    "no-extra-parens": "off",
+    "no-inline-comments": "off",
+    "no-loss-of-precision": "off",
+    "no-magic-numbers": "off",
+    "no-mixed-operators": "off",
+    "no-shadow": "off",
+    "no-ternary": "off",
+    "no-unused-expressions": "off",
+    "no-unused-vars": "off",
+    "no-warning-comments": "off",
+    "object-curly-spacing": ["error", "always"],
+    "object-property-newline": [
+      "error",
+      { "allowAllPropertiesOnSameLine": true }
+    ],
+    "one-var": "off",
+    "padded-blocks": ["error", "never"],
+    "quote-props": ["error", "as-needed"],
+    "sort-keys": "off",
+    "sort-imports": "off",
+    "space-before-function-paren": [
+      "error",
+      {
+        "anonymous": "never",
+        "named": "never",
+        "asyncArrow": "always"
+      }
+    ]
+  }
 }

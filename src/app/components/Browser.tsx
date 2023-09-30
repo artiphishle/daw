@@ -22,9 +22,11 @@ function Three(three: IThree) {
         <ul className="mt-6 -ml-16 pl-4 border-l border-gray-400">
           {[three].map(({ name, items = [] }, threeIndex) => (
             <li key={`browser-three-${threeIndex}`} className={liStyle}>
-              {name.includes(".") ? (
+              {name.includes(".")
+? (
                 <FileAudioIcon className={fileStyle} />
-              ) : (
+              )
+: (
                 <FolderIcon className={folderStyle} />
               )}
               {name}
@@ -49,14 +51,13 @@ function Browser() {
     isLoading,
     error,
   } = useSWR<IThree[], boolean, any>(EEndpoint.Browser, (endpoint: EEndpoint) =>
-    fetch(endpoint).then((res) => res.json())
-  );
+    fetch(endpoint).then((res) => res.json()));
 
   /*
-  useEffect(() => {
-    if (data) console.log(data);
-  }, [data]);
-*/
+   *UseEffect(() => {
+   *  if (data) console.log(data);
+   *}, [data]);
+   */
   return (
     <section className="flex bg-white pt-8 px-4 text-xs">
       <div className="pr-8">{data?.length && <Three {...data[0]} />}</div>

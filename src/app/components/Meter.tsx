@@ -2,13 +2,12 @@ import { useEffect, useRef } from "react";
 import { Draw, type Meter as TMeter, Transport } from "tone";
 
 interface IMeter {
+  className?: string;
   meter?: TMeter;
 }
 
-export default function Meter({ meter }: IMeter) {
+export default function Meter({ className, meter }: IMeter) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
-  const DEFAULT_METER_WIDTH = 80;
-  const DEFAULT_METER_HEIGHT = 100;
 
   useEffect(() => {
     const canvas = canvasRef.current! as HTMLCanvasElement;
@@ -21,13 +20,13 @@ export default function Meter({ meter }: IMeter) {
 
       context.clearRect(0, 0, width, height);
       context.fillStyle = "transparent";
-      context.fillRect(0, 0, DEFAULT_METER_WIDTH, DEFAULT_METER_HEIGHT);
-      context.fillStyle = "#FDBA74"; // orange-300
-      context.fillRect(0, DEFAULT_METER_HEIGHT, DEFAULT_METER_WIDTH, level);
+      context.fillRect(0, 0, 100, 50);
+      context.fillStyle = "#FDBA74"; // Orange-300
+      context.fillRect(0, 50, 100, level);
       if (level !== -Infinity) {
         context.font = "12px Arial";
-        context.fillStyle = "#F97316"; // orange-500
-        context.fillText(level.toFixed(2) + "db", 0, 20);
+        context.fillStyle = "#fff"; // Orange-500
+        context.fillText(`${level.toFixed(2)}db`, 0, 20);
       }
     };
     Transport.scheduleRepeat(
@@ -38,5 +37,7 @@ export default function Meter({ meter }: IMeter) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  return <canvas width={`${DEFAULT_METER_WIDTH}px`} ref={canvasRef} />;
+  return (
+    <canvas className={className} width="100%" height="50px" ref={canvasRef} />
+  );
 }

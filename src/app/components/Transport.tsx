@@ -48,13 +48,13 @@ export default function Transport() {
   const events = {
     // TransportSettings
     onBpmChange: (event: ChangeEvent<HTMLInputElement>) =>
-      updateProjectContext({ bpm: parseInt(event.target.value) }),
+      updateProjectContext({ bpm: parseInt(event.target.value, 10) }),
     onClefChange: (event: ChangeEvent<HTMLInputElement>) =>
       updateProjectContext({ clef: event.target.value }),
     onMeasureCountChange: (event: ChangeEvent<HTMLInputElement>) =>
-      updateProjectContext({ measureCount: parseInt(event.target.value) }),
+      updateProjectContext({ measureCount: parseInt(event.target.value, 10) }),
     onQuantizationChange: (event: ChangeEvent<HTMLInputElement>) =>
-      updateProjectContext({ quantization: parseInt(event.target.value) }),
+      updateProjectContext({ quantization: parseInt(event.target.value, 10) }),
     // TransportControl
     onPause: (_: MouseEvent<SVGSVGElement>) => ToneTransport.pause(),
     onRecord: (_: MouseEvent<SVGSVGElement>) =>

@@ -18,7 +18,9 @@ const Template = ({
   writeLog = false,
 }: IMessageProps) => {
   const h1 = title || t(type);
-  const action = type === EMessageType.Success ? EMessageType.Info : type;
+  const action = type === EMessageType.Success
+? EMessageType.Info
+: type;
 
   if (writeLog) console[action](h1, message);
 

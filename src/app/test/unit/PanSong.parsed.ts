@@ -949,9 +949,7 @@ const PanSongParsed = [
   {
     pitchMidi: 52,
     amplitude: 0.35528188705444336,
-    pitchBends: [
-      1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
-    ],
+    pitchBends: [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
     startTimeSeconds: 158.69371836734695,
     durationSeconds: 0.27992335600907836,
   },
@@ -2809,9 +2807,7 @@ const PanSongParsed = [
   {
     pitchMidi: 86,
     amplitude: 0.24444046542048453,
-    pitchBends: [
-      -1, -2, -2, -2, -2, 1, 1, -2, -2, -2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
-    ],
+    pitchBends: [-1, -2, -2, -2, -2, 1, 1, -2, -2, -2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
     startTimeSeconds: 146.29816916099773,
     durationSeconds: 0.2321995464852762,
   },
@@ -3562,9 +3558,7 @@ const PanSongParsed = [
   {
     pitchMidi: 40,
     amplitude: 0.3038507029414177,
-    pitchBends: [
-      1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
-    ],
+    pitchBends: [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
     startTimeSeconds: 142.78938820861677,
     durationSeconds: 0.26831337868480887,
   },
@@ -3623,9 +3617,7 @@ const PanSongParsed = [
   {
     pitchMidi: 59,
     amplitude: 0.24492940238930963,
-    pitchBends: [
-      1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
-    ],
+    pitchBends: [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
     startTimeSeconds: 142.52235873015874,
     durationSeconds: 0.25541950113378675,
   },
@@ -3985,9 +3977,7 @@ const PanSongParsed = [
   {
     pitchMidi: 43,
     amplitude: 0.4222148263454437,
-    pitchBends: [
-      1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
-    ],
+    pitchBends: [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
     startTimeSeconds: 139.83917006802722,
     durationSeconds: 0.29024943310659523,
   },
@@ -4312,9 +4302,7 @@ const PanSongParsed = [
   {
     pitchMidi: 74,
     amplitude: 0.42959997927149135,
-    pitchBends: [
-      1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
-    ],
+    pitchBends: [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
     startTimeSeconds: 137.57394058956916,
     durationSeconds: 0.2786394557822973,
   },
@@ -4457,9 +4445,7 @@ const PanSongParsed = [
   {
     pitchMidi: 72,
     amplitude: 0.35285076439380647,
-    pitchBends: [
-      1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
-    ],
+    pitchBends: [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
     startTimeSeconds: 136.88766802721088,
     durationSeconds: 0.27992335600907836,
   },
@@ -4651,9 +4637,7 @@ const PanSongParsed = [
   {
     pitchMidi: 55,
     amplitude: 0.27507276379543805,
-    pitchBends: [
-      1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
-    ],
+    pitchBends: [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
     startTimeSeconds: 135.63379047619048,
     durationSeconds: 0.26702947845805625,
   },
@@ -4681,9 +4665,7 @@ const PanSongParsed = [
   {
     pitchMidi: 48,
     amplitude: 0.23643712140619755,
-    pitchBends: [
-      1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
-    ],
+    pitchBends: [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
     startTimeSeconds: 135.4712507936508,
     durationSeconds: 0.27863945578232574,
   },
@@ -4861,9 +4843,7 @@ const PanSongParsed = [
   {
     pitchMidi: 74,
     amplitude: 0.4480691457336599,
-    pitchBends: [
-      1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
-    ],
+    pitchBends: [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
     startTimeSeconds: 134.23930929705213,
     durationSeconds: 0.25541950113378675,
   },
@@ -4884,9 +4864,7 @@ const PanSongParsed = [
   {
     pitchMidi: 50,
     amplitude: 0.3412399955771186,
-    pitchBends: [
-      1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
-    ],
+    pitchBends: [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
     startTimeSeconds: 134.21608934240362,
     durationSeconds: 0.25541950113378675,
   },
@@ -5314,9 +5292,7 @@ const PanSongParsed = [
   {
     pitchMidi: 50,
     amplitude: 0.32575538009405136,
-    pitchBends: [
-      1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
-    ],
+    pitchBends: [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
     startTimeSeconds: 131.8231501133787,
     durationSeconds: 0.2786394557822973,
   },
@@ -6040,9 +6016,7 @@ const PanSongParsed = [
   {
     pitchMidi: 59,
     amplitude: 0.46410144090652466,
-    pitchBends: [
-      1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
-    ],
+    pitchBends: [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
     startTimeSeconds: 128.36080907029478,
     durationSeconds: 0.2902494331065668,
   },
@@ -6668,9 +6642,7 @@ const PanSongParsed = [
   {
     pitchMidi: 50,
     amplitude: 0.3629159840444724,
-    pitchBends: [
-      1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
-    ],
+    pitchBends: [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
     startTimeSeconds: 125.94464988662132,
     durationSeconds: 0.27863945578231153,
   },
@@ -6939,9 +6911,7 @@ const PanSongParsed = [
   {
     pitchMidi: 38,
     amplitude: 0.22016868469390002,
-    pitchBends: [
-      1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
-    ],
+    pitchBends: [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
     startTimeSeconds: 124.63143854875284,
     durationSeconds: 0.25541950113378675,
   },
@@ -7077,9 +7047,7 @@ const PanSongParsed = [
   {
     pitchMidi: 60,
     amplitude: 0.3388677469708703,
-    pitchBends: [
-      0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
-    ],
+    pitchBends: [0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
     startTimeSeconds: 123.85357006802721,
     durationSeconds: 0.25541950113378675,
   },
@@ -7766,9 +7734,7 @@ const PanSongParsed = [
   {
     pitchMidi: 57,
     amplitude: 0.33107120316961536,
-    pitchBends: [
-      1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 1, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1,
-    ],
+    pitchBends: [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 1, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1],
     startTimeSeconds: 119.07801768707483,
     durationSeconds: 0.2567034013605394,
   },
@@ -7824,9 +7790,7 @@ const PanSongParsed = [
   {
     pitchMidi: 57,
     amplitude: 0.29772412453008734,
-    pitchBends: [
-      1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
-    ],
+    pitchBends: [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
     startTimeSeconds: 118.38141904761905,
     durationSeconds: 0.26702947845805625,
   },
@@ -7896,9 +7860,7 @@ const PanSongParsed = [
   {
     pitchMidi: 52,
     amplitude: 0.33149254135787487,
-    pitchBends: [
-      1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
-    ],
+    pitchBends: [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
     startTimeSeconds: 117.89380000000001,
     durationSeconds: 0.27863945578231153,
   },
@@ -8150,9 +8112,7 @@ const PanSongParsed = [
   {
     pitchMidi: 55,
     amplitude: 0.3855493329465389,
-    pitchBends: [
-      1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
-    ],
+    pitchBends: [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
     startTimeSeconds: 116.59219863945579,
     durationSeconds: 0.27863945578231153,
   },
@@ -8362,9 +8322,7 @@ const PanSongParsed = [
   {
     pitchMidi: 71,
     amplitude: 0.5731534893098085,
-    pitchBends: [
-      1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
-    ],
+    pitchBends: [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
     startTimeSeconds: 115.29188117913833,
     durationSeconds: 0.26702947845804204,
   },
@@ -9037,9 +8995,7 @@ const PanSongParsed = [
   {
     pitchMidi: 62,
     amplitude: 0.3483458161354065,
-    pitchBends: [
-      1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
-    ],
+    pitchBends: [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
     startTimeSeconds: 111.13165759637188,
     durationSeconds: 0.2450934240362841,
   },
@@ -9570,9 +9526,7 @@ const PanSongParsed = [
   {
     pitchMidi: 62,
     amplitude: 0.39392662387002597,
-    pitchBends: [
-      1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
-    ],
+    pitchBends: [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
     startTimeSeconds: 108.28592925170068,
     durationSeconds: 0.25541950113380096,
   },
@@ -9666,9 +9620,7 @@ const PanSongParsed = [
   {
     pitchMidi: 55,
     amplitude: 0.4265813407572833,
-    pitchBends: [
-      1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
-    ],
+    pitchBends: [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
     startTimeSeconds: 107.78670022675738,
     durationSeconds: 0.25541950113378675,
   },
@@ -9696,9 +9648,7 @@ const PanSongParsed = [
   {
     pitchMidi: 50,
     amplitude: 0.28314845847046893,
-    pitchBends: [
-      1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
-    ],
+    pitchBends: [1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
     startTimeSeconds: 107.60094058956916,
     durationSeconds: 0.26702947845805625,
   },
@@ -9733,9 +9683,7 @@ const PanSongParsed = [
   {
     pitchMidi: 74,
     amplitude: 0.41762365942651575,
-    pitchBends: [
-      1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
-    ],
+    pitchBends: [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
     startTimeSeconds: 107.54289070294786,
     durationSeconds: 0.25541950113378675,
   },
@@ -9833,9 +9781,7 @@ const PanSongParsed = [
   {
     pitchMidi: 72,
     amplitude: 0.4315357235344974,
-    pitchBends: [
-      1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
-    ],
+    pitchBends: [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
     startTimeSeconds: 106.86822811791383,
     durationSeconds: 0.25541950113378675,
   },
@@ -9961,9 +9907,7 @@ const PanSongParsed = [
   {
     pitchMidi: 72,
     amplitude: 0.3485786652281171,
-    pitchBends: [
-      1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, -2,
-    ],
+    pitchBends: [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, -2],
     startTimeSeconds: 106.26450929705216,
     durationSeconds: 0.24380952380951726,
   },
@@ -10431,9 +10375,7 @@ const PanSongParsed = [
   {
     pitchMidi: 50,
     amplitude: 0.40974263911661896,
-    pitchBends: [
-      1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
-    ],
+    pitchBends: [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
     startTimeSeconds: 104.0921596371882,
     durationSeconds: 0.26702947845805625,
   },
@@ -10503,9 +10445,7 @@ const PanSongParsed = [
   {
     pitchMidi: 48,
     amplitude: 0.4389723191658656,
-    pitchBends: [
-      1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
-    ],
+    pitchBends: [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
     startTimeSeconds: 103.39556099773243,
     durationSeconds: 0.27863945578231153,
   },
@@ -10554,9 +10494,7 @@ const PanSongParsed = [
   {
     pitchMidi: 67,
     amplitude: 0.4474735026774199,
-    pitchBends: [
-      1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
-    ],
+    pitchBends: [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
     startTimeSeconds: 103.05758775510203,
     durationSeconds: 0.2567034013605536,
   },
@@ -10601,9 +10539,7 @@ const PanSongParsed = [
   {
     pitchMidi: 55,
     amplitude: 0.41713977108399075,
-    pitchBends: [
-      1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
-    ],
+    pitchBends: [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
     startTimeSeconds: 102.77894829931972,
     durationSeconds: 0.27863945578231153,
   },
@@ -10725,9 +10661,7 @@ const PanSongParsed = [
   {
     pitchMidi: 76,
     amplitude: 0.2747702734036879,
-    pitchBends: [
-      1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
-    ],
+    pitchBends: [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
     startTimeSeconds: 101.83854013605442,
     durationSeconds: 0.25541950113378675,
   },
@@ -11212,9 +11146,7 @@ const PanSongParsed = [
   {
     pitchMidi: 64,
     amplitude: 0.26516957321892615,
-    pitchBends: [
-      1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
-    ],
+    pitchBends: [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
     startTimeSeconds: 98.55034875283447,
     durationSeconds: 0.26702947845805625,
   },
@@ -11612,9 +11544,7 @@ const PanSongParsed = [
   {
     pitchMidi: 72,
     amplitude: 0.46184124300877255,
-    pitchBends: [
-      1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
-    ],
+    pitchBends: [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
     startTimeSeconds: 95.62335056689342,
     durationSeconds: 0.27863945578231153,
   },
@@ -12006,9 +11936,7 @@ const PanSongParsed = [
   {
     pitchMidi: 50,
     amplitude: 0.33951522782444954,
-    pitchBends: [
-      1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
-    ],
+    pitchBends: [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
     startTimeSeconds: 93.03175782312925,
     durationSeconds: 0.27863945578231153,
   },
@@ -13389,9 +13317,7 @@ const PanSongParsed = [
   {
     pitchMidi: 69,
     amplitude: 0.3229273044400745,
-    pitchBends: [
-      -5, 1, 1, 1, 1, 1, 1, 1, 1, -5, -5, -5, -5, -5, -5, -5, -5, -5,
-    ],
+    pitchBends: [-5, 1, 1, 1, 1, 1, 1, 1, 1, -5, -5, -5, -5, -5, -5, -5, -5, -5],
     startTimeSeconds: 86.28250929705216,
     durationSeconds: 0.2089795918367372,
   },
@@ -13440,9 +13366,7 @@ const PanSongParsed = [
   {
     pitchMidi: 69,
     amplitude: 0.4171551153063774,
-    pitchBends: [
-      1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, -5, -5, -5, -5, -5, -5, -5, -5, -5,
-    ],
+    pitchBends: [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, -5, -5, -5, -5, -5, -5, -5, -5, -5],
     startTimeSeconds: 86.0503097505669,
     durationSeconds: 0.23219954648526198,
   },
@@ -13456,9 +13380,7 @@ const PanSongParsed = [
   {
     pitchMidi: 50,
     amplitude: 0.3016083163022995,
-    pitchBends: [
-      1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
-    ],
+    pitchBends: [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
     startTimeSeconds: 86.00386984126985,
     durationSeconds: 0.2902494331065668,
   },
@@ -14586,9 +14508,7 @@ const PanSongParsed = [
   {
     pitchMidi: 62,
     amplitude: 0.513953603126786,
-    pitchBends: [
-      1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
-    ],
+    pitchBends: [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
     startTimeSeconds: 80.47366893424037,
     durationSeconds: 0.25541950113378675,
   },
@@ -15053,9 +14973,7 @@ const PanSongParsed = [
   {
     pitchMidi: 64,
     amplitude: 0.29817969414095086,
-    pitchBends: [
-      1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
-    ],
+    pitchBends: [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
     startTimeSeconds: 77.89497006802722,
     durationSeconds: 0.27863945578231153,
   },
@@ -15328,9 +15246,7 @@ const PanSongParsed = [
   {
     pitchMidi: 62,
     amplitude: 0.2528636015274308,
-    pitchBends: [
-      1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
-    ],
+    pitchBends: [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
     startTimeSeconds: 75.75745034013606,
     durationSeconds: 0.25541950113378675,
   },
@@ -15386,9 +15302,7 @@ const PanSongParsed = [
   {
     pitchMidi: 86,
     amplitude: 0.28211834314076795,
-    pitchBends: [
-      1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
-    ],
+    pitchBends: [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
     startTimeSeconds: 75.38464716553288,
     durationSeconds: 0.2567034013605394,
   },
@@ -15769,9 +15683,7 @@ const PanSongParsed = [
   {
     pitchMidi: 55,
     amplitude: 0.4650985151529312,
-    pitchBends: [
-      1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
-    ],
+    pitchBends: [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
     startTimeSeconds: 73.52705079365079,
     durationSeconds: 0.25541950113378675,
   },
@@ -16064,9 +15976,7 @@ const PanSongParsed = [
   {
     pitchMidi: 86,
     amplitude: 0.2727443400932395,
-    pitchBends: [
-      1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
-    ],
+    pitchBends: [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
     startTimeSeconds: 72.2486693877551,
     durationSeconds: 0.26702947845804204,
   },
@@ -16304,9 +16214,7 @@ const PanSongParsed = [
   {
     pitchMidi: 52,
     amplitude: 0.3823969221115112,
-    pitchBends: [
-      1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
-    ],
+    pitchBends: [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
     startTimeSeconds: 70.14597959183673,
     durationSeconds: 0.290249433106581,
   },
@@ -16404,9 +16312,7 @@ const PanSongParsed = [
   {
     pitchMidi: 67,
     amplitude: 0.35371249079704287,
-    pitchBends: [
-      1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
-    ],
+    pitchBends: [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
     startTimeSeconds: 69.29716734693878,
     durationSeconds: 0.27992335600907836,
   },
@@ -16668,9 +16574,7 @@ const PanSongParsed = [
   {
     pitchMidi: 48,
     amplitude: 0.273221355676651,
-    pitchBends: [
-      1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
-    ],
+    pitchBends: [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
     startTimeSeconds: 67.89236009070295,
     durationSeconds: 0.290249433106581,
   },
@@ -17141,9 +17045,7 @@ const PanSongParsed = [
   {
     pitchMidi: 50,
     amplitude: 0.27027095079422,
-    pitchBends: [
-      1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
-    ],
+    pitchBends: [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
     startTimeSeconds: 64.36035918367347,
     durationSeconds: 0.290249433106581,
   },
@@ -17325,9 +17227,7 @@ const PanSongParsed = [
   {
     pitchMidi: 62,
     amplitude: 0.2978049910068512,
-    pitchBends: [
-      1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
-    ],
+    pitchBends: [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
     startTimeSeconds: 62.73367845804989,
     durationSeconds: 0.2902494331065739,
   },
@@ -17418,9 +17318,7 @@ const PanSongParsed = [
   {
     pitchMidi: 76,
     amplitude: 0.46584161996841433,
-    pitchBends: [
-      1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
-    ],
+    pitchBends: [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
     startTimeSeconds: 61.909370068027215,
     durationSeconds: 0.2902494331065739,
   },
@@ -17633,9 +17531,7 @@ const PanSongParsed = [
   {
     pitchMidi: 52,
     amplitude: 0.285453239860742,
-    pitchBends: [
-      1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
-    ],
+    pitchBends: [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
     startTimeSeconds: 60.32912925170068,
     durationSeconds: 0.26702947845804914,
   },
@@ -18458,9 +18354,7 @@ const PanSongParsed = [
   {
     pitchMidi: 55,
     amplitude: 0.4588469629702361,
-    pitchBends: [
-      1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
-    ],
+    pitchBends: [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
     startTimeSeconds: 55.15883764172336,
     durationSeconds: 0.26702947845804914,
   },
@@ -18585,9 +18479,7 @@ const PanSongParsed = [
   {
     pitchMidi: 74,
     amplitude: 0.2742829675024206,
-    pitchBends: [
-      1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, -5, 1,
-    ],
+    pitchBends: [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, -5, 1],
     startTimeSeconds: 54.50867891156463,
     durationSeconds: 0.25541950113378675,
   },
@@ -18839,9 +18731,7 @@ const PanSongParsed = [
   {
     pitchMidi: 67,
     amplitude: 0.4108953213691711,
-    pitchBends: [
-      1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
-    ],
+    pitchBends: [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
     startTimeSeconds: 52.731068480725625,
     durationSeconds: 0.2902494331065739,
   },
@@ -18956,9 +18846,7 @@ const PanSongParsed = [
   {
     pitchMidi: 50,
     amplitude: 0.304662966132164,
-    pitchBends: [
-      0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
-    ],
+    pitchBends: [0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
     startTimeSeconds: 52.09251972789116,
     durationSeconds: 0.2902494331065739,
   },
@@ -19108,9 +18996,7 @@ const PanSongParsed = [
   {
     pitchMidi: 69,
     amplitude: 0.28266421146690845,
-    pitchBends: [
-      1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
-    ],
+    pitchBends: [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
     startTimeSeconds: 50.8025283446712,
     durationSeconds: 0.27863945578231153,
   },
@@ -19697,9 +19583,7 @@ const PanSongParsed = [
   {
     pitchMidi: 50,
     amplitude: 0.33974902399561624,
-    pitchBends: [
-      1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
-    ],
+    pitchBends: [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
     startTimeSeconds: 46.608758730158726,
     durationSeconds: 0.25541950113378675,
   },
@@ -19863,9 +19747,7 @@ const PanSongParsed = [
   {
     pitchMidi: 50,
     amplitude: 0.32969812214374544,
-    pitchBends: [
-      1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
-    ],
+    pitchBends: [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
     startTimeSeconds: 45.643846712018146,
     durationSeconds: 0.27992335600906415,
   },
@@ -20187,9 +20069,7 @@ const PanSongParsed = [
   {
     pitchMidi: 50,
     amplitude: 0.3651173568290213,
-    pitchBends: [
-      1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
-    ],
+    pitchBends: [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
     startTimeSeconds: 44.29708934240363,
     durationSeconds: 0.26702947845804914,
   },
@@ -20245,9 +20125,7 @@ const PanSongParsed = [
   {
     pitchMidi: 50,
     amplitude: 0.3136034709215164,
-    pitchBends: [
-      1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
-    ],
+    pitchBends: [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
     startTimeSeconds: 44.00683990929706,
     durationSeconds: 0.2902494331065739,
   },
@@ -20275,9 +20153,7 @@ const PanSongParsed = [
   {
     pitchMidi: 86,
     amplitude: 0.2771796350893767,
-    pitchBends: [
-      1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
-    ],
+    pitchBends: [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
     startTimeSeconds: 43.84430022675737,
     durationSeconds: 0.26702947845805625,
   },
@@ -20368,9 +20244,7 @@ const PanSongParsed = [
   {
     pitchMidi: 50,
     amplitude: 0.3506587348554445,
-    pitchBends: [
-      0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
-    ],
+    pitchBends: [0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
     startTimeSeconds: 43.06514784580499,
     durationSeconds: 0.26702947845804914,
   },
@@ -20440,9 +20314,7 @@ const PanSongParsed = [
   {
     pitchMidi: 50,
     amplitude: 0.3545088618993759,
-    pitchBends: [
-      1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
-    ],
+    pitchBends: [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
     startTimeSeconds: 42.565918820861675,
     durationSeconds: 0.25541950113378675,
   },
@@ -21225,9 +21097,7 @@ const PanSongParsed = [
   {
     pitchMidi: 52,
     amplitude: 0.3171521217926689,
-    pitchBends: [
-      1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
-    ],
+    pitchBends: [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
     startTimeSeconds: 36.942838095238095,
     durationSeconds: 0.26702947845804914,
   },
@@ -21276,9 +21146,7 @@ const PanSongParsed = [
   {
     pitchMidi: 64,
     amplitude: 0.3988333809375763,
-    pitchBends: [
-      1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
-    ],
+    pitchBends: [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
     startTimeSeconds: 36.5945387755102,
     durationSeconds: 0.2902494331065739,
   },
@@ -22155,9 +22023,7 @@ const PanSongParsed = [
   {
     pitchMidi: 50,
     amplitude: 0.2532606693831357,
-    pitchBends: [
-      1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
-    ],
+    pitchBends: [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
     startTimeSeconds: 31.1339977324263,
     durationSeconds: 0.25541950113378675,
   },
@@ -22394,9 +22260,7 @@ const PanSongParsed = [
   {
     pitchMidi: 59,
     amplitude: 0.42450934275984764,
-    pitchBends: [
-      1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
-    ],
+    pitchBends: [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
     startTimeSeconds: 30.158759637188208,
     durationSeconds: 0.27863945578231153,
   },
@@ -23219,9 +23083,7 @@ const PanSongParsed = [
   {
     pitchMidi: 50,
     amplitude: 0.29518678908546764,
-    pitchBends: [
-      1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
-    ],
+    pitchBends: [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
     startTimeSeconds: 24.5124589569161,
     durationSeconds: 0.2786394557823151,
   },
@@ -23623,18 +23485,14 @@ const PanSongParsed = [
   {
     pitchMidi: 50,
     amplitude: 0.4148781168460846,
-    pitchBends: [
-      1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
-    ],
+    pitchBends: [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
     startTimeSeconds: 22.39815918367347,
     durationSeconds: 0.2902494331065739,
   },
   {
     pitchMidi: 62,
     amplitude: 0.30914986065842887,
-    pitchBends: [
-      1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
-    ],
+    pitchBends: [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
     startTimeSeconds: 22.11951972789116,
     durationSeconds: 0.25541950113378675,
   },
@@ -23753,9 +23611,7 @@ const PanSongParsed = [
   {
     pitchMidi: 55,
     amplitude: 0.2772144980051301,
-    pitchBends: [
-      1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
-    ],
+    pitchBends: [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
     startTimeSeconds: 21.11977777777778,
     durationSeconds: 0.25541950113378675,
   },
@@ -24121,9 +23977,7 @@ const PanSongParsed = [
   {
     pitchMidi: 72,
     amplitude: 0.4579032320867885,
-    pitchBends: [
-      1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
-    ],
+    pitchBends: [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
     startTimeSeconds: 19.504707029478457,
     durationSeconds: 0.25541950113378675,
   },
@@ -24140,9 +23994,7 @@ const PanSongParsed = [
   {
     pitchMidi: 48,
     amplitude: 0.2544175473352273,
-    pitchBends: [
-      1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
-    ],
+    pitchBends: [1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
     startTimeSeconds: 19.411827210884354,
     durationSeconds: 0.27863945578231153,
   },
@@ -25062,9 +24914,7 @@ const PanSongParsed = [
   {
     pitchMidi: 50,
     amplitude: 0.3443916404247284,
-    pitchBends: [
-      1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
-    ],
+    pitchBends: [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
     startTimeSeconds: 13.382397278911565,
     durationSeconds: 0.2902494331065757,
   },
@@ -25246,9 +25096,7 @@ const PanSongParsed = [
   {
     pitchMidi: 67,
     amplitude: 0.3153847954843355,
-    pitchBends: [
-      1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
-    ],
+    pitchBends: [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
     startTimeSeconds: 11.604786848072564,
     durationSeconds: 0.26702947845804914,
   },
@@ -26962,9 +26810,7 @@ const PanSongParsed = [
   {
     pitchMidi: 62,
     amplitude: 0.3092103012298283,
-    pitchBends: [
-      -5, 1, 1, 1, 1, 1, 1, -5, -5, -5, -5, -5, -5, -5, 1, 1, 1, 1, 1,
-    ],
+    pitchBends: [-5, 1, 1, 1, 1, 1, 1, -5, -5, -5, -5, -5, -5, -5, 1, 1, 1, 1, 1],
     startTimeSeconds: 3.542326984126984,
     durationSeconds: 0.2205895691609978,
   },
@@ -27520,9 +27366,7 @@ const PanSongParsed = [
   {
     pitchMidi: 62,
     amplitude: 0.31437933444976807,
-    pitchBends: [
-      1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
-    ],
+    pitchBends: [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
     startTimeSeconds: 0.7778684807256235,
     durationSeconds: 0.26702947845805003,
   },
@@ -27904,9 +27748,7 @@ const PanSongParsed = [
   {
     pitchMidi: 52,
     amplitude: 0.2884922879934311,
-    pitchBends: [
-      1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
-    ],
+    pitchBends: [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
     startTimeSeconds: 61.804880272108846,
     durationSeconds: 0.2902494331065739,
   },
@@ -28010,9 +27852,7 @@ const PanSongParsed = [
   {
     pitchMidi: 50,
     amplitude: 0.3137294753738072,
-    pitchBends: [
-      1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
-    ],
+    pitchBends: [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
     startTimeSeconds: 111.14326757369614,
     durationSeconds: 0.2567034013605536,
   },
@@ -28407,7 +28247,7 @@ const PanSongParsed = [
     pitchBends: [1, 1, 1, 1, 1, 1],
     startTimeSeconds: 43.483107029478454,
     durationSeconds: 0.06965986394558144,
-  }
+  },
 ];
 
 export { PanSongParsed };

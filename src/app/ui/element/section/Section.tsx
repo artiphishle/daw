@@ -5,8 +5,8 @@ interface ISection {
   readonly className?: string;
 }
 
-function Section({ children, ...rest }: ISection) {
-  return <section {...rest}>{children}</section>;
-}
+const Section = ({ children, ...rest }: ISection) => (
+  <section {...rest}>{children}</section>
+);
 
 export { Section };

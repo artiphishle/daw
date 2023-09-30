@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { Midi } from "@tonejs/midi";
 
 import abcjs, { type TuneObjectArray } from "abcjs";
@@ -22,9 +22,9 @@ interface ISheet {
 
 export default function Sheet({
   markdown,
-}: // noteStyle = ENoteStyle.Normal,
+}: // NoteStyle = ENoteStyle.Normal,
 ISheet) {
-  // const [noteStyl, setNoteStyl] = useState<ENoteStyle>(noteStyle);
+  // Const [noteStyl, setNoteStyl] = useState<ENoteStyle>(noteStyle);
   useEffect(() => {
     const sheet: TuneObjectArray = abcjs.renderAbc("paper", markdown);
 

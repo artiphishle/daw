@@ -1,4 +1,4 @@
-import { SamplerOptions, Time, ToneAudioBuffer, Transport } from "tone";
+import { Time, ToneAudioBuffer, Transport } from "tone";
 import { analyze } from "web-audio-beat-detector";
 import classNames from "classnames";
 
@@ -23,7 +23,7 @@ import type {
 const audioConfig: ITrackConfig = {
   Icon: AudioIcon,
   draw: ({ url }) => {
-    (async function () {
+    (async () => {
       try {
         const buffer = await new ToneAudioBuffer().load(url);
         const tempo = await analyze(buffer.get()!);
@@ -38,9 +38,7 @@ const audioConfig: ITrackConfig = {
 };
 const groupConfig: ITrackConfig = {
   Icon: GroupIcon,
-  draw: () => {
-    return <div />;
-  },
+  draw: () => <div />,
 };
 function play(
   instrument: Instrument<InstrumentOptions>,
@@ -72,21 +70,27 @@ const instrumentConfig: ITrackConfig = {
     const onToggle = (event: MouseEvent<HTMLDivElement>) => {
       const currentTrack = event.target as HTMLDivElement;
       const [track] = tracks.filter((track) => track.id === currentTrack.id);
-      const noteIndex = parseInt(currentTrack.getAttribute("data-noteindex")!);
-      // TODO
-      // updateProjectContext({ tracks: newTracks });
+      const noteIndex = parseInt(
+        currentTrack.getAttribute("data-noteindex")!,
+        10
+      );
+
+      /*
+       * TODO
+       * updateProjectContext({ tracks: newTracks });
+       */
     };
     const { instrument, label, events = [] } = track.routing.input;
     if (!instrument) return trackId;
-    /* seq = */ play(instrument, label, measureCount, events);
+    /* Seq = */ play(instrument, label, measureCount, events);
     const css = styles.notes;
     const TOTAL_TICKS = 768 * measureCount;
     const TICK_IN_PX = windowWidth / TOTAL_TICKS;
 
     return events.map(
       ({ note, duration, time }: IMidiEvent, eventIndex: number) => {
-        const left = `${parseInt(time) * TICK_IN_PX}${EUnit.Px}`;
-        const width = `${parseInt(duration) * TICK_IN_PX}${EUnit.Px}`;
+        const left = `${parseInt(time, 10) * TICK_IN_PX}${EUnit.Px}`;
+        const width = `${parseInt(duration, 10) * TICK_IN_PX}${EUnit.Px}`;
 
         return (
           <div
@@ -106,9 +110,7 @@ const instrumentConfig: ITrackConfig = {
 
 const samplerConfig: ITrackConfig = {
   Icon: MidiIcon,
-  draw: () => {
-    return <div />;
-  },
+  draw: () => <div />,
 };
 
 const trackConfig = new Map<ETrackType, ITrackConfig>([
@@ -120,7 +122,8 @@ const trackConfig = new Map<ETrackType, ITrackConfig>([
 
 export default function useTrackConfig(type: ETrackType) {
   const config = trackConfig.get(type);
-  if (!config || !config.draw || !config.Icon)
-    throw new Error(`[useTrackConfig] Track type ${type} not found`);
+  const errorMsg = `[useTrackConfig] Track type ${type} not found`;
+  if (!config || !config.draw || !config.Icon) throw new Error(errorMsg);
+
   return config;
 }

@@ -8,7 +8,12 @@ import type {
   Instrument,
   InstrumentOptions,
 } from "tone/build/esm/instrument/Instrument";
-import { type ChannelOptions, type SamplerOptions, getContext } from "tone";
+import {
+  type ChannelOptions,
+  type SamplerOptions,
+  getContext,
+  Destination,
+} from "tone";
 import type { RecursivePartial } from "tone/build/esm/core/util/Interface";
 import type { IWaveForm } from "@/app/components/track/WaveForm";
 
@@ -45,7 +50,6 @@ const DEFAULT_TRACK_AUDIO: ITrack<IWaveForm, undefined> = {
   routing: {
     input: {
       id: "track-audio-input",
-      instrument: undefined,
       label: "Audio",
       options: {
         url: "/halloween.mp3",
@@ -117,7 +121,7 @@ const DEFAULT_TRACK_INSTRUMENT_CHH: ITrack<
     input: {
       events: [
         { note: "F#1", duration: "24i", time: "0i" },
-        { note: "F#1", duration: "24i", time: `${TICKS_PER_16N * 1}i` },
+        { note: "F#1", duration: "24i", time: `${Number(TICKS_PER_16N)}i` },
         { note: "F#1", duration: "24i", time: `${TICKS_PER_16N * 2}i` },
         { note: "F#1", duration: "24i", time: `${TICKS_PER_16N * 3}i` },
         { note: "F#1", duration: "24i", time: `${TICKS_PER_16N * 4}i` },
@@ -244,16 +248,38 @@ const DEFAULT_GROUP_MIXBUS: ITrack<ChannelOptions, null> = {
       instrument: null,
       label: "All",
       options: {
-        volume: 0,
-        pan: 0,
-        solo: false,
-        mute: false,
         channelCount: 1,
         context: getContext(),
+        mute: false,
+        pan: 0,
+        solo: false,
+        volume: 0,
       },
       events: [],
     },
     output: "master",
+  },
+  type: ETrackType.Group,
+};
+
+// MASTER
+const DEFAULT_TRACK_MASTER: ITrack<ChannelOptions, null> = {
+  id: "master",
+  name: "Master",
+  routing: {
+    input: {
+      id: "master-input",
+      label: "Master",
+      options: {
+        channelCount: 1,
+        context: getContext(),
+        mute: false,
+        pan: 0,
+        solo: false,
+        volume: 0,
+      },
+    },
+    output: "destination",
   },
   type: ETrackType.Group,
 };
@@ -282,4 +308,6 @@ export {
   //
   DEFAULT_GROUP_DRUMS,
   DEFAULT_GROUP_MIXBUS,
+  //
+  DEFAULT_TRACK_MASTER,
 };

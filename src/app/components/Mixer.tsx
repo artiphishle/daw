@@ -3,124 +3,119 @@ import { Destination, Meter as ToneMeter } from "tone";
 import classNames from "classnames";
 
 import t from "@/app/core/i18n";
-import styles, { TrackColor } from "@/app/core/config/styles";
 import { AudioIcon, GroupIcon, MidiIcon } from "@/app/core/config/icons";
 import useProjectContext from "@/app/core/hooks/useProjectContext";
 import { Meter } from "@/app/components";
-import { Accordion } from "@/ui";
 
-import { ETrackType } from "@/app/types/daw";
+import { ETrackType, type IMixer, type ITrack } from "@/app/types/daw";
+import { useCallback, useMemo, type ReactNode } from "react";
+import type { UniqueIdentifier } from "@dnd-kit/core";
 
-interface IMixer {
-  openInstrument: () => void;
-}
+import styles from "@/app/core/config/styles";
+import { ButtonGroup } from "../ui";
+import { Button } from "../ui/element/button/Button";
+const css = styles.mixer;
+const btn =
+  "w-[calc(100%-4px)] ml-[2px] mb-2 text-center lg:w-[80%] lg:ml-[10%] lg:p-1";
+
+const getTrackTypeIcon = (type: ETrackType) => {
+  const props = { className: styles.icon };
+  switch (type) {
+    case ETrackType.Audio:
+      return <AudioIcon {...props} />;
+    case ETrackType.Group:
+      return <GroupIcon {...props} />;
+    case ETrackType.Instrument:
+      return <MidiIcon {...props} />;
+    default:
+      console.error("[Mixer] Unknown trackType:", type);
+      return <></>;
+  }
+};
+const Inner = ({ children }: { children: ReactNode }) => (
+  <div className={css.track.inner}>{children}</div>
+);
+const TplFX = () => (
+  <div>
+    <ol>
+      <li>{t("empty")}</li>
+    </ol>
+  </div>
+);
 
 export default function Mixer({ openInstrument }: IMixer) {
-  const css = styles.mixer;
   const windowWidth = useWindowWidth();
-
+  const FxChannel = useMemo(
+    () => ({
+      Inserts: () => <TplFX />,
+      Sends: () => <TplFX />,
+    }),
+    []
+  );
+  const getRouting = useCallback(
+    ({ label, output }: { label: string; output?: string }) => {
+      const a = { href: "#", onClick: openInstrument };
+      return (
+        <ol>
+          <li>
+            <a {...a}>{label}</a>
+          </li>
+          <li>{output}</li>
+        </ol>
+      );
+    },
+    [openInstrument]
+  );
+  const getChannelData = (
+    track: ITrack<any, any>,
+    activeTrackId: UniqueIdentifier
+  ) => {
+    const { id, routing, type, name } = track;
+    const { input, output } = routing;
+    const { instrument, label } = input;
+    const active = activeTrackId === id ? "active" : "inactive";
+    const Icon = getTrackTypeIcon(type);
+    const cn = classNames(css.track.main, css.track[active]);
+    return { cn, Icon, id, instrument, label, name, output };
+  };
   const { projectContext } = useProjectContext();
   if (!projectContext) return null;
   const { tracks, activeTrackId } = projectContext;
-
-  const masterMeter = new ToneMeter();
-  Destination.connect(masterMeter);
+  const w = `calc(${windowWidth / tracks.length}px)`;
+  const width = `${parseInt(w, 10) - 168}px`;
 
   return (
-    <section className={classNames(css.main)}>
+    <section className={css.main}>
       <div className={css.inner}>
-        {tracks.map((track, trackIndex) => {
-          const { id, routing, type, name } = track;
-          const { input, output } = routing;
-          const { instrument, label } = input;
-          const { bg, text } = TrackColor[type as ETrackType];
+        {tracks.map((track) => {
+          const { cn, Icon, id, instrument, label, name, output } =
+            getChannelData(track, activeTrackId);
           const meter = new ToneMeter();
-
-          console.log(
-            "[Mixer]",
-            instrument ? "instrument" : "no instrument",
-            label,
-            label
-          );
-          instrument && instrument.chain(meter, Destination); // no 'Group'
-
-          const RoutingDetails = () => (
-            <ol>
-              <li className="text-center p-1">
-                <a href="#" onClick={openInstrument}>
-                  {label}
-                </a>
-              </li>
-              <li className="text-center p-1">{output}</li>
-            </ol>
-          );
-          const InsertDetails = () => (
-            <ol>
-              <li className="text-center bg-white p-1">{t("empty")}</li>
-            </ol>
-          );
-          const SendDetails = () => (
-            <ol>
-              <li className="text-center bg-white p-1">empty</li>
-            </ol>
-          );
-          const details = [
-            { Details: RoutingDetails, label: "Routing", type },
-            { Details: InsertDetails, label: "Inserts", type },
-            { Details: SendDetails, label: "Sends", type },
-          ];
-          function getTrackTypeIcon(type: ETrackType) {
-            const className = "w-[16px] h-[16px] mr-1";
-            switch (type) {
-              case ETrackType.Audio:
-                return <AudioIcon className={className} />;
-              case ETrackType.Group:
-                return <GroupIcon className={className} />;
-              case ETrackType.Instrument:
-                return <MidiIcon className={className} />;
-              default:
-                return <></>;
-            }
-          }
+          instrument && instrument.chain(meter, Destination);
 
           return (
-            <div
-              key={`mixer-track-${id}-${trackIndex}`}
-              className={classNames(
-                `${css.track.main} ${text}`,
-                css.track[activeTrackId === id ? "active" : "inactive"],
-                bg,
-                { "ml-auto": name === "Mixbus" }
-              )}
-              style={{
-                width: `calc(${windowWidth / (tracks.length + 1)}px - 0.5rem)`,
-              }}
-            >
-              {details.map(({ Details, label }, detailsIndex) => (
-                <Accordion
-                  key={`mixer-track-${id}-details-${detailsIndex}`}
-                  summary={<h2 className={css.track.inner}>{label}</h2>}
-                  details={<Details />}
-                />
-              ))}
-              <Meter meter={meter} />
-              <div className={css.track.inner}>
-                {getTrackTypeIcon(type)}
-                <span>{name}</span>
-              </div>
+            <div key={id} className={cn} style={{ width, minWidth: "65px" }}>
+              <ButtonGroup>
+                <Button value="S" className={classNames(btn, "bg-blue-800")} />
+                <Button value="M" className={classNames(btn, "bg-red-800")} />
+              </ButtonGroup>
+              <Inner>{getRouting({ label, output })}</Inner>
+              <Inner>
+                <FxChannel.Inserts />
+              </Inner>
+              <Inner>
+                <FxChannel.Sends />
+              </Inner>
+              <Inner>
+                <h2>{label}</h2>
+              </Inner>
+              <Meter className="w-full bg-[#333]" meter={meter} />
+              <Inner>
+                {Icon} <span>{name}</span>
+              </Inner>
             </div>
           );
         })}
-
-        <div className={`${css.track} content-end text-xs`}>
-          <div className={`${css.track.master}`}>
-            <Meter meter={masterMeter} />
-            <div className={css.track.inner}>
-              <MidiIcon className="w-[16px] h-[16px] mr-1" />
-              <span>{t("master")}</span>
-            </div>
-          </div>
-        </div>
       </div>
     </section>
   );

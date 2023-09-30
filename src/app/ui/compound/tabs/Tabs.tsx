@@ -22,7 +22,9 @@ function Tabs({
   initialActive = 0,
   ...rest
 }: ITabs) {
-  const flexDir = vertical ? "flex-row" : "flex-col";
+  const flexDir = vertical
+? "flex-row"
+: "flex-col";
   const className = classNames("flex flex-1", _className, flexDir);
   const role = ERole.Tablist;
   const props = { ...rest, className, role };

@@ -9,9 +9,7 @@ function audioToBase64(fileOrDir: string) {
   if (!existsSync(fileOrDir)) throw new Error("File or directory not found");
 
   // Read directory and convert audio files to base64
-  const base64 = readdirSync(fileOrDir, "utf8").map((fileOrDir) => {
-    return lstatSync(fileOrDir).isDirectory()
+  const base64 = readdirSync(fileOrDir, "utf8").map((fileOrDir) => (lstatSync(fileOrDir).isDirectory()
       ? audioToBase64(fileOrDir)
-      : Buffer.from(fileOrDir).toString("base64");
-  });
+      : Buffer.from(fileOrDir).toString("base64")));
 }
