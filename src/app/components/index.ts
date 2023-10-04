@@ -12,7 +12,6 @@ import Song from "./_Song";
 import Toolbar from "./Toolbar";
 import Track from "./track/Track";
 import Transport from "./Transport";
-
 import Draggable from "./Draggable";
 import Droppable from "./Droppable";
 import SortableItem from "./SortableItem";
@@ -33,4 +32,7 @@ export {
   Track,
   Transport,
 };
+
 export { Draggable, Droppable, SortableItem };
+export { App } from "./App";
+export { StartDialog } from "./StartDialog";

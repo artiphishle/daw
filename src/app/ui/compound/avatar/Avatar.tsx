@@ -1,16 +1,13 @@
 import classNames from "classnames";
 import { UserIcon } from "lucide-react";
 import type { IAvatar } from "@/ui";
+import styles from "@/app/core/config/styles";
 
-const css = {
-  main: "flex items-center justify-center bg-cyan-700 text-white cursor-pointer w-12 h-12 hover:rotate-180",
-  bordered: "border border-cyan-400",
-  rounded: "rounded-full",
-};
-
-function Avatar({ bordered = true, rounded = true }: IAvatar) {
+function Avatar({ bordered = true, className, rounded = true }: IAvatar) {
+  const css = styles.avatar;
   const props = {
     className: classNames(
+      { className },
       css.main,
       { [css.bordered]: bordered },
       { [css.rounded]: rounded }
@@ -19,7 +16,7 @@ function Avatar({ bordered = true, rounded = true }: IAvatar) {
 
   return (
     <div {...props}>
-      <UserIcon className="w-8 h-8" />
+      <UserIcon className={css.icon} />
     </div>
   );
 }

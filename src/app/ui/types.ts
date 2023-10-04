@@ -8,18 +8,18 @@ import { AllHTMLAttributes, ReactNode } from "react";
  * ELEMENTS
  */
 
-// a
+// A
 interface IA extends Readonly<AllHTMLAttributes<HTMLAnchorElement>> {
   readonly id: string;
   readonly order: number;
   readonly isActive?: boolean;
   readonly classNameActive?: string;
 }
-// ol
+// Ol
 interface IOl extends Readonly<AllHTMLAttributes<HTMLOListElement>> {
   readonly children: ReactNode;
 }
-// ul
+// Ul
 interface IUl extends Readonly<AllHTMLAttributes<HTMLUListElement>> {
   readonly children: ReactNode;
 }
@@ -28,8 +28,8 @@ interface IUl extends Readonly<AllHTMLAttributes<HTMLUListElement>> {
  * COMPOUNDS
  */
 
-// avatar
-interface IAvatar {
+// Avatar
+interface IAvatar extends AllHTMLAttributes<HTMLDivElement> {
   bordered?: boolean;
   rounded?: boolean;
 }
@@ -39,11 +39,11 @@ interface IButtonGroup extends AllHTMLAttributes<HTMLDivElement> {}
  * LAYOUTS
  */
 
-// flex
+// Flex
 interface IFlex extends AllHTMLAttributes<HTMLDivElement> {
   vertical?: boolean;
 }
-// grid
+// Grid
 interface IGrid extends AllHTMLAttributes<HTMLDivElement> {}
 
 export type { IA, IOl, IUl };

@@ -76,8 +76,7 @@ export default function SalamanderGrandPianoV3() {
     "Fs7",
   ];
   const loaders = samples.map((sample) =>
-    (async () => await Buffer.load(`${baseUrl}/${sample}v1.wav`))()
-  );
+    (async () => await Buffer.load(`${baseUrl}/${sample}v1.wav`))());
 
   // Load all piano samples
   useEffect(() => {
@@ -85,28 +84,32 @@ export default function SalamanderGrandPianoV3() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  // const filter = new Tone.AutoFilter(4).start();
-  // const distortion = new Tone.Distortion(0.5);
+  /*
+   * Const filter = new Tone.AutoFilter(4).start();
+   * const distortion = new Tone.Distortion(0.5);
+   */
   const reverb = new Reverb(10);
 
-  // connect the player to the filter, distortion and then to the master output
-  // sampler.chain(filter, distortion, reverb, Tone.Destination);
+  /*
+   * Connect the player to the filter, distortion and then to the master output
+   * sampler.chain(filter, distortion, reverb, Tone.Destination);
+   */
   sampler.chain(reverb, Destination);
 
   /*
-const keys = new Tone.Players({
-  urls: {
-    0: "A1v1.wav",
-    1: "Fs5v1.wav",
-    2: "C7v1.wav",
-    3: "A6v1.wav",
-  },
-  fadeOut: "64n",
-
-  // Source des sons du séquenceur
-  baseUrl: "./SalamanderGrandPianoV3/48khz24bit/",
-}).toDestination();
-*/
+   *Const keys = new Tone.Players({
+   *  urls: {
+   *    0: "A1v1.wav",
+   *    1: "Fs5v1.wav",
+   *    2: "C7v1.wav",
+   *    3: "A6v1.wav",
+   *  },
+   *  fadeOut: "64n",
+   *
+   *  // Source des sons du séquenceur
+   *  baseUrl: "./SalamanderGrandPianoV3/48khz24bit/",
+   *}).toDestination();
+   */
   function onMouseDown(event: MouseEvent<HTMLDivElement>) {
     const which = event.target as HTMLElement;
     sampler.triggerAttack(which.getAttribute("data-key")!);
@@ -119,24 +122,26 @@ const keys = new Tone.Players({
 
   const MidiKeys = () => (
     <div className="flex">
-      {new Array(5).fill("").map((_, octave) =>
-        ["C", "D", "E", "F", "G", "A", "B"].map((key) => (
-          <div
-            data-key={`${key}${octave + 2}`}
-            className="relative cursor-pointer pl-2 h-10 text-xs bg-slate-50 border-r border-r-slate-200 text-slate-500"
-            onMouseDown={onMouseDown}
-            onMouseUp={onMouseUp}
-            key={`key-${key}`}
-          >
-            {key === "E" || key === "B" ? null : (
+      {new Array(5).fill("").
+        map((_, octave) =>
+          ["C", "D", "E", "F", "G", "A", "B"].map((key) => (
+            <div
+              data-key={`${key}${octave + 2}`}
+              className="relative cursor-pointer pl-2 h-10 text-xs bg-slate-50 border-r border-r-slate-200 text-slate-500"
+              onMouseDown={onMouseDown}
+              onMouseUp={onMouseUp}
+              key={`key-${key}`}
+            >
+              {key === "E" || key === "B"
+? null
+: (
               <div
                 data-key={`${key}#${octave + 2}`}
                 className="bg-black w-2 h-6 text-white top-0 bottom-0 left-auto right-0 p-1"
               ></div>
             )}
-          </div>
-        ))
-      )}
+            </div>
+          )))}
     </div>
   );
 
@@ -144,7 +149,9 @@ const keys = new Tone.Players({
     <div className="handle absolute flex-col bg-blue-300 p-2">
       <h3 className="mb-2 font-black">{name}</h3>
 
-      {isLoaded ? <MidiKeys /> : <div>Loading...</div>}
+      {isLoaded
+? <MidiKeys />
+: <div>Loading...</div>}
     </div>
   );
 }

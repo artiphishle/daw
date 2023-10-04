@@ -1,3 +1,4 @@
+"use client";
 import { useState } from "react";
 import cn from "classnames";
 
@@ -5,7 +6,7 @@ import useTransport from "@/app/core/hooks/useTransport";
 import { DEFAULT_OFFSET_LEFT } from "@/app/core/config/constants";
 
 import { EUnit } from "@/app/types/utility";
-import type { IProjectContext } from "@/app/core/config/types";
+import type { IProjectContext } from "@/app/types/daw";
 
 interface ILocator {
   className?: string;
@@ -24,8 +25,8 @@ export default function Locator({ className = "", projectContext }: ILocator) {
   function loopFn(position: string) {
     const splitPosition = position.toString().split(":");
 
-    const currentMeasure = parseInt(splitPosition[0]);
-    const currentQuarter = parseInt(splitPosition[1]);
+    const currentMeasure = parseInt(splitPosition[0], 10);
+    const currentQuarter = parseInt(splitPosition[1], 10);
     if (currentQuarter === quarter) return;
 
     const measureWidth = getMeasureWidth(measureCount);

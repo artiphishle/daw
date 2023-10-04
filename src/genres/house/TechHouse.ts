@@ -1,33 +1,28 @@
-// TODO buy that one
-function useRolandTb303() {}
-
 /**
- * @stylistic House, Techno, MinimalTechno
  * @origin associated with UK & Detroit
+ * @bpm 110-125
  * @since mid/late 1990s
- * @description
- * - Styistic features of Tehchno + House (DeepHouse finds MinimalTechno)
+ * @artist Adam Beyer
+ *
+ * @baseDrum Boomy deephouse bd's replaced, by techno's:
+ * - shorter/deeper/darker & often distorted
+ * @snareDrum Noisier & more synthetic
+ * @hiHat smaller & quicker
+ *
+ * @stylistic
+ * - House/Techno/MinimalTechno
+ * - Features of Tehchno + House, DeepHouse finds MinimalTechno
  * - Often contains Dub elements
  * - Some overlap with progressive house, the latter more energetic
- * @artist Adam Beyer
  */
 const preset = {
-  bpm: [110, 125],
+  bpm: 110,
   tracks: {
     drums: {
-      /**
-       * Boomy deephouse kick's replaced by techno ones:
-       * shorter, deeper, darker, often distorted
-       */
       baseDrum: {},
-      /**
-       * Noisier & more synthetic Snare's
-       */
+      closedHiHat: {},
+      openHiHat: {},
       snareDrum: {},
-      /**
-       * Smaller, quicker Hihat's
-       */
-      Hihat: { Closed: {}, Open: {} },
     },
 
     /**

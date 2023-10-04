@@ -1,35 +1,20 @@
-enum ELanguage {
-  De = "de",
-  En = "en",
-  Fr = "fr",
-  It = "it",
-}
-
-interface II18n {
-  [term: string]: {
-    [language: string]: string;
-  };
-}
-
 // Set english as the default language
-const l = ELanguage.En;
+const l = "en";
 
-// Define translations
-const i18n: II18n = {
+const i18n = {
   de: {
     all: "Alle",
     beat: "Beat",
     bpm: "BPM",
     chordProgression: "Chord progression",
-    "dialog.allowAudio": "Web Audio API erlauben, Sound abzuspielen?",
     daw: "DAW",
+    "dialog.allowAudio": "Web Audio API erlauben, Sound abzuspielen?",
     error: "Error",
     errorUseConfig: "ERROR: useConfig",
     master: "Master",
     ok: "OK",
     progression: "progression",
     untitled: "Unbenannt",
-    visualization: "Visualisierung",
     volume: "Lautstärke",
   },
   en: {
@@ -46,7 +31,6 @@ const i18n: II18n = {
     ok: "OK",
     progression: "progression",
     untitled: "Untitled",
-    visualization: "Visualization",
     volume: "Volume",
   },
   fr: {
@@ -63,7 +47,6 @@ const i18n: II18n = {
     ok: "OK",
     progression: "progression",
     untitled: "Sans titre",
-    visualization: "Visualization",
     volume: "Volume",
   },
   it: {
@@ -80,7 +63,6 @@ const i18n: II18n = {
     ok: "OK",
     progression: "progression",
     untitled: "Senza titolo",
-    visualization: "Visualization",
     volume: "Volume",
   },
 };
@@ -90,7 +72,8 @@ const i18n: II18n = {
  * TODO migrate to any official i18n library
  */
 export default function t(term: string) {
-  const translation = i18n[l][term];
+  const translations: { [k: string]: string } = i18n[l];
+  const translation = translations[term];
 
   // Requested translation is missing (return {term} as placeholder to avoid emptiness in app
   if (!translation) {

@@ -13,7 +13,9 @@ function TabsPanel({ isActive = false, id, Content, className }: ITabsPanel) {
 
   return (
     <section
-      className={classNames("flex flex-col", className, { hidden: !isActive })}
+      className={classNames("flex flex-col flex-1", className, {
+        hidden: !isActive,
+      })}
       id={`${id}-panel`}
       role="tabpanel"
       aria-labelledby={`${id}`}

@@ -6,8 +6,8 @@ import { Inter } from "next/font/google";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "DAW",
   description: "Digital Audio Workstation",
+  title: "DAW",
 };
 
 interface IRootLayoutProps {
@@ -16,7 +16,7 @@ interface IRootLayoutProps {
 
 export default function RootLayout({ children }: IRootLayoutProps) {
   return (
-    <html className="h-full" lang="en">
+    <html className="box-content h-full" lang="en">
       <body className={`${inter.className} h-full`}>{children}</body>
     </html>
   );

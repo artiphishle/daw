@@ -1,7 +1,7 @@
 import t from "@/app/core/i18n";
 import styles from "@/app/core/config/styles";
 import useMusicTheory from "@/app/core/hooks/useMusicTheory";
-import useProjectContext from "@/app/core/hooks/useProjectContext";
+import useProjectContext from "@/app/core/hooks/api/useProjectContext";
 
 const PROGRESSION = [
   "I vi IV V", // 50s Progression

@@ -4,7 +4,7 @@ export default function useInstrument() {
   const { isOpen, openPortal, togglePortal, closePortal, Portal } = usePortal();
 
   return {
-    Instrument: Portal,
+    InstrumentPortal: Portal,
     openInstrument: openPortal,
     toggleInstrument: togglePortal,
     closeInstrument: closePortal,

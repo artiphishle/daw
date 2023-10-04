@@ -1,16 +1,6 @@
 import t from "@/app/core/i18n";
 
-import Sampler from "../instruments/sampler/Sampler";
-
-import { EInstrument } from "@/app/core/hooks/useProjectContext";
-import { ETrackType, type ITrack } from "@/app/types/daw";
-import type {
-  Instrument,
-  InstrumentOptions,
-} from "tone/build/esm/instrument/Instrument";
-import { type ChannelOptions, type SamplerOptions, getContext } from "tone";
-import type { RecursivePartial } from "tone/build/esm/core/util/Interface";
-import type { IWaveForm } from "@/app/components/track/WaveForm";
+import { EInstrument, ETrackType, type ITrack } from "@/app/types/daw";
 
 /**
  * GENERAL
@@ -39,13 +29,12 @@ const DEFAULT_STATES = {
  */
 
 // AUDIO
-const DEFAULT_TRACK_AUDIO: ITrack<IWaveForm, undefined> = {
+const DEFAULT_TRACK_AUDIO: ITrack = {
   id: "track-audio-halloween",
   name: "Halloween",
   routing: {
     input: {
       id: "track-audio-input",
-      instrument: undefined,
       label: "Audio",
       options: {
         url: "/halloween.mp3",
@@ -57,156 +46,57 @@ const DEFAULT_TRACK_AUDIO: ITrack<IWaveForm, undefined> = {
 };
 const DEFAULT_ACTIVE_TRACK_ID = DEFAULT_TRACK_AUDIO.id;
 const TICKS_PER_16N = 48;
-
-// DRUMS
-const DEFAULT_TRACK_INSTRUMENT_BD: ITrack<
-  RecursivePartial<InstrumentOptions>,
-  typeof Instrument | null
-> = {
-  id: "track-midi-bd",
-  name: "BD",
-  routing: {
-    input: {
-      id: EInstrument.BaseDrum,
-      instrument: null,
-      label: EInstrument.BaseDrum,
-      options: {},
-      events: [
-        { note: "C1", duration: "48i", time: "0i" },
-        { note: "C1", duration: "48i", time: `${TICKS_PER_16N * 6}i` },
-        { note: "C1", duration: "48i", time: `${TICKS_PER_16N * 8}i` },
-        { note: "C1", duration: "48i", time: `${TICKS_PER_16N * 10}i` },
-        { note: "C1", duration: "48i", time: `${TICKS_PER_16N * 16}i` },
-        { note: "C1", duration: "48i", time: `${TICKS_PER_16N * 24}i` },
-      ],
-    },
-    output: "drums",
-  },
-  type: ETrackType.Instrument,
-};
-const DEFAULT_TRACK_INSTRUMENT_SD: ITrack<
-  RecursivePartial<InstrumentOptions>,
-  typeof Instrument | null
-> = {
-  id: "track-instrument-sd",
-  name: "SD",
-  routing: {
-    input: {
-      id: EInstrument.SnareDrum,
-      instrument: null,
-      label: EInstrument.SnareDrum,
-      options: {},
-      events: [
-        { note: "D1", duration: "24i", time: `${TICKS_PER_16N * 4}i` },
-        { note: "D1", duration: "24i", time: `${TICKS_PER_16N * 12}i` },
-        { note: "D1", duration: "24i", time: `${TICKS_PER_16N * 20}i` },
-        { note: "D1", duration: "24i", time: `${TICKS_PER_16N * 28}i` },
-      ],
-    },
-    output: "drums",
-  },
-  type: ETrackType.Instrument,
-};
-const DEFAULT_TRACK_INSTRUMENT_CHH: ITrack<
-  RecursivePartial<InstrumentOptions>,
-  typeof Instrument | null
-> = {
-  id: "track-instrument-chh",
-  name: "CHH",
-  routing: {
-    input: {
-      events: [
-        { note: "F#1", duration: "24i", time: "0i" },
-        { note: "F#1", duration: "24i", time: `${TICKS_PER_16N * 1}i` },
-        { note: "F#1", duration: "24i", time: `${TICKS_PER_16N * 2}i` },
-        { note: "F#1", duration: "24i", time: `${TICKS_PER_16N * 3}i` },
-        { note: "F#1", duration: "24i", time: `${TICKS_PER_16N * 4}i` },
-        { note: "F#1", duration: "24i", time: `${TICKS_PER_16N * 5}i` },
-        { note: "F#1", duration: "24i", time: `${TICKS_PER_16N * 6}i` },
-        { note: "F#1", duration: "24i", time: `${TICKS_PER_16N * 7}i` },
-        { note: "F#1", duration: "24i", time: `${TICKS_PER_16N * 8}i` },
-        { note: "F#1", duration: "24i", time: `${TICKS_PER_16N * 9}i` },
-        { note: "F#1", duration: "24i", time: `${TICKS_PER_16N * 10}i` },
-        { note: "F#1", duration: "24i", time: `${TICKS_PER_16N * 11}i` },
-        { note: "F#1", duration: "24i", time: `${TICKS_PER_16N * 12}i` },
-        { note: "F#1", duration: "24i", time: `${TICKS_PER_16N * 13}i` },
-        { note: "F#1", duration: "24i", time: `${TICKS_PER_16N * 14}i` },
-        { note: "F#1", duration: "24i", time: `${TICKS_PER_16N * 15}i` },
-        { note: "F#1", duration: "24i", time: `${TICKS_PER_16N * 16}i` },
-        { note: "F#1", duration: "24i", time: `${TICKS_PER_16N * 17}i` },
-        { note: "F#1", duration: "24i", time: `${TICKS_PER_16N * 18}i` },
-        { note: "F#1", duration: "24i", time: `${TICKS_PER_16N * 19}i` },
-        { note: "F#1", duration: "24i", time: `${TICKS_PER_16N * 20}i` },
-        { note: "F#1", duration: "24i", time: `${TICKS_PER_16N * 21}i` },
-        { note: "F#1", duration: "24i", time: `${TICKS_PER_16N * 22}i` },
-        { note: "F#1", duration: "24i", time: `${TICKS_PER_16N * 23}i` },
-        { note: "F#1", duration: "24i", time: `${TICKS_PER_16N * 24}i` },
-        { note: "F#1", duration: "24i", time: `${TICKS_PER_16N * 25}i` },
-        { note: "F#1", duration: "24i", time: `${TICKS_PER_16N * 26}i` },
-        { note: "F#1", duration: "24i", time: `${TICKS_PER_16N * 27}i` },
-        { note: "F#1", duration: "24i", time: `${TICKS_PER_16N * 28}i` },
-        { note: "F#1", duration: "24i", time: `${TICKS_PER_16N * 29}i` },
-        { note: "F#1", duration: "24i", time: `${TICKS_PER_16N * 30}i` },
-      ],
-      instrument: null,
-      label: EInstrument.ClosedHiHat,
-      options: {},
-      id: EInstrument.ClosedHiHat,
-    },
-    output: "drums",
-  },
-  type: ETrackType.Instrument,
-};
-
 // BASS
-const DEFAULT_TRACK_INSTRUMENT_BASS: ITrack<
-  RecursivePartial<InstrumentOptions>,
-  typeof Instrument | null
-> = {
+const DEFAULT_TRACK_INSTRUMENT_BASS: ITrack = {
   id: "track-instrument-bass",
   name: "Bass",
   routing: {
     input: {
-      id: EInstrument.BassSynth,
-      instrument: null,
-      label: EInstrument.BassSynth,
-      options: { volume: -24 },
-      events: [
-        { note: "A1", duration: `${4 * 48}i`, time: "0i" },
-        { note: "D#2", duration: `${1 * 48}i`, time: `${TICKS_PER_16N * 14}i` },
-        { note: "D2", duration: `${4 * 48}i`, time: `${TICKS_PER_16N * 16}i` },
-        { note: "B#1", duration: `${1 * 48}i`, time: `${TICKS_PER_16N * 30}i` },
-      ],
+      id: EInstrument.MonoSynth,
+      label: "BA",
+      options: {
+        oscillator: { type: "sawtooth" },
+        envelope: { attack: 0.1, decay: 0.5, release: 1, sustain: 0.7 },
+        filterEnvelope: {
+          attack: 0.001,
+          baseFrequency: 200,
+          decay: 0.01,
+          octaves: 0,
+          release: 0.1,
+          sustain: 0.5,
+        },
+        volume: -14,
+      },
+      notes: ["A1", "D#2", "D2", null] as any,
     },
     output: "mixbus",
   },
   type: ETrackType.Instrument,
 };
 
-// SAMPLER
-const DEFAULT_TRACK_SAMPLER: ITrack<
-  Partial<SamplerOptions>,
-  typeof Sampler | null
-> = {
+// SAMPLER (Drums)
+const DEFAULT_TRACK_SAMPLER: ITrack = {
   id: "track-sampler",
   name: "Sampler",
   routing: {
     input: {
       id: EInstrument.Sampler,
-      instrument: null,
-      label: EInstrument.Sampler,
+      label: "Drums",
       options: {
         baseUrl: "./samples/WaveAlchemy/wa_808_tape/",
-        urls: { C3: "wa_808tape_kick_01_sat.wav" },
+        urls: {
+          C3: "wa_808tape_kick_01_sat.wav",
+          D3: "wa_808tape_snare_10_clean.wav",
+          E3: "wa_808tape_closedhat_08_clean.wav",
+        },
+        volume: -12,
       },
-      events: [
-        { note: "D1", duration: "24i", time: `${TICKS_PER_16N * 4}i` },
-        { note: "D1", duration: "24i", time: `${TICKS_PER_16N * 5}i` },
-        { note: "D1", duration: "24i", time: `${TICKS_PER_16N * 6}i` },
-        { note: "D1", duration: "24i", time: `${TICKS_PER_16N * 7}i` },
-        { note: "D3", duration: "24i", time: `${TICKS_PER_16N * 25}i` },
-        { note: "D4", duration: "24i", time: `${TICKS_PER_16N * 26}i` },
-      ],
+      notes: [
+        ["C3", "E3", "E3", "E3"],
+        "D3",
+        ["C3", "C3", "E3", "E3"],
+        ["D3", "E3", "D3", null],
+      ] as any,
     },
     output: "mixbus",
   },
@@ -214,14 +104,13 @@ const DEFAULT_TRACK_SAMPLER: ITrack<
 };
 
 // GROUP
-const DEFAULT_GROUP_DRUMS: ITrack<ChannelOptions, null> = {
+const DEFAULT_GROUP_DRUMS: ITrack = {
   id: "track-group-drums",
   type: ETrackType.Group,
   name: "Drums",
   routing: {
     input: {
       id: "track-group-drums-input",
-      instrument: null,
       label: "Drums",
       options: {
         volume: -12,
@@ -229,31 +118,49 @@ const DEFAULT_GROUP_DRUMS: ITrack<ChannelOptions, null> = {
         solo: false,
         mute: false,
         channelCount: 1,
-        context: getContext(),
       },
     },
     output: "mixbus",
   },
 };
-const DEFAULT_GROUP_MIXBUS: ITrack<ChannelOptions, null> = {
+const DEFAULT_GROUP_MIXBUS: ITrack = {
   id: "mixbus",
   name: "Mixbus",
   routing: {
     input: {
       id: "mixbus-input",
-      instrument: null,
       label: "All",
       options: {
-        volume: 0,
+        channelCount: 1,
+        mute: false,
         pan: 0,
         solo: false,
-        mute: false,
-        channelCount: 1,
-        context: getContext(),
+        volume: 0,
       },
-      events: [],
+      notes: [],
     },
     output: "master",
+  },
+  type: ETrackType.Group,
+};
+
+// MASTER
+const DEFAULT_TRACK_MASTER: ITrack = {
+  id: "master",
+  name: "Master",
+  routing: {
+    input: {
+      id: "master-input",
+      label: "Master",
+      options: {
+        channelCount: 1,
+        mute: false,
+        pan: 0,
+        solo: false,
+        volume: 0,
+      },
+    },
+    output: "destination",
   },
   type: ETrackType.Group,
 };
@@ -273,13 +180,12 @@ export {
   DEFAULT_STATES,
   //
   DEFAULT_TRACK_AUDIO,
-  DEFAULT_TRACK_INSTRUMENT_BD,
-  DEFAULT_TRACK_INSTRUMENT_SD,
-  DEFAULT_TRACK_INSTRUMENT_CHH,
   DEFAULT_TRACK_INSTRUMENT_BASS,
   //
   DEFAULT_TRACK_SAMPLER,
   //
   DEFAULT_GROUP_DRUMS,
   DEFAULT_GROUP_MIXBUS,
+  //
+  DEFAULT_TRACK_MASTER,
 };

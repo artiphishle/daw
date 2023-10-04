@@ -1,10 +1,4 @@
-import { RangeAttrs } from "@tensorflow/tfjs";
-import {
-  ChangeEvent,
-  HTMLInputTypeAttribute,
-  ReactElement,
-  useState,
-} from "react";
+import { ChangeEvent, useState } from "react";
 
 interface IRangeInput {
   id?: string;
@@ -17,7 +11,7 @@ interface IRangeInput {
 }
 
 export default function RangeInput({
-  id = `form-range-${+new Date()}`,
+  id = `form-range-${Number(new Date())}`,
   min = 0,
   max = 100,
   initialValue = 0,
@@ -38,7 +32,7 @@ export default function RangeInput({
           value={value}
           step={step}
           onChange={(event: ChangeEvent<HTMLInputElement>) =>
-            setValue(parseInt(event.target.value))
+            setValue(parseInt(event.target.value, 10))
           }
         />
       </label>
