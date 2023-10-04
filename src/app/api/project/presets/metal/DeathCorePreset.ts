@@ -8,11 +8,9 @@ import {
   DEFAULT_BPM,
 } from "@/app/core/config/constants";
 
-import type { IProjectContext } from "@/app/core/config/types";
-import type { ITrack } from "@/app/types/daw";
+import type { IProjectContext } from "@/app/types/daw";
 
-const tracks: ITrack<any, any>[] = [DEFAULT_TRACK_AUDIO];
-
+const tracks = [DEFAULT_TRACK_AUDIO];
 const DeathcorePreset: IProjectContext = {
   activeTrackId: tracks[0].id,
   bpm: DEFAULT_BPM,

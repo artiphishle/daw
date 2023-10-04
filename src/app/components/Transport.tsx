@@ -1,4 +1,5 @@
-import { type ChangeEvent, type MouseEvent, useState } from "react";
+"use client";
+import { type ChangeEvent, type MouseEvent, useState, useEffect } from "react";
 import {
   CircleIcon,
   FastForwardIcon,
@@ -11,10 +12,9 @@ import {
   TimerIcon,
 } from "lucide-react";
 
-import { Transport as ToneTransport } from "tone";
+import { Ticks, Time, Transport as ToneTransport } from "tone";
 
-import t from "@/app/core/i18n";
-import useProjectContext from "@/app/core/hooks/useProjectContext";
+import useProjectContext from "@/app/core/hooks/api/useProjectContext";
 import useTransport from "@/app/core/hooks/useTransport";
 import styles from "@/app/core/config/styles";
 
@@ -25,49 +25,44 @@ export enum ETransportState {
 }
 
 export default function Transport() {
+  const css = styles.transport;
   const [position, setPosition] = useState<string>("0:0:0.000");
 
   const loopFn = (position: string) => setPosition(position);
   useTransport({ loopFn });
 
-  const { projectContext, updateProjectContext } = useProjectContext();
-  if (!projectContext) return null;
+  const { projectContext, patchProjectContext } = useProjectContext();
 
-  const {
-    bpm,
-    clef,
-    measureCount,
-    position: _position,
-    quantization,
-  } = projectContext;
-  ToneTransport.bpm.value = bpm;
-  ToneTransport.loop = true;
-  ToneTransport.loopStart = 0;
-  ToneTransport.loopEnd = `${measureCount}m`;
+  if (projectContext) {
+    ToneTransport.bpm.value = projectContext.bpm;
+    ToneTransport.loop = true;
+    ToneTransport.loopStart = 0;
+    ToneTransport.loopEnd = `${projectContext.measureCount}m`;
+  }
 
   const events = {
     // TransportSettings
     onBpmChange: (event: ChangeEvent<HTMLInputElement>) =>
-      updateProjectContext({ bpm: parseInt(event.target.value, 10) }),
+      patchProjectContext({ bpm: parseInt(event.target.value, 10) }),
     onClefChange: (event: ChangeEvent<HTMLInputElement>) =>
-      updateProjectContext({ clef: event.target.value }),
+      patchProjectContext({ clef: event.target.value }),
     onMeasureCountChange: (event: ChangeEvent<HTMLInputElement>) =>
-      updateProjectContext({ measureCount: parseInt(event.target.value, 10) }),
+      patchProjectContext({ measureCount: parseInt(event.target.value, 10) }),
     onQuantizationChange: (event: ChangeEvent<HTMLInputElement>) =>
-      updateProjectContext({ quantization: parseInt(event.target.value, 10) }),
+      patchProjectContext({ quantization: parseInt(event.target.value, 10) }),
     // TransportControl
     onPause: (_: MouseEvent<SVGSVGElement>) => ToneTransport.pause(),
     onRecord: (_: MouseEvent<SVGSVGElement>) =>
       console.log("🎙️ Recording soon available"),
     onStart: (_: MouseEvent<SVGSVGElement>) => ToneTransport.start(),
     onStop: (_: MouseEvent<SVGSVGElement>) => {
-      ToneTransport.stop(0.5);
+      ToneTransport.stop();
     },
   };
 
   function TransportControl() {
     return (
-      <div className="flex items-center text-white px-4 mx-2 border-r border-r-[#555]">
+      <div className={css.control}>
         <RepeatIcon
           className={styles.button.navbar}
           fill="#fff"
@@ -103,11 +98,11 @@ export default function Transport() {
   }
   function TransportSettings() {
     return (
-      <section className="text-xs flex flex-col justify-between">
-        <div className="flex">
-          <div className="flex items-center">
+      <section className={css.settings.main}>
+        <div className={css.settings.inner}>
+          <div className={css.settings.item}>
             <label
-              className="text-cyan-300"
+              className={styles.transport.settings.label}
               htmlFor="clef"
               title="clef"
             ></label>
@@ -116,41 +111,45 @@ export default function Transport() {
               className="w-4 ml-1 bg-transparent"
               id="clef"
               onChange={events.onClefChange}
-              value={clef}
+              value={projectContext?.clef}
             />
           </div>
-          <div className="flex items-center">
-            <label className="text-cyan-300" htmlFor="measureCount">
+          <div className={css.settings.item}>
+            <label className={css.settings.label} htmlFor="measureCount">
               M
             </label>
             <input
-              className="w-4 ml-1 bg-transparent"
+              className={css.settings.input}
               id="measureCount"
               onChange={events.onMeasureCountChange}
-              value={measureCount}
+              value={projectContext?.measureCount}
             />
           </div>
-          <div className="flex items-center">
-            <label className="text-cyan-300" htmlFor="quantization">
+          <div className={css.settings.item}>
+            <label className={css.settings.label} htmlFor="quantization">
               Q
             </label>
             <input
-              className="w-8 ml-1 bg-transparent"
+              className={css.settings.input}
               id="quantization"
               onChange={events.onQuantizationChange}
-              value={quantization}
+              value={projectContext?.quantization}
             />
           </div>
-          <div className="flex items-center">
-            <label className="text-cyan-300" htmlFor="bpm" title="bpm"></label>
+          <div className={css.settings.item}>
+            <label
+              className={css.settings.label}
+              htmlFor="bpm"
+              title="bpm"
+            ></label>
             <TimerIcon color="rgb(103, 232, 249)" className="w-4 h-4" />
             <input
-              className="w-8 ml-1 bg-transparent"
+              className={css.settings.input}
               id="bpm"
               onChange={events.onBpmChange}
-              value={bpm}
+              value={projectContext?.bpm}
             />
-            <div className="flex items-center">
+            <div className={css.settings.item}>
               <span>
                 <Music2Icon color="rgb(103, 232, 249)" className="w-4 h-4" />
               </span>
@@ -158,13 +157,13 @@ export default function Transport() {
             </div>
           </div>
         </div>
-        <span className="text-[#fff] text-lg">{position}</span>
+        <span className={css.settings.position}>{position}</span>
       </section>
     );
   }
   return (
-    <section className="flex px-4">
-      <div className="flex gap-2">
+    <section className={css.main}>
+      <div className={css.inner}>
         <TransportControl />
         <TransportSettings />
       </div>

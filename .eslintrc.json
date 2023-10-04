@@ -8,10 +8,9 @@
       }
     }
   ],
-  "parser": "@typescript-eslint/parser",
-  "plugins": ["@typescript-eslint"],
   "rules": {
     "array-element-newline": "off",
+    "capitalized-comments": "off",
     "curly": "off",
     "comma-dangle": ["error", "always-multiline"],
     "dot-location": "off",
@@ -22,6 +21,7 @@
     "implicit-arrow-linebreak": "off",
     "indent": "off",
     "line-comment-position": "off",
+    "lines-around-comment": "off",
     "max-len": [
       "error",
       {

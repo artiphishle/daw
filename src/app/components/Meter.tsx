@@ -1,3 +1,4 @@
+"use client";
 import { useEffect, useRef } from "react";
 import { Draw, type Meter as TMeter, Transport } from "tone";
 

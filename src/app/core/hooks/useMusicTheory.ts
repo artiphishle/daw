@@ -1,4 +1,4 @@
-import useProjectContext from "@/app/core/hooks/useProjectContext";
+import useProjectContext from "@/app/core/hooks/api/useProjectContext";
 import { Chord, Progression } from "tonal";
 
 export default function useMusicTheory() {
@@ -20,14 +20,14 @@ export default function useMusicTheory() {
   function getChords(progression: string | string[]) {
     const ROMAN_NUMS = ["i", "ii", "iii", "iv", "v", "vi", "vii"];
     const prog =
-      typeof progression === "string"
-? progression.split(" ")
-: progression;
+      typeof progression === "string" ? progression.split(" ") : progression;
 
-    const mappedProgression = prog.map((roman: string) =>
-      (ROMAN_NUMS.includes(roman)
-? `${roman}m`
-: roman));
+    const mappedProgression = prog.map((roman: string) => {
+      if (!ROMAN_NUMS.includes(roman.toLowerCase())) {
+        console.error("Invalid roman numeral");
+      }
+      return `${roman}m`;
+    });
     return Progression.fromRomanNumerals(tonic, mappedProgression);
   }
 

@@ -6,12 +6,13 @@ import {
 } from "lucide-react";
 
 import styles from "@/app/core/config/styles";
-import { usePublicSampleDirectory } from "@/app/core/hooks/usePublicSampleDirectory";
+import { usePublicSampleDirectory } from "@/app/core/hooks/api/usePublicSampleDirectory";
 
-import type { ITree } from "@/app/types/daw";
+import type { IDirItem } from "@/app/types/daw";
 
 // TODO extract to other file and load samples from server
-function Three(three: ITree) {
+function Three({ dirItems }: { dirItems: IDirItem[] }) {
+  console.log(dirItems);
   const css = styles.browser;
   return (
     <ul>
@@ -19,7 +20,7 @@ function Three(three: ITree) {
         <FolderOpenIcon className={css.folderStyle} />
         Samples
         <ul className="mt-6 -ml-16 pl-4 border-l border-gray-400">
-          {[three].map(({ name, items = [] }, threeIndex) => (
+          {dirItems.map(({ name, dirs = [] }, threeIndex) => (
             <li key={`browser-three-${threeIndex}`} className={css.liStyle}>
               {name.includes(".") ? (
                 <FileAudioIcon className={css.fileStyle} />
@@ -27,9 +28,9 @@ function Three(three: ITree) {
                 <FolderIcon className={css.folderStyle} />
               )}
               {name}
-              {items.length && (
+              {dirs.length && (
                 <ul className="mt-6 -ml-16 pl-4 border-l border-gray-400">
-                  {items.slice(0, 5).map(({ name }, itemsIndex) => (
+                  {dirs.map(({ name }, itemsIndex) => (
                     <li key={`item-${name}-${itemsIndex}`}>{name}</li>
                   ))}
                 </ul>
@@ -43,14 +44,15 @@ function Three(three: ITree) {
 }
 
 function Browser() {
-  const { tree, isLoading, error } = usePublicSampleDirectory();
+  const { dirItems, isLoading, error } = usePublicSampleDirectory();
   if (error) throw error;
-  if (!tree) return <Loader />;
+  if (!dirItems?.length) return <Loader />;
 
-  console.log(tree);
   return (
-    <section className="flex bg-white pt-8 px-4 text-xs">
-      <div className="pr-8">{tree.length && <Three {...tree[0]} />}</div>
+    <section className="flex flex-1 bg-white pt-8 px-4 text-xs">
+      <div className="pr-8">
+        {dirItems.length && <Three dirItems={[...dirItems]} />}
+      </div>
       <div className="flex-1 bg-gray-50">Content</div>
     </section>
   );

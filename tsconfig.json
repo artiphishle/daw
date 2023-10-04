@@ -27,6 +27,7 @@
     "**/*.ts",
     "**/*.tsx",
     ".next/types/**/*.ts",
-    "jest.config.mjs"
+    "jest.config.mjs",
+    "src/app/core/hooks/swrMagic"
   ]
 }

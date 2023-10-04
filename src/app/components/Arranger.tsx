@@ -6,13 +6,15 @@ import {
 } from "@dnd-kit/sortable";
 
 import styles from "@/app/core/config/styles";
-import useProjectContext from "@/app/core/hooks/useProjectContext";
 import { Locator } from "@/app/components";
 import Track from "@/app/components/track/Track";
 import Time from "./Time";
+import useProjectContext from "@/app/core/hooks/api/useProjectContext";
+
+import { EEndpoint } from "@/app/types/daw";
 
 export default function Arranger() {
-  const { projectContext, updateProjectContext } = useProjectContext();
+  const { projectContext, patchProjectContext } = useProjectContext();
 
   if (!projectContext) return null;
   const { tracks, activeTrackId, measureCount } = projectContext;
@@ -25,7 +27,7 @@ export default function Arranger() {
       const oldIndex = tracks.findIndex(({ id }) => id === active.id);
       const newIndex = tracks.findIndex(({ id }) => id === over?.id);
       const sortedTracks = arrayMove(tracks, oldIndex, newIndex);
-      updateProjectContext({ tracks: sortedTracks });
+      patchProjectContext({ tracks: sortedTracks });
     },
   };
 

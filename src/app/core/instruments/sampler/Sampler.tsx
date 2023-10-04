@@ -1,4 +1,4 @@
-import { type CSSProperties, type MouseEvent } from "react";
+import { FC, type CSSProperties, type MouseEvent } from "react";
 import { GripIcon, KeySquareIcon, XIcon } from "lucide-react";
 import classNames from "classnames";
 import { useDraggable } from "@dnd-kit/core";
@@ -6,12 +6,8 @@ import { Sampler as ToneSampler, SamplerOptions } from "tone";
 import { Scale } from "tonal";
 
 import { ButtonGroup, Grid } from "@/ui";
-import useProjectContext from "@/app/core/hooks/useProjectContext";
+import useProjectContext from "@/app/core/hooks/api/useProjectContext";
 
-interface ISampler extends Partial<SamplerOptions> {
-  instrument: ToneSampler;
-  onClose: () => void;
-}
 interface IPad {
   instrument: ToneSampler;
   label: string;
@@ -45,12 +41,17 @@ const Pad = ({ instrument, label }: IPad) => (
   </button>
 );
 
-export default function Sampler({ instrument, onClose }: ISampler) {
+interface ISampler extends Partial<SamplerOptions> {
+  instrument: any;
+  onClose: any;
+}
+
+const Sampler: FC<ISampler> = ({ instrument, onClose }) => {
   const { attributes, listeners, setNodeRef, transform } = useDraggable({
     id: "sampler",
   });
 
-  const { projectContext, updateProjectContext } = useProjectContext();
+  const { projectContext, patchProjectContext } = useProjectContext();
   if (!projectContext) return null;
   const { clef } = projectContext;
 
@@ -78,7 +79,7 @@ export default function Sampler({ instrument, onClose }: ISampler) {
           id="samplay-clef"
           className="w-8 bg-transparent"
           onChange={(event) =>
-            updateProjectContext({ clef: event.target.value })
+            patchProjectContext({ clef: event.target.value })
           }
           title="Clef"
           value={clef}
@@ -124,4 +125,6 @@ export default function Sampler({ instrument, onClose }: ISampler) {
       </footer>
     </div>
   );
-}
+};
+
+export default Sampler;
