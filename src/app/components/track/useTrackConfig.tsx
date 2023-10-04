@@ -1,4 +1,4 @@
-import { Time, ToneAudioBuffer, Transport } from "tone";
+import { ToneAudioBuffer } from "tone";
 import { analyze } from "web-audio-beat-detector";
 import classNames from "classnames";
 
@@ -6,19 +6,13 @@ import { AudioIcon, GroupIcon, MidiIcon } from "@/app/core/config/icons";
 import styles from "@/app/core/config/styles";
 import WaveForm from "@/app/components/track/WaveForm";
 
-import { EInstrument } from "@/app/core/hooks/useProjectContext";
-import { EUnit } from "@/app/types/utility";
-import type { IProjectContext } from "@/app/core/config/types";
 import type { MouseEvent } from "react";
 import {
   ETrackType,
-  type IMidiEvent,
+  type IProjectContext,
   type ITrackConfig,
+  // eslint-disable-next-line react-hooks/exhaustive-deps,
 } from "@/app/types/daw";
-import type {
-  Instrument,
-  InstrumentOptions,
-} from "tone/build/esm/instrument/Instrument";
 
 const audioConfig: ITrackConfig = {
   Icon: AudioIcon,
@@ -27,7 +21,7 @@ const audioConfig: ITrackConfig = {
       try {
         const buffer = await new ToneAudioBuffer().load(url);
         const tempo = await analyze(buffer.get()!);
-        console.info("[BPM Detection]", url.split("/").pop(), tempo);
+        console.info("[BPM Detection]", url, tempo);
       } catch (error) {
         console.error(error);
       }
@@ -40,28 +34,6 @@ const groupConfig: ITrackConfig = {
   Icon: GroupIcon,
   draw: () => <div />,
 };
-function play(
-  instrument: Instrument<InstrumentOptions>,
-  label: string,
-  measureCount: number,
-  events: IMidiEvent[]
-) {
-  function repeat(currentTime: number) {
-    events.forEach(({ note, duration, time }) => {
-      const t = Time(time).valueOf() + currentTime;
-      const d = duration.valueOf();
-      const isNoise = [EInstrument.SnareDrum, EInstrument.ClosedHiHat].includes(
-        label as EInstrument
-      );
-
-      return isNoise
-        ? (instrument as any).triggerAttackRelease(d, t)
-        : (instrument as any).triggerAttackRelease(note, d, t);
-    });
-  }
-  Transport.scheduleRepeat(repeat, `${measureCount}m`);
-}
-
 const instrumentConfig: ITrackConfig = {
   Icon: MidiIcon,
   draw: ({ id: trackId, measureCount, projectContext, windowWidth }) => {
@@ -80,34 +52,40 @@ const instrumentConfig: ITrackConfig = {
        * updateProjectContext({ tracks: newTracks });
        */
     };
-    const { instrument, label, events = [] } = track.routing.input;
-    if (!instrument) return trackId;
-    /* Seq = */ play(instrument, label, measureCount, events);
+    const { instrument, id, notes = [] } = track.routing.input;
+    const instr = instrument?.instrument;
+
     const css = styles.notes;
-    const TOTAL_TICKS = 768 * measureCount;
-    const TICK_IN_PX = windowWidth / TOTAL_TICKS;
+    const widths = {
+      "2n": windowWidth / 2 / measureCount,
+      "4n": windowWidth / 4 / measureCount,
+      "8n": windowWidth / 8 / measureCount,
+      "16n": windowWidth / 16 / measureCount,
+    };
 
-    return events.map(
-      ({ note, duration, time }: IMidiEvent, eventIndex: number) => {
-        const left = `${parseInt(time, 10) * TICK_IN_PX}${EUnit.Px}`;
-        const width = `${parseInt(duration, 10) * TICK_IN_PX}${EUnit.Px}`;
-
-        return (
-          <div
-            key={`midi-event-${eventIndex}`}
-            onClick={onToggle}
-            className={classNames(css.main, note ? css.bgActive : css.bg)}
-            data-noteindex={eventIndex}
-            style={{ left, width, position: "absolute", top: 0, bottom: 0 }}
-          >
-            {note}
-          </div>
-        );
-      }
-    );
+    return notes.map((note, noteIndex) => {
+      const left = noteIndex * (windowWidth / 16) * 4;
+      const n = note as string | string[];
+      return (
+        <div
+          key={`midi-event-${n}-${noteIndex}`}
+          onClick={onToggle}
+          className={classNames(css.main, n ? css.bgActive : css.bg)}
+          data-noteindex={n}
+          style={{
+            left: `${left}px`,
+            width: `${widths["16n"]}px`,
+            position: "absolute",
+            top: 0,
+            bottom: 0,
+          }}
+        >
+          {n}
+        </div>
+      );
+    });
   },
 };
-
 const samplerConfig: ITrackConfig = {
   Icon: MidiIcon,
   draw: () => <div />,

@@ -1,3 +1,4 @@
+"use client";
 import { useState, type ReactNode, MouseEvent, ReactEventHandler } from "react";
 
 interface IAccordionDetailsProps {

@@ -1,3 +1,4 @@
+"use client";
 import styles from "@/app/core/config/styles";
 import { useEffect, useMemo } from "react";
 import WaveSurfer from "wavesurfer.js";

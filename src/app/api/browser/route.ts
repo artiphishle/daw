@@ -16,6 +16,5 @@ export async function GET(req: NextRequest) {
       .slice(0, 10);
     return { name, items };
   });
-  // Const resInit = { headers: { "content-type": "application/json" } };
   return new Response(JSON.stringify(three));
 }

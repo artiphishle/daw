@@ -65,6 +65,7 @@ const styles = {
   mixer: {
     main: "bg-[#3e4140] flex justify-between w-full text-white pl-[168px]",
     inner: "flex w-full",
+    meter: "w-full bg-[#333]",
     track: {
       main: "pt-6 bg-[#3e4140] border border-r-[#555] border-r-[2px] justify-center text-xs items-center content-end",
       inner: "flex px-4 py-2 border-b border-b-[#555]",
@@ -94,6 +95,19 @@ const styles = {
       `fill-${TrackColor[trackType]}-400 w-6 h-6`,
     row: (trackType: ETrackType) =>
       `relative flex w-full h-10 ${TrackColor[trackType].bg} text-black mb-[1px] first:text-gray-400 first:mb-0 text-xs`,
+  },
+  transport: {
+    main: "flex px-4",
+    inner: "flex gap-2",
+    control: "flex items-center text-white px-4 mx-2 border-r border-r-[#555]",
+    settings: {
+      main: "text-xs flex flex-col justify-between",
+      inner: "flex",
+      input: "w-4 ml-1 bg-transparent",
+      item: "flex items-center",
+      label: "text-cyan-300",
+      position: "text-[#fff] text-lg",
+    },
   },
 };
 

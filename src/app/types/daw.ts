@@ -1,12 +1,66 @@
+import type { FC, MouseEvent, ReactNode } from "react";
+import type { Note, Subdivision } from "tone/build/esm/core/type/Units";
 import type { UniqueIdentifier } from "@dnd-kit/core";
-import type { MouseEvent, ReactNode } from "react";
-import type { Note } from "tone/build/esm/core/type/Units";
 import type { TIcon } from "@/app/core/config/icons";
+import type { RecursivePartial } from "tone/build/esm/core/util/Interface";
+import type {
+  ChannelOptions,
+  MembraneSynth,
+  MembraneSynthOptions,
+  MetalSynth,
+  MetalSynthOptions,
+  MonoSynth,
+  MonoSynthOptions,
+  NoiseSynth,
+  NoiseSynthOptions,
+  Sampler,
+  SamplerOptions,
+  Synth,
+  SynthOptions,
+} from "tone";
 
 /**
- * ENUMS
+ * Types
  */
+type TInstrumentOptions =
+  | MetalSynthOptions
+  | MembraneSynthOptions
+  | MonoSynthOptions
+  | NoiseSynthOptions
+  | SynthOptions
+  | SamplerOptions;
 
+type TInstrument =
+  | MembraneSynth
+  | MetalSynth
+  | MonoSynth
+  | NoiseSynth
+  | Sampler
+  | Synth;
+
+type TInputOptions =
+  | RecursivePartial<TInstrumentOptions>
+  | Partial<ChannelOptions>
+  | { url?: string };
+
+/**
+ * Enums
+ */
+enum EEndpoint {
+  Browser = "/api/browser",
+  ProjectSettings = "/api/project/settings",
+}
+enum EInstrument {
+  MembraneSynth = "MembraneSynth",
+  MetalSynth = "MetalSynth",
+  MonoSynth = "MonoSynth",
+  NoiseSynth = "NoiseSynth",
+  Synth = "Synth",
+  Sampler = "Sampler",
+}
+enum EPortal {
+  Instruments = "portal-instruments",
+}
 enum ETrackType {
   Audio = "audio",
   Group = "group",
@@ -14,32 +68,22 @@ enum ETrackType {
   Sampler = "sampler",
 }
 
-enum EPortal {
-  Instruments = "portal-instruments",
-}
-
 /**
- * MIDI
+ * Interfaces
  */
-
+interface IInstrument {
+  Instrument: FC<any>;
+  instrument: TInstrument;
+  options: TInputOptions;
+}
 interface IMidiEvent {
   duration: string;
   note: Note;
   time: string;
 }
-
-/**
- * Mixer
- */
-
 interface IMixer {
   openInstrument: () => void;
 }
-
-/**
- * Track
- */
-
 interface ITrackConfig {
   Icon: TIcon;
   draw: (args: { [k: string]: any }) => ReactNode;
@@ -49,39 +93,59 @@ interface ITrackConfig {
     label,
     notes,
   }: {
-    instrument: any;
+    instrument: IInstrument;
     label: string;
     notes: Note[];
   }) => void;
 }
-
-interface IRoutingInput<O, I> {
+interface IRoutingInput {
   id: UniqueIdentifier;
-  instrument?: I;
+  instrument?: IInstrument;
   label: string;
-  options: O;
-  events?: IMidiEvent[];
+  options: TInputOptions;
+  notes?: Note[];
+  // events?: IMidiEvent[]
 }
-
-interface ITrackRouting<O, I> {
-  input: IRoutingInput<O, I>;
+interface ITrackRouting {
+  input: IRoutingInput;
   output?: string;
 }
-interface ITrack<O, I> {
+interface ITrack {
   id: UniqueIdentifier;
   name: string;
-  routing: ITrackRouting<O, I>;
+  routing: ITrackRouting;
   type: ETrackType;
   className?: string;
 }
-
-/**
- * API Browser Tree
- */
-interface ITree {
+interface IProjectContext {
+  activeTrackId: UniqueIdentifier;
+  bpm: number;
+  clef: string;
+  measureCount: number;
   name: string;
-  items?: ITree[];
+  position: string;
+  quantization: number;
+  states: Record<string, number>;
+  swing: number;
+  swingSubdivision: Subdivision;
+  tracks: ITrack[];
 }
 
-export { EPortal, ETrackType };
-export type { IMidiEvent, IMixer, ITrack, ITrackConfig, ITrackRouting, ITree };
+// Directory content
+interface IDirItem {
+  name: string;
+  dirs?: IDirItem[];
+}
+
+export { EEndpoint, EInstrument, EPortal, ETrackType };
+export type { TInputOptions, TInstrument };
+export type {
+  IDirItem,
+  IInstrument,
+  IMidiEvent,
+  IMixer,
+  IProjectContext,
+  ITrack,
+  ITrackConfig,
+  ITrackRouting,
+};

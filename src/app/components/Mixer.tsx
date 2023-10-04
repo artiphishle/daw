@@ -1,10 +1,11 @@
+"use client";
 import { useWindowWidth } from "@react-hook/window-size";
-import { Destination, Meter as ToneMeter } from "tone";
+import { Meter as ToneMeter, getDestination } from "tone";
 import classNames from "classnames";
 
 import t from "@/app/core/i18n";
 import { AudioIcon, GroupIcon, MidiIcon } from "@/app/core/config/icons";
-import useProjectContext from "@/app/core/hooks/useProjectContext";
+import useProjectContext from "@/app/core/hooks/api/useProjectContext";
 import { Meter } from "@/app/components";
 
 import { ETrackType, type IMixer, type ITrack } from "@/app/types/daw";
@@ -12,8 +13,8 @@ import { useCallback, useMemo, type ReactNode } from "react";
 import type { UniqueIdentifier } from "@dnd-kit/core";
 
 import styles from "@/app/core/config/styles";
-import { ButtonGroup } from "../ui";
-import { Button } from "../ui/element/button/Button";
+import { ButtonGroup } from "@/ui";
+import { Button } from "@/ui/element/button/Button";
 const css = styles.mixer;
 const btn =
   "w-[calc(100%-4px)] ml-[2px] mb-2 text-center lg:w-[80%] lg:ml-[10%] lg:p-1";
@@ -66,10 +67,7 @@ export default function Mixer({ openInstrument }: IMixer) {
     },
     [openInstrument]
   );
-  const getChannelData = (
-    track: ITrack<any, any>,
-    activeTrackId: UniqueIdentifier
-  ) => {
+  const getChannelData = (track: ITrack, activeTrackId: UniqueIdentifier) => {
     const { id, routing, type, name } = track;
     const { input, output } = routing;
     const { instrument, label } = input;
@@ -90,8 +88,9 @@ export default function Mixer({ openInstrument }: IMixer) {
         {tracks.map((track) => {
           const { cn, Icon, id, instrument, label, name, output } =
             getChannelData(track, activeTrackId);
+
           const meter = new ToneMeter();
-          instrument && instrument.chain(meter, Destination);
+          instrument?.instrument.chain(meter, getDestination());
 
           return (
             <div key={id} className={cn} style={{ width, minWidth: "65px" }}>
@@ -109,7 +108,7 @@ export default function Mixer({ openInstrument }: IMixer) {
               <Inner>
                 <h2>{label}</h2>
               </Inner>
-              <Meter className="w-full bg-[#333]" meter={meter} />
+              <Meter className={css.meter} meter={meter} />
               <Inner>
                 {Icon} <span>{name}</span>
               </Inner>

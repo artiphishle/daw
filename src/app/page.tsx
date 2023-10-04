@@ -1,8 +1,7 @@
 "use client";
 import { useState } from "react";
 
-import { StartDialog } from "./components/StartDialog";
-import { App } from "./components/App";
+import { App, StartDialog } from "./components";
 
 export default function Home() {
   const [toneReady, setToneReady] = useState(false);

@@ -15,7 +15,6 @@ const i18n = {
     ok: "OK",
     progression: "progression",
     untitled: "Unbenannt",
-    visualization: "Visualisierung",
     volume: "Lautstärke",
   },
   en: {
@@ -32,7 +31,6 @@ const i18n = {
     ok: "OK",
     progression: "progression",
     untitled: "Untitled",
-    visualization: "Visualization",
     volume: "Volume",
   },
   fr: {
@@ -49,7 +47,6 @@ const i18n = {
     ok: "OK",
     progression: "progression",
     untitled: "Sans titre",
-    visualization: "Visualization",
     volume: "Volume",
   },
   it: {
@@ -66,7 +63,6 @@ const i18n = {
     ok: "OK",
     progression: "progression",
     untitled: "Senza titolo",
-    visualization: "Visualization",
     volume: "Volume",
   },
 };
