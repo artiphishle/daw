@@ -6,18 +6,16 @@ function A({
   children,
   order,
   className: _className,
-  classNameActive = "",
+  classNameActive,
   href = "#",
   isActive = false,
-  onClick = (event) => event.preventDefault(),
   ...rest
 }: IA) {
   const className = classNames("relative p-4", _className, `order-${order}`, {
-    [classNameActive]: isActive,
+    classNameActive: isActive,
   });
   const tabIndex = order;
-  const props = { ...rest, href, className, tabIndex, onClick };
-
+  const props = { ...rest, href, className, tabIndex };
   return <a {...props}>{children}</a>;
 }
 

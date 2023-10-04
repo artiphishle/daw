@@ -1,3 +1,5 @@
+"use client";
+import styles from "@/app/core/config/styles";
 import { useEffect, useMemo } from "react";
 import WaveSurfer from "wavesurfer.js";
 
@@ -10,8 +12,8 @@ export default function WaveForm({ url }: IWaveForm) {
     const waveSurfer = WaveSurfer.create({
       url,
       container: "#wave",
-      waveColor: "#9333EA", // purple-600
-      progressColor: "#6B21A8", // purple-800
+      waveColor: "rgb(30, 58, 138)", // Purple-600
+      progressColor: "#6B21A8", // Purple-800
       height: 24,
     });
 
@@ -24,7 +26,8 @@ export default function WaveForm({ url }: IWaveForm) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  return useMemo(() => {
-    return <div className="w-full" id="wave" />;
-  }, []);
+  return useMemo(
+    () => <div className={styles.track.audio.main} id="wave" />,
+    []
+  );
 }

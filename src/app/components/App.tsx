@@ -1,16 +1,13 @@
-import { useEffect, useState } from "react";
+"use client";
+import { MouseEvent, useEffect, useState } from "react";
 import { CogIcon, GridIcon, HopIcon, InfinityIcon } from "lucide-react";
 import { DndContext, DragEndEvent, UniqueIdentifier } from "@dnd-kit/core";
-import { Sampler as ToneSampler } from "tone";
 
-import t from "@/app/core/i18n";
 import styles from "@/app/core/config/styles";
 import { DEFAULT_OFFSET_LEFT } from "@/app/core/config/constants";
 
-import { useActiveState } from "@/ui/hooks/useActiveState";
-import useConverter from "@/app/core/hooks/useConverter";
+// import useConverter from "@/app/core/hooks/useConverter";
 import useInstrument from "@/app/core/hooks/useInstrument";
-import useProjectContext from "@/app/core/hooks/useProjectContext";
 
 import data from "@/app/components/sheet.data";
 import {
@@ -24,43 +21,44 @@ import {
   Settings,
   Sheet,
 } from "@/app/components";
-import { PollySynth } from "@/app/core/instruments";
-import Sampler from "@/app/core/instruments/sampler/Sampler";
-import SnareDrum from "@/app/core/instruments/drums/snareDrum/SnareDrum";
 import { A, Nav, Tabs, TabsPanel } from "@/ui";
-import { ITrack } from "../types/daw";
-// import { PanSongParsed } from "./test/unit/PanSong.parsed";
+import { ITrack } from "@/app/types/daw";
+import useProjectContext from "@/app/core/hooks/api/useProjectContext";
+// Import { PanSongParsed } from "./test/unit/PanSong.parsed";
 
 function App() {
-  const { isOpen, Instrument, openInstrument, closeInstrument } =
-    useInstrument();
-  const { audioToAbc, audioToMidi } = useConverter();
-  const { active: tabTopActive, setActive: setTabTopActive } =
-    useActiveState<number>(-1);
-  const { active: tabBtmActive, setActive: setTabBtmActive } =
-    useActiveState<number>(-1);
-  const [tracks, setTracks] = useState<ITrack<any, any>[]>([]);
+  /* const { isOpen, InstrumentPortal, openInstrument, closeInstrument } =
+    useInstrument(); */
+  // const { audioToAbc, audioToMidi } = useConverter();
+  const [tabTopActive, setTabTopActive] = useState<number>();
+  const [tabBtmActive, setTabBtmActive] = useState<number>();
+  const [tracks, setTracks] = useState<ITrack[]>([]);
   const [activeTrackId, setActiveTrackId] = useState<UniqueIdentifier>();
 
-  (async function () {
+  /*
+  const convertAudioToMidi = async () => {
     try {
       // TODO stream it & not run always at start up
       const notes = await audioToMidi({ audio: "/halloween.mp3" });
     } catch (error) {
       console.error(error);
     }
-  });
+  };
+  */
+
+  /* TODO
   useEffect(() => {
-    (async function () {
+    (async () => {
       try {
-        // setAbcParsed(await audioToAbc(PanSongParsed));
+        setAbcParsed(await audioToAbc(PanSongParsed));
       } catch (error) {
         console.error(error);
       }
     })();
   }, [audioToAbc]);
+  */
 
-  const { projectContext, updateProjectContext } = useProjectContext();
+  const { projectContext, patchProjectContext } = useProjectContext();
 
   useEffect(() => {
     if (!projectContext) return;
@@ -76,7 +74,14 @@ function App() {
       href: "#",
       id: "tabs-mixer",
       order: 1,
-      panel: <Mixer openInstrument={openInstrument} />,
+      // panel: <Mixer openInstrument={openInstrument} />,
+      panel: (
+        <Mixer
+          openInstrument={() => {
+            console.log("TODO");
+          }}
+        />
+      ),
       title: "Mixer",
     },
     {
@@ -119,10 +124,15 @@ function App() {
                   order={aIndex + 1}
                   key={`tabs-btm-nav-${id}-${aIndex}`}
                   isActive={tabBtmActive === aIndex}
-                  onClick={() => {
+                  onClick={(event: MouseEvent<HTMLAnchorElement>) => {
+                    event.preventDefault();
+
                     setTabBtmActive(aIndex);
-                    updateProjectContext({
-                      states: { tabTopActive, tabBtmActive: aIndex },
+                    patchProjectContext({
+                      states: {
+                        tabTopActive: tabTopActive as number,
+                        tabBtmActive: aIndex,
+                      },
                     });
                   }}
                 >
@@ -182,12 +192,7 @@ function App() {
       panel: (
         <Droppable id="dropzone-1">
           <section className="bg-white">
-            <PollySynth />
             <Progression />
-            <div className="p-8">
-              <h2 className={styles.headings.h2}>{t("visualization")}</h2>
-              <SnareDrum className="-mt-100" />
-            </div>
           </section>
         </Droppable>
       ),
@@ -214,8 +219,11 @@ function App() {
                   key={`tabs-top-nav-${id}-${aIndex}`}
                   onClick={() => {
                     setTabTopActive(aIndex);
-                    updateProjectContext({
-                      states: { tabBtmActive, tabTopActive: aIndex },
+                    patchProjectContext({
+                      states: {
+                        tabBtmActive: tabBtmActive as number,
+                        tabTopActive: aIndex,
+                      },
                     });
                   }}
                 >
@@ -236,17 +244,17 @@ function App() {
         </div>
       </main>
 
-      {isOpen && (
-        <Instrument>
-          <Sampler
-            instrument={
-              tracks.find((track) => track.id === activeTrackId)!.routing.input
-                .instrument! as ToneSampler
-            }
-            onClose={closeInstrument}
-          />
-        </Instrument>
-      )}
+      {/* <InstrumentPortal>
+        {isOpen &&
+          tracks.map((track) => {
+            if (activeTrackId !== track.id) return null;
+            const I = track.routing.input.instrument?.Instrument;
+            if (!I) return null;
+            return (
+              <I key={`instrument-${track.id}`} onClose={closeInstrument} />
+            );
+          })}
+        </InstrumentPortal> */}
     </DndContext>
   );
 }

@@ -1,20 +1,18 @@
 import { MenuIcon } from "lucide-react";
 
-import t from "@/app/core/i18n";
 import styles from "@/app/core/config/styles";
+import t from "@/app/core/i18n";
 
-import { Transport } from "@/app/components";
 import { Avatar } from "@/ui";
+import { Transport } from "@/app/components";
 
-const { navbar } = styles;
+export default function Navbar() {
+  const { navbar } = styles;
 
-interface INavbar {}
-
-export default function Navbar({}: INavbar) {
   return (
-    <div className={styles.navbar.ui}>
-      <div className={styles.navbar.uiInner}>
-        <MenuIcon className={styles.navbar.icon} />
+    <div className={navbar.ui}>
+      <div className={navbar.uiInner}>
+        <MenuIcon className={navbar.icon} />
         <h1 className={styles.headings.h1}>{t("daw")}</h1>
       </div>
       <Transport />

@@ -5,13 +5,9 @@ import { Draggable } from "@/app/components";
 import { GripIcon } from "lucide-react";
 
 export default function PollySynth() {
-  const polySynth = new PolySynth(Synth, {
-    detune: -1.4,
-  }).toDestination();
+  const polySynth = new PolySynth(Synth, { detune: -1.4 }).toDestination();
+  const MidiKeys = () => useMidiKeys({ instrument: polySynth, octaves: 7 });
 
-  const MidiKeys = () => useMidiKeys({ octaves: 7, instrument: polySynth });
-
-  // TODO should be 'absolute' if DnD
   return (
     <Draggable id="pollysynth">
       <section className="absolute top-[30%] right-2 z-50">

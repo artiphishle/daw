@@ -41,7 +41,7 @@ const genres = [
   {
     genre: "Pop",
     genres: [
-      { genres: "Pop" }, // yeah typical
+      { genres: "Pop" },
       { genres: "Dance Pop" },
       { genres: "Latin Pop" },
       { genres: "Pov: Indie" },
@@ -78,75 +78,51 @@ const genres = [
   },
   {
     genre: "R&B",
-    genres: [
-      // There are many more...
-    ],
+    genres: [],
   },
   {
     genre: "Latin",
-    genres: [
-      // There are many more...
-    ],
+    genres: [],
   },
   {
     genre: "Rock",
-    genres: [
-      // There are many more...
-    ],
+    genres: [],
   },
   {
     genre: "Metal",
-    genres: [
-      // There are many more...
-    ],
+    genres: [],
   },
   {
     genre: "Country",
-    genres: [
-      // There are many more...
-    ],
+    genres: [],
   },
   {
     genre: "Folk/Acoustic",
-    genres: [
-      // There are many more...
-    ],
+    genres: [],
   },
   {
     genre: "Classical",
-    genres: [
-      // There are many more...
-    ],
+    genres: [],
   },
   {
     genre: "Jazz",
-    genres: [
-      // There are many more...
-    ],
+    genres: [],
   },
   {
     genre: "Blues",
-    genres: [
-      // There are many more...
-    ],
+    genres: [],
   },
   {
     genre: "Easy Listening",
-    genres: [
-      // There are many more...
-    ],
+    genres: [],
   },
   {
     genre: "New age",
-    genres: [
-      // There are many more...
-    ],
+    genres: [],
   },
   {
     genre: "World/Traditional",
-    genres: [
-      // There are many more...
-    ],
+    genres: [],
   },
 ];
 

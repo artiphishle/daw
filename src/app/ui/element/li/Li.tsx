@@ -4,8 +4,6 @@ interface ILi extends AllHTMLAttributes<HTMLLIElement> {
   children: ReactNode;
 }
 
-function Li({ children, ...rest }: ILi) {
-  return <li {...rest}>{children}</li>;
-}
+const Li = ({ children, ...rest }: ILi) => <li {...rest}>{children}</li>;
 
 export { Li };
