@@ -44,7 +44,9 @@ interface IFlex extends AllHTMLAttributes<HTMLDivElement> {
   vertical?: boolean;
 }
 // Grid
-interface IGrid extends AllHTMLAttributes<HTMLDivElement> {}
+interface IGrid extends AllHTMLAttributes<HTMLDivElement> {
+  classNameItem?: string;
+}
 
 export type { IA, IOl, IUl };
 export type { IAvatar, IButtonGroup };

@@ -1,14 +1,18 @@
+/**
+ * TODO Tabs: Extract to configuration file
+ */
 "use client";
 import { MouseEvent, useEffect, useState } from "react";
 import { CogIcon, GridIcon, HopIcon, InfinityIcon } from "lucide-react";
 import { DndContext, DragEndEvent, UniqueIdentifier } from "@dnd-kit/core";
 
 import styles from "@/app/core/config/styles";
-import { DEFAULT_OFFSET_LEFT } from "@/app/core/config/constants";
-
+import {
+  DEFAULT_MEASURE_COUNT,
+  DEFAULT_OFFSET_LEFT,
+  DEFAULT_QUANTIZATION,
+} from "@/app/core/config/constants";
 // import useConverter from "@/app/core/hooks/useConverter";
-import useInstrument from "@/app/core/hooks/useInstrument";
-
 import data from "@/app/components/sheet.data";
 import {
   Arranger,
@@ -21,9 +25,10 @@ import {
   Settings,
   Sheet,
 } from "@/app/components";
-import { A, Nav, Tabs, TabsPanel } from "@/ui";
+import { A, Grid, Nav, Tabs, TabsPanel } from "@/ui";
 import { ITrack } from "@/app/types/daw";
 import useProjectContext from "@/app/core/hooks/api/useProjectContext";
+import { useWindowWidth } from "@react-hook/window-size";
 // Import { PanSongParsed } from "./test/unit/PanSong.parsed";
 
 function App() {
@@ -34,6 +39,12 @@ function App() {
   const [tabBtmActive, setTabBtmActive] = useState<number>();
   const [tracks, setTracks] = useState<ITrack[]>([]);
   const [activeTrackId, setActiveTrackId] = useState<UniqueIdentifier>();
+  const [gridCols, setGridCols] = useState<number>();
+  const [quantization, setQuantization] =
+    useState<number>(DEFAULT_QUANTIZATION);
+  const [measureCount, setMeasureCount] = useState<number>(
+    DEFAULT_MEASURE_COUNT
+  );
 
   /*
   const convertAudioToMidi = async () => {
@@ -58,6 +69,7 @@ function App() {
   }, [audioToAbc]);
   */
 
+  const windowWidth = useWindowWidth();
   const { projectContext, patchProjectContext } = useProjectContext();
 
   useEffect(() => {
@@ -66,6 +78,9 @@ function App() {
     setTabBtmActive(projectContext.states.tabBtmActive);
     setTracks(projectContext.tracks);
     setActiveTrackId(projectContext.activeTrackId);
+    setMeasureCount(projectContext.measureCount);
+    setQuantization(projectContext.quantization);
+    setGridCols(quantization * measureCount);
   }, [projectContext]);
 
   const tabsBottomItems = [
@@ -114,7 +129,16 @@ function App() {
       order: 1,
       panel: (
         <>
-          <Arranger />
+          {/* TODO Extract as 'Backdrop' component */}
+          <section className="relative">
+            <Grid
+              className={"absolute top-[32px] left-[168px] right-0 bottom-0"}
+              cols={gridCols}
+              rows={tracks.length}
+              classNameItem="h-[40px] border border-[#fff] mb-[1px]"
+            />
+          </section>
+          <Arranger className="absolute top-0 left-0 right-0 bottom-0" />
           <Tabs className="justify-end">
             <Nav className={`ml-[${DEFAULT_OFFSET_LEFT}px]`}>
               {tabsBottomItems.map(({ id, children }: any, aIndex) => (
