@@ -36,16 +36,7 @@ function App() {
   const { isOpen, InstrumentPortal, openInstrument, closeInstrument } =
     useInstrument();
   // const { audioToAbc, audioToMidi } = useConverter();
-  const [tabTopActive, setTabTopActive] = useState<number>();
-  const [tabBtmActive, setTabBtmActive] = useState<number>();
-  const [tracks, setTracks] = useState<ITrack[]>([]);
-  const [activeTrackId, setActiveTrackId] = useState<UniqueIdentifier>();
   const [gridCols, setGridCols] = useState<number>();
-  const [quantization, setQuantization] =
-    useState<number>(DEFAULT_QUANTIZATION);
-  const [measureCount, setMeasureCount] = useState<number>(
-    DEFAULT_MEASURE_COUNT
-  );
 
   /*
   const convertAudioToMidi = async () => {
@@ -75,14 +66,15 @@ function App() {
 
   useEffect(() => {
     if (!projectContext) return;
-    setTabTopActive(projectContext.states.tabTopActive);
-    setTabBtmActive(projectContext.states.tabBtmActive);
-    setTracks(projectContext.tracks);
-    setActiveTrackId(projectContext.activeTrackId);
-    setMeasureCount(projectContext.measureCount);
-    setQuantization(projectContext.quantization);
     setGridCols(projectContext.quantization * projectContext.measureCount);
   }, [projectContext]);
+
+  if (!projectContext) return null;
+  const {
+    activeTrackId,
+    states: { tabBtmActive, tabTopActive },
+    tracks,
+  } = projectContext;
 
   const tabsBottomItems = [
     {
@@ -151,8 +143,6 @@ function App() {
                   isActive={tabBtmActive === aIndex}
                   onClick={(event: MouseEvent<HTMLAnchorElement>) => {
                     event.preventDefault();
-
-                    setTabBtmActive(aIndex);
                     patchProjectContext({
                       states: {
                         tabTopActive: tabTopActive as number,
@@ -243,7 +233,6 @@ function App() {
                   order={aIndex + 1}
                   key={`tabs-top-nav-${id}-${aIndex}`}
                   onClick={() => {
-                    setTabTopActive(aIndex);
                     patchProjectContext({
                       states: {
                         tabBtmActive: tabBtmActive as number,
