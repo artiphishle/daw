@@ -4,8 +4,7 @@ import { Midi } from "@tonejs/midi";
 
 import abcjs, { type TuneObjectArray } from "abcjs";
 import "abcjs/abcjs-audio.css";
-
-import { PanSongParsed as notes } from "@/app/test/unit/PanSong.parsed";
+// import { PanSongParsed } from "testdata/unit/PanSong.parsed";
 import type { NoteEventTime as INoteEventTime } from "@spotify/basic-pitch/types";
 
 export enum ENoteStyle {
@@ -37,6 +36,7 @@ ISheet) {
   const trackWithMelodia = midi.addTrack();
   trackWithMelodia.name = "Melodia";
 
+  /*
   notes.forEach(
     ({
       amplitude,
@@ -63,7 +63,7 @@ ISheet) {
         );
       }
     }
-  );
+  );*/
 
   return <div className="bg-white" id="paper" />;
 }
