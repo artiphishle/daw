@@ -12,7 +12,7 @@ import {
   TimerIcon,
 } from "lucide-react";
 
-import { Ticks, Time, Transport as ToneTransport } from "tone";
+import { Transport as ToneTransport } from "tone";
 
 import useProjectContext from "@/app/core/hooks/api/useProjectContext";
 import useTransport from "@/app/core/hooks/useTransport";
@@ -29,7 +29,7 @@ export default function Transport() {
   const [position, setPosition] = useState<string>("0:0:0.000");
 
   const loopFn = (position: string) => setPosition(position);
-  useTransport({ loopFn });
+  const { loop } = useTransport({ loopFn });
 
   const { projectContext, patchProjectContext } = useProjectContext();
 
@@ -56,7 +56,9 @@ export default function Transport() {
       console.log("🎙️ Recording soon available"),
     onStart: (_: MouseEvent<SVGSVGElement>) => ToneTransport.start(),
     onStop: (_: MouseEvent<SVGSVGElement>) => {
+      console.log("stop");
       ToneTransport.stop();
+      loop.stop();
     },
   };
 

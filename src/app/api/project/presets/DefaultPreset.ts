@@ -17,9 +17,9 @@ import {
 import type { IProjectContext } from "@/app/types/daw";
 
 const tracks = [
-  DEFAULT_TRACK_AUDIO,
   DEFAULT_TRACK_INSTRUMENT_BASS,
   DEFAULT_TRACK_SAMPLER,
+  DEFAULT_TRACK_AUDIO,
   DEFAULT_GROUP_DRUMS,
   DEFAULT_GROUP_MIXBUS,
   DEFAULT_TRACK_MASTER,
