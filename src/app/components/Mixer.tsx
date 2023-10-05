@@ -15,6 +15,8 @@ import type { UniqueIdentifier } from "@dnd-kit/core";
 import styles from "@/app/core/config/styles";
 import { ButtonGroup } from "@/ui";
 import { Button } from "@/ui/element/button/Button";
+import { EColor, ESize } from "../ui/shape/Circle";
+import Knob from "../ui/audio/Knob";
 const css = styles.mixer;
 const btn =
   "w-[calc(100%-4px)] ml-[2px] mb-2 text-center lg:w-[80%] lg:ml-[10%] lg:p-1";
@@ -94,6 +96,16 @@ export default function Mixer({ openInstrument }: IMixer) {
 
           return (
             <div key={id} className={cn} style={{ width, minWidth: "65px" }}>
+              <Inner>
+                <Knob size={ESize.Xs} max={1} min={0} value={0.8} />
+                <Knob
+                  size={ESize.Xs}
+                  color={EColor.Primary}
+                  max={50}
+                  min={-50}
+                  value={0}
+                />
+              </Inner>
               <ButtonGroup>
                 <Button value="S" className={classNames(btn, "bg-blue-800")} />
                 <Button value="M" className={classNames(btn, "bg-red-800")} />
