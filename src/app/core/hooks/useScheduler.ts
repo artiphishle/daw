@@ -23,7 +23,7 @@ export default function useScheduler() {
       (time, note) => {
         const n = note as unknown as Note;
         if (isSampler) {
-          instrument.triggerAttackRelease(n, "4n", time);
+          instrument.triggerAttackRelease(n, "16n", time, 0.8);
         } else if (isNoise) {
           instrument.triggerAttackRelease("8n", time);
         } else {

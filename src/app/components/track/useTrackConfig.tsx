@@ -36,7 +36,13 @@ const groupConfig: ITrackConfig = {
 };
 const instrumentConfig: ITrackConfig = {
   Icon: MidiIcon,
-  draw: ({ id: trackId, measureCount, projectContext, windowWidth }) => {
+  draw: ({
+    measureCount,
+    quantization,
+    projectContext,
+    id: trackId,
+    windowWidth,
+  }) => {
     const { tracks } = projectContext as IProjectContext;
     const [track] = tracks.filter((track) => track.id === trackId);
     const onToggle = (event: MouseEvent<HTMLDivElement>) => {
@@ -64,8 +70,33 @@ const instrumentConfig: ITrackConfig = {
     };
 
     return notes.map((note, noteIndex) => {
-      const left = noteIndex * (windowWidth / 16) * 4;
+      const left = noteIndex * (windowWidth / quantization) * measureCount;
       const n = note as string | string[];
+
+      if (Array.isArray(n)) {
+        return n.map((subN, subNIndex) => {
+          const subWidth = widths["8n"];
+          const subLeft = left + noteIndex * subNIndex;
+          // TODO Refactoring (Redundant code)
+          return (
+            <div
+              key={`midi-event-${subN}-${subNIndex}-sub`}
+              onClick={onToggle}
+              className={classNames(css.main, subN ? css.bgActive : css.bg)}
+              data-noteindex={subN}
+              style={{
+                left: `${subLeft}px`,
+                width: `${subWidth}px`,
+                position: "absolute",
+                top: 0,
+                bottom: 0,
+              }}
+            >
+              {subN}
+            </div>
+          );
+        });
+      }
       return (
         <div
           key={`midi-event-${n}-${noteIndex}`}
@@ -74,7 +105,7 @@ const instrumentConfig: ITrackConfig = {
           data-noteindex={n}
           style={{
             left: `${left}px`,
-            width: `${widths["16n"]}px`,
+            width: `${widths["8n"]}px`,
             position: "absolute",
             top: 0,
             bottom: 0,
