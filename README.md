@@ -33,6 +33,13 @@ We're [@here](https://github.com/scha-ch/daw/discussions) 🙋‍♂️ and [@th
 
 ## 🎼Changelog
 
+### 🍂 October 2023
+
+#### 4th
+
+- **SWR 'Selector'** to handle unserializable data
+- **Refactoring** there is way more
+
 ### 🍃 September 2023
 
 #### 29th

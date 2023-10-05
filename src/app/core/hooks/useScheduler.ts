@@ -1,4 +1,4 @@
-import { Sequence } from "tone";
+import { Sequence, Transport } from "tone";
 
 import { EInstrument, type TInstrument } from "@/app/types/daw";
 import { useState } from "react";
@@ -41,6 +41,11 @@ export default function useScheduler() {
     sequence?.dispose();
     setSequence(null);
   }
+
+  Transport.on("stop", () => {
+    console.log("stop");
+    dispose();
+  });
 
   return { setup, dispose };
 }

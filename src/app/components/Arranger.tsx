@@ -10,10 +10,9 @@ import { Locator } from "@/app/components";
 import Track from "@/app/components/track/Track";
 import Time from "./Time";
 import useProjectContext from "@/app/core/hooks/api/useProjectContext";
+import classNames from "classnames";
 
-import { EEndpoint } from "@/app/types/daw";
-
-export default function Arranger() {
+export default function Arranger({ className = "" }: { className?: string }) {
   const { projectContext, patchProjectContext } = useProjectContext();
 
   if (!projectContext) return null;
@@ -32,7 +31,7 @@ export default function Arranger() {
   };
 
   return (
-    <div className={styles.arranger.main}>
+    <div className={classNames(styles.arranger.main, className)}>
       <DndContext collisionDetection={closestCenter} onDragEnd={events.dragEnd}>
         <SortableContext items={tracks} strategy={verticalListSortingStrategy}>
           <ol className="flex-1 ">

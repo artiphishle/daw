@@ -44,7 +44,7 @@ const styles = {
   icon: "w-[16px] h-[16px] mr-1",
   main: "relative h-full flex flex-1 justify-between",
   // Custom components
-  arranger: { main: "relative bg-white" },
+  arranger: { main: "relative" },
   avatar: {
     main: "flex items-center justify-center bg-[#222] text-white cursor-pointer w-12 h-12 hover:rotate-180",
     bordered: "border border-gray-600",
@@ -83,9 +83,10 @@ const styles = {
   track: {
     audio: { main: "w-full flex flex-col justify-center" },
     time: "flex w-full bg-white text-gray-500 text-xs",
-    active: "font-bold text-black bg-[#00000020]",
+    active: "font-bold text-black",
     col1: {
-      main: "flex justify-between items-center px-4",
+      active: "bg-[blue]",
+      main: "flex justify-between items-center px-4 bg-white",
       name: "whitespace-nowrap w-28 overflow-x-hidden text-ellipsis",
     },
     col2: {
@@ -94,7 +95,7 @@ const styles = {
     icon: (trackType: ETrackType) =>
       `fill-${TrackColor[trackType]}-400 w-6 h-6`,
     row: (trackType: ETrackType) =>
-      `relative flex w-full h-10 ${TrackColor[trackType].bg} text-black mb-[1px] first:text-gray-400 first:mb-0 text-xs`,
+      "relative flex w-full h-10 text-black mb-[1px] first:text-gray-400 first:mb-0 text-xs",
   },
   transport: {
     main: "flex px-4",
