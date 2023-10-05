@@ -35,10 +35,14 @@ We're [@here](https://github.com/scha-ch/daw/discussions) 🙋‍♂️ and [@th
 
 ### 🍂 October 2023
 
+#### 5th
+
+- **Github Workflow** lint, test & build on 'main' push & PR (matrix strategy)
+
 #### 4th
 
+- **Arranger** Quantization grid & playing sequences
 - **SWR 'Selector'** to handle unserializable data
-- **Refactoring** there is way more
 
 ### 🍃 September 2023
 
