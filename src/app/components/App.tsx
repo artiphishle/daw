@@ -29,11 +29,12 @@ import { A, Grid, Nav, Tabs, TabsPanel } from "@/ui";
 import { ITrack } from "@/app/types/daw";
 import useProjectContext from "@/app/core/hooks/api/useProjectContext";
 import { useWindowWidth } from "@react-hook/window-size";
+import useInstrument from "../core/hooks/useInstrument";
 // Import { PanSongParsed } from "./test/unit/PanSong.parsed";
 
 function App() {
-  /* const { isOpen, InstrumentPortal, openInstrument, closeInstrument } =
-    useInstrument(); */
+  const { isOpen, InstrumentPortal, openInstrument, closeInstrument } =
+    useInstrument();
   // const { audioToAbc, audioToMidi } = useConverter();
   const [tabTopActive, setTabTopActive] = useState<number>();
   const [tabBtmActive, setTabBtmActive] = useState<number>();
@@ -80,7 +81,7 @@ function App() {
     setActiveTrackId(projectContext.activeTrackId);
     setMeasureCount(projectContext.measureCount);
     setQuantization(projectContext.quantization);
-    setGridCols(quantization * measureCount);
+    setGridCols(projectContext.quantization * projectContext.measureCount);
   }, [projectContext]);
 
   const tabsBottomItems = [
@@ -268,7 +269,7 @@ function App() {
         </div>
       </main>
 
-      {/* <InstrumentPortal>
+      <InstrumentPortal>
         {isOpen &&
           tracks.map((track) => {
             if (activeTrackId !== track.id) return null;
@@ -278,7 +279,7 @@ function App() {
               <I key={`instrument-${track.id}`} onClose={closeInstrument} />
             );
           })}
-        </InstrumentPortal> */}
+      </InstrumentPortal>
     </DndContext>
   );
 }

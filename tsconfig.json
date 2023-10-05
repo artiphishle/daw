@@ -28,6 +28,6 @@
     "**/*.tsx",
     ".next/types/**/*.ts",
     "jest.config.mjs",
-    "src/app/core/hooks/swrMagic"
+    "src/test/unit/**/*.tsx"
   ]
 }
