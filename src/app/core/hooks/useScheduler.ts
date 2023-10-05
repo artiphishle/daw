@@ -34,7 +34,7 @@ export default function useScheduler() {
       "4n"
     ).start(0);
 
-    setSequence(seq);
+    return setSequence(seq);
   }
 
   function dispose() {

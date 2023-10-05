@@ -12,7 +12,11 @@ import Time from "./Time";
 import useProjectContext from "@/app/core/hooks/api/useProjectContext";
 import classNames from "classnames";
 
-export default function Arranger({ className = "" }: { className?: string }) {
+interface IArranger {
+  className?: string;
+}
+
+export default function Arranger({ className = "" }: IArranger) {
   const { projectContext, patchProjectContext } = useProjectContext();
 
   if (!projectContext) return null;
@@ -31,7 +35,7 @@ export default function Arranger({ className = "" }: { className?: string }) {
   };
 
   return (
-    <div className={classNames(styles.arranger.main, className)}>
+    <section className={classNames(styles.arranger.main, className)}>
       <DndContext collisionDetection={closestCenter} onDragEnd={events.dragEnd}>
         <SortableContext items={tracks} strategy={verticalListSortingStrategy}>
           <ol className="flex-1 ">
@@ -49,6 +53,6 @@ export default function Arranger({ className = "" }: { className?: string }) {
         </SortableContext>
       </DndContext>
       {projectContext && <Locator projectContext={projectContext} />}
-    </div>
+    </section>
   );
 }
