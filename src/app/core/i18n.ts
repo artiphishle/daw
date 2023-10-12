@@ -4,6 +4,8 @@ const l = "en";
 const i18n = {
   de: {
     all: "Alle",
+    allowSound:
+      "Bitte bestätige die Berechtigung zum Abspielen von Musik (erforderlich)",
     beat: "Beat",
     bpm: "BPM",
     chordProgression: "Chord progression",
@@ -19,6 +21,7 @@ const i18n = {
   },
   en: {
     all: "All",
+    allowSound: "Please confirm permission to play sound (required)",
     beat: "Beat",
     bpm: "BPM",
     chordProgression: "Chord progression",
@@ -35,6 +38,7 @@ const i18n = {
   },
   fr: {
     all: "Tous",
+    allowSound: "Veuillez confirmer l'autorisation de jouer du son (requis)",
     beat: "Beat",
     bpm: "BPM",
     chordProgression: "Chord progression",
@@ -51,6 +55,7 @@ const i18n = {
   },
   it: {
     all: "Tutti",
+    allowSound: "Conferma l'autorizzazione a riprodurre il suono (richiesto)",
     beat: "Beat",
     bpm: "BPM",
     chordProgression: "Chord progression",

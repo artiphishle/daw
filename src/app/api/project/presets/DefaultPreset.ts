@@ -12,14 +12,16 @@ import {
   DEFAULT_TRACK_INSTRUMENT_BASS,
   DEFAULT_TRACK_SAMPLER,
   DEFAULT_TRACK_MASTER,
+  DEFAULT_TRACK_PLAYERS,
 } from "@/app/core/config/constants";
 
-import type { IProjectContext } from "@/app/types/daw";
+import type { IProjectContext } from "@/app/types/project.types";
 
 const tracks = [
   DEFAULT_TRACK_INSTRUMENT_BASS,
   DEFAULT_TRACK_SAMPLER,
   DEFAULT_TRACK_AUDIO,
+  DEFAULT_TRACK_PLAYERS,
   DEFAULT_GROUP_DRUMS,
   DEFAULT_GROUP_MIXBUS,
   DEFAULT_TRACK_MASTER,

@@ -1,19 +1,14 @@
-/**
- * TODO Tabs: Extract to configuration file
- */
 "use client";
-import { MouseEvent, useEffect, useState } from "react";
+import { type MouseEvent, useEffect, useState } from "react";
+import { useWindowWidth } from "@react-hook/window-size";
 import { CogIcon, GridIcon, HopIcon, InfinityIcon } from "lucide-react";
-import { DndContext, DragEndEvent, UniqueIdentifier } from "@dnd-kit/core";
+import { DndContext, type DragEndEvent } from "@dnd-kit/core";
 
 import styles from "@/app/core/config/styles";
-import {
-  DEFAULT_MEASURE_COUNT,
-  DEFAULT_OFFSET_LEFT,
-  DEFAULT_QUANTIZATION,
-} from "@/app/core/config/constants";
+import { DEFAULT_OFFSET_LEFT } from "@/app/core/config/constants";
+// Import { PanSongParsed } from "./test/unit/PanSong.parsed";
 // import useConverter from "@/app/core/hooks/useConverter";
-import data from "@/app/components/sheet.data";
+import data from "@/test/data/sheet";
 import {
   Arranger,
   Browser,
@@ -26,15 +21,14 @@ import {
   Sheet,
 } from "@/app/components";
 import { A, Grid, Nav, Tabs, TabsPanel } from "@/ui";
-import { ITrack } from "@/app/types/daw";
 import useProjectContext from "@/app/core/hooks/api/useProjectContext";
-import { useWindowWidth } from "@react-hook/window-size";
-import useInstrument from "../core/hooks/useInstrument";
-// Import { PanSongParsed } from "./test/unit/PanSong.parsed";
+import useAudioInstrument from "@/app/core/hooks/audio/useAudioInstrument";
 
-function App() {
+import type { Note as TNote } from "tone/build/esm/core/type/NoteUnits";
+
+export function App() {
   const { isOpen, InstrumentPortal, openInstrument, closeInstrument } =
-    useInstrument();
+    useAudioInstrument();
   // const { audioToAbc, audioToMidi } = useConverter();
   const [gridCols, setGridCols] = useState<number>();
 
@@ -72,6 +66,7 @@ function App() {
   if (!projectContext) return null;
   const {
     activeTrackId,
+    clef,
     states: { tabBtmActive, tabTopActive },
     tracks,
   } = projectContext;
@@ -82,14 +77,7 @@ function App() {
       href: "#",
       id: "tabs-mixer",
       order: 1,
-      // panel: <Mixer openInstrument={openInstrument} />,
-      panel: (
-        <Mixer
-          openInstrument={() => {
-            console.log("TODO");
-          }}
-        />
-      ),
+      panel: <Mixer openInstrument={openInstrument} />,
       title: "Mixer",
     },
     {
@@ -207,7 +195,7 @@ function App() {
       panel: (
         <Droppable id="dropzone-1">
           <section className="bg-white">
-            <Progression />
+            <Progression tonic={clef as TNote} />
           </section>
         </Droppable>
       ),
@@ -262,6 +250,7 @@ function App() {
         {isOpen &&
           tracks.map((track) => {
             if (activeTrackId !== track.id) return null;
+            console.log(track.id);
             const I = track.routing.input.instrument?.Instrument;
             if (!I) return null;
             return (
@@ -272,5 +261,3 @@ function App() {
     </DndContext>
   );
 }
-
-export { App };

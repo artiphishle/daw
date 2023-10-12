@@ -1,6 +1,6 @@
 "use client";
 import { useWindowWidth } from "@react-hook/window-size";
-import { Meter as ToneMeter, getDestination } from "tone";
+import { Destination, Meter as ToneMeter, Volume } from "tone";
 import classNames from "classnames";
 
 import t from "@/app/core/i18n";
@@ -8,16 +8,23 @@ import { AudioIcon, GroupIcon, MidiIcon } from "@/app/core/config/icons";
 import useProjectContext from "@/app/core/hooks/api/useProjectContext";
 import { Meter } from "@/app/components";
 
-import { ETrackType, type IMixer, type ITrack } from "@/app/types/daw";
 import { useCallback, useMemo, type ReactNode } from "react";
 import type { UniqueIdentifier } from "@dnd-kit/core";
 
 import styles from "@/app/core/config/styles";
 import { ButtonGroup } from "@/ui";
-import { Button } from "@/ui/element/button/Button";
-import { EColor, ESize } from "../ui/shape/Circle";
+import {
+  Button,
+  EButtonType,
+  ESize,
+  EVariant,
+} from "@/ui/element/button/Button";
 import Knob from "../ui/audio/Knob";
-const css = styles.mixer;
+
+import { ETrackType, type ITrack } from "@/types/track";
+import type { IMixer } from "@/types/mixer";
+
+const $ = styles.mixer;
 const btn =
   "w-[calc(100%-4px)] ml-[2px] mb-2 text-center lg:w-[80%] lg:ml-[10%] lg:p-1";
 
@@ -30,13 +37,17 @@ const getTrackTypeIcon = (type: ETrackType) => {
       return <GroupIcon {...props} />;
     case ETrackType.Instrument:
       return <MidiIcon {...props} />;
+    case ETrackType.Players:
+      return <MidiIcon {...props} />;
+    case ETrackType.Sampler:
+      return <MidiIcon {...props} />;
     default:
       console.error("[Mixer] Unknown trackType:", type);
       return <></>;
   }
 };
 const Inner = ({ children }: { children: ReactNode }) => (
-  <div className={css.track.inner}>{children}</div>
+  <div className={$.track.inner}>{children}</div>
 );
 const TplFX = () => (
   <div>
@@ -75,7 +86,7 @@ export default function Mixer({ openInstrument }: IMixer) {
     const { instrument, label } = input;
     const active = activeTrackId === id ? "active" : "inactive";
     const Icon = getTrackTypeIcon(type);
-    const cn = classNames(css.track.main, css.track[active]);
+    const cn = classNames($.track.main, $.track[active]);
     return { cn, Icon, id, instrument, label, name, output };
   };
   const { projectContext } = useProjectContext();
@@ -85,30 +96,50 @@ export default function Mixer({ openInstrument }: IMixer) {
   const width = `${parseInt(w, 10) - 168}px`;
 
   return (
-    <section className={css.main}>
-      <div className={css.inner}>
+    <section className={$.main}>
+      <div className={$.inner}>
         {tracks.map((track) => {
           const { cn, Icon, id, instrument, label, name, output } =
             getChannelData(track, activeTrackId);
 
           const meter = new ToneMeter();
-          instrument?.instrument.chain(meter, getDestination());
+          const volume = new Volume();
+
+          if (instrument?.instrument) {
+            instrument?.instrument?.chain(volume, meter, Destination);
+          }
 
           return (
-            <div key={id} className={cn} style={{ width, minWidth: "65px" }}>
+            <div
+              key={id}
+              className={classNames(cn, "relative")}
+              style={{ width, minWidth: "65px" }}
+            >
               <Inner>
-                <Knob size={ESize.Xs} max={1} min={0} value={0.8} />
+                <Knob size={ESize.Sm} max={1} min={0} value={0.8} />
                 <Knob
-                  size={ESize.Xs}
-                  color={EColor.Primary}
+                  size={ESize.Sm}
+                  color={EVariant.Primary}
                   max={50}
                   min={-50}
                   value={0}
                 />
               </Inner>
-              <ButtonGroup>
-                <Button value="S" className={classNames(btn, "bg-blue-800")} />
-                <Button value="M" className={classNames(btn, "bg-red-800")} />
+              <ButtonGroup className="absolute top-0 right-0">
+                <Button
+                  size={ESize.Sm}
+                  title="Solo"
+                  type={EButtonType.Button}
+                  variant={EVariant.Primary}
+                  value="S"
+                />
+                <Button
+                  size={ESize.Sm}
+                  title="Mute"
+                  type={EButtonType.Button}
+                  value="M"
+                  variant={EVariant.Error}
+                />
               </ButtonGroup>
               <Inner>{getRouting({ label, output })}</Inner>
               <Inner>
@@ -120,7 +151,7 @@ export default function Mixer({ openInstrument }: IMixer) {
               <Inner>
                 <h2>{label}</h2>
               </Inner>
-              <Meter className={css.meter} meter={meter} />
+              <Meter className={$.meter} meter={meter} />
               <Inner>
                 {Icon} <span>{name}</span>
               </Inner>

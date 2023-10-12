@@ -1,95 +1,137 @@
 "use client";
-import classNames from "classnames";
-
-import { DEFAULT_OFFSET_LEFT } from "@/app/core/config/constants";
-
-import styles from "@/app/core/config/styles";
-import useProjectContext from "@/app/core/hooks/api/useProjectContext";
-import useTrackConfig from "@/app/components/track/useTrackConfig";
-import { SortableItem } from "@/app/components";
-
-import { useWindowWidth } from "@react-hook/window-size";
-import {
-  ETrackType,
-  type ITrack,
-  TInputOptions,
-  IInstrument,
-} from "@/app/types/daw";
-import useScheduler from "@/app/core/hooks/useScheduler";
 import { useEffect } from "react";
+import classNames from "classnames";
+import { useWindowWidth } from "@react-hook/window-size";
 
-function Track(track: ITrack) {
-  const { id, name, type, routing, className = "" } = track;
-  const { notes, id: inputId, instrument } = routing.input;
+import { getIconByType } from "@/app/core/config/icons";
+import styles from "@/app/core/config/styles";
+import SortableItem from "@/app/components/SortableItem";
+import useScheduler from "@/app/core/hooks/audio/useAudioScheduler";
 
-  const { Icon, draw } = useTrackConfig(type);
-  const { setup, dispose } = useScheduler();
-  const windowWidth = useWindowWidth();
+import {
+  DEFAULT_OFFSET_LEFT,
+  isPlayableTrackType,
+} from "@/app/core/config/constants";
+import Note from "../Note";
+import type { Note as TNote } from "tone/build/esm/core/type/NoteUnits";
+import type { IMidiEvent, TMidiPart } from "@/app/types/midi.types";
+import { type ITrack } from "@/types/track";
+import _ from "lodash/fp";
 
-  const { projectContext, patchProjectContext } = useProjectContext();
-  const measureCount = projectContext?.measureCount;
-  const quantization = projectContext?.quantization;
+function Track({
+  id,
+  measureCount,
+  name,
+  type,
+  routing,
+  className = "",
+}: ITrack & { measureCount: number; quantization: number }) {
+  const duration = 16;
+
+  const windowWidth = useWindowWidth() - DEFAULT_OFFSET_LEFT;
+  // const measureWidth = windowWidth / measureCount;
+  const { setup } = useScheduler();
+  const { id: inputId, instrument, parts = [] } = routing.input;
+  const $ = styles.track;
+  const $li = classNames($.row(type), className);
+
+  const drawPart = (part: TMidiPart) => {
+    const numSequences = part.sequences.length;
+    const h = 100 / numSequences;
+    return (
+      <>
+        {part.sequences.map((sequence, sequenceIndex) => {
+          const numNotes = sequence.events.length;
+          const t = sequenceIndex * h;
+          return sequence.events.map(
+            (event: IMidiEvent | IMidiEvent[], eventIndex) => {
+              const w = windowWidth / numNotes / measureCount; // TODO ratio is hardcoded
+              const l =
+                (eventIndex * windowWidth) /
+                sequence.events.length /
+                measureCount; // quantization;
+
+              if (_.isArray(event)) {
+                return (event as IMidiEvent[]).map(({ n, v }, evIndex) => {
+                  const subL = l + windowWidth / sequence.events.length;
+                  const subW = w / 2;
+                  return (
+                    n && (
+                      <Note
+                        key={`note-${n}-${evIndex}`}
+                        note={n}
+                        style={{
+                          left: subL,
+                          top: `${t}%`,
+                          width: w,
+                          height: `${h}%`,
+                          borderRight: "1px solid #fff",
+                          borderBottom: "1px solid #fff",
+                        }}
+                      />
+                    )
+                  );
+                });
+              }
+
+              try {
+                const { n, v } = event as unknown as {
+                  n: TNote;
+                  v: number;
+                };
+
+                return (
+                  n && (
+                    <Note
+                      key={`note-${n}-${eventIndex}`}
+                      note={n}
+                      style={{
+                        left: l,
+                        top: `${t}%`,
+                        width: w,
+                        height: `${h}%`,
+                        borderRight: "1px solid #fff",
+                      }}
+                    />
+                  )
+                );
+              } catch (error) {
+                throw new Error("handle subdivision");
+              }
+            }
+          );
+        })}
+      </>
+    );
+  };
 
   useEffect(() => {
-    console.log("init");
+    if (!isPlayableTrackType(type) || !instrument?.instrument) return;
 
-    return () => dispose();
+    setup({
+      instrument: instrument.instrument,
+      id: inputId,
+      parts,
+    });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  useEffect(() => {
-    if (!projectContext) return;
-    if (instrument?.instrument && notes?.length) {
-      setup(instrument.instrument, inputId, measureCount!, notes);
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [projectContext]);
-
-  const UNSORTABLE_TRACK_TYPES = [ETrackType.Group];
-  const isSortable = !UNSORTABLE_TRACK_TYPES.includes(type);
-
-  const css = styles.track;
-  const cssLi = classNames(css.row(type), className);
-  const params = {
-    options: routing.input.options,
-    instrument: routing.input.instrument,
+  const props = {
+    main: { id, className: $li },
+    inner: { className: classNames($.col1.main, className) },
   };
+  const TypeIcon = getIconByType(type);
 
-  interface ITpl {
-    options: TInputOptions;
-    instrument: IInstrument;
-  }
-
-  const Tpl = ({ options, instrument }: ITpl) => (
-    <>
-      <div className={classNames(css.col1.main, className)}>
-        <Icon className={css.icon(type)} />
-        <div className={css.col1.name}>{name}</div>
+  return (
+    <SortableItem {...props.main}>
+      <div {...props.inner} style={{ height: 40 }}>
+        <TypeIcon />
+        <div className={$.col1.name}>{name}</div>
       </div>
-      <div className={css.col2.main}>
-        {draw({
-          measureCount,
-          quantization,
-          projectContext,
-          id,
-          windowWidth: windowWidth - DEFAULT_OFFSET_LEFT,
-          patchProjectContext,
-          ...options,
-          instrument,
-        })}
+      <div className={$.col2.main}>
+        {isPlayableTrackType(type) && drawPart(parts[0])}
       </div>
-    </>
-  );
-
-  return isSortable ? (
-    <SortableItem className={cssLi} id={id}>
-      <Tpl options={params.options} instrument={params.instrument!} />
     </SortableItem>
-  ) : (
-    <li id={id as string} className={cssLi}>
-      <Tpl options={params.options} instrument={params.instrument!} />
-    </li>
   );
 }
-
 export default Track;
