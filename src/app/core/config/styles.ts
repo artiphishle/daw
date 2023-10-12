@@ -114,7 +114,7 @@ const styles = {
     settings: {
       main: "text-xs flex flex-col justify-between",
       inner: "flex",
-      input: "w-5 ml-1 bg-transparent",
+      input: "ml-1 bg-transparent",
       item: "flex items-center",
       label: "text-cyan-300",
       position: "text-[#fff] text-lg",

@@ -31,6 +31,8 @@ import useProjectContext from "@/app/core/hooks/api/useProjectContext";
 import useAudioInstrument from "@/app/core/hooks/audio/useAudioInstrument";
 
 import type { Note as TNote } from "tone/build/esm/core/type/NoteUnits";
+import t from "../core/i18n";
+import _ from "lodash/fp";
 
 export function App() {
   const { isOpen, InstrumentPortal, openInstrument, closeInstrument } =
@@ -202,7 +204,12 @@ export function App() {
       order: 4,
       panel: (
         <Droppable id="dropzone-1">
-          <section className="bg-white">
+          <section className="bg-white p-8">
+            <h1 className={styles.headings.h1}>Testing</h1>
+            <hr className="my-8" />
+            <h2 className={styles.headings.h2}>
+              {_.upperFirst(t("progression"))}
+            </h2>
             <Progression tonic={clef as TNote} />
           </section>
         </Droppable>
