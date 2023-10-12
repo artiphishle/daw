@@ -110,11 +110,12 @@ export default function useProjectContext() {
   // Remove unnserializable data and return the 'patch' to be applied
   const selectData = (data: Partial<IProjectContext>) => {
     if (!data.tracks) return data;
-    return data.tracks.map((track) => {
+    const tracks = data.tracks.map((track) => {
       if (!track.routing.input.instrument) return track;
       delete track.routing.input.instrument;
       return track;
     });
+    return { ...data, tracks };
   };
 
   const fetcher = async (url: EEndpoint) => {
@@ -124,13 +125,14 @@ export default function useProjectContext() {
   };
 
   const patch = async (patch: Partial<IProjectContext>) => {
+    console.log("useProjectContext > patch", selectData(patch));
     try {
       const res = await fetch(EEndpoint.ProjectSettings, {
         method: "PATCH",
         body: JSON.stringify(selectData(patch)),
       });
       const data = await res.json();
-      mutate(EEndpoint.ProjectSettings, deselectData(data));
+      await mutate(deselectData(data));
     } catch (error) {
       console.error(error);
     }
@@ -141,5 +143,11 @@ export default function useProjectContext() {
     fetcher
   );
 
-  return { projectContext: data, error, isLoading, patchProjectContext: patch };
+  return {
+    projectContext: data,
+    error,
+    isLoading,
+    patchProjectContext: patch,
+    mutate,
+  };
 }
