@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import WaveSurfer from "wavesurfer.js";
 import RecordPlugin from "wavesurfer.js/dist/plugins/record";
 
-export default function useRecorder() {
+export default function useAudioRecorder() {
   useEffect(() => {
     const waveSurfer = WaveSurfer.create({
       container: "#mic",

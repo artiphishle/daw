@@ -1,11 +1,79 @@
+import _ from "lodash/fp";
+
 import t from "@/app/core/i18n";
 
-import { EInstrument, ETrackType, type ITrack } from "@/app/types/daw";
+import { EInstrument } from "@/types/instrument";
+import { ETrackType, type ITrack } from "@/types/track";
+import { PlayersOptions } from "tone";
 
 /**
- * GENERAL
+ * General
  */
+export const PROGRESSION = [
+  /**
+   * Diatonic
+   */
 
+  // Major
+  "ii V I",
+
+  /**
+   * Pop
+   */
+
+  // 50s Progression
+  "I vi IV V",
+
+  // Pachelbel's Canon
+  "I V vi iii IV I IV V",
+
+  /**
+   * Medieval
+   */
+
+  // Passamezzo antico
+  "i VII i V III VII i V i",
+
+  // Passamezzo moderno
+  "I IV I V I IV I V I",
+
+  /**
+   * Classical
+   */
+
+  // Circle Progression
+  "vi ii V I",
+
+  /**
+   * Blues
+   */
+
+  // "12-bar blues" (verify AI msg)
+  "I V vi IV",
+
+  // Eight-bar blues
+  "I V IV IV I V I V",
+
+  // Sixteen-bar blues
+  "I I I I I I I I IV IV I I V IV I I",
+
+  /**
+   * Jazz
+   */
+
+  // Montgomery Ward bridge
+  "I IV ii V",
+];
+
+export const isPlayableTrackType = (trackType: ETrackType) =>
+  [ETrackType.Instrument, ETrackType.Sampler].includes(trackType);
+
+export const isRomanNum = (test: string) =>
+  ["i", "ii", "iii", "iv", "v", "vi", "vii"].includes(test.toLowerCase());
+
+/**
+ * Project
+ */
 const DEFAULT_BPM = 120;
 const DEFAULT_CLEF = "C";
 const DEFAULT_MEASURE_COUNT = 2;
@@ -25,10 +93,19 @@ const DEFAULT_STATES = {
 };
 
 /**
- * TRACKS
+ * Routing
+ */
+const DEFAULT_CHANNEL_ROUTING = [
+  ["player-drums", "channel-drums"],
+  ["*!{master}", "mixbus"],
+  ["mixbus", "master"],
+];
+
+/**
+ * Tracks
  */
 
-// AUDIO
+// Audio
 const DEFAULT_TRACK_AUDIO: ITrack = {
   id: "track-audio-halloween",
   name: "Halloween",
@@ -45,36 +122,138 @@ const DEFAULT_TRACK_AUDIO: ITrack = {
   type: ETrackType.Audio,
 };
 const DEFAULT_ACTIVE_TRACK_ID = DEFAULT_TRACK_AUDIO.id;
-const TICKS_PER_16N = 48;
-// BASS
+// Bass
 const DEFAULT_TRACK_INSTRUMENT_BASS: ITrack = {
   id: "track-instrument-bass",
   name: "Bass",
+  type: ETrackType.Instrument,
   routing: {
+    output: "mixbus",
     input: {
       id: EInstrument.MonoSynth,
       label: "BA",
       options: {
         oscillator: { type: "sawtooth" },
-        envelope: { attack: 0.1, decay: 0.5, release: 1, sustain: 0.7 },
+        envelope: { attack: 0.01, decay: 0.4, release: 0.3, sustain: 0.2 },
         filterEnvelope: {
           attack: 0.001,
-          baseFrequency: 200,
-          decay: 0.01,
+          baseFrequency: 180,
+          decay: 0.2,
           octaves: 0,
-          release: 0.1,
-          sustain: 0.5,
+          release: 0.2,
+          sustain: 0.25,
         },
-        volume: -14,
+        volume: -35,
       },
-      notes: ["A1", "D#2", "D2", null] as any,
+      parts: [
+        {
+          label: "BA-Part1",
+          sequences: [
+            {
+              label: "Bass",
+              events: [
+                { n: "D#2", v: 100 },
+                { n: "D#2", v: 100 },
+                { n: "D#2", v: 100 },
+                { n: "D#2", v: 100 },
+
+                { n: "E2", v: 100 },
+                { n: "E2", v: 100 },
+                { n: "E2", v: 100 },
+                { n: "E2", v: 100 },
+
+                { n: "F#2", v: 100 },
+                { n: "F#2", v: 100 },
+                { n: "F#2", v: 100 },
+                { n: "F#2", v: 100 },
+
+                { n: "G2", v: 100 },
+                { n: "G2", v: 100 },
+                { n: "G2", v: 100 },
+                { n: "G2", v: 100 },
+              ],
+            },
+          ],
+        },
+      ],
+    },
+  },
+};
+// Player(s)
+const DEFAULT_TRACK_PLAYERS: ITrack = {
+  id: "track-players",
+  name: "Toms",
+  routing: {
+    input: {
+      id: "Players",
+      label: "Players",
+      options: {
+        mute: false,
+        volume: -3,
+        // baseUrl: "./samples/WaveAlchemy/wa_drm_drums/",
+        urls: {
+          F4: "./samples/WaveAlchemy/wa_drm_drums/high_tom/wadrm_hitom_acc1_r2.wav",
+          G4: "./samples/WaveAlchemy/wa_drm_drums/mid_tom/wadrm_midtom_acc0_r5.wav",
+          A4: "./samples/WaveAlchemy/wa_drm_drums/low_tom/wadrm_lotom_acc2_r5.wav",
+        },
+        fadeIn: 0.001,
+        fadeOut: 0.001,
+        onerror: (error: any) => console.error("Toms error", error),
+        onload: () => console.log("Toms loaded"),
+        onstop: () => console.log("toms stopped"),
+      } as Partial<PlayersOptions>,
+      parts: [
+        {
+          label: "Drums (Players)",
+          sequences: [
+            {
+              label: "TomsRoll",
+              events: [
+                { n: null },
+                { n: null },
+                { n: null },
+                { n: null },
+                { n: "F4" },
+                { n: null },
+                { n: null },
+                { n: null },
+              ],
+            },
+            {
+              label: "Tom Mid",
+              events: [
+                { n: null },
+                { n: null },
+                { n: null },
+                { n: null },
+                { n: null },
+                { n: "G4" },
+                { n: "G4" },
+                { n: null },
+              ],
+            },
+            {
+              label: "Tom Low",
+              events: [
+                { n: null },
+                { n: null },
+                { n: null },
+                { n: null },
+                { n: null },
+                { n: null },
+                { n: null },
+                { n: "A4" },
+              ],
+            },
+          ],
+        },
+      ],
     },
     output: "mixbus",
   },
   type: ETrackType.Instrument,
 };
-
-// SAMPLER (Drums)
+// Sampler (Drums)
 const DEFAULT_TRACK_SAMPLER: ITrack = {
   id: "track-sampler",
   name: "Sampler",
@@ -89,25 +268,68 @@ const DEFAULT_TRACK_SAMPLER: ITrack = {
           D3: "wa_808tape_snare_10_clean.wav",
           E3: "wa_808tape_closedhat_08_clean.wav",
         },
-        volume: -12,
+        volume: -40,
+        fadeIn: 0.2,
+        fadeOut: 0.2,
       },
-      notes: [
-        "C3",
-        [["E3", "E3", "E3", "E3"]],
-        ["D3", "D3"],
-        "E3",
-        "C3",
-        ["E3", "E3"],
-        "D3",
-        ["E3", "E3"],
-      ] as any,
+      parts: [
+        {
+          label: "Drums (Sampler)",
+          sequences: [
+            {
+              label: "Kick",
+              events: [
+                { n: "C3", v: 95 },
+                { n: null },
+                { n: null },
+                { n: null },
+                { n: "C3", v: 89 },
+                { n: null },
+                { n: null },
+                { n: null },
+              ],
+            },
+            {
+              label: "Snare",
+              events: [
+                { n: null },
+                { n: null },
+                { n: null },
+                { n: "D3", v: 94 },
+                { n: null },
+                { n: null },
+                { n: null },
+                { n: "D3", v: 89 },
+              ],
+            },
+            {
+              label: "Closed HiHat",
+              events: [
+                [
+                  { n: "E3", v: 104 },
+                  { n: "E3", v: 89 },
+                ],
+                { n: "E3", v: 104 },
+                { n: "E3", v: 99 },
+                { n: "E3", v: 99 },
+                [
+                  { n: "E3", v: 104 },
+                  { n: "E3", v: 79 },
+                ],
+                { n: "E3", v: 89 },
+                { n: "E3", v: 74 },
+                { n: null },
+              ],
+            },
+          ],
+        },
+      ],
     },
     output: "mixbus",
   },
-  type: ETrackType.Instrument,
+  type: ETrackType.Sampler,
 };
-
-// GROUP
+// Channels
 const DEFAULT_GROUP_DRUMS: ITrack = {
   id: "track-group-drums",
   type: ETrackType.Group,
@@ -117,7 +339,7 @@ const DEFAULT_GROUP_DRUMS: ITrack = {
       id: "track-group-drums-input",
       label: "Drums",
       options: {
-        volume: -12,
+        volume: -24,
         pan: 0,
         solo: false,
         mute: false,
@@ -139,16 +361,13 @@ const DEFAULT_GROUP_MIXBUS: ITrack = {
         mute: false,
         pan: 0,
         solo: false,
-        volume: 0,
+        volume: -24,
       },
-      notes: [],
     },
     output: "master",
   },
   type: ETrackType.Group,
 };
-
-// MASTER
 const DEFAULT_TRACK_MASTER: ITrack = {
   id: "master",
   name: "Master",
@@ -161,7 +380,7 @@ const DEFAULT_TRACK_MASTER: ITrack = {
         mute: false,
         pan: 0,
         solo: false,
-        volume: 0,
+        volume: -24,
       },
     },
     output: "destination",
@@ -185,7 +404,7 @@ export {
   //
   DEFAULT_TRACK_AUDIO,
   DEFAULT_TRACK_INSTRUMENT_BASS,
-  //
+  DEFAULT_TRACK_PLAYERS,
   DEFAULT_TRACK_SAMPLER,
   //
   DEFAULT_GROUP_DRUMS,

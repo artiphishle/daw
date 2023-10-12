@@ -1,6 +1,6 @@
 import usePortal from "react-useportal";
 
-export default function useInstrument() {
+export default function useAudioInstrument() {
   const { isOpen, openPortal, togglePortal, closePortal, Portal } = usePortal();
 
   return {

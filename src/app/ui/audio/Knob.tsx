@@ -1,4 +1,5 @@
-import Circle, { EColor, ESize, ICircle } from "../shape/Circle";
+import { ESize, EVariant } from "../element/button/Button";
+import Circle, { ICircle } from "../shape/Circle";
 
 interface IKnob extends ICircle {
   className?: string;
@@ -13,8 +14,9 @@ export default function Knob({
   max = 1,
   value = 0.8,
 }: IKnob) {
+  console.info("[Knob] min/max", min, max);
   return (
-    <Circle color={EColor.Primary} size={ESize.Xs} className={className}>
+    <Circle color={EVariant.Primary} size={ESize.Sm} className={className}>
       {value}
     </Circle>
   );

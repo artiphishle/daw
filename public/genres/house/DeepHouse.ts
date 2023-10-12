@@ -1,4 +1,4 @@
-import { useRolandTr909 } from "@/app/core/instruments/synths/hooks/useRolandTr909";
+import { useRolandTr909 } from "@/app/core/instruments/hooks/_useRolandTr909";
 
 /**
  * @stylistics House, ChicagoHouse, Soul
