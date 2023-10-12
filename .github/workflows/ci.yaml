@@ -48,15 +48,16 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
-
-      - name: Cypress run
-        uses: cypress-io/github-action@v6
-        with:
-          start: npm start
-          wait-on: "http://localhost:3000"
-          record: true
-          parallel: true
+        uses: actions/checkout@v2
+      - name: Install dependencies
+        run: npm install
+      - name: Run server
+        run: npm start
+        wait-on: "http://localhost:3000"
+        record: true
+        # parallel: true
         env:
           CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }} # Add this line
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Run E2E tests
+        run: npm run test:e2e
