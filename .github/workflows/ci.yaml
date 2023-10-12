@@ -49,15 +49,15 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v2
+      - name: Set Working Directory
+        run: cd ../../
       - name: Install dependencies
         run: npm install
-      - name: Run server
-        run: npm start
-        wait-on: "http://localhost:3000"
-        record: true
-        parallel: true
+      - name: Run server and Cypress tests
+        run: |
+          cd path/to/your/directory  # Change this to the actual path
+          npm start
+          npx cypress run
         env:
-          CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }} # Add this line
+          CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      - name: Run E2E tests
-        run: npm run test:e2e
