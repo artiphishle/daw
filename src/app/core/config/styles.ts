@@ -1,4 +1,4 @@
-import { ETrackType } from "@/app/types/daw";
+import { ETrackType } from "@/types/track";
 
 const SemColor = {
   Primary: { bg: "bg-blue-900", text: "text-white" },
@@ -17,6 +17,16 @@ const TrackColor = {
     border: "text-gray-300",
   },
   [ETrackType.Group]: {
+    bg: "bg-blue-100",
+    text: "text-white",
+    border: "bg-gray-300",
+  },
+  [ETrackType.Player]: {
+    bg: "bg-blue-100",
+    text: "text-white",
+    border: "bg-gray-300",
+  },
+  [ETrackType.Players]: {
     bg: "bg-blue-100",
     text: "text-white",
     border: "bg-gray-300",
@@ -104,7 +114,7 @@ const styles = {
     settings: {
       main: "text-xs flex flex-col justify-between",
       inner: "flex",
-      input: "w-4 ml-1 bg-transparent",
+      input: "w-5 ml-1 bg-transparent",
       item: "flex items-center",
       label: "text-cyan-300",
       position: "text-[#fff] text-lg",

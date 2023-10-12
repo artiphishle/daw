@@ -5,7 +5,7 @@ import { Midi } from "@tonejs/midi";
 import abcjs, { type TuneObjectArray } from "abcjs";
 import "abcjs/abcjs-audio.css";
 // import { PanSongParsed } from "testdata/unit/PanSong.parsed";
-import type { NoteEventTime as INoteEventTime } from "@spotify/basic-pitch/types";
+// import type { NoteEventTime as INoteEventTime } from "@spotify/basic-pitch/types";
 
 export enum ENoteStyle {
   Rhythm = "rhythm",
@@ -28,7 +28,7 @@ ISheet) {
   useEffect(() => {
     const sheet: TuneObjectArray = abcjs.renderAbc("paper", markdown);
 
-    console.info("[Sheet] rendered:", sheet);
+    // console.info("[Sheet] rendered:", sheet);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 

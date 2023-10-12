@@ -1,3 +1,4 @@
+import { ETrackType } from "@/app/types/track.types";
 import {
   ActivityIcon as AudioIcon,
   GroupIcon,
@@ -6,5 +7,17 @@ import {
   type LucideIcon as TIcon,
 } from "lucide-react";
 
-export { AudioIcon, GroupIcon, MidiIcon, TimeIcon };
+const getIconByType = (type: ETrackType) => {
+  switch (type) {
+    case ETrackType.Instrument:
+      return MidiIcon;
+    case ETrackType.Audio:
+      return AudioIcon;
+    case ETrackType.Group:
+      return GroupIcon;
+    default:
+      return MidiIcon;
+  }
+};
+export { getIconByType, AudioIcon, GroupIcon, MidiIcon, TimeIcon };
 export type { TIcon };

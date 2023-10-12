@@ -9,8 +9,6 @@ import {
   type NoteEventTime,
 } from "@spotify/basic-pitch";
 
-import { ENoteStyle } from "@/app/components/Sheet";
-
 interface IAudioToMidi {
   audio: string;
 }
@@ -99,6 +97,6 @@ async function audioToMidi({ audio }: IAudioToMidi) {
   return notes;
 }
 
-export default function useConverter() {
+export default function useAudioConverter() {
   return { audioToMidi, audioToAbc };
 }

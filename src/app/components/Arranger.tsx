@@ -1,4 +1,5 @@
 import { DndContext, DragEndEvent, closestCenter } from "@dnd-kit/core";
+import classNames from "classnames";
 import {
   SortableContext,
   arrayMove,
@@ -10,17 +11,16 @@ import { Locator } from "@/app/components";
 import Track from "@/app/components/track/Track";
 import Time from "./Time";
 import useProjectContext from "@/app/core/hooks/api/useProjectContext";
-import classNames from "classnames";
 
-interface IArranger {
-  className?: string;
-}
+import type { IArranger } from "../types/arranger.types";
+import { ETrackType } from "../types/track.types";
 
 export default function Arranger({ className = "" }: IArranger) {
+  const $ = styles.arranger;
   const { projectContext, patchProjectContext } = useProjectContext();
 
   if (!projectContext) return null;
-  const { tracks, activeTrackId, measureCount } = projectContext;
+  const { tracks, activeTrackId, measureCount, quantization } = projectContext;
 
   const events = {
     dragEnd: (event: DragEndEvent) => {
@@ -33,9 +33,9 @@ export default function Arranger({ className = "" }: IArranger) {
       patchProjectContext({ tracks: sortedTracks });
     },
   };
-
+  console.log("rendering tracks now");
   return (
-    <section className={classNames(styles.arranger.main, className)}>
+    <section className={classNames($.main, className)}>
       <DndContext collisionDetection={closestCenter} onDragEnd={events.dragEnd}>
         <SortableContext items={tracks} strategy={verticalListSortingStrategy}>
           <ol className="flex-1 ">
@@ -46,6 +46,8 @@ export default function Arranger({ className = "" }: IArranger) {
                   activeTrackId === track.id ? styles.track.active : ""
                 }
                 key={`track-${trackIndex}`}
+                measureCount={measureCount}
+                quantization={quantization}
                 {...track}
               />
             ))}

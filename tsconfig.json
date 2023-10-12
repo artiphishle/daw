@@ -17,6 +17,16 @@
     "plugins": [{ "name": "next" }],
     "paths": {
       "@/*": ["./src/*"],
+      "@/constants": ["./src/app/core/config/constants"],
+      "@/types/api": ["./src/app/types/api.types"],
+      "@/types/arranger": ["./src/app/types/arranger.types"],
+      "@/types/fs": ["./src/app/types/fs.types"],
+      "@/types/instrument": ["./src/app/types/instrument.types"],
+      "@/types/midi": ["./src/app/types/midi.types"],
+      "@/types/project": ["./src/app/types/project.types"],
+      "@/types/mixer": ["./src/app/types/mixer.types"],
+      "@/types/track": ["./src/app/types/track.types"],
+      "@/types/utility": ["./src/app/types/utility.types"],
       "@/ui": ["./src/app/ui/index"],
       "@/ui/*": ["./src/app/ui/*"]
     }
