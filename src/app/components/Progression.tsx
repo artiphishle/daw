@@ -1,23 +1,20 @@
+import _ from "lodash/fp";
+
 import t from "@/app/core/i18n";
 import styles from "@/app/core/config/styles";
-import useMusicTheory from "@/app/core/hooks/useMusicTheory";
+import useAudioTheory from "@/app/core/hooks/audio/useAudioTheory";
 import useProjectContext from "@/app/core/hooks/api/useProjectContext";
 
-const PROGRESSION = [
-  "I vi IV V", // 50s Progression
-  "I V vi IV",
-  "I IV ii V", // Montgomery Ward bridge
-  "vi ii V I", // Circle Progression
-  "I V IV IV I V I V", // Eight-bar blues
-  "ii V I",
-  "I V vi iii IV I IV V", // Pachelbel's Canon
-  "i VII i V III VII i V i", // Passamezzo antico
-  "I IV I V I IV I V I", // Passamezzo moderno
-  "I I I I I I I I IV IV I I V IV I I", // Sixteen-bar blues
-];
+import type { Note as TNote } from "tone/build/esm/core/type/NoteUnits";
+import { PROGRESSION } from "@/constants";
 
-export default function Progression() {
-  const chords = useMusicTheory()?.getChords(PROGRESSION[0]);
+interface IProgression {
+  tonic: TNote;
+}
+export default function Progression({ tonic }: IProgression) {
+  const [, progression] = PROGRESSION;
+  const { getChordsByProgression } = useAudioTheory({ tonic });
+  const chords = getChordsByProgression(progression);
 
   const { projectContext } = useProjectContext();
   if (!projectContext) return null;
@@ -29,10 +26,10 @@ export default function Progression() {
       <h2 className={styles.headings.h2}>{t("chordProgression")}</h2>
       <p>
         Tonic <span className="p-2 bg-gray-200">{clef}</span> {t("progression")}
-        : <span className="p-2 bg-gray-200">{PROGRESSION[0]}</span>
+        : <span className="p-2 bg-gray-200">{progression}</span>
         &nbsp;
         <span>
-          = <b>{chords}</b>
+          = <b>{chords.join(" ")}</b>
         </span>
       </p>
       <small>

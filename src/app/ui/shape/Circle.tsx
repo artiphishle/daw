@@ -1,34 +1,18 @@
 import classNames from "classnames";
 import { ReactNode } from "react";
-
-export enum EColor {
-  Danger = "#f00",
-  Neutral = "#ccc",
-  Primary = "#00f",
-  Secondary = "#0ff",
-  Success = "#0f0",
-  Warning = "#ff0",
-}
-
-export enum ESize {
-  Xl = "24rem",
-  Lg = "18rem",
-  Md = "12rem",
-  Sm = "6rem",
-  Xs = "3rem",
-}
+import { ESize, EVariant } from "../element/button/Button";
 
 export interface ICircle {
   children?: ReactNode;
   className?: string;
-  color?: EColor;
+  color?: EVariant;
   size?: ESize;
 }
 
 export default function Circle({
   children,
   className = "",
-  color = EColor.Neutral,
+  color = EVariant.Normal,
   size = ESize.Lg,
 }: ICircle) {
   return (

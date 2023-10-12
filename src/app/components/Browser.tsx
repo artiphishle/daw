@@ -1,3 +1,4 @@
+"use client";
 import {
   FileAudioIcon,
   FolderIcon,
@@ -8,11 +9,11 @@ import {
 import styles from "@/app/core/config/styles";
 import { usePublicSampleDirectory } from "@/app/core/hooks/api/usePublicSampleDirectory";
 
-import type { IDirItem } from "@/app/types/daw";
+import type { IDirectory } from "@/types/fs";
 
 // TODO extract to other file and load samples from server
-function Three({ dirItems }: { dirItems: IDirItem[] }) {
-  console.log(dirItems);
+function Three({ dirItems }: { dirItems: IDirectory[] }) {
+  console.info("[Browser]", dirItems);
   const css = styles.browser;
   return (
     <ul>
@@ -28,13 +29,13 @@ function Three({ dirItems }: { dirItems: IDirItem[] }) {
                 <FolderIcon className={css.folderStyle} />
               )}
               {name}
-              {dirs.length && (
+              {dirs.length ? (
                 <ul className="mt-6 -ml-16 pl-4 border-l border-gray-400">
                   {dirs.map(({ name }, itemsIndex) => (
                     <li key={`item-${name}-${itemsIndex}`}>{name}</li>
                   ))}
                 </ul>
-              )}
+              ) : null}
             </li>
           ))}
         </ul>
@@ -44,14 +45,13 @@ function Three({ dirItems }: { dirItems: IDirItem[] }) {
 }
 
 function Browser() {
-  const { dirItems, isLoading, error } = usePublicSampleDirectory();
+  const { dirItems, error } = usePublicSampleDirectory();
   if (error) throw error;
-  if (!dirItems?.length) return <Loader />;
 
   return (
     <section className="flex flex-1 bg-white pt-8 px-4 text-xs">
       <div className="pr-8">
-        {dirItems.length && <Three dirItems={[...dirItems]} />}
+        {dirItems?.length ? <Three dirItems={[...dirItems]} /> : <Loader />}
       </div>
       <div className="flex-1 bg-gray-50">Content</div>
     </section>

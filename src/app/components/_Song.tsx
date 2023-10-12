@@ -4,8 +4,6 @@ import { Transport } from "tone";
 
 import useProjectContext from "@/app/core/hooks/api/useProjectContext";
 
-import { EEndpoint } from "@/app/types/daw";
-
 interface ISongContext {
   isPlaying?: boolean;
 }

@@ -14,18 +14,21 @@ import {
   MonoSynth,
   MonoSynthOptions,
   getContext,
+  Players,
+  PlayersOptions,
 } from "tone";
 
-import Sampler from "@/app/core/instruments/sampler/Sampler";
+import OmniSynth from "@/app/core/instruments/OmniSynth";
 
+import { EEndpoint } from "@/types/api";
+import { ETrackType } from "@/types/track";
+import type { IProjectContext } from "@/types/project";
 import {
-  EEndpoint,
-  ETrackType,
-  TInputOptions,
-  type IProjectContext,
+  type TInputOptions,
+  type IInstrument,
   EInstrument,
-  IInstrument,
-} from "@/app/types/daw";
+} from "@/types/instrument";
+import Sampler from "../../instruments/Sampler";
 
 // TODO load instruments dynamically
 const loadInstrument = (
@@ -33,24 +36,39 @@ const loadInstrument = (
   options: TInputOptions
 ): IInstrument => {
   let instrument = null;
+  let Instrument = null;
 
   switch (_instrument) {
     case EInstrument.MembraneSynth:
+      Instrument = OmniSynth;
       instrument = new MembraneSynth(options as MembraneSynthOptions);
       break;
     case EInstrument.MetalSynth:
+      Instrument = OmniSynth;
       instrument = new MetalSynth(options as MetalSynthOptions);
       break;
     case EInstrument.MonoSynth:
+      Instrument = OmniSynth;
       instrument = new MonoSynth(options as MonoSynthOptions);
       break;
     case EInstrument.NoiseSynth:
+      Instrument = OmniSynth;
       instrument = new NoiseSynth(options as NoiseSynthOptions);
       break;
+    case EInstrument.Player:
+      Instrument = OmniSynth;
+      instrument = new Players(options as PlayersOptions);
+      break;
+    case EInstrument.Players:
+      Instrument = OmniSynth;
+      instrument = new Players(options as PlayersOptions) as Players;
+      break;
     case EInstrument.Sampler:
+      Instrument = Sampler;
       instrument = new ToneSampler(options as SamplerOptions);
       break;
     case EInstrument.Synth:
+      Instrument = OmniSynth;
       instrument = new Synth(options as SynthOptions);
       break;
     default:
@@ -58,13 +76,14 @@ const loadInstrument = (
         "[useProjectContext] Using 'Synth' for unknown instrument:",
         _instrument
       );
+      Instrument = OmniSynth;
       instrument = new Synth(options as SynthOptions);
   }
   console.info("✅", _instrument);
   return {
+    Instrument,
     instrument,
     options,
-    Instrument: Sampler,
   };
 };
 const INSTRUMENT_TYPE = [ETrackType.Instrument, ETrackType.Sampler];
@@ -111,12 +130,10 @@ export default function useProjectContext() {
         body: JSON.stringify(selectData(patch)),
       });
       const data = await res.json();
-
       mutate(EEndpoint.ProjectSettings, deselectData(data));
     } catch (error) {
       console.error(error);
     }
-    // mutate(EEndpoint.ProjectSettings);
   };
 
   const { data, error, isLoading } = useSWR<IProjectContext, any, EEndpoint>(

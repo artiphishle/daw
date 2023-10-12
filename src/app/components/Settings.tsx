@@ -1,4 +1,4 @@
-import useMidiDevice from "@/app/core/hooks/useMidiDevice";
+import useMidiDevice from "@/app/core/hooks/audio/useMidiDevice";
 
 export default function Settings() {
   // Enable MIDI Device (WebMidi)

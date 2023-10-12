@@ -1,5 +1,5 @@
 "use client";
-import { type ChangeEvent, type MouseEvent, useState, useEffect } from "react";
+import { type ChangeEvent, type MouseEvent, useState } from "react";
 import {
   CircleIcon,
   FastForwardIcon,
@@ -12,7 +12,7 @@ import {
   TimerIcon,
 } from "lucide-react";
 
-import { Transport as ToneTransport } from "tone";
+import { Transport as ToneTransport, start } from "tone";
 
 import useProjectContext from "@/app/core/hooks/api/useProjectContext";
 import useTransport from "@/app/core/hooks/useTransport";
@@ -54,7 +54,10 @@ export default function Transport() {
     onPause: (_: MouseEvent<SVGSVGElement>) => ToneTransport.pause(),
     onRecord: (_: MouseEvent<SVGSVGElement>) =>
       console.log("🎙️ Recording soon available"),
-    onStart: (_: MouseEvent<SVGSVGElement>) => ToneTransport.start(),
+    onStart: async (_: MouseEvent<SVGSVGElement>) => {
+      ToneTransport.start();
+      await start();
+    },
     onStop: (_: MouseEvent<SVGSVGElement>) => {
       console.log("stop");
       ToneTransport.stop();

@@ -10,9 +10,11 @@
   ],
   "rules": {
     "array-element-newline": "off",
+    "arrow-body-style": "off",
     "capitalized-comments": "off",
     "curly": "off",
     "comma-dangle": ["error", "always-multiline"],
+    "consistent-return": "off",
     "dot-location": "off",
     "function-call-argument-newline": "off",
     "function-paren-newline": "off",
@@ -20,8 +22,11 @@
     "id-length": "off",
     "implicit-arrow-linebreak": "off",
     "indent": "off",
+    "init-declarations": "off",
     "line-comment-position": "off",
     "lines-around-comment": "off",
+    "lines-between-class-members": "off",
+    "max-classes-per-file": "off",
     "max-len": [
       "error",
       {
@@ -40,6 +45,7 @@
     "multiline-ternary": "off",
     "new-cap": "off",
     "newline-per-chained-call": "off",
+    "no-confusing-arrow": "off",
     "no-console": "off",
     "no-extra-parens": "off",
     "no-inline-comments": "off",
@@ -48,8 +54,10 @@
     "no-mixed-operators": "off",
     "no-shadow": "off",
     "no-ternary": "off",
+    "no-underscore-dangle": "off",
     "no-unused-expressions": "off",
     "no-unused-vars": "off",
+    "nonblock-statement-body-position": "off",
     "no-warning-comments": "off",
     "object-curly-spacing": ["error", "always"],
     "object-property-newline": [
@@ -59,6 +67,8 @@
     "one-var": "off",
     "padded-blocks": ["error", "never"],
     "quote-props": ["error", "as-needed"],
+    "quotes": "off",
+    "require-await": "off",
     "sort-keys": "off",
     "sort-imports": "off",
     "space-before-function-paren": [
