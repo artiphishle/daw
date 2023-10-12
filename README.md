@@ -74,9 +74,20 @@ We're [@here](https://github.com/scha-ch/daw/discussions) 🙋‍♂️ and [@th
 
 ---
 
+## 🎼Screenshot
+
+![alt DAW Screenshot](./public/screenshot.png)
+
+---
+
 ## 🎼Changelog
 
 ### 🍂 October 2023
+
+#### 12th
+
+- **Arranger** Players & Sampler can play Tone.Sequence
+- **Samples** added new sample library
 
 #### 7th
 
@@ -103,7 +114,7 @@ We're [@here](https://github.com/scha-ch/daw/discussions) 🙋‍♂️ and [@th
 - **Arranger & Mixer auto-resize** throttled update on window resize
 - **Browser** Media browser tab, ready to be filled with provided free samples
 
-#### 24th
+#### 23th
 
 - **BPM Detection** works, audio tracks are automatically analyzed
 - **MIDI Device** support for Chrome, more to follow (Tab 'Settings')
