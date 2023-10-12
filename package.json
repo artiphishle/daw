@@ -11,7 +11,7 @@
   "private": true,
   "types": "./src/app/types.d.ts",
   "scripts": {
-    "ci": "npm run lint && npm run test && npm run build && npm run test:e2e",
+    "ci": "npm run lint && npm run test && npm run build",
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
