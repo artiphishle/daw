@@ -64,7 +64,6 @@
     "eslint-plugin-cypress": "^2.15.1",
     "jest": "^29.7.0",
     "jest-environment-jsdom": "^29.7.0",
-    "typescript": "^5.2.2",
-    "web-audio-mock": "^0.1.9"
+    "typescript": "^5.2.2"
   }
 }
