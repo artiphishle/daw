@@ -1,48 +1,33 @@
 import useMidiDevice from "@/app/core/hooks/audio/useMidiDevice";
+import styles from "../core/config/styles";
+import { useEffect } from "react";
 
 export default function Settings() {
   // Enable MIDI Device (WebMidi)
   useMidiDevice({ sysex: false });
 
-  /*
-   * TODO: Move to better place
-   * TODO: Go over code again
-   */
-  /*
-   *Const initializeDevice = (device: MIDIInput) => {
-   *  device.onmidimessage = (ev: Event) => {
-   *    const message = ev as MIDIMessageEvent;
-   *    const command = message.data[0];
-   *    const note = message.data[1];
-   *    const velocity = message.data.length > 2 ? message.data[2] : 0;
-   *    console.log(command, note, velocity);
-   *  };
-   *};
-   *const initialize = (access: MIDIAccess) => {
-   *  const devices = Array.from(access.inputs.values());
-   *  for (let device of devices) {
-   *    initializeDevice(device);
-   *  }
-   *};
-   *const requestAccess = (): Promise<MIDIAccess> => {
-   *  return new Promise((resolve, reject) => {
-   *    if (navigator.requestMIDIAccess)
-   *      navigator.requestMIDIAccess().then(resolve).catch(reject);
-   *    else reject();
-   *  });
-   *};
-   *const enableMidi = async () => {
-   *  try {
-   *    const access = await requestAccess();
-   *    initialize(access);
-   *  } catch (error) {
-   *    console.error(error);
-   *  }
-   *};
-   */
+  // useEffect(() => {}, []);
+
   return (
-    <section className="bg-white p-4">
-      <p>TODO</p>
+    <section className="bg-white p-4 pt-8">
+      <h1 className={styles.headings.h1}>Settings</h1>
+      <hr className="my-8" />
+      <h2 className={styles.headings.h2}>Theme</h2>
+      <h3 className={styles.headings.h3}>Colors (pending...)</h3>
+      <section className="flex">
+        <ul>
+          <li>Normal</li>
+          <li>Primary</li>
+          <li>Secondary</li>
+          <li>...</li>
+          <li>Success</li>
+          <li>Warning</li>
+          <li>Danger</li>
+        </ul>
+      </section>
+      <hr className="my-8" />
+      <h2 className={styles.headings.h2}>Midi Device</h2>
+      <p>Tested in Chrome. More browseres supported in a bit.</p>
       {/* <button
         onClick={enableMidi}
         className="inline-flex items-center justify-center px-8 py-4 bg-slate-300"

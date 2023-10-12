@@ -5,8 +5,14 @@ interface IUseMidiDevice {
 }
 
 export default async function useMidiDevice({ sysex = false }: IUseMidiDevice) {
-  await WebMidi.enable({ sysex });
-  console.info("WebMidi enabled!");
+  try {
+    await WebMidi.enable({ sysex });
+    console.info("[useMidiDevice] WebMidi enabled!");
+  } catch (error) {
+    console.error(
+      "[useMidiDevice] Browser not supported yet! Try Chrome meamwhile."
+    );
+  }
 
   /**
    * MIDI Inputs
@@ -16,7 +22,12 @@ export default async function useMidiDevice({ sysex = false }: IUseMidiDevice) {
    * - Listeners: https://webmidijs.org/api/classes/Input#addListener
    */
   WebMidi.inputs.forEach(({ id, manufacturer, name }) => {
-    console.info("Input: id/Manufacturer/Name", id, manufacturer, name);
+    console.info(
+      "[useMidiDevice] Input id/manufacturer/name:",
+      id,
+      manufacturer,
+      name
+    );
 
     const myInput = WebMidi.getInputByName(name);
 

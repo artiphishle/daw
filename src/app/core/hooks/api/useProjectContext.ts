@@ -132,7 +132,7 @@ export default function useProjectContext() {
         body: JSON.stringify(selectData(patch)),
       });
       const data = await res.json();
-      await mutate(deselectData(data));
+      await mutate(EEndpoint.ProjectSettings, deselectData(data));
     } catch (error) {
       console.error(error);
     }
