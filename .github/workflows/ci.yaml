@@ -52,7 +52,7 @@ jobs:
         run: |
           npm run build
           npm start
-          npx cypress run
+          npm run test:e2e
         env:
           CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
