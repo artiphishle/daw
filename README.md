@@ -1,5 +1,7 @@
 # Digital Audio Workstation
 
+[![CI](https://github.com/scha-ch/daw/actions/workflows/ci.yaml/badge.svg)](https://github.com/scha-ch/daw/actions/workflows/ci.yaml)
+
 ---
 
 ## 🎼Quickstart

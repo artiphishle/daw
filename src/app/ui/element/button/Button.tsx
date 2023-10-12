@@ -32,8 +32,7 @@ export enum EVariant {
   Success = "bg-[#00ff00] text-white",
   Warning = "bg-[#ffff00] text-white",
 }
-interface IButton
-  extends Omit<ButtonHTMLAttributes<HTMLButtonElement>, "size"> {
+interface IButton extends ButtonHTMLAttributes<HTMLButtonElement> {
   readonly type: EButtonType;
   readonly value: string;
   readonly className?: string;

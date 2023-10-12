@@ -1,5 +1,5 @@
 {
-  "extends": ["eslint:all", "next"],
+  "extends": ["plugin:cypress/recommended", "eslint:all", "next"],
   "overrides": [
     {
       "files": ["**/*.test.ts", "**/*.test.tsx"],
@@ -9,11 +9,12 @@
     }
   ],
   "rules": {
+    "cypress/unsafe-to-chain-command": "off",
     "array-element-newline": "off",
     "arrow-body-style": "off",
     "capitalized-comments": "off",
     "curly": "off",
-    "comma-dangle": ["error", "always-multiline"],
+    "comma-dangle": "off",
     "consistent-return": "off",
     "dot-location": "off",
     "function-call-argument-newline": "off",
@@ -78,6 +79,7 @@
         "named": "never",
         "asyncArrow": "always"
       }
-    ]
+    ],
+    "spaced-comment": "off"
   }
 }
