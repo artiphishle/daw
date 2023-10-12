@@ -24,7 +24,6 @@ jobs:
       - run: npm run lint
       - run: npm run test
       - run: npm run start
-      - run: npm run test:e2e
   lint:
     runs-on: ubuntu-latest
     steps:
@@ -44,3 +43,20 @@ jobs:
         run: npm install
       - name: Run unit tests
         run: npm test
+
+  cypress-run:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Cypress run
+        uses: cypress-io/github-action@v6
+        with:
+          start: npm start
+          wait-on: "http://localhost:3000"
+          record: true
+          parallel: true
+        env:
+          CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }} # Add this line
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
