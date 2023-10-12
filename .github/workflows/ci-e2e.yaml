@@ -1,0 +1,58 @@
+name: CI E2E
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Build Next.js app
+        run: npm run build
+
+      - name: Run Cypress tests
+        run: npm run test:e2e
+
+      - name: Upload test results
+        uses: actions/upload-artifact@v2
+        with:
+          name: cypress-results
+          path: cypress/results
+
+      - name: Upload .next directory
+        uses: actions/upload-artifact@v2
+        with:
+          name: nextjs-build
+          path: .next
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Download .next directory
+        uses: actions/download-artifact@v2
+        with:
+          name: nextjs-build
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Start Next.js app
+        run: npm start
+
+      - name: Run Cypress tests
+        run: npm run test:e2e
