@@ -121,6 +121,7 @@ export default function Transport() {
               defaultValue={projectContext?.clef || "C"}
               id="clef"
               onChange={events.onClefChange}
+              title="Clef"
               value={projectContext?.clef}
             >
               <option value="C">C</option>
@@ -139,6 +140,7 @@ export default function Transport() {
               }
               id="measureCount"
               onChange={events.onMeasureCountChange}
+              title="Measure Count"
               value={projectContext?.measureCount || DEFAULT_MEASURE_COUNT}
             >
               <option>1</option>
@@ -158,6 +160,7 @@ export default function Transport() {
               }
               id="quantization"
               onChange={events.onQuantizationChange}
+              title="Quantization"
               value={projectContext?.quantization || DEFAULT_QUANTIZATION}
             >
               <option>2</option>
@@ -186,7 +189,12 @@ export default function Transport() {
                 <Music2Icon color="rgb(103, 232, 249)" className="w-4 h-4" />
               </span>
               &nbsp;
-              <select className="bg-transparent" defaultValue="4" value="4">
+              <select
+                className="bg-transparent"
+                defaultValue="4"
+                title="BPM"
+                value="4"
+              >
                 <option value="4">4/{ToneTransport.timeSignature}</option>
               </select>
             </div>
