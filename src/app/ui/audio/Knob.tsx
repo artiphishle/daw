@@ -14,7 +14,6 @@ export default function Knob({
   max = 1,
   value = 0.8,
 }: IKnob) {
-  console.info("[Knob] min/max", min, max);
   return (
     <Circle color={EVariant.Primary} size={ESize.Sm} className={className}>
       {value}
