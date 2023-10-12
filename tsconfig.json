@@ -38,6 +38,7 @@
     "**/*.tsx",
     ".next/types/**/*.ts",
     "jest.config.mjs",
-    "src/test/unit/**/*.tsx"
+    "src/test/unit/**/*.tsx",
+    "cypress.config.ts"
   ]
 }

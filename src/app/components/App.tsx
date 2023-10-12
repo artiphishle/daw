@@ -2,7 +2,13 @@
 import { type MouseEvent, useEffect, useState } from "react";
 import { useWindowWidth } from "@react-hook/window-size";
 import { CogIcon, GridIcon, HopIcon, InfinityIcon } from "lucide-react";
-import { DndContext, type DragEndEvent } from "@dnd-kit/core";
+import {
+  DndContext,
+  useSensor,
+  type DragEndEvent,
+  MouseSensor,
+  useSensors,
+} from "@dnd-kit/core";
 
 import styles from "@/app/core/config/styles";
 import { DEFAULT_OFFSET_LEFT } from "@/app/core/config/constants";
@@ -31,6 +37,8 @@ export function App() {
     useAudioInstrument();
   // const { audioToAbc, audioToMidi } = useConverter();
   const [gridCols, setGridCols] = useState<number>();
+  const mouseSensor = useSensor(MouseSensor);
+  const sensors = useSensors(mouseSensor);
 
   /*
   const convertAudioToMidi = async () => {
@@ -208,7 +216,7 @@ export function App() {
   }
 
   return (
-    <DndContext onDragEnd={dragEnd}>
+    <DndContext onDragEnd={dragEnd} sensors={sensors}>
       <main className={styles.main}>
         <div className="flex flex-col flex-1">
           <Navbar />

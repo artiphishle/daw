@@ -1,4 +1,11 @@
-import { DndContext, DragEndEvent, closestCenter } from "@dnd-kit/core";
+import {
+  DndContext,
+  DragEndEvent,
+  MouseSensor,
+  closestCenter,
+  useSensor,
+  useSensors,
+} from "@dnd-kit/core";
 import classNames from "classnames";
 import {
   SortableContext,
@@ -13,30 +20,38 @@ import Time from "./Time";
 import useProjectContext from "@/app/core/hooks/api/useProjectContext";
 
 import type { IArranger } from "../types/arranger.types";
-import { ETrackType } from "../types/track.types";
+import { EEndpoint } from "../types/api.types";
 
 export default function Arranger({ className = "" }: IArranger) {
+  const mouseSensor = useSensor(MouseSensor);
+  const sensors = useSensors(mouseSensor);
   const $ = styles.arranger;
-  const { projectContext, patchProjectContext } = useProjectContext();
+  const { projectContext, patchProjectContext, mutate } = useProjectContext();
 
   if (!projectContext) return null;
   const { tracks, activeTrackId, measureCount, quantization } = projectContext;
 
   const events = {
-    dragEnd: (event: DragEndEvent) => {
+    dragEnd: async (event: DragEndEvent) => {
       const { active, over } = event;
       if (active.id === over?.id) return;
 
       const oldIndex = tracks.findIndex(({ id }) => id === active.id);
       const newIndex = tracks.findIndex(({ id }) => id === over?.id);
       const sortedTracks = arrayMove(tracks, oldIndex, newIndex);
-      patchProjectContext({ tracks: sortedTracks });
+
+      await patchProjectContext({ tracks: sortedTracks });
+      mutate(EEndpoint.ProjectSettings);
     },
   };
   console.log("rendering tracks now");
   return (
     <section className={classNames($.main, className)}>
-      <DndContext collisionDetection={closestCenter} onDragEnd={events.dragEnd}>
+      <DndContext
+        sensors={sensors}
+        collisionDetection={closestCenter}
+        onDragEnd={events.dragEnd}
+      >
         <SortableContext items={tracks} strategy={verticalListSortingStrategy}>
           <ol className="flex-1 ">
             <Time measureCount={measureCount} />

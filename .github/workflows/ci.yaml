@@ -21,8 +21,6 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
       - run: npm ci
-      - run: npm run lint
-      - run: npm run test
   lint:
     runs-on: ubuntu-latest
     steps:
@@ -42,3 +40,20 @@ jobs:
         run: npm install
       - name: Run unit tests
         run: npm test
+
+  cypress-run:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Install dependencies
+        run: npm install
+      - name: Run server and Cypress tests
+        run: |
+          npm run build
+          npm start &
+          sleep 10
+          npm run test:e2e
+        env:
+          CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
