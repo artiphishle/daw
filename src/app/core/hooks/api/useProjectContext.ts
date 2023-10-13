@@ -18,17 +18,17 @@ import {
   PlayersOptions,
 } from "tone";
 
-import OmniSynth from "@/app/core/instruments/OmniSynth";
+import OmniSynth from "@/core/instruments/OmniSynth";
 
-import { EEndpoint } from "@/types/api";
-import { ETrackType } from "@/types/track";
-import type { IProjectContext } from "@/types/project";
+import { EEndpoint } from "@/types/api.types";
+import { ETrackType } from "@/types/track.types";
+import type { IProjectContext } from "@/types/project.types";
 import {
   type TInputOptions,
   type IInstrument,
   EInstrument,
-} from "@/types/instrument";
-import Sampler from "../../instruments/Sampler";
+} from "@/types/instrument.types";
+import Sampler from "@/core/instruments/Sampler";
 
 // TODO load instruments dynamically
 const loadInstrument = (
@@ -79,7 +79,6 @@ const loadInstrument = (
       Instrument = OmniSynth;
       instrument = new Synth(options as SynthOptions);
   }
-  console.info("✅", _instrument);
   return {
     Instrument,
     instrument,

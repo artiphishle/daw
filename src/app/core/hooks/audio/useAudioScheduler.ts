@@ -1,11 +1,8 @@
 import _ from "lodash/fp";
-import { Player, Players, Sequence } from "tone";
-import { useWindowWidth } from "@react-hook/window-size";
+import { Players, Sequence } from "tone";
 
-import { DEFAULT_OFFSET_LEFT } from "@/constants";
-
-import type { TInstrument } from "@/types/instrument";
-import type { IMidiEvent, IMidiEventPos, TMidiPart } from "@/types/midi";
+import type { TInstrument } from "@/types/instrument.types";
+import type { IMidiEventPos, TMidiPart } from "@/types/midi.types";
 import type { UniqueIdentifier } from "@dnd-kit/core";
 
 interface IUseScheduler {
@@ -16,8 +13,6 @@ interface IUseScheduler {
 }
 
 export default function useAudioScheduler() {
-  const windowWidth = useWindowWidth() - DEFAULT_OFFSET_LEFT;
-
   function setup({ instrument, parts = [] }: IUseScheduler) {
     return parts.map((part) => {
       const h = 100 / part.sequences.length;

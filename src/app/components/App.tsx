@@ -1,6 +1,5 @@
 "use client";
 import { type MouseEvent, useEffect, useState } from "react";
-import { useWindowWidth } from "@react-hook/window-size";
 import { CogIcon, GridIcon, HopIcon, InfinityIcon } from "lucide-react";
 import {
   DndContext,
@@ -10,11 +9,11 @@ import {
   useSensors,
 } from "@dnd-kit/core";
 
-import styles from "@/app/core/config/styles";
-import { DEFAULT_OFFSET_LEFT } from "@/app/core/config/constants";
+import styles from "@/core/config/styles";
+import { DEFAULT_OFFSET_LEFT } from "@/constants";
 // Import { PanSongParsed } from "./test/unit/PanSong.parsed";
-// import useConverter from "@/app/core/hooks/useConverter";
-import data from "@/test/data/sheet";
+// import useConverter from "@/core/hooks/useConverter";
+import data from "../../../__tests__/data/sheet";
 import {
   Arranger,
   Browser,
@@ -25,14 +24,15 @@ import {
   Progression,
   Settings,
   Sheet,
-} from "@/app/components";
+} from "@/components";
 import { A, Grid, Nav, Tabs, TabsPanel } from "@/ui";
-import useProjectContext from "@/app/core/hooks/api/useProjectContext";
-import useAudioInstrument from "@/app/core/hooks/audio/useAudioInstrument";
+import useProjectContext from "@/core/hooks/api/useProjectContext";
+import useAudioInstrument from "@/core/hooks/audio/useAudioInstrument";
 
 import type { Note as TNote } from "tone/build/esm/core/type/NoteUnits";
 import t from "../core/i18n";
 import _ from "lodash/fp";
+import Adsr from "app/ui/compound/daw/envelope/adsr/Adsr";
 
 export function App() {
   const { isOpen, InstrumentPortal, openInstrument, closeInstrument } =
@@ -65,7 +65,6 @@ export function App() {
   }, [audioToAbc]);
   */
 
-  const windowWidth = useWindowWidth();
   const { projectContext, patchProjectContext } = useProjectContext();
 
   useEffect(() => {
@@ -205,12 +204,21 @@ export function App() {
       panel: (
         <Droppable id="dropzone-1">
           <section className="bg-white p-8">
-            <h1 className={styles.headings.h1}>Testing</h1>
+            <h1 className={styles.headings.h1}>News & Showroom</h1>
             <hr className="my-8" />
-            <h2 className={styles.headings.h2}>
-              {_.upperFirst(t("progression"))}
-            </h2>
-            <Progression tonic={clef as TNote} />
+            <section className="flex flex-col lg:flex-row gap-8">
+              <section>
+                <h2 className={styles.headings.h2}>
+                  {_.upperFirst(t("progression"))}
+                </h2>
+                <Progression tonic={clef as TNote} />
+              </section>
+              <section>
+                <h2 className={styles.headings.h2}>ADSR Shaper</h2>
+                <br />
+                <Adsr />
+              </section>
+            </section>
           </section>
         </Droppable>
       ),

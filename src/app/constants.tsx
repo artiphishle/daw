@@ -1,9 +1,9 @@
 import _ from "lodash/fp";
 
-import t from "@/app/core/i18n";
+import t from "@/core/i18n";
 
-import { EInstrument } from "@/types/instrument";
-import { ETrackType, type ITrack } from "@/types/track";
+import { EInstrument } from "@/types/instrument.types";
+import { ETrackType, type ITrack } from "@/types/track.types";
 import { PlayersOptions } from "tone";
 
 /**

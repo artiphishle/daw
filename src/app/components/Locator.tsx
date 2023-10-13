@@ -2,11 +2,11 @@
 import { useState } from "react";
 import cn from "classnames";
 
-import useTransport from "@/app/core/hooks/useTransport";
-import { DEFAULT_OFFSET_LEFT } from "@/app/core/config/constants";
+import useTransport from "@/core/hooks/useTransport";
+import { DEFAULT_OFFSET_LEFT } from "@/constants";
 
-import { EUnit } from "@/app/types/utility.types";
-import type { IProjectContext } from "@/app/types/project.types";
+import { EUnit } from "@/types/utility.types";
+import type { IProjectContext } from "@/types/project.types";
 
 interface ILocator {
   className?: string;

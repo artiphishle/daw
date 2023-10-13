@@ -3,26 +3,20 @@ import { useWindowWidth } from "@react-hook/window-size";
 import { Destination, Meter as ToneMeter, Volume } from "tone";
 import classNames from "classnames";
 
-import t from "@/app/core/i18n";
-import { AudioIcon, GroupIcon, MidiIcon } from "@/app/core/config/icons";
-import useProjectContext from "@/app/core/hooks/api/useProjectContext";
-import { Meter } from "@/app/components";
+import t from "@/core/i18n";
+import { AudioIcon, GroupIcon, MidiIcon } from "@/core/config/icons";
+import useProjectContext from "@/core/hooks/api/useProjectContext";
+import { Meter } from "@/components";
 
 import { useCallback, useMemo, type ReactNode } from "react";
 import type { UniqueIdentifier } from "@dnd-kit/core";
 
-import styles from "@/app/core/config/styles";
-import { ButtonGroup } from "@/ui";
-import {
-  Button,
-  EButtonType,
-  ESize,
-  EVariant,
-} from "@/ui/element/button/Button";
-import Knob from "../ui/audio/Knob";
+import styles from "@/core/config/styles";
+import { Button, ButtonGroup, Knob, EButtonType, ESize, EVariant } from "@/ui";
 
-import { ETrackType, type ITrack } from "@/types/track";
-import type { IMixer } from "@/types/mixer";
+import { ETrackType, type ITrack } from "@/types/track.types";
+import type { IMixer } from "@/types/mixer.types";
+import { IProjectContext } from "@/types/project.types";
 
 const $ = styles.mixer;
 const btn =

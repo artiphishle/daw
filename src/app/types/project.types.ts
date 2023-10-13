@@ -1,11 +1,17 @@
 import type { Subdivision } from "tone/build/esm/core/type/Units";
 import type { UniqueIdentifier } from "@dnd-kit/core";
-import type { ITrack } from "@/types/track";
+import type { ITrack } from "@/types/track.types";
 
-enum EPortal {
+export enum ETransportState {
+  Paused = "paused",
+  Started = "started",
+  Stopped = "stopped",
+}
+
+export enum EPortal {
   Instruments = "portal-instruments",
 }
-interface IProjectContext {
+export interface IProjectContext {
   activeTrackId: UniqueIdentifier;
   bpm: number;
   clef: string;
@@ -18,6 +24,3 @@ interface IProjectContext {
   swingSubdivision: Subdivision;
   tracks: ITrack[];
 }
-
-export { EPortal };
-export type { IProjectContext };

@@ -1,7 +1,7 @@
 import { PolySynth, Synth } from "tone";
 
-import useMidiKeys from "@/app/core/hooks/useMidiKeys";
-import { Draggable } from "@/app/components";
+import useMidiKeys from "@/core/hooks/useMidiKeys";
+import { Draggable } from "@/components";
 import { GripIcon } from "lucide-react";
 
 export default function PollySynth() {

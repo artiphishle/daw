@@ -1,4 +1,4 @@
-import { ETrackType } from "@/app/types/track.types";
+import { ETrackType } from "@/types/track.types";
 import {
   ActivityIcon as AudioIcon,
   GroupIcon,

@@ -6,7 +6,7 @@ import { Sampler as ToneSampler, SamplerOptions } from "tone";
 import { Scale } from "tonal";
 
 import { ButtonGroup, Grid } from "@/ui";
-import useProjectContext from "@/app/core/hooks/api/useProjectContext";
+import useProjectContext from "@/core/hooks/api/useProjectContext";
 
 interface IPad {
   instrument: ToneSampler;

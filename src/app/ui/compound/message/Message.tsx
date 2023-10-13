@@ -1,4 +1,4 @@
-import t from "@/app/core/i18n";
+import t from "@/core/i18n";
 
 enum EMessageType {
   Info = "info",
@@ -18,9 +18,7 @@ const Template = ({
   writeLog = false,
 }: IMessageProps) => {
   const h1 = title || t(type);
-  const action = type === EMessageType.Success
-? EMessageType.Info
-: type;
+  const action = type === EMessageType.Success ? EMessageType.Info : type;
 
   if (writeLog) console[action](h1, message);
 
