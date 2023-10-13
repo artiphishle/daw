@@ -13,7 +13,6 @@ import styles from "@/core/config/styles";
 import { DEFAULT_OFFSET_LEFT } from "@/constants";
 // Import { PanSongParsed } from "./test/unit/PanSong.parsed";
 // import useConverter from "@/core/hooks/useConverter";
-import data from "../../../__tests__/data/sheet";
 import {
   Arranger,
   Browser,
@@ -32,7 +31,8 @@ import useAudioInstrument from "@/core/hooks/audio/useAudioInstrument";
 import type { Note as TNote } from "tone/build/esm/core/type/NoteUnits";
 import t from "../core/i18n";
 import _ from "lodash/fp";
-import Adsr from "app/ui/compound/daw/envelope/adsr/Adsr";
+import Adsr from "app/ui/audio/envelope/adsr/Adsr";
+import data from "../../../cypress/fixtures/sheet";
 
 export function App() {
   const { isOpen, InstrumentPortal, openInstrument, closeInstrument } =

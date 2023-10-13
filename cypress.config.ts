@@ -5,6 +5,7 @@ const { combinedEnv } = loadEnvConfig(process.cwd());
 export default defineConfig({
   projectId: "obf3zh",
   env: combinedEnv,
+
   e2e: {
     baseUrl: "http://localhost:3000",
     retries: {
@@ -14,5 +15,12 @@ export default defineConfig({
     viewportWidth: 1920,
     video: false,
     screenshotOnRunFailure: false,
+  },
+  component: {
+    devServer: {
+      framework: "next",
+      bundler: "webpack",
+    },
+    specPattern: "cypress/unit/**/*.cy.{ts,tsx}",
   },
 });

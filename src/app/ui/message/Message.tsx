@@ -1,3 +1,4 @@
+import styles from "@/core/config/styles";
 import t from "@/core/i18n";
 
 enum EMessageType {
@@ -25,24 +26,22 @@ const Template = ({
   return (
     // TODO add optional icon
     <section>
-      <h1 className="font-bold text-xl">{h1}</h1>
+      <h1 className={styles.headings.h1}>{h1}</h1>
       <p>{message}</p>
     </section>
   );
 };
 
-const ErrorMessage = (props: IMessageProps) => {
+export const ErrorMessage = (props: IMessageProps) => {
   const p = { ...props, type: EMessageType.Error };
   return <Template {...p} />;
 };
-const InfoMessage = (props: IMessageProps) => {
+export const InfoMessage = (props: IMessageProps) => {
   const p = { ...props, type: EMessageType.Info };
   return <Template {...p} />;
 };
 
-const SuccessMessage = (props: IMessageProps) => {
+export const SuccessMessage = (props: IMessageProps) => {
   const p = { ...props, type: EMessageType.Success };
   return <Template {...p} />;
 };
-
-export { ErrorMessage, InfoMessage, SuccessMessage };

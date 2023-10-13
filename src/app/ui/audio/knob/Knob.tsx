@@ -1,4 +1,4 @@
-import { ESize, EVariant } from "../../element/button/Button";
+import { ESize, EVariant } from "app/ui/constants";
 import Circle, { ICircle } from "../../shape/Circle";
 
 interface IKnob extends ICircle {

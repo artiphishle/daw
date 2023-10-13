@@ -12,11 +12,13 @@ import { useCallback, useMemo, type ReactNode } from "react";
 import type { UniqueIdentifier } from "@dnd-kit/core";
 
 import styles from "@/core/config/styles";
-import { Button, ButtonGroup, Knob, EButtonType, ESize, EVariant } from "@/ui";
+import { Button, ButtonGroup, Knob } from "@/ui";
 
 import { ETrackType, type ITrack } from "@/types/track.types";
 import type { IMixer } from "@/types/mixer.types";
 import { IProjectContext } from "@/types/project.types";
+import { ESize, EVariant } from "app/ui/constants";
+import { EButtonType } from "app/ui/button/Button";
 
 const $ = styles.mixer;
 const btn =
