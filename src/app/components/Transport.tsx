@@ -41,7 +41,7 @@ export default function Transport() {
 
   const events = {
     // TransportSettings
-    onBpmChange: (event: ChangeEvent<HTMLInputElement>) => {
+    onBpmChange: (event: ChangeEvent<HTMLSelectElement>) => {
       const bpm = parseInt(event.target.value, 10);
       patchProjectContext({ bpm });
     },

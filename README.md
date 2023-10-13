@@ -85,15 +85,30 @@ We're [@here](https://github.com/scha-ch/daw/discussions) 🙋‍♂️ and [@th
 
 ---
 
-## 🎼Screenshot
+## 🎼Screenshots
 
-![alt DAW Screenshot](./public/screenshot.png)
+Design will be applied soon, this is just a raw sketch!
+
+![alt DAW Screenshot Arranger](./public/screenshot.png)
+
+<div style='display:flex;flex-direction:row;gap:4rem'>
+
+![alt DAW Screenshot News](./public/screenshot3.png)
+
+![alt DAW Screenshot Sheets](./public/screenshot2.png)
+
+</div>
 
 ---
 
 ## 🎼Changelog
 
 ### 🍂 October 2023
+
+#### 13th
+
+- **Progression** Show famous chord progressions by tonic (try to change clef on top)
+- **E2E Testing** using Cypress, also integrated into CI pipeline & first test for DnD useSortable tracks (Arranger)
 
 #### 12th
 
