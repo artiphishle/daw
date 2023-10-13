@@ -1,6 +1,5 @@
+import { IGrid } from "app/ui/types";
 import classNames from "classnames";
-
-import type { IGrid } from "@/ui";
 
 const Grid = ({
   children,

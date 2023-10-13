@@ -1,5 +1,4 @@
 import classNames from "classnames";
-import { Section } from "@/ui";
 import type { ReactNode } from "react";
 
 enum ERole {
@@ -24,7 +23,7 @@ function Tabs({
   const role = ERole.Tablist;
   const props = { ...rest, className, role };
 
-  return <Section {...props}>{children}</Section>;
+  return <section {...props}>{children}</section>;
 }
 
 export { Tabs };

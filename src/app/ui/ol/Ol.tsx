@@ -1,7 +1,6 @@
 import type { IOl } from "@/ui";
 
 export default function Ol({ children, className }: IOl) {
-  return <ol className={className}>{children}</ol>;
+  return <ul className={className}>{children}</ul>;
 }
-
 export { Ol };

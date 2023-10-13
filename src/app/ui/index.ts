@@ -1,26 +1,21 @@
-// ELEMENTS
-export * from "./element/button/Button";
-export * from "./element/dialog/Dialog";
-export * from "./element/a/A";
-export * from "./element/form/range/Range";
-export * from "./compound/accordion";
-export * from "./compound/message/Message";
-export * from "./element/nav/Nav";
-export * from "./element/ol/Ol";
-export * from "./element/section/Section";
-export * from "./compound/tabs";
-export * from "./element/ul/Ul";
+// Elements
+export { A } from "./a/A";
+export { Accordion, AccordionSummary, AccordionDetails } from "./accordion";
+export { Avatar } from "./avatar/Avatar";
+export { Button } from "./button/Button";
+export { ButtonGroup } from "./buttonGroup/ButtonGroup";
+export { Dialog } from "./dialog/Dialog";
+export { RangeInput } from "./form/range/Range";
+export { ErrorMessage, InfoMessage, SuccessMessage } from "./message/Message";
+export { Nav } from "./nav/Nav";
+export { Ol } from "./ol/Ol"; // obsolete?
+export { Tabs, TabsPanel } from "./tabs"; // TabsPanel obsolete?
 
-// COMPOUNDS
-export * from "./compound/avatar/Avatar";
-export * from "./compound/buttonGroup/ButtonGroup";
+// Audio
+export { Knob } from "./audio/knob/Knob";
 
-// AUDIO
-export * from "./audio/knob/Knob";
+// Layout
+export { Flex } from "./layout/flex/Flex";
+export { Grid } from "./layout/grid/Grid";
 
-// LAYOUTS
-export * from "./layout/flex/Flex";
-export * from "./layout/grid/Grid";
-
-// TYPES
-export * from "./types";
+export type { IA, IAvatar, IButtonGroup, IOl } from "./types"; // back to the comp

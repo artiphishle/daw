@@ -1,6 +1,6 @@
 import classNames from "classnames";
 import { ReactNode } from "react";
-import { ESize, EVariant } from "../element/button/Button";
+import { ESize, EVariant } from "../constants";
 
 export interface ICircle {
   children?: ReactNode;
