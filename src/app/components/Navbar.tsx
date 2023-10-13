@@ -1,10 +1,10 @@
 import { MenuIcon } from "lucide-react";
 
-import styles from "@/app/core/config/styles";
-import t from "@/app/core/i18n";
+import styles from "@/core/config/styles";
+import t from "@/core/i18n";
 
 import { Avatar } from "@/ui";
-import { Transport } from "@/app/components";
+import { Transport } from "@/components";
 
 export default function Navbar() {
   const { navbar } = styles;

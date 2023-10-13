@@ -1,4 +1,4 @@
-import { ETrackType } from "@/types/track";
+import { ETrackType } from "@/types/track.types";
 
 const SemColor = {
   Primary: { bg: "bg-blue-900", text: "text-white" },

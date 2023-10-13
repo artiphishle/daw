@@ -3,19 +3,16 @@ import { useEffect } from "react";
 import classNames from "classnames";
 import { useWindowWidth } from "@react-hook/window-size";
 
-import { getIconByType } from "@/app/core/config/icons";
-import styles from "@/app/core/config/styles";
-import SortableItem from "@/app/components/SortableItem";
-import useScheduler from "@/app/core/hooks/audio/useAudioScheduler";
+import { getIconByType } from "@/core/config/icons";
+import styles from "@/core/config/styles";
+import { SortableItem } from "@/components";
+import useScheduler from "@/core/hooks/audio/useAudioScheduler";
 
-import {
-  DEFAULT_OFFSET_LEFT,
-  isPlayableTrackType,
-} from "@/app/core/config/constants";
+import { DEFAULT_OFFSET_LEFT, isPlayableTrackType } from "@/constants";
 import Note from "../Note";
 import type { Note as TNote } from "tone/build/esm/core/type/NoteUnits";
-import type { IMidiEvent, TMidiPart } from "@/app/types/midi.types";
-import { type ITrack } from "@/types/track";
+import type { IMidiEvent, TMidiPart } from "@/types/midi.types";
+import { type ITrack } from "@/types/track.types";
 import _ from "lodash/fp";
 
 function Track({

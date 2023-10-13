@@ -1,4 +1,4 @@
-import useMidiDevice from "@/app/core/hooks/audio/useMidiDevice";
+import useMidiDevice from "@/core/hooks/audio/useMidiDevice";
 import styles from "../core/config/styles";
 import { useEffect } from "react";
 

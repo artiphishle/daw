@@ -6,9 +6,9 @@ import {
   DEFAULT_STATES,
   DEFAULT_CLEF,
   DEFAULT_BPM,
-} from "@/app/core/config/constants";
+} from "@/constants";
 
-import type { IProjectContext } from "@/app/types/project.types";
+import type { IProjectContext } from "@/types/project.types";
 
 const tracks = [DEFAULT_TRACK_AUDIO];
 const DeathcorePreset: IProjectContext = {

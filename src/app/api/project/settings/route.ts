@@ -1,5 +1,5 @@
 import { NextRequest } from "next/server";
-import { DefaultPreset } from "@/app/api/project/presets/DefaultPreset";
+import { DefaultPreset } from "@/api/project/presets/DefaultPreset";
 
 /**
  * Don't you dare to touch this!

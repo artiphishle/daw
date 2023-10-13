@@ -1,6 +1,6 @@
 import type { UniqueIdentifier } from "@dnd-kit/core";
-import type { IInstrument, TInputOptions } from "@/types/instrument";
-import type { TMidiPart } from "@/types/midi";
+import type { IInstrument, TInputOptions } from "@/types/instrument.types";
+import type { TMidiPart } from "@/types/midi.types";
 
 export enum ETrackType {
   Audio = "audio",

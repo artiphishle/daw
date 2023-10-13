@@ -4,6 +4,15 @@
 
 ---
 
+## Kauderwälsch
+
+There are some terms/abbreviations used in the code, here the list:
+
+| Abbreviation | Term | Description           | Reason                       |
+| ------------ | ---- | --------------------- | ---------------------------- |
+| $            | css  | Component root styles | dependency injection planned |
+| $d           | data | Component data        | dependency injection planned |
+
 ## 🎼Quickstart
 
 Assuming you have [Node.js](https://nodejs.org) installed...

@@ -1,11 +1,12 @@
+import _ from "lodash/fp";
 import { Scale } from "tonal";
 
-import { DEFAULT_OFFSET_LEFT } from "@/app/core/config/constants";
-import useProjectContext from "@/app/core/hooks/api/useProjectContext";
+import { DEFAULT_OFFSET_LEFT } from "@/constants";
+import useProjectContext from "@/core/hooks/api/useProjectContext";
 import { Grid } from "@/ui";
 
-import type { ITrack } from "@/types/track";
-import _ from "lodash/fp";
+import type { ITrack } from "@/types/track.types";
+import { IMidiEvent } from "@/types/midi.types";
 
 export default function PianoRoll() {
   // Const [currentStepIndex, setCurrentStepIndex] = useState(0);
@@ -20,7 +21,7 @@ export default function PianoRoll() {
     return null;
   }
   const events = activeTrack.routing.input.parts?.[0].sequences?.[0]?.events;
-  const notes = events?.map((event) =>
+  const notes = events?.map((event: IMidiEvent | IMidiEvent[]) =>
     _.isArray(event) ? event.map(({ n }) => n) : event.n && event.n
   );
 

@@ -10,7 +10,7 @@ interface IRangeInput {
   vertical?: boolean;
 }
 
-export default function RangeInput({
+function RangeInput({
   id = `form-range-${Number(new Date())}`,
   min = 0,
   max = 100,
@@ -39,3 +39,5 @@ export default function RangeInput({
     </div>
   );
 }
+
+export { RangeInput };

@@ -1,13 +1,12 @@
 import _ from "lodash/fp";
+import { useMemo } from "react";
 
-import t from "@/app/core/i18n";
-import styles from "@/app/core/config/styles";
-import useAudioTheory from "@/app/core/hooks/audio/useAudioTheory";
-import useProjectContext from "@/app/core/hooks/api/useProjectContext";
+import { PROGRESSION } from "@/constants";
+import useAudioTheory from "@/core/hooks/audio/useAudioTheory";
+import useProjectContext from "@/core/hooks/api/useProjectContext";
 
 import type { Note as TNote } from "tone/build/esm/core/type/NoteUnits";
-import { PROGRESSION } from "@/constants";
-import { useMemo } from "react";
+import t from "@/core/i18n";
 
 interface IProgression {
   tonic: TNote;
@@ -19,6 +18,7 @@ export default function Progression({ tonic }: IProgression) {
 
   const memoProgressions = useMemo(
     () => PROGRESSION.map((p) => getChordsByProgression(p).join(" ")),
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     [tonic]
   );
 
@@ -33,9 +33,15 @@ export default function Progression({ tonic }: IProgression) {
       </h3>
       <table>
         <thead>
-          <th>Roman numerals</th>
-          <th>Tonic</th>
-          <th>Progression</th>
+          <tr>
+            <th>Roman numerals</th>
+          </tr>
+          <tr>
+            <th>Tonic</th>
+          </tr>
+          <tr>
+            <th>{_.upperFirst(t("progression"))}</th>
+          </tr>
         </thead>
         <tbody>
           {memoProgressions.map((memoProgression, progressionIndex) => {
@@ -44,11 +50,11 @@ export default function Progression({ tonic }: IProgression) {
                 key={`testing-progression-${progressionIndex}`}
                 className="border border-b-gray-100"
               >
-                <td className="p-3 border border-r-gray-100">
+                <td className="p-1 border border-r-gray-100">
                   <b>{PROGRESSION[progressionIndex]}</b>
                 </td>
-                <td className="p-3">{clef}</td>
-                <td className="p-3 bg-gray-200">{memoProgression}</td>
+                <td className="p-1">{clef}</td>
+                <td className="p-1 bg-gray-200">{memoProgression}</td>
               </tr>
             );
           })}

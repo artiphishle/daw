@@ -1,6 +1,6 @@
 import classNames from "classnames";
 
-import styles from "@/app/core/config/styles";
+import styles from "@/core/config/styles";
 
 import type { AllHTMLAttributes, CSSProperties } from "react";
 import type { Note as TNote } from "tone/build/esm/core/type/NoteUnits";
