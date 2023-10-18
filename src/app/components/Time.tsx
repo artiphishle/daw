@@ -1,6 +1,6 @@
-import { DEFAULT_OFFSET_LEFT } from "../constants";
-import { TimeIcon } from "../core/config/icons";
-import styles from "../core/config/styles";
+import { DEFAULT_OFFSET_LEFT } from "../common/constants";
+import { TimeIcon } from "../../config/icons";
+import styles from "../../config/styles";
 
 export default function Time({ measureCount }: { measureCount: number }) {
   const mc = measureCount as number;

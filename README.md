@@ -8,10 +8,13 @@
 
 There are some terms/abbreviations used in the code, here the list:
 
-| Abbreviation | Term | Description           | Reason                       |
-| ------------ | ---- | --------------------- | ---------------------------- |
-| $            | css  | Component root styles | dependency injection planned |
-| $d           | data | Component data        | dependency injection planned |
+| Const | Meaning | Description      | Reason                                  |
+| ----- | ------- | ---------------- | --------------------------------------- |
+| $     | css     | Component styles | reserved, DI\* planned                  |
+| $d    | data    | Component data   | reserved, DI\* planned                  |
+| $e    | event   | Component event  | reserved, elsewhere placed should throw |
+
+\* Dependency Injection
 
 ## 🎼Quickstart
 
@@ -104,6 +107,11 @@ Design will be applied soon, this is just a raw sketch!
 ## 🎼Changelog
 
 ### 🍂 October 2023
+
+#### 14th
+
+- **Mixer** FFT Analyzers for all tracks
+- **Cypress** Component & E2E tests (removed Jest)
 
 #### 13th
 

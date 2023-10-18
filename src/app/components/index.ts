@@ -1,3 +1,4 @@
+import { Analyzer } from "./Analyzer";
 import Arranger from "./Arranger";
 import Browser from "./Browser";
 import Locator from "./Locator";
@@ -17,6 +18,7 @@ import Droppable from "./Droppable";
 import SortableItem from "./SortableItem";
 
 export {
+  Analyzer,
   Arranger,
   Browser,
   Locator,

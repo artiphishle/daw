@@ -1,6 +1,6 @@
 import { Dispatch, SetStateAction } from "react";
-import { Dialog } from "../ui";
-import styles from "../core/config/styles";
+import { Dialog } from "../../packages/ui";
+import styles from "../../config/styles";
 import { start } from "tone";
 import t from "../core/i18n";
 

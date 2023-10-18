@@ -1,7 +1,7 @@
 import _ from "lodash/fp";
 import { useMemo } from "react";
 
-import { PROGRESSION } from "@/constants";
+import { PROGRESSION } from "app/common/constants";
 import useAudioTheory from "@/core/hooks/audio/useAudioTheory";
 import useProjectContext from "@/core/hooks/api/useProjectContext";
 

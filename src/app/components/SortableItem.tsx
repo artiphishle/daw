@@ -3,7 +3,7 @@ import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
 import { GripVerticalIcon } from "lucide-react";
 
-import styles from "@/core/config/styles";
+import styles from "config/styles";
 
 import type { UniqueIdentifier } from "@dnd-kit/core";
 

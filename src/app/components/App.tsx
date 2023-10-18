@@ -1,6 +1,7 @@
 "use client";
 import { type MouseEvent, useEffect, useState } from "react";
 import { CogIcon, GridIcon, HopIcon, InfinityIcon } from "lucide-react";
+import * as Tone from "tone";
 import {
   DndContext,
   useSensor,
@@ -9,8 +10,8 @@ import {
   useSensors,
 } from "@dnd-kit/core";
 
-import styles from "@/core/config/styles";
-import { DEFAULT_OFFSET_LEFT } from "@/constants";
+import styles from "config/styles";
+import { DEFAULT_OFFSET_LEFT } from "app/common/constants";
 // Import { PanSongParsed } from "./test/unit/PanSong.parsed";
 // import useConverter from "@/core/hooks/useConverter";
 import {
@@ -24,19 +25,26 @@ import {
   Settings,
   Sheet,
 } from "@/components";
-import { A, Grid, Nav, Tabs, TabsPanel } from "@/ui";
+import { A, Grid, Nav, Tabs, TabsPanel } from "packages/ui";
 import useProjectContext from "@/core/hooks/api/useProjectContext";
 import useAudioInstrument from "@/core/hooks/audio/useAudioInstrument";
 
 import type { Note as TNote } from "tone/build/esm/core/type/NoteUnits";
 import t from "../core/i18n";
 import _ from "lodash/fp";
-import Adsr from "app/ui/audio/envelope/adsr/Adsr";
+import Adsr from "packages/ui/audio/envelope/adsr/Adsr";
 import data from "../../../cypress/fixtures/sheet";
 
 export function App() {
   const { isOpen, InstrumentPortal, openInstrument, closeInstrument } =
     useAudioInstrument();
+
+  useEffect(() => {
+    const audioContext = new Tone.Context();
+    audioContext.resume();
+    // Your audio processing code goes here
+  }, []);
+
   // const { audioToAbc, audioToMidi } = useConverter();
   const [gridCols, setGridCols] = useState<number>();
   const mouseSensor = useSensor(MouseSensor);

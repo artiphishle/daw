@@ -1,12 +1,12 @@
 import _ from "lodash/fp";
 import { Scale } from "tonal";
 
-import { DEFAULT_OFFSET_LEFT } from "@/constants";
+import { DEFAULT_OFFSET_LEFT } from "app/common/constants";
 import useProjectContext from "@/core/hooks/api/useProjectContext";
-import { Grid } from "@/ui";
+import { Grid } from "packages/ui";
 
-import type { ITrack } from "@/types/track.types";
-import { IMidiEvent } from "@/types/midi.types";
+import type { ITrack } from "app/common/types/track.types";
+import { IMidiEvent } from "app/common/types/midi.types";
 
 export default function PianoRoll() {
   // Const [currentStepIndex, setCurrentStepIndex] = useState(0);

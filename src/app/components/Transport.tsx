@@ -16,9 +16,9 @@ import {
 
 import useProjectContext from "@/core/hooks/api/useProjectContext";
 import useTransport from "@/core/hooks/useTransport";
-import styles from "@/core/config/styles";
+import styles from "config/styles";
 
-import { EEndpoint } from "@/types/api.types";
+import { EEndpoint } from "app/common/types/api.types";
 
 export default function Transport() {
   const $ = styles.transport;

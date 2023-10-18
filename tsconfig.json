@@ -17,12 +17,12 @@
     "resolveJsonModule": true,
     "plugins": [{ "name": "next" }],
     "paths": {
-      "@/api/*": ["app/api/*"],
+      "@/api/*": ["app/api/(routes)/*"],
       "@/components": ["app/components/index"],
-      "@/constants": ["app/constants"],
       "@/core/*": ["app/core/*"],
-      "@/types/*": ["app/types/*"],
-      "@/ui": ["app/ui/index"]
+      "@/ui": ["app/ui/index"],
+      "@/constants": ["app/common/constants"],
+      "@/types/*": ["app/common/types/*"]
     }
   },
   "exclude": ["node_modules"],

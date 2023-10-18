@@ -4,10 +4,10 @@ import * as Tone from "tone";
 import { App } from "./components";
 import { useState } from "react";
 import { Loader } from "lucide-react";
-import { Dialog } from "./ui";
-import { Button, EButtonType } from "./ui/button/Button";
+import { Dialog } from "../packages/ui";
+import { Button, EButtonType } from "../packages/ui/button/Button";
 import t from "./core/i18n";
-import { ESize, EVariant } from "./ui/constants";
+import { ESize, EVariant } from "../packages/ui/constants";
 
 export default function Home() {
   const [toneReady, setToneReady] = useState(false);
