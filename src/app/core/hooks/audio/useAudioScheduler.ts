@@ -1,9 +1,13 @@
 import _ from "lodash/fp";
-import { Players, Sequence } from "tone";
+import { Player, Players, Sequence, Time } from "tone";
 
-import type { TInstrument } from "@/types/instrument.types";
-import type { IMidiEventPos, TMidiPart } from "@/types/midi.types";
+import type { TInstrument } from "app/common/types/instrument.types";
+import type { IMidiEventPos, TMidiPart } from "app/common/types/midi.types";
 import type { UniqueIdentifier } from "@dnd-kit/core";
+import {
+  Instrument,
+  InstrumentOptions,
+} from "tone/build/esm/instrument/Instrument";
 
 interface IUseScheduler {
   id: UniqueIdentifier;
@@ -27,13 +31,14 @@ export default function useAudioScheduler() {
           }
         }
         return new Sequence((t, { n, v }) => {
-          console.log(n, t);
           if (!n) return;
-
-          if ((instrument as Players).player) {
-            return (instrument as Players).player(n).start(t);
-          }
-          return (instrument as any).triggerAttackRelease(n, "16n", t, v);
+          if ((instrument as Players).player)
+            return (instrument as Players)
+              .player(n)
+              .start(t + Time("16n").toSeconds());
+          return (
+            instrument as Instrument<InstrumentOptions>
+          )?.triggerAttackRelease(n, "16n", t + Time("16n").toSeconds(), v);
         }, notes || sequence.events).start(0);
       });
     });

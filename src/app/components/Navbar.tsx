@@ -1,9 +1,9 @@
 import { MenuIcon } from "lucide-react";
 
-import styles from "@/core/config/styles";
+import styles from "config/styles";
 import t from "@/core/i18n";
 
-import { Avatar } from "@/ui";
+import { Avatar } from "packages/ui";
 import { Transport } from "@/components";
 
 export default function Navbar() {

@@ -4,7 +4,7 @@ import { Midi } from "@tonejs/midi";
 
 import abcjs, { type TuneObjectArray } from "abcjs";
 import "abcjs/abcjs-audio.css";
-import styles from "@/core/config/styles";
+import styles from "config/styles";
 // import { PanSongParsed } from "testdata/unit/PanSong.parsed";
 // import type { NoteEventTime as INoteEventTime } from "@spotify/basic-pitch/types";
 

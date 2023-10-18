@@ -13,13 +13,13 @@ import {
   verticalListSortingStrategy,
 } from "@dnd-kit/sortable";
 
-import styles from "@/core/config/styles";
+import styles from "config/styles";
 import { Locator, Track } from "@/components";
 import Time from "./Time";
 import useProjectContext from "@/core/hooks/api/useProjectContext";
 
-import type { IArranger } from "../types/arranger.types";
-import { EEndpoint } from "../types/api.types";
+import type { IArranger } from "../common/types/arranger.types";
+import { EEndpoint } from "../common/types/api.types";
 
 export default function Arranger({ className = "" }: IArranger) {
   const mouseSensor = useSensor(MouseSensor);

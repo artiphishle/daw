@@ -16,18 +16,19 @@ import {
   getContext,
   Players,
   PlayersOptions,
+  Channel,
 } from "tone";
 
 import OmniSynth from "@/core/instruments/OmniSynth";
 
-import { EEndpoint } from "@/types/api.types";
-import { ETrackType } from "@/types/track.types";
-import type { IProjectContext } from "@/types/project.types";
+import { EEndpoint } from "app/common/types/api.types";
+import { ETrackType } from "app/common/types/track.types";
+import type { IProjectContext } from "app/common/types/project.types";
 import {
   type TInputOptions,
   type IInstrument,
   EInstrument,
-} from "@/types/instrument.types";
+} from "app/common/types/instrument.types";
 import Sampler from "@/core/instruments/Sampler";
 
 // TODO load instruments dynamically
@@ -92,18 +93,35 @@ export default function useProjectContext() {
 
   // Add unserializable data and return the data
   const deselectData = (data: IProjectContext) => {
-    if (!data.tracks) return data;
-    const deselectedTracks = data.tracks.map((track) => {
-      if (!INSTRUMENT_TYPE.includes(track.type)) return track;
+    const { channels = [], tracks = [] } = data;
 
+    // 1 Channel
+    const deselectedChannels = channels.map((channel) => ({
+      ...channel,
+      channel: new Channel(channel.options),
+    }));
+
+    // 2 Instrument
+    const deselectedTracks = tracks.map((track) => {
+      const { type, routing } = track;
+
+      if (!INSTRUMENT_TYPE.includes(type)) return track;
       const instrument: IInstrument = loadInstrument(
-        track.routing.input.id as EInstrument,
-        { ...track.routing.input.options, context: getContext() }
+        routing.input.id as EInstrument,
+        { ...routing.input.options, context: getContext() }
       );
-      track.routing.input.instrument = instrument;
-      return track;
+      routing.input.instrument = instrument;
+      return {
+        ...track,
+        routing: { ...routing, input: { ...routing.input, instrument } },
+      };
     });
-    return { ...data, tracks: deselectedTracks };
+    console.info("HERE", {
+      ...data,
+      channels: deselectedChannels,
+      tracks: deselectedTracks,
+    });
+    return { ...data, channels: deselectedChannels, tracks: deselectedTracks };
   };
 
   // Remove unnserializable data and return the 'patch' to be applied

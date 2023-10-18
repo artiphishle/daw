@@ -6,10 +6,10 @@ import {
   Loader,
 } from "lucide-react";
 
-import styles from "@/core/config/styles";
+import styles from "config/styles";
 import { usePublicSampleDirectory } from "@/core/hooks/api/usePublicSampleDirectory";
 
-import type { IDirectory } from "@/types/fs.types";
+import type { IDirectory } from "app/common/types/fs.types";
 
 // TODO extract to other file and load samples from server
 function Three({ dirItems }: { dirItems: IDirectory[] }) {

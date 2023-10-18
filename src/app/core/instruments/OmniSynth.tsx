@@ -1,4 +1,4 @@
-import styles from "../config/styles";
+import styles from "../../../config/styles";
 
 import type { MonoSynthOptions } from "tone";
 
