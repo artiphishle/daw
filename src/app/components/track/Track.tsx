@@ -4,7 +4,7 @@ import classNames from "classnames";
 import { useWindowWidth } from "@react-hook/window-size";
 
 import { getIconByType } from "config/icons";
-import styles from "config/styles";
+import styles from "app/common/styles";
 import { SortableItem } from "@/components";
 import useScheduler from "@/core/hooks/audio/useAudioScheduler";
 

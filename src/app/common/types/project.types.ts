@@ -1,7 +1,7 @@
 import type { Subdivision } from "tone/build/esm/core/type/Units";
 import type { UniqueIdentifier } from "@dnd-kit/core";
 import type { ITrack } from "app/common/types/track.types";
-import { IChannel } from "./channel.types";
+import type { IChannel } from "./channel.types";
 
 export enum ETransportState {
   Paused = "paused",

@@ -19,6 +19,7 @@
     "paths": {
       "@/api/*": ["app/api/(routes)/*"],
       "@/components": ["app/components/index"],
+      "@/common/*": ["app/common/*"],
       "@/core/*": ["app/core/*"],
       "@/ui": ["app/ui/index"],
       "@/constants": ["app/common/constants"],

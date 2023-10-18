@@ -1,6 +1,6 @@
 import { MenuIcon } from "lucide-react";
 
-import styles from "config/styles";
+import styles from "app/common/styles";
 import t from "@/core/i18n";
 
 import { Avatar } from "packages/ui";

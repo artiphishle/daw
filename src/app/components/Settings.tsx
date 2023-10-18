@@ -1,5 +1,5 @@
 import useMidiDevice from "@/core/hooks/audio/useMidiDevice";
-import styles from "../../config/styles";
+import styles from "../common/styles";
 import { useEffect } from "react";
 
 export default function Settings() {

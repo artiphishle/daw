@@ -10,8 +10,8 @@ import {
   useSensors,
 } from "@dnd-kit/core";
 
-import styles from "config/styles";
-import { DEFAULT_OFFSET_LEFT } from "app/common/constants";
+import styles from "@/common/styles";
+import { DEFAULT_OFFSET_LEFT } from "@/constants";
 // Import { PanSongParsed } from "./test/unit/PanSong.parsed";
 // import useConverter from "@/core/hooks/useConverter";
 import {

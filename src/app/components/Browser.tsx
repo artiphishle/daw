@@ -6,7 +6,7 @@ import {
   Loader,
 } from "lucide-react";
 
-import styles from "config/styles";
+import styles from "app/common/styles";
 import { usePublicSampleDirectory } from "@/core/hooks/api/usePublicSampleDirectory";
 
 import type { IDirectory } from "app/common/types/fs.types";

@@ -13,7 +13,7 @@ import {
   verticalListSortingStrategy,
 } from "@dnd-kit/sortable";
 
-import styles from "config/styles";
+import styles from "app/common/styles";
 import { Locator, Track } from "@/components";
 import Time from "./Time";
 import useProjectContext from "@/core/hooks/api/useProjectContext";
