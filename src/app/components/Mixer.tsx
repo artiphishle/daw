@@ -17,7 +17,7 @@ import type { UniqueIdentifier } from "@dnd-kit/core";
 import type { ITrack } from "app/common/types/track.types";
 import type { IMixer } from "app/common/types/mixer.types";
 
-import styles from "config/styles";
+import styles from "app/common/styles";
 const $ = styles.mixer;
 ("w-[calc(100%-4px)] ml-[2px] mb-2 text-center lg:w-[80%] lg:ml-[10%] lg:p-1");
 

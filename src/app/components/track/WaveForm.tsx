@@ -1,5 +1,5 @@
 "use client";
-import styles from "config/styles";
+import styles from "app/common/styles";
 import { useEffect, useMemo } from "react";
 import WaveSurfer from "wavesurfer.js";
 

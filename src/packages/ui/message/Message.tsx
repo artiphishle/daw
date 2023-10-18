@@ -1,4 +1,4 @@
-import styles from "config/styles";
+import styles from "app/common/styles";
 import t from "@/core/i18n";
 
 enum EMessageType {

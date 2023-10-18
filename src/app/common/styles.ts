@@ -1,10 +1,5 @@
 import { ETrackType } from "app/common/types/track.types";
 
-const SemColor = {
-  Primary: { bg: "bg-blue-900", text: "text-white" },
-  Secondary: { bg: "bg-cyan-900", text: "text-white" },
-};
-
 const TrackColor = {
   [ETrackType.Audio]: {
     bg: "bg-blue-100",
@@ -102,8 +97,7 @@ const styles = {
     col2: {
       main: "relative flex w-full",
     },
-    icon: (trackType: ETrackType) =>
-      `fill-${TrackColor[trackType]}-400 w-6 h-6`,
+    icon: "fill-white w-6 h-6", // TODO see this in review and fail
     row: (trackType: ETrackType) =>
       "relative flex w-full h-10 text-black mb-[1px] first:text-gray-400 first:mb-0 text-xs",
   },

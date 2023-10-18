@@ -16,7 +16,7 @@ import {
 
 import useProjectContext from "@/core/hooks/api/useProjectContext";
 import useTransport from "@/core/hooks/useTransport";
-import styles from "config/styles";
+import styles from "app/common/styles";
 
 import { EEndpoint } from "app/common/types/api.types";
 
