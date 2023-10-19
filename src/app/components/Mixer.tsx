@@ -183,6 +183,8 @@ export default function Mixer({ openInstrument }: IMixer) {
   });
 
   return (
-    <section className={$.main}>{[...mixerTracks, ...channelTracks]}</section>
+    <section id="DAW_MXR" className={$.main}>
+      {[...mixerTracks, ...channelTracks]}
+    </section>
   );
 }

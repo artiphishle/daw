@@ -1,5 +1,5 @@
 describe("[Arranger]", () => {
-  it("should persist track sorting and update mixer sorting", () => {
+  it("should update the order of tracks in Arranger & Mixer", () => {
     // cy.visit("http://localhost:3000");
     // cy.get("button").click();
     cy.get("svg.lucide-grip-vertical")
@@ -33,16 +33,10 @@ describe("[Arranger]", () => {
       .eq(0)
       .parent()
       .parent()
-      .should("not.have.id", "track-instrument-bass");
+      .should("not.have.id", "track-bd")
+      .should("have.id", "track-sd");
 
-    // cy.get("svg.lucide-grip-vertical").eq(5).parent().parent();
-
-    /* cy.get("svg.lucide-grip-vertical")
-      .eq(5)
-      .parent()
-      .parent()
-      .should("have.id", "track-instrument-bass"); */
-
-    // TODO check mixer sorting
+    // mixer sorting
+    cy.get("#DAW_MXR > section:first-child").should("contain.text", "Snare");
   });
 });
