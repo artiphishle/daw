@@ -369,7 +369,7 @@ const DEFAULT_TRACK_MI_TOM: ITrack = {
       id: "Player",
       label: "Tom Mi",
       options: {
-        url: "./samples/WaveAlchemy/wa_drm_drums/low_tom/wadrm_lotom_acc2_r5.wav",
+        url: "/samples/WaveAlchemy/wa_drm_drums/low_tom/wadrm_lotom_acc2_r5.wav",
       },
       parts: [
         {
@@ -419,7 +419,7 @@ const DEFAULT_TRACK_LO_TOM: ITrack = {
       id: "Player",
       label: "Tom Lo",
       options: {
-        url: "./samples/WaveAlchemy/wa_drm_drums/mid_tom/wadrm_midtom_acc0_r5.wav",
+        url: "/samples/WaveAlchemy/wa_drm_drums/mid_tom/wadrm_midtom_acc0_r5.wav",
       },
       parts: [
         {
@@ -467,7 +467,7 @@ const DEFAULT_TRACK_SAMPLER: ITrack = {
       id: EInstrument.Sampler,
       label: "Drums",
       options: {
-        baseUrl: "./samples/WaveAlchemy/wa_808_tape/",
+        baseUrl: "/samples/WaveAlchemy/wa_808_tape/",
         urls: {
           C3: "wa_808tape_kick_01_sat.wav",
           D3: "wa_808tape_snare_10_clean.wav",
