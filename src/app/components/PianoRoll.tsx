@@ -6,7 +6,6 @@ import useProjectContext from "@/core/hooks/api/useProjectContext";
 import { Grid } from "packages/ui";
 
 import type { ITrack } from "app/common/types/track.types";
-import { IMidiEvent } from "app/common/types/midi.types";
 
 export default function PianoRoll() {
   // Const [currentStepIndex, setCurrentStepIndex] = useState(0);
@@ -20,11 +19,7 @@ export default function PianoRoll() {
     console.error("[PianoRoll] No active track");
     return null;
   }
-  const events = activeTrack.routing.input.parts?.[0].sequences?.[0]?.events;
-  const notes = events?.map((event: IMidiEvent | IMidiEvent[]) =>
-    _.isArray(event) ? event.map(({ n }) => n) : event.n && event.n
-  );
-
+  const events = activeTrack.routing.input.parts?.[0].events;
   const notes2 = Scale.get(`${clef}2 major`).notes;
   const notes1 = Scale.get(`${clef}1 major`).notes;
   const noteScale = [...notes2.reverse(), ...notes1.reverse()];
@@ -34,7 +29,7 @@ export default function PianoRoll() {
   const rows = new Array(noteScale.length * gridColumnCount).fill("_");
 
   return (
-    <section className="mb-10">
+    <section className="mb-10 bg-white">
       <div className="flex flex-cols text-xs">
         <Grid cols={1} style={{ width: DEFAULT_OFFSET_LEFT }}></Grid>
         <Grid className="flex-1" cols={gridColumnCount}>

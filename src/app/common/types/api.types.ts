@@ -1,4 +1,4 @@
 export enum EEndpoint {
-  Browser = "/api/browser",
+  Browser = "/api/directories",
   ProjectSettings = "/api/project",
 }

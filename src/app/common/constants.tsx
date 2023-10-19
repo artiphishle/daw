@@ -3,15 +3,11 @@ import * as Tone from "tone";
 
 import t from "@/core/i18n";
 
-import { EInstrument } from "app/common/types/instrument.types";
-import { ETrackType, type ITrack } from "app/common/types/track.types";
-import { IChannel } from "./types/channel.types";
-import { UniqueIdentifier } from "@dnd-kit/core";
-import { useState } from "react";
+import { ETrackType, type ITrack } from "@/common/types/track.types";
+import type { IChannel } from "./types/channel.types";
 
-/**
- * General
- */
+// ---------- General
+
 export const PROGRESSION = [
   /**
    * Diatonic
@@ -67,94 +63,74 @@ export const PROGRESSION = [
   // Montgomery Ward bridge
   "I IV ii V",
 ];
-
-export const isPlayableTrackType = (trackType: ETrackType) =>
-  [ETrackType.Instrument, ETrackType.Sampler].includes(trackType);
-
 export const isRomanNum = (test: string) =>
   ["i", "ii", "iii", "iv", "v", "vi", "vii"].includes(test.toLowerCase());
 
-// Project
-const DEFAULT_BPM = 120;
-const DEFAULT_CLEF = "C";
+// ---------- Project
+
+const DEFAULT_ACTIVE_TRACK_ID = "track-bd";
+const DEFAULT_BPM = 98;
+const DEFAULT_CLEF = "D";
+const DEFAULT_SCALE = "minor";
 const DEFAULT_MEASURE_COUNT = 2;
 const DEFAULT_NAME = t("untitled");
-const DEFAULT_OFFSET_LEFT = 168;
+const DEFAULT_OFFSET_LEFT = 184;
 const DEFAULT_POSITION = "0:0:0";
-const DEFAULT_QUANTIZATION = 8;
+const DEFAULT_QUANTIZATION = 16;
 const DEFAULT_SWING = 0;
 const DEFAULT_SWING_SUBDIVISION = "8n";
-// States
 const DEFAULT_STATES = {
   tabTopActive: 0,
   tabBtmActive: 0,
 };
 
-// Tracks
-const DEFAULT_TRACK_AUDIO: ITrack = {
-  id: "track-audio-halloween",
-  name: "Halloween",
-  routing: {
-    input: {
-      id: "track-audio-input",
-      label: "Audio",
-      options: {
-        url: "/halloween.mp3",
-      },
-    },
-    output: "mixbus",
-  },
-  type: ETrackType.Audio,
-};
-const DEFAULT_ACTIVE_TRACK_ID = DEFAULT_TRACK_AUDIO.id;
-const DEFAULT_TRACK_INSTRUMENT_BASS: ITrack = {
+// -------- Tracks
+
+/* const DEFAULT_TRACK_INSTRUMENT_BASS: ITrack = {
   id: "track-instrument-bass",
   name: "Bass",
   type: ETrackType.Instrument,
   routing: {
-    output: "mixbus",
+    output: "master",
     input: {
       id: EInstrument.MonoSynth,
       label: "BA",
       options: {
         oscillator: { type: "sawtooth" },
-        envelope: { attack: 0.01, decay: 0.4, release: 0.3, sustain: 0.2 },
+        envelope: { attack: 0.01, decay: 0.4, release: 0.3, sustainote: 0.2 },
         filterEnvelope: {
           attack: 0.001,
           baseFrequency: 180,
           decay: 0.2,
           octaves: 0,
           release: 0.2,
-          sustain: 0.25,
+          sustainote: 0.25,
         },
         volume: -35,
       },
       parts: [
         {
           label: "BA-Part1",
-          sequences: [
-            {
-              label: "Bass",
               events: [
-                { n: "D#2", v: 100 },
-                { n: "D#2", v: 100 },
-                { n: "D#2", v: 100 },
-                { n: "D#2", v: 100 },
+                { note: "D#2", v: 100 },
+                { note: "D#2", v: 100 },
+                { note: "D#2", v: 100 },
+                { note: "D#2", v: 100 },
 
-                { n: "E2", v: 100 },
-                { n: "E2", v: 100 },
-                { n: "E2", v: 100 },
-                { n: "E2", v: 100 },
+                { note: "E2", v: 100 },
+                { note: "E2", v: 100 },
+                { note: "E2", v: 100 },
+                { note: "E2", v: 100 },
 
-                { n: "F#2", v: 100 },
-                { n: "F#2", v: 100 },
-                { n: "F#2", v: 100 },
-                { n: "F#2", v: 100 },
+                { note: "F#2", v: 100 },
+                { note: "F#2", v: 100 },
+                { note: "F#2", v: 100 },
+                { note: "F#2", v: 100 },
 
-                { n: "G2", v: 100 },
-                { n: "G2", v: 100 },
-                { n: "G2", v: 100 },
-                { n: "G2", v: 100 },
+                { note: "G2", v: 100 },
+                { note: "G2", v: 100 },
+                { note: "G2", v: 100 },
+                { note: "G2", v: 100 },
               ],
             },
           ],
@@ -163,79 +139,326 @@ const DEFAULT_TRACK_INSTRUMENT_BASS: ITrack = {
     },
   },
 };
-const DEFAULT_TRACK_PLAYERS: ITrack = {
-  id: "track-players",
-  name: "Toms",
+*/
+/*
+const DEFAULT_TRACK_AUDIO: ITrack = {
+  id: "track-audio-halloween",
+  name: "Halloween",
   routing: {
     input: {
-      id: "Players",
-      label: "Players",
+      parts: [],
+      id: "track-audio-input",
+      label: "Audio",
       options: {
-        mute: false,
-        volume: -3,
-        // baseUrl: "./samples/WaveAlchemy/wa_drm_drums/",
-        urls: {
-          F4: "./samples/WaveAlchemy/wa_drm_drums/high_tom/wadrm_hitom_acc1_r2.wav",
-          G4: "./samples/WaveAlchemy/wa_drm_drums/mid_tom/wadrm_midtom_acc0_r5.wav",
-          A4: "./samples/WaveAlchemy/wa_drm_drums/low_tom/wadrm_lotom_acc2_r5.wav",
-        },
-        fadeIn: 0.001,
-        fadeOut: 0.001,
-        onerror: (error: any) => console.error("Toms error", error),
-        onload: () => console.log("Toms loaded"),
-        onstop: () => console.log("toms stopped"),
-      } as Partial<Tone.PlayersOptions>,
+        url: "/halloween.mp3",
+      },
+    },
+    output: "master",
+  },
+  type: ETrackType.Audio,
+};
+*/
+
+// -------- Drums
+
+/***
+ * @Track
+ */
+const DEFAULT_TRACK_BD: ITrack = {
+  id: "track-bd",
+  name: "Kick",
+  routing: {
+    input: {
+      id: "Player",
+      label: "KickPlayer",
+      options: {
+        url: "/samples/Roland_TR-909/BT3AAD0.WAV",
+      },
       parts: [
         {
-          label: "Drums (Players)",
-          sequences: [
-            {
-              label: "TomsRoll",
-              events: [
-                { n: null },
-                { n: null },
-                { n: null },
-                { n: null },
-                { n: "F4" },
-                { n: null },
-                { n: null },
-                { n: null },
-              ],
-            },
-            {
-              label: "Tom Mid",
-              events: [
-                { n: null },
-                { n: null },
-                { n: null },
-                { n: null },
-                { n: null },
-                { n: "G4" },
-                { n: "G4" },
-                { n: null },
-              ],
-            },
-            {
-              label: "Tom Low",
-              events: [
-                { n: null },
-                { n: null },
-                { n: null },
-                { n: null },
-                { n: null },
-                { n: null },
-                { n: null },
-                { n: "A4" },
-              ],
-            },
+          label: "BD",
+          length: "1m",
+          events: [
+            { note: "C2" },
+            { note: null },
+            { note: null },
+            { note: null },
+
+            { note: null },
+            { note: null },
+            { note: null },
+            { note: null },
+          ],
+        },
+        {
+          label: "BD",
+          length: "1m",
+          events: [
+            { note: "C2" },
+            { note: null },
+            { note: null },
+            { note: null },
+
+            { note: null },
+            { note: null },
+            { note: null },
+            { note: null },
           ],
         },
       ],
     },
-    output: "mixbus",
+    output: "ch-drums",
   },
-  type: ETrackType.Instrument,
+  type: ETrackType.Player,
 };
+/***
+ * @Track
+ */
+const DEFAULT_TRACK_SD: ITrack = {
+  id: "track-sd",
+  name: "Snare",
+  routing: {
+    input: {
+      id: "Player",
+      label: "SnarePlayer",
+      options: {
+        url: "/samples/WaveAlchemy/wa_808_tape/wa_808tape_snare_16_clean.wav",
+      },
+      parts: [
+        {
+          label: "SD",
+          length: "1m",
+          events: [
+            { note: null },
+            { note: null },
+            { note: null },
+            { note: null },
+
+            { note: "D2" },
+            { note: null },
+            { note: null },
+            { note: null },
+          ],
+        },
+        {
+          label: "SD",
+          length: "1m",
+          events: [
+            { note: null },
+            { note: null },
+            { note: null },
+            { note: null },
+
+            { note: "D2" },
+            { note: null },
+            { note: null },
+            { note: null },
+          ],
+        },
+      ],
+    },
+    output: "ch-drums",
+  },
+  type: ETrackType.Player,
+};
+const DEFAULT_TRACK_OH: ITrack = {
+  id: "track-oh",
+  name: "OH",
+  routing: {
+    input: {
+      id: "Player",
+      label: "inp-oh",
+      options: {
+        url: "/samples/WaveAlchemy/wa_808_tape/wa_808tape_openhat_01_clean.wav",
+      },
+      parts: [
+        {
+          label: "p1-oh",
+          length: "1m",
+          events: [
+            { note: "F#2" },
+            { note: null },
+            { note: "F#2" },
+            { note: null },
+
+            { note: "F#2" },
+            { note: null },
+            { note: "F#2" },
+            { note: null },
+          ],
+        },
+        {
+          label: "p2-oh",
+          length: "1m",
+          events: [
+            { note: "F#2" },
+            { note: null },
+            { note: "F#2" },
+            { note: null },
+
+            { note: "F#2" },
+            { note: null },
+            { note: "F#2" },
+            { note: null },
+          ],
+        },
+      ],
+    },
+    output: "ch-drums",
+  },
+  type: ETrackType.Player,
+};
+/***
+ * @Track
+ */
+const DEFAULT_TRACK_HI_TOM: ITrack = {
+  id: "track-hi-tom",
+  name: "HiTom",
+  routing: {
+    input: {
+      id: "Player",
+      label: "Tom Hi",
+      options: {
+        url: "/samples/WaveAlchemy/wa_drm_drums/high_tom/wadrm_hitom_acc1_r2.wav",
+      },
+      parts: [
+        {
+          label: "HiTomPart",
+          length: "1m",
+          events: [
+            { note: null },
+            { note: null },
+            { note: null },
+            { note: null },
+
+            { note: null },
+            { note: null },
+            { note: null },
+            { note: null },
+          ],
+        },
+        {
+          label: "HiTomPart",
+          length: "1m",
+          events: [
+            { note: null },
+            { note: null },
+            { note: null },
+            { note: null },
+
+            { note: null },
+            { note: "C4" },
+            { note: null },
+            { note: null },
+          ],
+        },
+      ],
+    },
+    output: "ch-drums",
+  },
+  type: ETrackType.Player,
+};
+/***
+ * @Track
+ */
+const DEFAULT_TRACK_MI_TOM: ITrack = {
+  id: "track-mi-tom",
+  name: "MiToms",
+  routing: {
+    input: {
+      id: "Player",
+      label: "Tom Mi",
+      options: {
+        url: "./samples/WaveAlchemy/wa_drm_drums/low_tom/wadrm_lotom_acc2_r5.wav",
+      },
+      parts: [
+        {
+          label: "MiTomPart",
+          length: "1m",
+          events: [
+            { note: null },
+            { note: null },
+            { note: null },
+            { note: null },
+
+            { note: null },
+            { note: null },
+            { note: null },
+            { note: null },
+          ],
+        },
+        {
+          label: "MiTomPart",
+          length: "1m",
+          events: [
+            { note: null },
+            { note: null },
+            { note: null },
+            { note: null },
+
+            { note: null },
+            { note: null },
+            { note: "F4" },
+            { note: null },
+          ],
+        },
+      ],
+    },
+    output: "ch-drums",
+  },
+  type: ETrackType.Player,
+};
+/***
+ * @Track
+ */
+const DEFAULT_TRACK_LO_TOM: ITrack = {
+  id: "track-lo-tom",
+  name: "LoTom",
+  routing: {
+    input: {
+      id: "Player",
+      label: "Tom Lo",
+      options: {
+        url: "./samples/WaveAlchemy/wa_drm_drums/mid_tom/wadrm_midtom_acc0_r5.wav",
+      },
+      parts: [
+        {
+          label: "LoTomPart",
+          length: "1m",
+          events: [
+            { note: null },
+            { note: null },
+            { note: null },
+            { note: null },
+
+            { note: null },
+            { note: null },
+            { note: null },
+            { note: null },
+          ],
+        },
+        {
+          label: "LoTomPart",
+          length: "1m",
+          events: [
+            { note: null },
+            { note: null },
+            { note: null },
+            { note: null },
+
+            { note: null },
+            { note: null },
+            { note: null },
+            { note: "E4" },
+          ],
+        },
+      ],
+    },
+    output: "ch-drums",
+  },
+  type: ETrackType.Player,
+};
+/*
 const DEFAULT_TRACK_SAMPLER: ITrack = {
   id: "track-sampler",
   name: "Sampler",
@@ -261,63 +484,70 @@ const DEFAULT_TRACK_SAMPLER: ITrack = {
             {
               label: "Kick",
               events: [
-                { n: "C3", v: 95 },
-                { n: null },
-                { n: null },
-                { n: null },
-                { n: "C3", v: 89 },
-                { n: null },
-                { n: null },
-                { n: null },
+                { note: "C3", v: 95 },
+                { note: null },
+                { note: null },
+                { note: null },
+                { note: "C3", v: 89 },
+                { note: null },
+                { note: null },
+                { note: null },
               ],
             },
             {
               label: "Snare",
               events: [
-                { n: null },
-                { n: null },
-                { n: null },
-                { n: "D3", v: 94 },
-                { n: null },
-                { n: null },
-                { n: null },
-                { n: "D3", v: 89 },
+                { note: null },
+                { note: null },
+                { note: null },
+                { note: "D3", v: 94 },
+                { note: null },
+                { note: null },
+                { note: null },
+                { note: "D3", v: 89 },
               ],
             },
             {
               label: "Closed HiHat",
               events: [
                 [
-                  { n: "E3", v: 104 },
-                  { n: "E3", v: 89 },
+                  { note: "E3", v: 104 },
+                  { note: "E3", v: 89 },
                 ],
-                { n: "E3", v: 104 },
-                { n: "E3", v: 99 },
-                { n: "E3", v: 99 },
+                { note: "E3", v: 104 },
+                { note: "E3", v: 99 },
+                { note: "E3", v: 99 },
                 [
-                  { n: "E3", v: 104 },
-                  { n: "E3", v: 79 },
+                  { note: "E3", v: 104 },
+                  { note: "E3", v: 79 },
                 ],
-                { n: "E3", v: 89 },
-                { n: "E3", v: 74 },
-                { n: null },
+                { note: "E3", v: 89 },
+                { note: "E3", v: 74 },
+                { note: null },
               ],
             },
           ],
         },
       ],
     },
-    output: "mixbus",
+    output: "ch-drums",
   },
   type: ETrackType.Sampler,
 };
+*/
+
+// --------- Channels
 
 /***
   @Channel
 */
 const DEFAULT_CHANNEL_DRUMS: IChannel = {
-  id: "channel-drums",
+  id: "ch-drums",
   label: "Drums",
+  routing: {
+    input: "(drums)",
+    output: "master",
+  },
   options: {
     channelCount: 1,
     mute: false,
@@ -326,13 +556,13 @@ const DEFAULT_CHANNEL_DRUMS: IChannel = {
     volume: 0,
   },
 };
-
 /***
   @Channel
 */
 const DEFAULT_CHANNEL_MASTER: IChannel = {
   id: "master",
   label: "Master",
+  routing: { input: "(all)", output: "Stereo out" },
   options: {
     channelCount: 1,
     mute: false,
@@ -346,6 +576,7 @@ export {
   DEFAULT_ACTIVE_TRACK_ID,
   DEFAULT_BPM,
   DEFAULT_CLEF,
+  DEFAULT_SCALE,
   DEFAULT_MEASURE_COUNT,
   DEFAULT_NAME,
   DEFAULT_OFFSET_LEFT,
@@ -356,11 +587,16 @@ export {
   //
   DEFAULT_STATES,
   //
-  DEFAULT_TRACK_AUDIO,
-  DEFAULT_TRACK_INSTRUMENT_BASS,
-  DEFAULT_TRACK_PLAYERS,
-  DEFAULT_TRACK_SAMPLER,
-  //
+  // DEFAULT_TRACK_AUDIO,
+  // DEFAULT_TRACK_INSTRUMENT_BASS,
+  // DEFAULT_TRACK_PLAYERS,
+  // DEFAULT_TRACK_SAMPLER,
+  DEFAULT_TRACK_BD,
+  DEFAULT_TRACK_SD,
+  DEFAULT_TRACK_OH,
+  DEFAULT_TRACK_HI_TOM,
+  DEFAULT_TRACK_MI_TOM,
+  DEFAULT_TRACK_LO_TOM,
   DEFAULT_CHANNEL_DRUMS,
   DEFAULT_CHANNEL_MASTER,
   //

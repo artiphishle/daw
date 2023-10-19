@@ -7,4 +7,5 @@ export interface IChannel {
   readonly label: string;
   readonly options: Partial<Tone.ChannelOptions>;
   channel?: Tone.Channel;
+  readonly routing: { input: string; output: string };
 }
