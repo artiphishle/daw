@@ -1,6 +1,6 @@
 import useOscillator, {
   Options,
-} from "@/app/core/instruments/hooks/_useOscillator";
+} from "@/core/instruments/hooks/_useOscillator";
 
 interface IOscillatorProps {
   options: Options;

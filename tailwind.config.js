@@ -319,5 +319,5 @@ module.exports = {
   plugins: [],
 
   // type TDarkMode = "class"|"media"|"false"
-  darkmode: "class",
+  darkmode: "false",
 };

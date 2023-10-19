@@ -2,11 +2,11 @@
 import { useState } from "react";
 import cn from "classnames";
 
-import useTransport from "@/app/core/hooks/useTransport";
-import { DEFAULT_OFFSET_LEFT } from "@/app/core/config/constants";
+import useTransport from "@/core/hooks/useTransport";
+import { DEFAULT_OFFSET_LEFT } from "app/common/constants";
 
-import { EUnit } from "@/app/types/utility.types";
-import type { IProjectContext } from "@/app/types/project.types";
+import { EUnit } from "app/common/types/utility.types";
+import type { IProjectContext } from "app/common/types/project.types";
 
 interface ILocator {
   className?: string;
@@ -24,7 +24,6 @@ export default function Locator({ className = "", projectContext }: ILocator) {
 
   function loopFn(position: string) {
     const splitPosition = position.toString().split(":");
-
     const currentMeasure = parseInt(splitPosition[0], 10);
     const currentQuarter = parseInt(splitPosition[1], 10);
     if (currentQuarter === quarter) return;

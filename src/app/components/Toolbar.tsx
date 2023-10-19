@@ -1,8 +1,8 @@
 import { MenuIcon } from "lucide-react";
 
-import t from "@/app/core/i18n";
-import styles from "@/app/core/config/styles";
-import { Transport } from "@/app/components";
+import t from "@/core/i18n";
+import styles from "app/common/styles";
+import { Transport } from "@/components";
 
 export default function Toolbar() {
   return (

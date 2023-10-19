@@ -1,8 +1,10 @@
 import { Dispatch, SetStateAction } from "react";
-import { Dialog } from "../ui";
-import styles from "../core/config/styles";
+import { Button, Dialog } from "../../packages/ui";
+import styles from "../common/styles";
 import { start } from "tone";
 import t from "../core/i18n";
+import { EButtonType } from "packages/ui/button/Button";
+import { EVariant } from "packages/ui/constants";
 
 interface IStartDialog {
   toneReady: boolean;
@@ -13,15 +15,15 @@ function StartDialog({ toneReady, setToneReady }: IStartDialog) {
   return (
     <Dialog className={styles.dialog} id="start" open>
       <p className="p-4">{t("dialog.allowAudio")}</p>
-      <button
-        className={styles.button.primary}
+      <Button
         onClick={async () => {
           await start();
           setToneReady(true);
         }}
-      >
-        {t("ok")}
-      </button>
+        type={EButtonType.Button}
+        value="OK"
+        variant={EVariant.Primary}
+      />
     </Dialog>
   );
 }

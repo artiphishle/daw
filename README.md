@@ -4,6 +4,18 @@
 
 ---
 
+## Kauderwälsch
+
+There are some terms/abbreviations used in the code, here the list:
+
+| Const | Meaning | Description      | Reason                                  |
+| ----- | ------- | ---------------- | --------------------------------------- |
+| $     | css     | Component styles | reserved, DI\* planned                  |
+| $d    | data    | Component data   | reserved, DI\* planned                  |
+| $e    | event   | Component event  | reserved, elsewhere placed should throw |
+
+\* Dependency Injection
+
 ## 🎼Quickstart
 
 Assuming you have [Node.js](https://nodejs.org) installed...
@@ -76,15 +88,35 @@ We're [@here](https://github.com/scha-ch/daw/discussions) 🙋‍♂️ and [@th
 
 ---
 
-## 🎼Screenshot
+## 🎼Screenshots
 
-![alt DAW Screenshot](./public/screenshot.png)
+Design will be applied soon, this is just a raw sketch!
+
+![alt DAW Screenshot Arranger](./public/screenshot.png)
+
+<div style='display:flex;flex-direction:row;gap:4rem'>
+
+![alt DAW Screenshot News](./public/screenshot3.png)
+
+![alt DAW Screenshot Sheets](./public/screenshot2.png)
+
+</div>
 
 ---
 
 ## 🎼Changelog
 
 ### 🍂 October 2023
+
+#### 14th
+
+- **Mixer** FFT Analyzers for all tracks
+- **Cypress** Component & E2E tests (removed Jest)
+
+#### 13th
+
+- **Progression** Show famous chord progressions by tonic (try to change clef on top)
+- **E2E Testing** using Cypress, also integrated into CI pipeline & first test for DnD useSortable tracks (Arranger)
 
 #### 12th
 

@@ -2,10 +2,12 @@
 import { useEffect } from "react";
 import { Midi } from "@tonejs/midi";
 
+import styles from "@/common/styles";
 import abcjs, { type TuneObjectArray } from "abcjs";
 import "abcjs/abcjs-audio.css";
-import styles from "../core/config/styles";
+import t from "@/core/i18n";
 // import { PanSongParsed } from "testdata/unit/PanSong.parsed";
+
 // import type { NoteEventTime as INoteEventTime } from "@spotify/basic-pitch/types";
 
 export enum ENoteStyle {
@@ -68,7 +70,7 @@ ISheet) {
 
   return (
     <section className="bg-white p-8">
-      <h1 className={styles.headings.h1}>Sheets</h1>
+      <h1 className={styles.headings.h1}>{t("sheets")}</h1>
       <p>
         The music sheet was generated using abc.js, markdown for music notes!
       </p>

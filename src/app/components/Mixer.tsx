@@ -1,51 +1,27 @@
 "use client";
-import { useWindowWidth } from "@react-hook/window-size";
-import { Destination, Meter as ToneMeter, Volume } from "tone";
-import classNames from "classnames";
-
-import t from "@/app/core/i18n";
-import { AudioIcon, GroupIcon, MidiIcon } from "@/app/core/config/icons";
-import useProjectContext from "@/app/core/hooks/api/useProjectContext";
-import { Meter } from "@/app/components";
-
 import { useCallback, useMemo, type ReactNode } from "react";
+import { Loader } from "lucide-react";
+import { useWindowWidth } from "@react-hook/window-size";
+import classNames from "classnames";
+import * as Tone from "tone";
+
+import { NUM_BANDS } from "./Analyzer";
+import t from "@/core/i18n";
+import { getIconByType } from "config/icons";
+import useProjectContext from "@/core/hooks/api/useProjectContext";
+import { Analyzer } from "@/components";
+import { ButtonGroup, Knob, MuteButton, SoloButton } from "packages/ui";
+
+import { ESize, EVariant } from "packages/ui/constants";
 import type { UniqueIdentifier } from "@dnd-kit/core";
+import { ETrackType, type ITrack } from "app/common/types/track.types";
+import type { IMixer } from "app/common/types/mixer.types";
 
-import styles from "@/app/core/config/styles";
-import { ButtonGroup } from "@/ui";
-import {
-  Button,
-  EButtonType,
-  ESize,
-  EVariant,
-} from "@/ui/element/button/Button";
-import Knob from "../ui/audio/Knob";
-
-import { ETrackType, type ITrack } from "@/types/track";
-import type { IMixer } from "@/types/mixer";
-
+import styles from "app/common/styles";
+import { DEFAULT_OFFSET_LEFT } from "@/common/constants";
 const $ = styles.mixer;
-const btn =
-  "w-[calc(100%-4px)] ml-[2px] mb-2 text-center lg:w-[80%] lg:ml-[10%] lg:p-1";
+// ("w-[calc(100%-4px)] ml-[2px] mb-2 text-center lg:w-[80%] lg:ml-[10%] lg:p-1");
 
-const getTrackTypeIcon = (type: ETrackType) => {
-  const props = { className: styles.icon };
-  switch (type) {
-    case ETrackType.Audio:
-      return <AudioIcon {...props} />;
-    case ETrackType.Group:
-      return <GroupIcon {...props} />;
-    case ETrackType.Instrument:
-      return <MidiIcon {...props} />;
-    case ETrackType.Players:
-      return <MidiIcon {...props} />;
-    case ETrackType.Sampler:
-      return <MidiIcon {...props} />;
-    default:
-      console.error("[Mixer] Unknown trackType:", type);
-      return <></>;
-  }
-};
 const Inner = ({ children }: { children: ReactNode }) => (
   <div className={$.track.inner}>{children}</div>
 );
@@ -56,9 +32,26 @@ const TplFX = () => (
     </ol>
   </div>
 );
+const getTrackData = (track: ITrack, activeTrackId: UniqueIdentifier) => {
+  const { id, routing, type, name } = track;
+  const { input, output } = routing;
+  const { instrument, label } = input;
+  const active = activeTrackId === id ? "active" : "inactive";
+  const cn = classNames($.track.main, $.track[active]);
+  const Icon = getIconByType(type);
+  return { cn, Icon, id, instrument, label, name, output };
+};
 
 export default function Mixer({ openInstrument }: IMixer) {
   const windowWidth = useWindowWidth();
+
+  /* 1. Master Settings */
+  const masterFft = new Tone.FFT(NUM_BANDS);
+  const masterLimiter = new Tone.Limiter(-0.01);
+  const masterGain = new Tone.Gain(-1)
+    .toDestination()
+    .chain(masterLimiter, masterFft);
+
   const FxChannel = useMemo(
     () => ({
       Inserts: () => <TplFX />,
@@ -80,85 +73,118 @@ export default function Mixer({ openInstrument }: IMixer) {
     },
     [openInstrument]
   );
-  const getChannelData = (track: ITrack, activeTrackId: UniqueIdentifier) => {
-    const { id, routing, type, name } = track;
-    const { input, output } = routing;
-    const { instrument, label } = input;
-    const active = activeTrackId === id ? "active" : "inactive";
-    const Icon = getTrackTypeIcon(type);
-    const cn = classNames($.track.main, $.track[active]);
-    return { cn, Icon, id, instrument, label, name, output };
-  };
-  const { projectContext } = useProjectContext();
-  if (!projectContext) return null;
-  const { tracks, activeTrackId } = projectContext;
+  const { projectContext: $d } = useProjectContext();
+  const tracks = $d?.tracks || [];
+  const channels = $d?.channels || [];
+  if (!$d || !tracks.length) return <Loader />;
+
   const w = `calc(${windowWidth / tracks.length}px)`;
-  const width = `${parseInt(w, 10) - 168}px`;
+  const width = `${parseInt(w, 10) - DEFAULT_OFFSET_LEFT}px`;
+
+  const mixerTracks = tracks.map((track, trackIndex) => {
+    const fft = new Tone.FFT(NUM_BANDS);
+    const trackData = getTrackData(track, $d!.activeTrackId);
+    const { cn, Icon, instrument, label, name, output } = trackData;
+    const player = instrument!.instrument as Tone.Player;
+    player
+      .chain(fft, masterGain)
+      .load((instrument!.options as Tone.PlayerOptions).url as string);
+
+    return (
+      <section
+        key={`${track.id}-${trackIndex}`}
+        className={classNames(cn, "relative")}
+        style={{ width, minWidth: "65px" }}
+      >
+        <Inner>
+          <Knob size={ESize.Sm} max={1} min={0} value={0.8} />
+          <Knob
+            size={ESize.Sm}
+            color={EVariant.Primary}
+            max={50}
+            min={-50}
+            value={0}
+          />
+        </Inner>
+        <ButtonGroup className="absolute top-0 right-0">
+          <SoloButton />
+          <MuteButton />
+        </ButtonGroup>
+        <Inner>{getRouting({ label, output })}</Inner>
+        <Inner>
+          <FxChannel.Inserts />
+        </Inner>
+        <Inner>
+          <FxChannel.Sends />
+        </Inner>
+        <Inner>
+          <h2>{label}</h2>
+        </Inner>
+        <Analyzer className={$.meter} color="white" fft={fft} />
+        <Inner>
+          <Icon /> {name}
+        </Inner>
+      </section>
+    );
+  });
+  const channelTracks = channels.map((channel, channelIndex) => {
+    const fft = new Tone.FFT(NUM_BANDS);
+    channel.channel!.chain(fft, masterGain);
+    const Icon = getIconByType(ETrackType.Channel);
+
+    return (
+      <section
+        key={`${channel.id}-${channelIndex}`}
+        className={classNames(
+          $.track.main,
+          "justify-end relative bg-green-700"
+        )}
+        style={{ width, minWidth: "65px" }}
+      >
+        <Inner>
+          <Knob size={ESize.Sm} max={1} min={0} value={0.8} />
+          <Knob
+            size={ESize.Sm}
+            color={EVariant.Primary}
+            max={50}
+            min={-50}
+            value={0}
+          />
+        </Inner>
+        <ButtonGroup className="absolute top-0 right-0">
+          <SoloButton />
+          <MuteButton />
+        </ButtonGroup>
+        <Inner>
+          {getRouting({
+            label: channel.routing.input,
+            output: channel.routing.output,
+          })}
+        </Inner>
+        <Inner>
+          <FxChannel.Inserts />
+        </Inner>
+        <Inner>
+          <FxChannel.Sends />
+        </Inner>
+        <Inner>
+          <h2>{channel.label}</h2>
+        </Inner>
+        <Analyzer
+          className={classNames($.meter, "bg-green-900")}
+          color="white"
+          fft={channel.id === "master" ? masterFft : fft}
+        />
+        <Inner>
+          <Icon /> {channel.label}
+        </Inner>
+      </section>
+    );
+  });
 
   return (
-    <section className={$.main}>
-      <div className={$.inner}>
-        {tracks.map((track) => {
-          const { cn, Icon, id, instrument, label, name, output } =
-            getChannelData(track, activeTrackId);
-
-          const meter = new ToneMeter();
-          const volume = new Volume();
-
-          if (instrument?.instrument) {
-            instrument?.instrument?.chain(volume, meter, Destination);
-          }
-
-          return (
-            <div
-              key={id}
-              className={classNames(cn, "relative")}
-              style={{ width, minWidth: "65px" }}
-            >
-              <Inner>
-                <Knob size={ESize.Sm} max={1} min={0} value={0.8} />
-                <Knob
-                  size={ESize.Sm}
-                  color={EVariant.Primary}
-                  max={50}
-                  min={-50}
-                  value={0}
-                />
-              </Inner>
-              <ButtonGroup className="absolute top-0 right-0">
-                <Button
-                  size={ESize.Sm}
-                  title="Solo"
-                  type={EButtonType.Button}
-                  variant={EVariant.Primary}
-                  value="S"
-                />
-                <Button
-                  size={ESize.Sm}
-                  title="Mute"
-                  type={EButtonType.Button}
-                  value="M"
-                  variant={EVariant.Error}
-                />
-              </ButtonGroup>
-              <Inner>{getRouting({ label, output })}</Inner>
-              <Inner>
-                <FxChannel.Inserts />
-              </Inner>
-              <Inner>
-                <FxChannel.Sends />
-              </Inner>
-              <Inner>
-                <h2>{label}</h2>
-              </Inner>
-              <Meter className={$.meter} meter={meter} />
-              <Inner>
-                {Icon} <span>{name}</span>
-              </Inner>
-            </div>
-          );
-        })}
-      </div>
+    <section id="DAW_MXR" className={$.main}>
+      {[...mixerTracks, ...channelTracks]}
     </section>
   );
 }

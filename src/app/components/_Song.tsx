@@ -2,7 +2,7 @@
 import { type ReactNode, useEffect, useState, createContext } from "react";
 import { Transport } from "tone";
 
-import useProjectContext from "@/app/core/hooks/api/useProjectContext";
+import useProjectContext from "@/core/hooks/api/useProjectContext";
 
 interface ISongContext {
   isPlaying?: boolean;

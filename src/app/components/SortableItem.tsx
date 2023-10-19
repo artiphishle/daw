@@ -3,7 +3,7 @@ import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
 import { GripVerticalIcon } from "lucide-react";
 
-import styles from "@/app/core/config/styles";
+import styles from "app/common/styles";
 
 import type { UniqueIdentifier } from "@dnd-kit/core";
 
@@ -35,7 +35,7 @@ export default function SortableItem({
       style={style}
       {...attributes}
     >
-      <div {...listeners} className="absolute left-0 bottom-0 top-0 right-auto">
+      <div {...listeners} className="absolute left-[.3rem] top-[.5rem]">
         <GripVerticalIcon />
       </div>
       {children}

@@ -1,7 +1,7 @@
 "use client";
-import { type MouseEvent, useEffect, useState } from "react";
-import { useWindowWidth } from "@react-hook/window-size";
+import { type MouseEvent, useEffect } from "react";
 import { CogIcon, GridIcon, HopIcon, InfinityIcon } from "lucide-react";
+import * as Tone from "tone";
 import {
   DndContext,
   useSensor,
@@ -10,11 +10,14 @@ import {
   useSensors,
 } from "@dnd-kit/core";
 
-import styles from "@/app/core/config/styles";
-import { DEFAULT_OFFSET_LEFT } from "@/app/core/config/constants";
+import styles from "@/common/styles";
+import {
+  DEFAULT_MEASURE_COUNT,
+  DEFAULT_OFFSET_LEFT,
+  DEFAULT_QUANTIZATION,
+} from "@/constants";
 // Import { PanSongParsed } from "./test/unit/PanSong.parsed";
-// import useConverter from "@/app/core/hooks/useConverter";
-import data from "@/test/data/sheet";
+// import useConverter from "@/core/hooks/useConverter";
 import {
   Arranger,
   Browser,
@@ -25,20 +28,28 @@ import {
   Progression,
   Settings,
   Sheet,
-} from "@/app/components";
-import { A, Grid, Nav, Tabs, TabsPanel } from "@/ui";
-import useProjectContext from "@/app/core/hooks/api/useProjectContext";
-import useAudioInstrument from "@/app/core/hooks/audio/useAudioInstrument";
+} from "@/components";
+import { A, Grid, Nav, Tabs, TabsPanel } from "packages/ui";
+import useProjectContext from "@/core/hooks/api/useProjectContext";
+import useAudioInstrument from "@/core/hooks/audio/useAudioInstrument";
 
 import type { Note as TNote } from "tone/build/esm/core/type/NoteUnits";
 import t from "../core/i18n";
 import _ from "lodash/fp";
+import Adsr from "packages/ui/audio/envelope/adsr/Adsr";
+import data from "../../../cypress/fixtures/sheet";
 
 export function App() {
   const { isOpen, InstrumentPortal, openInstrument, closeInstrument } =
     useAudioInstrument();
+
+  useEffect(() => {
+    const audioContext = new Tone.Context();
+    audioContext.resume();
+    // Your audio processing code goes here
+  }, []);
+
   // const { audioToAbc, audioToMidi } = useConverter();
-  const [gridCols, setGridCols] = useState<number>();
   const mouseSensor = useSensor(MouseSensor);
   const sensors = useSensors(mouseSensor);
 
@@ -65,21 +76,15 @@ export function App() {
   }, [audioToAbc]);
   */
 
-  const windowWidth = useWindowWidth();
   const { projectContext, patchProjectContext } = useProjectContext();
-
-  useEffect(() => {
-    if (!projectContext) return;
-    setGridCols(projectContext.quantization * projectContext.measureCount);
-  }, [projectContext]);
-
-  if (!projectContext) return null;
-  const {
-    activeTrackId,
-    clef,
-    states: { tabBtmActive, tabTopActive },
-    tracks,
-  } = projectContext;
+  const gridCols =
+    (projectContext?.quantization || DEFAULT_QUANTIZATION) *
+    (projectContext?.measureCount || DEFAULT_MEASURE_COUNT);
+  const activeTrackId = projectContext?.activeTrackId;
+  const clef = projectContext?.clef;
+  const tabBtmActive = projectContext?.states.tabBtmActive;
+  const tabTopActive = projectContext?.states.tabTopActive;
+  const tracks = projectContext?.tracks || [];
 
   const tabsBottomItems = [
     {
@@ -123,15 +128,17 @@ export function App() {
           {/* TODO Extract as 'Backdrop' component */}
           <section className="relative">
             <Grid
-              className={"absolute top-[32px] left-[168px] right-0 bottom-0"}
+              className={
+                "grid absolute top-[32px] left-[184px] right-0 bottom-0"
+              }
               cols={gridCols}
               rows={tracks.length}
               classNameItem="h-[40px] border border-[#fff] mb-[1px]"
             />
+            <Arranger className="absolute top-0 left-0 right-0 bottom-0" />
           </section>
-          <Arranger className="absolute top-0 left-0 right-0 bottom-0" />
           <Tabs className="justify-end">
-            <Nav className={`ml-[${DEFAULT_OFFSET_LEFT}px]`}>
+            <Nav className={`ml-[184px]`}>
               {tabsBottomItems.map(({ id, children }: any, aIndex) => (
                 <A
                   classNameActive="bg-white font-bold"
@@ -205,12 +212,21 @@ export function App() {
       panel: (
         <Droppable id="dropzone-1">
           <section className="bg-white p-8">
-            <h1 className={styles.headings.h1}>Testing</h1>
+            <h1 className={styles.headings.h1}>News & Showroom</h1>
             <hr className="my-8" />
-            <h2 className={styles.headings.h2}>
-              {_.upperFirst(t("progression"))}
-            </h2>
-            <Progression tonic={clef as TNote} />
+            <section className="flex flex-col lg:flex-row gap-8">
+              <section>
+                <h2 className={styles.headings.h2}>
+                  {_.upperFirst(t("progression"))}
+                </h2>
+                <Progression tonic={clef as TNote} />
+              </section>
+              <section>
+                <h2 className={styles.headings.h2}>ADSR Shaper</h2>
+                <br />
+                <Adsr />
+              </section>
+            </section>
           </section>
         </Droppable>
       ),
@@ -265,7 +281,6 @@ export function App() {
         {isOpen &&
           tracks.map((track) => {
             if (activeTrackId !== track.id) return null;
-            console.log(track.id);
             const I = track.routing.input.instrument?.Instrument;
             if (!I) return null;
             return (

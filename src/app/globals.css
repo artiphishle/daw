@@ -2,12 +2,14 @@
 @tailwind components;
 @tailwind utilities;
 
+* {
+  box-sizing: border-box;
+}
 :root {
   --foreground-rgb: 0, 0, 0;
   --background-start-rgb: 214, 219, 220;
   --background-end-rgb: 255, 255, 255;
 }
-
 @media (prefers-color-scheme: dark) {
   :root {
     --foreground-rgb: 255, 255, 255;
@@ -15,7 +17,6 @@
     --background-end-rgb: 0, 0, 0;
   }
 }
-
 body {
   color: rgb(var(--foreground-rgb));
   background: linear-gradient(
@@ -25,7 +26,6 @@ body {
     )
     rgb(var(--background-start-rgb));
 }
-
 /**
  * Form
  */
@@ -36,7 +36,6 @@ input[type="range"][orient="vertical"] {
   height: 175px;
   padding: 0 5px;
 }
-
 .vertical {
   width: 175px;
   height: 16px;
@@ -46,7 +45,6 @@ input[type="range"][orient="vertical"] {
   left: 50%;
   bottom: -1em;
 }
-
 .vertical-wrapper {
   display: inline-block;
   width: 16px;
@@ -58,7 +56,7 @@ input[type="range"][orient="vertical"] {
 /**
  * Animated SnareDrum
  */
-.drum {
+/* .drum {
   --drum-yellow: #e9c46a;
   --drum-dark-yellow: #cf9b1f;
   --drum-light-red: #ef233c;
@@ -355,14 +353,11 @@ input[type="range"][orient="vertical"] {
     transform: scale(0.6);
     opacity: 1;
   }
-}
+} */
 
 /**
  * ADSR Envelope Plugin
  */
-* {
-  box-sizing: border-box;
-}
 .defs {
   position: absolute;
   width: 0;
@@ -370,16 +365,17 @@ input[type="range"][orient="vertical"] {
   opacity: 0;
 }
 .fl-studio-envelope {
-  position: absolute;
+  /* position: absolute;
   left: 50%;
   top: 50%;
+  */
   width: 600px;
   padding: 20px;
   overflow: hidden;
   background: #363c40;
   border: 2px solid #272d31;
   box-shadow: 0 10px 70px rgba(0, 0, 0, 0.6);
-  transform: translate(-50%, -50%);
+  /* transform: translate(-50%, -50%); */
 }
 .fl-studio-envelope__visualizer {
   height: 200px;
@@ -468,7 +464,7 @@ input[type="range"][orient="vertical"] {
   height: 100%;
 }
 .knob-input__input {
-  cursor: grab;
+  cursor: grabbing;
   position: absolute;
   left: 0;
   top: 0;

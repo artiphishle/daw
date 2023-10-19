@@ -1,75 +1,58 @@
 "use client";
 import useSWR, { useSWRConfig } from "swr";
-import {
-  MembraneSynth,
-  MembraneSynthOptions,
-  MetalSynth,
-  MetalSynthOptions,
-  NoiseSynth,
-  NoiseSynthOptions,
-  Sampler as ToneSampler,
-  SamplerOptions,
-  Synth,
-  SynthOptions,
-  MonoSynth,
-  MonoSynthOptions,
-  getContext,
-  Players,
-  PlayersOptions,
-} from "tone";
+import * as Tone from "tone";
 
-import OmniSynth from "@/app/core/instruments/OmniSynth";
+import OmniSynth from "@/core/instruments/OmniSynth";
 
-import { EEndpoint } from "@/types/api";
-import { ETrackType } from "@/types/track";
-import type { IProjectContext } from "@/types/project";
+import { EEndpoint } from "app/common/types/api.types";
+import { ETrackType } from "app/common/types/track.types";
+import type { IProjectContext } from "app/common/types/project.types";
 import {
   type TInputOptions,
   type IInstrument,
   EInstrument,
-} from "@/types/instrument";
-import Sampler from "../../instruments/Sampler";
+} from "app/common/types/instrument.types";
+import Sampler from "@/core/instruments/Sampler";
 
 // TODO load instruments dynamically
-const loadInstrument = (
-  _instrument: EInstrument,
-  options: TInputOptions
-): IInstrument => {
+const loadInstrument = (_instrument: EInstrument, options: TInputOptions) => {
   let instrument = null;
   let Instrument = null;
 
   switch (_instrument) {
     case EInstrument.MembraneSynth:
       Instrument = OmniSynth;
-      instrument = new MembraneSynth(options as MembraneSynthOptions);
+      instrument = new Tone.MembraneSynth(options as Tone.MembraneSynthOptions);
       break;
     case EInstrument.MetalSynth:
       Instrument = OmniSynth;
-      instrument = new MetalSynth(options as MetalSynthOptions);
+      instrument = new Tone.MetalSynth(options as Tone.MetalSynthOptions);
       break;
     case EInstrument.MonoSynth:
       Instrument = OmniSynth;
-      instrument = new MonoSynth(options as MonoSynthOptions);
+      instrument = new Tone.MonoSynth(options as Tone.MonoSynthOptions);
       break;
     case EInstrument.NoiseSynth:
       Instrument = OmniSynth;
-      instrument = new NoiseSynth(options as NoiseSynthOptions);
+      instrument = new Tone.NoiseSynth(options as Tone.NoiseSynthOptions);
       break;
     case EInstrument.Player:
       Instrument = OmniSynth;
-      instrument = new Players(options as PlayersOptions);
+      instrument = new Tone.Player(options as Tone.PlayerOptions);
       break;
     case EInstrument.Players:
       Instrument = OmniSynth;
-      instrument = new Players(options as PlayersOptions) as Players;
+      instrument = new Tone.Players(
+        options as Tone.PlayersOptions
+      ) as Tone.Players;
       break;
     case EInstrument.Sampler:
       Instrument = Sampler;
-      instrument = new ToneSampler(options as SamplerOptions);
+      instrument = new Tone.Sampler(options as Tone.SamplerOptions);
       break;
     case EInstrument.Synth:
       Instrument = OmniSynth;
-      instrument = new Synth(options as SynthOptions);
+      instrument = new Tone.Synth(options as Tone.SynthOptions);
       break;
     default:
       console.error(
@@ -77,34 +60,44 @@ const loadInstrument = (
         _instrument
       );
       Instrument = OmniSynth;
-      instrument = new Synth(options as SynthOptions);
+      instrument = new Tone.Synth(options as Tone.SynthOptions);
   }
-  console.info("✅", _instrument);
   return {
     Instrument,
     instrument,
     options,
   };
 };
-const INSTRUMENT_TYPE = [ETrackType.Instrument, ETrackType.Sampler];
 
 export default function useProjectContext() {
   const { mutate } = useSWRConfig();
 
   // Add unserializable data and return the data
   const deselectData = (data: IProjectContext) => {
-    if (!data.tracks) return data;
-    const deselectedTracks = data.tracks.map((track) => {
-      if (!INSTRUMENT_TYPE.includes(track.type)) return track;
+    const { channels = [], tracks = [] } = data;
 
+    // 1 Channel
+    const deselectedChannels = channels.map((channel) => ({
+      ...channel,
+      channel: new Tone.Channel(channel.options),
+    }));
+
+    // 2 Instrument
+    const deselectedTracks = tracks.map((track) => {
+      const { type, routing } = track;
+
+      if (type !== ETrackType.Player) return track;
       const instrument: IInstrument = loadInstrument(
-        track.routing.input.id as EInstrument,
-        { ...track.routing.input.options, context: getContext() }
+        routing.input.id as EInstrument,
+        { ...routing.input.options }
       );
-      track.routing.input.instrument = instrument;
-      return track;
+      routing.input.instrument = instrument;
+      return {
+        ...track,
+        routing: { ...routing, input: { ...routing.input, instrument } },
+      };
     });
-    return { ...data, tracks: deselectedTracks };
+    return { ...data, channels: deselectedChannels, tracks: deselectedTracks };
   };
 
   // Remove unnserializable data and return the 'patch' to be applied

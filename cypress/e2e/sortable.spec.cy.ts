@@ -1,7 +1,17 @@
 describe("[Arranger]", () => {
-  it("should persist track sorting and update mixer sorting", () => {
-    // cy.visit("http://localhost:3000");
-    // cy.get("button").click();
+  it("should update the order of tracks in Arranger & Mixer", () => {
+    /*
+    cy.stub(Tone, "Player").returns({
+      load: cy.stub(),
+      loaded: true,
+      toDestination: cy.stub(),
+      sync: cy.stub(),
+      start: cy.stub(),
+      stop: cy.stub(),
+      dispose: cy.stub(),
+    });
+    */
+
     cy.get("svg.lucide-grip-vertical")
       .eq(0)
       .parent()
@@ -19,7 +29,7 @@ describe("[Arranger]", () => {
         button: 0,
         eventConstructor: "MouseEvent",
         clientX: 40,
-        clientY: 300,
+        clientY: 100,
         bubbles: true,
         force: true,
       })
@@ -33,16 +43,9 @@ describe("[Arranger]", () => {
       .eq(0)
       .parent()
       .parent()
-      .should("not.have.id", "track-instrument-bass");
+      .should("not.have.id", "track-bd");
 
-    // cy.get("svg.lucide-grip-vertical").eq(5).parent().parent();
-
-    /* cy.get("svg.lucide-grip-vertical")
-      .eq(5)
-      .parent()
-      .parent()
-      .should("have.id", "track-instrument-bass"); */
-
-    // TODO check mixer sorting
+    // mixer sorting
+    cy.get("#DAW_MXR > section:first-child").should("not.contain.text", "Kick");
   });
 });
