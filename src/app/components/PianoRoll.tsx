@@ -1,11 +1,11 @@
+import _ from "lodash/fp";
 import { Scale } from "tonal";
 
-import { DEFAULT_OFFSET_LEFT } from "@/app/core/config/constants";
-import useProjectContext from "@/app/core/hooks/api/useProjectContext";
-import { Grid } from "@/ui";
+import { DEFAULT_OFFSET_LEFT } from "app/common/constants";
+import useProjectContext from "@/core/hooks/api/useProjectContext";
+import { Grid } from "packages/ui";
 
-import type { ITrack } from "@/types/track";
-import _ from "lodash/fp";
+import type { ITrack } from "app/common/types/track.types";
 
 export default function PianoRoll() {
   // Const [currentStepIndex, setCurrentStepIndex] = useState(0);
@@ -19,11 +19,7 @@ export default function PianoRoll() {
     console.error("[PianoRoll] No active track");
     return null;
   }
-  const events = activeTrack.routing.input.parts?.[0].sequences?.[0]?.events;
-  const notes = events?.map((event) =>
-    _.isArray(event) ? event.map(({ n }) => n) : event.n && event.n
-  );
-
+  const events = activeTrack.routing.input.parts?.[0].events;
   const notes2 = Scale.get(`${clef}2 major`).notes;
   const notes1 = Scale.get(`${clef}1 major`).notes;
   const noteScale = [...notes2.reverse(), ...notes1.reverse()];
@@ -33,9 +29,9 @@ export default function PianoRoll() {
   const rows = new Array(noteScale.length * gridColumnCount).fill("_");
 
   return (
-    <section className="mb-10">
+    <section className="mb-10 bg-white">
       <div className="flex flex-cols text-xs">
-        <Grid cols={1} style={{ width: DEFAULT_OFFSET_LEFT }}></Grid>
+        <Grid cols={1} style={{ width: DEFAULT_OFFSET_LEFT }} />
         <Grid className="flex-1" cols={gridColumnCount}>
           {rows.map((row, rowIndex) => (
             <div key={`pianoroll-griditem-${rowIndex}`}>{row}</div>

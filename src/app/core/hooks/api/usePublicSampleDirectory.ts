@@ -1,9 +1,9 @@
 import useSWR from "swr";
 
-import { fetcher } from "@/app/core/config/fetcher";
+import { fetcher } from "config/fetcher";
 
-import { EEndpoint } from "@/types/api";
-import type { IDirectory } from "@/types/fs";
+import { EEndpoint } from "app/common/types/api.types";
+import type { IDirectory } from "app/common/types/fs.types";
 
 const usePublicSampleDirectory = () => {
   const {

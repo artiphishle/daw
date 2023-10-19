@@ -13,14 +13,13 @@ import {
   verticalListSortingStrategy,
 } from "@dnd-kit/sortable";
 
-import styles from "@/app/core/config/styles";
-import { Locator } from "@/app/components";
-import Track from "@/app/components/track/Track";
+import styles from "app/common/styles";
+import { Locator, Track } from "@/components";
 import Time from "./Time";
-import useProjectContext from "@/app/core/hooks/api/useProjectContext";
+import useProjectContext from "@/core/hooks/api/useProjectContext";
 
-import type { IArranger } from "../types/arranger.types";
-import { EEndpoint } from "../types/api.types";
+import type { IArranger } from "../common/types/arranger.types";
+import { EEndpoint } from "../common/types/api.types";
 
 export default function Arranger({ className = "" }: IArranger) {
   const mouseSensor = useSensor(MouseSensor);
@@ -44,7 +43,7 @@ export default function Arranger({ className = "" }: IArranger) {
       mutate(EEndpoint.ProjectSettings);
     },
   };
-  console.log("rendering tracks now");
+  console.warn("[Arranger] suspicious rerender amount");
   return (
     <section className={classNames($.main, className)}>
       <DndContext

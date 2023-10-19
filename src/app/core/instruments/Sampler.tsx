@@ -5,8 +5,8 @@ import { useDraggable } from "@dnd-kit/core";
 import { Sampler as ToneSampler, SamplerOptions } from "tone";
 import { Scale } from "tonal";
 
-import { ButtonGroup, Grid } from "@/ui";
-import useProjectContext from "@/app/core/hooks/api/useProjectContext";
+import { ButtonGroup, Grid } from "packages/ui";
+import useProjectContext from "@/core/hooks/api/useProjectContext";
 
 interface IPad {
   instrument: ToneSampler;

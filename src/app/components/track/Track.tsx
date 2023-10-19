@@ -1,22 +1,21 @@
 "use client";
+import _ from "lodash/fp";
 import { useEffect } from "react";
 import classNames from "classnames";
 import { useWindowWidth } from "@react-hook/window-size";
+import * as Tone from "tone";
 
-import { getIconByType } from "@/app/core/config/icons";
-import styles from "@/app/core/config/styles";
-import SortableItem from "@/app/components/SortableItem";
-import useScheduler from "@/app/core/hooks/audio/useAudioScheduler";
+import { getIconByType } from "config/icons";
+import { SortableItem } from "@/components";
+import useScheduler from "@/core/hooks/audio/useAudioScheduler";
 
-import {
-  DEFAULT_OFFSET_LEFT,
-  isPlayableTrackType,
-} from "@/app/core/config/constants";
+import { DEFAULT_OFFSET_LEFT } from "app/common/constants";
 import Note from "../Note";
-import type { Note as TNote } from "tone/build/esm/core/type/NoteUnits";
-import type { IMidiEvent, TMidiPart } from "@/app/types/midi.types";
-import { type ITrack } from "@/types/track";
-import _ from "lodash/fp";
+import type { IMidiPart } from "app/common/types/midi.types";
+import type { ITrack } from "app/common/types/track.types";
+
+import styles from "app/common/styles";
+const $ = styles.track;
 
 function Track({
   id,
@@ -26,95 +25,49 @@ function Track({
   routing,
   className = "",
 }: ITrack & { measureCount: number; quantization: number }) {
-  const duration = 16;
-
   const windowWidth = useWindowWidth() - DEFAULT_OFFSET_LEFT;
-  // const measureWidth = windowWidth / measureCount;
-  const { setup } = useScheduler();
+  const { setupPlayer } = useScheduler();
   const { id: inputId, instrument, parts = [] } = routing.input;
-  const $ = styles.track;
-  const $li = classNames($.row(type), className);
+  const $li = classNames($.row, className);
 
-  const drawPart = (part: TMidiPart) => {
-    const numSequences = part.sequences.length;
-    const h = 100 / numSequences;
-    return (
-      <>
-        {part.sequences.map((sequence, sequenceIndex) => {
-          const numNotes = sequence.events.length;
-          const t = sequenceIndex * h;
-          return sequence.events.map(
-            (event: IMidiEvent | IMidiEvent[], eventIndex) => {
-              const w = windowWidth / numNotes / measureCount; // TODO ratio is hardcoded
-              const l =
-                (eventIndex * windowWidth) /
-                sequence.events.length /
-                measureCount; // quantization;
+  const drawPart = (part: IMidiPart, partIndex: number) => {
+    const { events } = part;
+    const numEvents = events.length;
 
-              if (_.isArray(event)) {
-                return (event as IMidiEvent[]).map(({ n, v }, evIndex) => {
-                  const subL = l + windowWidth / sequence.events.length;
-                  const subW = w / 2;
-                  return (
-                    n && (
-                      <Note
-                        key={`note-${n}-${evIndex}`}
-                        note={n}
-                        style={{
-                          left: subL,
-                          top: `${t}%`,
-                          width: w,
-                          height: `${h}%`,
-                          borderRight: "1px solid #fff",
-                          borderBottom: "1px solid #fff",
-                        }}
-                      />
-                    )
-                  );
-                });
-              }
+    return events.map(({ note }, eventIndex) => {
+      const measureWidth = windowWidth / measureCount;
+      const w = measureWidth / numEvents;
+      const l = eventIndex * w + partIndex * measureWidth;
 
-              try {
-                const { n, v } = event as unknown as {
-                  n: TNote;
-                  v: number;
-                };
-
-                return (
-                  n && (
-                    <Note
-                      key={`note-${n}-${eventIndex}`}
-                      note={n}
-                      style={{
-                        left: l,
-                        top: `${t}%`,
-                        width: w,
-                        height: `${h}%`,
-                        borderRight: "1px solid #fff",
-                      }}
-                    />
-                  )
-                );
-              } catch (error) {
-                throw new Error("handle subdivision");
-              }
-            }
-          );
-        })}
-      </>
-    );
+      return (
+        note && (
+          <Note
+            key={`note-${eventIndex}`}
+            note={note}
+            style={{
+              left: l,
+              top: 0,
+              width: w,
+              height: "100%",
+              borderRight: "1px solid #fff",
+            }}
+          />
+        )
+      );
+    });
   };
 
   useEffect(() => {
-    if (!isPlayableTrackType(type) || !instrument?.instrument) return;
+    if (!(instrument?.options as Tone.PlayerOptions).url) return;
 
-    setup({
-      instrument: instrument.instrument,
+    setupPlayer({
+      player: instrument?.instrument as Tone.Player,
       id: inputId,
       parts,
+      measureCount,
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [instrument]);
 
   const props = {
     main: { id, className: $li },
@@ -129,7 +82,7 @@ function Track({
         <div className={$.col1.name}>{name}</div>
       </div>
       <div className={$.col2.main}>
-        {isPlayableTrackType(type) && drawPart(parts[0])}
+        {parts.map((part, partIndex) => drawPart(part, partIndex))}
       </div>
     </SortableItem>
   );
