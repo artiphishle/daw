@@ -1,3 +1,4 @@
+"use client";
 import classNames from "classnames";
 import { PlusIcon, Trash2Icon } from "lucide-react";
 import { type MouseEvent, useState, useEffect } from "react";
@@ -12,14 +13,6 @@ interface IMenu {
   readonly isContextMenu?: boolean;
 }
 
-// TODO move to utilities
-const { addEventListener: on, removeEventListener: off } = window;
-const one = (
-  event: string,
-  cb: (event: Event) => any,
-  options?: { once: true }
-) => addEventListener(event, cb, { ...options, once: true });
-
 // TODO move to styles
 const $ = {
   main: "absolute bg-black",
@@ -32,6 +25,15 @@ const $ = {
 export function Menu({ className, isContextMenu = false }: IMenu) {
   const [style, setStyle] = useState({ top: 0, left: 0 });
   const [visible, setVisible] = useState(false);
+
+  // TODO move to utilities
+  const on = window?.addEventListener;
+  const off = window?.removeEventListener;
+  const one = (
+    event: string,
+    cb: (event: Event) => any,
+    options?: { once: true }
+  ) => window?.addEventListener(event, cb, { ...options, once: true });
 
   /*** @pfui (Context-)Menu Activation */
   const menuOn: any = (event: MouseEvent) => {

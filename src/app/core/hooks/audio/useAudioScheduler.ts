@@ -18,7 +18,7 @@ export default function useAudioScheduler() {
         note &&
           player.start(t + partIndex * Tone.Time("1m").toSeconds(), 0, "+8n");
       };
-      // new Tone.Pattern(cb, part.events, part.label as PatternName).start(0);
+      new Tone.Sequence(cb, part.events).start(0);
     });
   }
   return { setupPlayer };
