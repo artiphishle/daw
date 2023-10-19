@@ -1,7 +1,9 @@
+import * as Tone from "tone";
+
 describe("[Arranger]", () => {
   it("should update the order of tracks in Arranger & Mixer", () => {
-    // cy.visit("http://localhost:3000");
-    // cy.get("button").click();
+    cy.stub(Tone.Player.prototype, "load");
+
     cy.get("svg.lucide-grip-vertical")
       .eq(0)
       .parent()
