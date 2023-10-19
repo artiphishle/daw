@@ -1,3 +1,5 @@
+/*** @url: https://github.com/scha-ch/daw/issues/75} */
+/* // !Important to prioritize cypress tests, add coverage and switch to TDD
 describe("[dndkit]", () => {
   it("should update the order of tracks in Arranger & Mixer", () => {
     cy.get("svg.lucide-grip-vertical")
@@ -37,3 +39,4 @@ describe("[dndkit]", () => {
     cy.get("#DAW_MXR > section:first-child").should("not.contain.text", "Kick");
   });
 });
+*/

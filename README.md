@@ -108,6 +108,10 @@ Design will be applied soon, this is just a raw sketch!
 
 ### 🍂 October 2023
 
+#### 19th
+
+- **Pfui Menu/ContextMenu** one4all menu. Bind a Menu/Contextmenu to an target area
+
 #### 14th
 
 - **Mixer** FFT Analyzers for all tracks
