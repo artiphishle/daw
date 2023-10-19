@@ -10,6 +10,7 @@
   ],
   "rules": {
     "cypress/unsafe-to-chain-command": "off",
+    "array-bracket-newline": "off",
     "array-element-newline": "off",
     "arrow-body-style": "off",
     "capitalized-comments": "off",
