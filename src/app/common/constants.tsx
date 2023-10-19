@@ -172,7 +172,7 @@ const DEFAULT_TRACK_BD: ITrack = {
       id: "Player",
       label: "KickPlayer",
       options: {
-        url: "/samples/Roland_TR-909/BT3AAD0.WAV",
+        url: "./samples/Roland_TR-909/BT3AAD0.WAV",
       },
       parts: [
         {
@@ -222,7 +222,7 @@ const DEFAULT_TRACK_SD: ITrack = {
       id: "Player",
       label: "SnarePlayer",
       options: {
-        url: "/samples/WaveAlchemy/wa_808_tape/wa_808tape_snare_16_clean.wav",
+        url: "./samples/WaveAlchemy/wa_808_tape/wa_808tape_snare_16_clean.wav",
       },
       parts: [
         {
@@ -269,7 +269,7 @@ const DEFAULT_TRACK_OH: ITrack = {
       id: "Player",
       label: "inp-oh",
       options: {
-        url: "/samples/WaveAlchemy/wa_808_tape/wa_808tape_openhat_01_clean.wav",
+        url: "./samples/WaveAlchemy/wa_808_tape/wa_808tape_openhat_01_clean.wav",
       },
       parts: [
         {
@@ -319,7 +319,7 @@ const DEFAULT_TRACK_HI_TOM: ITrack = {
       id: "Player",
       label: "Tom Hi",
       options: {
-        url: "/samples/WaveAlchemy/wa_drm_drums/high_tom/wadrm_hitom_acc1_r2.wav",
+        url: "./samples/WaveAlchemy/wa_drm_drums/high_tom/wadrm_hitom_acc1_r2.wav",
       },
       parts: [
         {
@@ -369,7 +369,7 @@ const DEFAULT_TRACK_MI_TOM: ITrack = {
       id: "Player",
       label: "Tom Mi",
       options: {
-        url: "/samples/WaveAlchemy/wa_drm_drums/low_tom/wadrm_lotom_acc2_r5.wav",
+        url: "./samples/WaveAlchemy/wa_drm_drums/low_tom/wadrm_lotom_acc2_r5.wav",
       },
       parts: [
         {
@@ -419,7 +419,7 @@ const DEFAULT_TRACK_LO_TOM: ITrack = {
       id: "Player",
       label: "Tom Lo",
       options: {
-        url: "/samples/WaveAlchemy/wa_drm_drums/mid_tom/wadrm_midtom_acc0_r5.wav",
+        url: "./samples/WaveAlchemy/wa_drm_drums/mid_tom/wadrm_midtom_acc0_r5.wav",
       },
       parts: [
         {
@@ -467,7 +467,7 @@ const DEFAULT_TRACK_SAMPLER: ITrack = {
       id: EInstrument.Sampler,
       label: "Drums",
       options: {
-        baseUrl: "/samples/WaveAlchemy/wa_808_tape/",
+        baseUrl: "./samples/WaveAlchemy/wa_808_tape/",
         urls: {
           C3: "wa_808tape_kick_01_sat.wav",
           D3: "wa_808tape_snare_10_clean.wav",
