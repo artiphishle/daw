@@ -1,6 +1,6 @@
 interface IDirectory {
   name: string;
-  dirs?: IDirectory[];
+  items?: IDirectory[];
 }
 
 export type { IDirectory };

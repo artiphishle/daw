@@ -14,7 +14,6 @@ export { RangeInput } from "./form/range/Range";
 export { ErrorMessage, InfoMessage, SuccessMessage } from "./message/Message";
 
 export { Nav } from "./nav/Nav";
-export { Ol } from "./ol/Ol"; // obsolete?
 export { Tabs, TabsPanel } from "./tabs"; // TabsPanel obsolete?
 
 // Audio

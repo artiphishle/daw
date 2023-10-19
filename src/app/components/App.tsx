@@ -1,5 +1,5 @@
 "use client";
-import { type MouseEvent, useEffect, useState } from "react";
+import { type MouseEvent, useEffect } from "react";
 import { CogIcon, GridIcon, HopIcon, InfinityIcon } from "lucide-react";
 import * as Tone from "tone";
 import {
@@ -11,7 +11,11 @@ import {
 } from "@dnd-kit/core";
 
 import styles from "@/common/styles";
-import { DEFAULT_OFFSET_LEFT } from "@/constants";
+import {
+  DEFAULT_MEASURE_COUNT,
+  DEFAULT_OFFSET_LEFT,
+  DEFAULT_QUANTIZATION,
+} from "@/constants";
 // Import { PanSongParsed } from "./test/unit/PanSong.parsed";
 // import useConverter from "@/core/hooks/useConverter";
 import {
@@ -46,7 +50,6 @@ export function App() {
   }, []);
 
   // const { audioToAbc, audioToMidi } = useConverter();
-  const [gridCols, setGridCols] = useState<number>();
   const mouseSensor = useSensor(MouseSensor);
   const sensors = useSensors(mouseSensor);
 
@@ -74,19 +77,14 @@ export function App() {
   */
 
   const { projectContext, patchProjectContext } = useProjectContext();
-
-  useEffect(() => {
-    if (!projectContext) return;
-    setGridCols(projectContext.quantization * projectContext.measureCount);
-  }, [projectContext]);
-
-  if (!projectContext) return null;
-  const {
-    activeTrackId,
-    clef,
-    states: { tabBtmActive, tabTopActive },
-    tracks,
-  } = projectContext;
+  const gridCols =
+    (projectContext?.quantization || DEFAULT_QUANTIZATION) *
+    (projectContext?.measureCount || DEFAULT_MEASURE_COUNT);
+  const activeTrackId = projectContext?.activeTrackId;
+  const clef = projectContext?.clef;
+  const tabBtmActive = projectContext?.states.tabBtmActive;
+  const tabTopActive = projectContext?.states.tabTopActive;
+  const tracks = projectContext?.tracks || [];
 
   const tabsBottomItems = [
     {
@@ -130,15 +128,17 @@ export function App() {
           {/* TODO Extract as 'Backdrop' component */}
           <section className="relative">
             <Grid
-              className={"absolute top-[32px] left-[168px] right-0 bottom-0"}
+              className={
+                "grid absolute top-[32px] left-[184px] right-0 bottom-0"
+              }
               cols={gridCols}
               rows={tracks.length}
               classNameItem="h-[40px] border border-[#fff] mb-[1px]"
             />
+            <Arranger className="absolute top-0 left-0 right-0 bottom-0" />
           </section>
-          <Arranger className="absolute top-0 left-0 right-0 bottom-0" />
           <Tabs className="justify-end">
-            <Nav className={`ml-[${DEFAULT_OFFSET_LEFT}px]`}>
+            <Nav className={`ml-[184px]`}>
               {tabsBottomItems.map(({ id, children }: any, aIndex) => (
                 <A
                   classNameActive="bg-white font-bold"
@@ -281,7 +281,6 @@ export function App() {
         {isOpen &&
           tracks.map((track) => {
             if (activeTrackId !== track.id) return null;
-            console.log(track.id);
             const I = track.routing.input.instrument?.Instrument;
             if (!I) return null;
             return (

@@ -1,41 +1,5 @@
-import { ETrackType } from "app/common/types/track.types";
-
-const TrackColor = {
-  [ETrackType.Audio]: {
-    bg: "bg-blue-100",
-    text: "text-white",
-    border: "text-gray-300",
-  },
-  [ETrackType.Instrument]: {
-    bg: "bg-gray-100",
-    text: "text-white",
-    border: "text-gray-300",
-  },
-  [ETrackType.Channel]: {
-    bg: "bg-blue-100",
-    text: "text-white",
-    border: "bg-gray-300",
-  },
-  [ETrackType.Player]: {
-    bg: "bg-blue-100",
-    text: "text-white",
-    border: "bg-gray-300",
-  },
-  [ETrackType.Players]: {
-    bg: "bg-blue-100",
-    text: "text-white",
-    border: "bg-gray-300",
-  },
-  [ETrackType.Sampler]: {
-    bg: "bg-gray-100",
-    text: "text-white",
-    border: "bg-gray-300",
-  },
-};
-
 const styles = {
   button: {
-    primary: "flex items-center justify-center p-4 bg-blue-800 text-white",
     navbar:
       "mr-1 w-11 h-11 p-2 bg-[#333] rounded-xs cursor-pointer hover:bg-[#222]",
   },
@@ -57,19 +21,20 @@ const styles = {
     icon: "w-8 h-8",
   },
   browser: {
+    a: "p-2 border border-gray-600",
     main: "w-4 h-4 mr-2",
     fileStyle: "fill-green-200",
     folderStyle: "fill-blue-200",
     liStyle: "flex",
   },
   navbar: {
-    ui: "p-4 flex flex-row mb-6 w-full bg-black text-white items-center justify-between",
+    ui: "p-4 flex flex-row w-full bg-black text-white items-center justify-between",
     uiInner: "flex px-4 py-2",
     icon: "w-8 h-8 mr-2",
   },
   mixer: {
-    main: "bg-[#3e4140] flex justify-between w-full text-white pl-[168px]",
-    inner: "flex w-full",
+    main: "bg-[#3e4140] flex w-full text-white pl-[184px]",
+    inner: "flex w-full items-center",
     meter: "w-full bg-[#333]",
     track: {
       main: "pt-6 bg-[#3e4140] border border-r-[#555] border-r-[2px] justify-center text-xs items-center content-end",
@@ -91,15 +56,14 @@ const styles = {
     active: "font-bold text-black",
     col1: {
       active: "bg-[blue]",
-      main: "flex justify-between items-center px-4 bg-white",
+      main: "flex justify-between items-center px-4 pl-8 bg-white",
       name: "whitespace-nowrap w-28 overflow-x-hidden text-ellipsis",
     },
     col2: {
       main: "relative flex w-full",
     },
-    icon: "fill-white w-6 h-6", // TODO see this in review and fail
-    row: (trackType: ETrackType) =>
-      "relative flex w-full h-10 text-black mb-[1px] first:text-gray-400 first:mb-0 text-xs",
+    icon: "fill-white w-6 h-6", // TODO not white
+    row: "relative flex w-full h-10 text-black mb-[1px] first:text-gray-400 first:mb-0 text-xs",
   },
   transport: {
     main: "flex px-4",
@@ -116,5 +80,4 @@ const styles = {
   },
 };
 
-export { TrackColor };
 export default styles;

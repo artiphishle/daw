@@ -46,6 +46,7 @@
     "multiline-ternary": "off",
     "new-cap": "off",
     "newline-per-chained-call": "off",
+    "no-case-declarations": "off",
     "no-confusing-arrow": "off",
     "no-console": "off",
     "no-extra-parens": "off",

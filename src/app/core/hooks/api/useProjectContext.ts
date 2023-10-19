@@ -1,23 +1,6 @@
 "use client";
 import useSWR, { useSWRConfig } from "swr";
-import {
-  MembraneSynth,
-  MembraneSynthOptions,
-  MetalSynth,
-  MetalSynthOptions,
-  NoiseSynth,
-  NoiseSynthOptions,
-  Sampler as ToneSampler,
-  SamplerOptions,
-  Synth,
-  SynthOptions,
-  MonoSynth,
-  MonoSynthOptions,
-  getContext,
-  Players,
-  PlayersOptions,
-  Channel,
-} from "tone";
+import * as Tone from "tone";
 
 import OmniSynth from "@/core/instruments/OmniSynth";
 
@@ -32,45 +15,44 @@ import {
 import Sampler from "@/core/instruments/Sampler";
 
 // TODO load instruments dynamically
-const loadInstrument = (
-  _instrument: EInstrument,
-  options: TInputOptions
-): IInstrument => {
+const loadInstrument = (_instrument: EInstrument, options: TInputOptions) => {
   let instrument = null;
   let Instrument = null;
 
   switch (_instrument) {
     case EInstrument.MembraneSynth:
       Instrument = OmniSynth;
-      instrument = new MembraneSynth(options as MembraneSynthOptions);
+      instrument = new Tone.MembraneSynth(options as Tone.MembraneSynthOptions);
       break;
     case EInstrument.MetalSynth:
       Instrument = OmniSynth;
-      instrument = new MetalSynth(options as MetalSynthOptions);
+      instrument = new Tone.MetalSynth(options as Tone.MetalSynthOptions);
       break;
     case EInstrument.MonoSynth:
       Instrument = OmniSynth;
-      instrument = new MonoSynth(options as MonoSynthOptions);
+      instrument = new Tone.MonoSynth(options as Tone.MonoSynthOptions);
       break;
     case EInstrument.NoiseSynth:
       Instrument = OmniSynth;
-      instrument = new NoiseSynth(options as NoiseSynthOptions);
+      instrument = new Tone.NoiseSynth(options as Tone.NoiseSynthOptions);
       break;
     case EInstrument.Player:
       Instrument = OmniSynth;
-      instrument = new Players(options as PlayersOptions);
+      instrument = new Tone.Player(options as Tone.PlayerOptions);
       break;
     case EInstrument.Players:
       Instrument = OmniSynth;
-      instrument = new Players(options as PlayersOptions) as Players;
+      instrument = new Tone.Players(
+        options as Tone.PlayersOptions
+      ) as Tone.Players;
       break;
     case EInstrument.Sampler:
       Instrument = Sampler;
-      instrument = new ToneSampler(options as SamplerOptions);
+      instrument = new Tone.Sampler(options as Tone.SamplerOptions);
       break;
     case EInstrument.Synth:
       Instrument = OmniSynth;
-      instrument = new Synth(options as SynthOptions);
+      instrument = new Tone.Synth(options as Tone.SynthOptions);
       break;
     default:
       console.error(
@@ -78,7 +60,7 @@ const loadInstrument = (
         _instrument
       );
       Instrument = OmniSynth;
-      instrument = new Synth(options as SynthOptions);
+      instrument = new Tone.Synth(options as Tone.SynthOptions);
   }
   return {
     Instrument,
@@ -86,7 +68,6 @@ const loadInstrument = (
     options,
   };
 };
-const INSTRUMENT_TYPE = [ETrackType.Instrument, ETrackType.Sampler];
 
 export default function useProjectContext() {
   const { mutate } = useSWRConfig();
@@ -98,28 +79,23 @@ export default function useProjectContext() {
     // 1 Channel
     const deselectedChannels = channels.map((channel) => ({
       ...channel,
-      channel: new Channel(channel.options),
+      channel: new Tone.Channel(channel.options),
     }));
 
     // 2 Instrument
     const deselectedTracks = tracks.map((track) => {
       const { type, routing } = track;
 
-      if (!INSTRUMENT_TYPE.includes(type)) return track;
+      if (type !== ETrackType.Player) return track;
       const instrument: IInstrument = loadInstrument(
         routing.input.id as EInstrument,
-        { ...routing.input.options, context: getContext() }
+        { ...routing.input.options }
       );
       routing.input.instrument = instrument;
       return {
         ...track,
         routing: { ...routing, input: { ...routing.input, instrument } },
       };
-    });
-    console.info("HERE", {
-      ...data,
-      channels: deselectedChannels,
-      tracks: deselectedTracks,
     });
     return { ...data, channels: deselectedChannels, tracks: deselectedTracks };
   };

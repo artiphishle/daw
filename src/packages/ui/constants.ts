@@ -15,11 +15,11 @@ export const SPACING = {
 };
 
 export enum EVariant {
-  Error = "bg-[#ff0000] text-white",
-  Info = "bg-[#00ffff] text-black",
+  Error = "bg-red-900 text-white",
+  Info = "bg-cyan-900 text-white",
   Normal = "bg-[#000000] text-white",
-  Primary = "bg-[#0000ff] text-white",
-  Secondary = "bg-[#00000f] text-white",
-  Success = "bg-[#00ff00] text-white",
-  Warning = "bg-[#ffff00] text-white",
+  Primary = "bg-blue-900 text-white",
+  Secondary = "bg-purple-900 text-white",
+  Success = "bg-green-900 text-white",
+  Warning = "bg-orange-900 text-white",
 }

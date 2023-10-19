@@ -15,6 +15,7 @@ export interface IProjectContext {
   activeTrackId: UniqueIdentifier;
   bpm: number;
   clef: string;
+  scale: string; // TODO enum
   //
   channels: IChannel[];
   tracks: ITrack[];

@@ -3,7 +3,7 @@ import type {
   IInstrument,
   TInputOptions,
 } from "app/common/types/instrument.types";
-import type { TMidiPart } from "app/common/types/midi.types";
+import type { IMidiPart } from "app/common/types/midi.types";
 
 export enum ETrackType {
   Audio = "audio",
@@ -19,7 +19,7 @@ export interface IRoutingInput {
   instrument?: IInstrument;
   label: string;
   options: TInputOptions;
-  parts?: TMidiPart[];
+  parts: IMidiPart[];
 }
 export interface ITrackRouting {
   input: IRoutingInput;
