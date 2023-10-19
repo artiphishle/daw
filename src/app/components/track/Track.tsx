@@ -6,14 +6,16 @@ import { useWindowWidth } from "@react-hook/window-size";
 import * as Tone from "tone";
 
 import { getIconByType } from "config/icons";
-import styles from "app/common/styles";
 import { SortableItem } from "@/components";
 import useScheduler from "@/core/hooks/audio/useAudioScheduler";
 
 import { DEFAULT_OFFSET_LEFT } from "app/common/constants";
 import Note from "../Note";
 import type { IMidiPart } from "app/common/types/midi.types";
-import { ETrackType, type ITrack } from "app/common/types/track.types";
+import type { ITrack } from "app/common/types/track.types";
+
+import styles from "app/common/styles";
+const $ = styles.track;
 
 function Track({
   id,
@@ -26,11 +28,9 @@ function Track({
   const windowWidth = useWindowWidth() - DEFAULT_OFFSET_LEFT;
   const { setupPlayer } = useScheduler();
   const { id: inputId, instrument, parts = [] } = routing.input;
-  const $ = styles.track;
   const $li = classNames($.row, className);
 
   const drawPart = (part: IMidiPart, partIndex: number) => {
-    const h = 100;
     const { events } = part;
     const numEvents = events.length;
 

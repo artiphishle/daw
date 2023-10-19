@@ -31,7 +31,7 @@ export default function PianoRoll() {
   return (
     <section className="mb-10 bg-white">
       <div className="flex flex-cols text-xs">
-        <Grid cols={1} style={{ width: DEFAULT_OFFSET_LEFT }}></Grid>
+        <Grid cols={1} style={{ width: DEFAULT_OFFSET_LEFT }} />
         <Grid className="flex-1" cols={gridColumnCount}>
           {rows.map((row, rowIndex) => (
             <div key={`pianoroll-griditem-${rowIndex}`}>{row}</div>
