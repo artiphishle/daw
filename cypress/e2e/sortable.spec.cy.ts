@@ -1,8 +1,6 @@
-import * as Tone from "tone";
-
 describe("[Arranger]", () => {
   it("should update the order of tracks in Arranger & Mixer", () => {
-    cy.stub(Tone.Player.prototype, "load");
+    cy.intercept("GET", "/samples/*").as("../../public/halloween.mp3");
 
     cy.get("svg.lucide-grip-vertical")
       .eq(0)
