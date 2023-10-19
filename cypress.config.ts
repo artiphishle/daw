@@ -1,4 +1,3 @@
-import "web-audio-test-api";
 import { loadEnvConfig } from "@next/env";
 import { defineConfig } from "cypress";
 

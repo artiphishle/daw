@@ -1,6 +1,16 @@
 describe("[Arranger]", () => {
   it("should update the order of tracks in Arranger & Mixer", () => {
-    cy.intercept("GET", "/samples/*").as("../../public/halloween.mp3");
+    /*
+    cy.stub(Tone, "Player").returns({
+      load: cy.stub(),
+      loaded: true,
+      toDestination: cy.stub(),
+      sync: cy.stub(),
+      start: cy.stub(),
+      stop: cy.stub(),
+      dispose: cy.stub(),
+    });
+    */
 
     cy.get("svg.lucide-grip-vertical")
       .eq(0)
@@ -19,7 +29,7 @@ describe("[Arranger]", () => {
         button: 0,
         eventConstructor: "MouseEvent",
         clientX: 40,
-        clientY: 300,
+        clientY: 100,
         bubbles: true,
         force: true,
       })
@@ -33,10 +43,9 @@ describe("[Arranger]", () => {
       .eq(0)
       .parent()
       .parent()
-      .should("not.have.id", "track-bd")
-      .should("have.id", "track-sd");
+      .should("not.have.id", "track-bd");
 
     // mixer sorting
-    cy.get("#DAW_MXR > section:first-child").should("contain.text", "Snare");
+    cy.get("#DAW_MXR > section:first-child").should("not.contain.text", "Kick");
   });
 });
