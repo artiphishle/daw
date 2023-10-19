@@ -38,6 +38,7 @@ import t from "../core/i18n";
 import _ from "lodash/fp";
 import Adsr from "packages/ui/audio/envelope/adsr/Adsr";
 import data from "../../../cypress/fixtures/sheet";
+import { Menu } from "packages/ui/menu/Menu";
 
 export function App() {
   const { isOpen, InstrumentPortal, openInstrument, closeInstrument } =
@@ -275,6 +276,7 @@ export function App() {
             ))}
           </Tabs>
         </div>
+        <Menu isContextMenu={true} />
       </main>
 
       <InstrumentPortal>

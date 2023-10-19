@@ -48,7 +48,7 @@ export default function Mixer({ openInstrument }: IMixer) {
   /* 1. Master Settings */
   const masterFft = new Tone.FFT(NUM_BANDS);
   const masterLimiter = new Tone.Limiter(-0.01);
-  const masterGain = new Tone.Gain(-1)
+  const masterGain = new Tone.Gain(0.8)
     .toDestination()
     .chain(masterLimiter, masterFft);
 
