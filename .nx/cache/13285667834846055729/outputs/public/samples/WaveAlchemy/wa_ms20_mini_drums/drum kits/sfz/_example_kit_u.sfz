@@ -1,0 +1,34 @@
+/////////////////////////////////////////////////////////////////////////////
+// sfz definition file
+// copyright Chicken Systems, Inc.
+// -------------------------------------------------------------------------
+// Application: Translator 6 6.0, Build 34
+// Vendor: 
+
+
+<region> sample=..\..\unprocessed drums\example patches\wams20_example_basic-kick_u.wav lokey=36 hikey=36 end=14156 pitch_keycenter=36 bend_up=700 bend_down=-700 amp_veltrack=59.842518 ampeg_decay=200.199997 ampeg_release=200.199997 pitchlfo_freq=5.998879 
+
+<region> sample=..\..\unprocessed drums\example patches\wams20_example_feedback-kick_u.wav lokey=37 hikey=37 end=18971 pitch_keycenter=37 bend_up=700 bend_down=-700 amp_veltrack=59.842518 ampeg_decay=200.199997 ampeg_release=200.199997 pitchlfo_freq=5.998879 
+
+<region> sample=..\..\unprocessed drums\example patches\wams20_example_noise-kick_u.wav lokey=38 hikey=38 end=11742 pitch_keycenter=38 bend_up=700 bend_down=-700 amp_veltrack=59.842518 ampeg_decay=200.199997 ampeg_release=200.199997 pitchlfo_freq=5.998879 
+
+<region> sample=..\..\unprocessed drums\example patches\wams20_example_vca-kick_u.wav lokey=39 hikey=39 end=38781 pitch_keycenter=39 bend_up=700 bend_down=-700 amp_veltrack=59.842518 ampeg_decay=200.199997 ampeg_release=200.199997 pitchlfo_freq=5.998879 
+
+<region> sample=..\..\unprocessed drums\example patches\wams20_example_snare_u.wav lokey=40 hikey=40 end=11161 pitch_keycenter=40 bend_up=700 bend_down=-700 amp_veltrack=59.842518 ampeg_decay=200.199997 ampeg_release=200.199997 pitchlfo_freq=5.998879 
+
+<region> sample=..\..\unprocessed drums\example patches\wams20_example_cymbal_u.wav lokey=41 hikey=41 end=84429 pitch_keycenter=41 bend_up=700 bend_down=-700 amp_veltrack=59.842518 ampeg_decay=200.199997 ampeg_release=200.199997 pitchlfo_freq=5.998879 
+
+<region> sample=..\..\unprocessed drums\example patches\wams20_example_cowbell_u.wav lokey=42 hikey=42 end=31122 pitch_keycenter=42 bend_up=700 bend_down=-700 amp_veltrack=59.842518 ampeg_decay=200.199997 ampeg_release=200.199997 pitchlfo_freq=5.998879 
+
+<region> sample=..\..\unprocessed drums\example patches\wams20_example_basic-block_u.wav lokey=43 hikey=43 end=6347 pitch_keycenter=43 bend_up=700 bend_down=-700 amp_veltrack=59.842518 ampeg_decay=200.199997 ampeg_release=200.199997 pitchlfo_freq=5.998879 
+
+<region> sample=..\..\unprocessed drums\example patches\wams20_example_complex-block_u.wav lokey=44 hikey=44 end=5458 pitch_keycenter=44 bend_up=700 bend_down=-700 amp_veltrack=59.842518 ampeg_decay=200.199997 ampeg_release=200.199997 pitchlfo_freq=5.998879 
+
+<region> sample=..\..\unprocessed drums\example patches\wams20_example_clave_u.wav lokey=45 hikey=45 end=9219 pitch_keycenter=45 bend_up=700 bend_down=-700 amp_veltrack=59.842518 ampeg_decay=200.199997 ampeg_release=200.199997 pitchlfo_freq=5.998879 
+
+<region> sample=..\..\unprocessed drums\example patches\wams20_example_basic-tom_u.wav lokey=46 hikey=46 end=39003 pitch_keycenter=46 bend_up=700 bend_down=-700 amp_veltrack=59.842518 ampeg_decay=200.199997 ampeg_release=200.199997 pitchlfo_freq=5.998879 
+
+<region> sample=..\..\unprocessed drums\example patches\wams20_example_vca-tom_u.wav lokey=47 hikey=47 end=40364 pitch_keycenter=47 bend_up=700 bend_down=-700 amp_veltrack=59.842518 ampeg_decay=200.199997 ampeg_release=200.199997 pitchlfo_freq=5.998879 
+
+<region> sample=..\..\unprocessed drums\example patches\wams20_example_conga_u.wav lokey=48 hikey=48 end=9423 pitch_keycenter=48 bend_up=700 bend_down=-700 amp_veltrack=59.842518 ampeg_decay=200.199997 ampeg_release=200.199997 pitchlfo_freq=5.998879 
+

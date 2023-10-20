@@ -29,16 +29,16 @@ import {
   Settings,
   Sheet,
 } from "@/components";
-import { A, Grid, Nav, Tabs, TabsPanel } from "packages/ui";
+import { A, Grid, Nav, Tabs, TabsPanel } from "packages/pfui";
 import useProjectContext from "@/core/hooks/api/useProjectContext";
 import useAudioInstrument from "@/core/hooks/audio/useAudioInstrument";
 
 import type { Note as TNote } from "tone/build/esm/core/type/NoteUnits";
 import t from "../core/i18n";
 import _ from "lodash/fp";
-import Adsr from "packages/ui/audio/envelope/adsr/Adsr";
+import Adsr from "packages/pfui/audio/envelope/adsr/Adsr";
 import data from "../../../cypress/fixtures/sheet";
-import { Menu } from "packages/ui/menu/Menu";
+import { Menu } from "packages/pfui/menu/Menu";
 
 export function App() {
   const { isOpen, InstrumentPortal, openInstrument, closeInstrument } =

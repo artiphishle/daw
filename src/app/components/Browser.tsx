@@ -9,7 +9,7 @@ import {
 } from "lucide-react";
 
 import { usePublicSampleDirectory } from "@/core/hooks/api/usePublicSampleDirectory";
-import { Accordion } from "packages/ui";
+import { Accordion } from "packages/pfui";
 
 import styles from "app/common/styles";
 import { ChangeEvent, KeyboardEvent, useEffect, useRef, useState } from "react";
