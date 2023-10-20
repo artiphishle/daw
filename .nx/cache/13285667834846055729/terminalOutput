@@ -1,0 +1,75 @@
+
+> daw@0.1.0 build
+> nx exec -- nx exec -- next build
+
+ [37m[1m [22m[39m Creating an optimized production build ...
+ [32m[1m✓[22m[39m Compiled successfully
+ [37m[1m [22m[39m Linting and checking validity of types ...
+ [37m[1m [22m[39m Collecting page data ...
+ [37m[1m [22m[39m Generating static pages (0/8) ...
+[
+  {
+    id: 'ch-drums',
+    position: { x: 0, y: 0 },
+    data: { id: 'ch-drums', label: 'Drums' }
+  },
+  {
+    id: 'master',
+    position: { x: 0, y: 100 },
+    data: { id: 'master', label: 'Master' }
+  }
+] [
+  {
+    id: 'track-bd',
+    position: { x: 0, y: 1 },
+    data: { id: 'track-bd', label: 'Kick' }
+  },
+  {
+    id: 'track-sd',
+    position: { x: 0, y: 51 },
+    data: { id: 'track-sd', label: 'Snare' }
+  },
+  {
+    id: 'track-oh',
+    position: { x: 0, y: 101 },
+    data: { id: 'track-oh', label: 'OH' }
+  },
+  {
+    id: 'track-hi-tom',
+    position: { x: 0, y: 151 },
+    data: { id: 'track-hi-tom', label: 'HiTom' }
+  },
+  {
+    id: 'track-mi-tom',
+    position: { x: 0, y: 201 },
+    data: { id: 'track-mi-tom', label: 'MiToms' }
+  },
+  {
+    id: 'track-lo-tom',
+    position: { x: 0, y: 251 },
+    data: { id: 'track-lo-tom', label: 'LoTom' }
+  }
+]
+ [37m[1m [22m[39m Generating static pages (2/8) 
+ [37m[1m [22m[39m Generating static pages (4/8) 
+ [37m[1m [22m[39m Generating static pages (6/8) 
+ [32m[1m✓[22m[39m Generating static pages (8/8) 
+ [37m[1m [22m[39m Finalizing page optimization ...
+ [37m[1m [22m[39m Collecting build traces ...
+
+[4mRoute (app)[24m                              [4mSize[24m     [4mFirst Load JS[24m
+┌ ○ /                                    306 kB          [31m[1m392 kB[22m[39m
+├ ○ /_not-found                          880 B          [32m84.8 kB[39m
+├ ○ /api/directories                     0 B                [32m0 B[39m
+├ λ /api/project                         0 B                [32m0 B[39m
+└ ○ /dsp                                 46.8 kB         [33m133 kB[39m
++ First Load JS shared by all            [32m83.9 kB[39m
+  ├ chunks/290-daebe6b251b0dd24.js       28.1 kB
+  ├ chunks/bf6a786c-91f3cee68677f5bf.js  53.7 kB
+  ├ chunks/main-app-7ac92df63cd5d7dd.js  232 B
+  └ chunks/webpack-158f6172b878d1bd.js   1.89 kB
+
+
+λ  (Server)  server-side renders at runtime (uses [36mgetInitialProps[39m or [36mgetServerSideProps[39m)
+○  (Static)  automatically rendered as static HTML (uses no initial props)
+

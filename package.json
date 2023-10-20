@@ -13,11 +13,11 @@
   "scripts": {
     "ci": "npm run lint && npm run test && npm run build",
     "dev": "next dev",
-    "build": "next build",
+    "build": "nx exec -- nx exec -- next build",
     "start": "next start",
-    "lint": "next lint",
+    "lint": "nx exec -- nx exec -- next lint",
     "telemetry:disable": "npx next telemetry disable",
-    "test": "cypress run --component",
+    "test": "nx exec -- nx exec -- cypress run --component",
     "test:e2e": "cypress run",
     "test:e2e:open": "cypress open"
   },
@@ -44,6 +44,7 @@
     "lucide-react": "^0.287.0",
     "next": "13.5.5",
     "postcss": "8.4.31",
+    "primereact": "^10.0.5",
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "react-useportal": "^1.0.18",
@@ -60,7 +61,11 @@
     "cypress": "^13.3.2",
     "eslint": "^8.51.0",
     "eslint-plugin-cypress": "^2.15.1",
+    "nx": "17.0.0",
     "typescript": "^5.2.2",
     "web-audio-test-api": "^0.5.2"
+  },
+  "nx": {
+    "targets": {}
   }
 }

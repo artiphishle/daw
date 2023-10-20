@@ -1,6 +1,6 @@
-import { Button } from "packages/ui";
-import { EButtonType } from "packages/ui/button/Button";
-import { EVariant } from "packages/ui/constants";
+import { Button } from "packages/pfui";
+import { EButtonType } from "packages/pfui/button/Button";
+import { EVariant } from "packages/pfui/constants";
 
 describe("Button", () => {
   const VariantButton = ({ variant }: { variant: EVariant }) => (

@@ -1,13 +1,13 @@
 "use client";
 
 import * as Tone from "tone";
-import { App } from "./components";
 import { useState } from "react";
 import { Loader } from "lucide-react";
-import { Dialog } from "../packages/ui";
-import { Button, EButtonType } from "../packages/ui/button/Button";
-import t from "./core/i18n";
-import { ESize, EVariant } from "../packages/ui/constants";
+import { App } from "@/components";
+import { Dialog } from "../packages/pfui";
+import { Button, EButtonType } from "../packages/pfui/button/Button";
+import t from "@/core/i18n";
+import { ESize, EVariant } from "../packages/pfui/constants";
 
 export default function Home() {
   const [toneReady, setToneReady] = useState(false);
