@@ -1,0 +1,38 @@
+/////////////////////////////////////////////////////////////////////////////
+// sfz definition file
+// copyright Chicken Systems, Inc.
+// -------------------------------------------------------------------------
+// Application: Translator 6 6.0, Build 34
+// Vendor: 
+
+
+<region> sample=..\..\processed drums\kicks\wams20_kick_vca-punch-2a_p.wav lokey=36 hikey=36 end=17824 pitch_keycenter=36 bend_up=700 bend_down=-700 amp_veltrack=59.842518 ampeg_decay=200.199997 ampeg_release=200.199997 pitchlfo_freq=5.998879 
+
+<region> sample=..\..\processed drums\percussion\wams20_rimshot_tight-snare_p.wav lokey=37 hikey=37 end=6544 pitch_keycenter=37 bend_up=700 bend_down=-700 amp_veltrack=59.842518 ampeg_decay=200.199997 ampeg_release=200.199997 pitchlfo_freq=5.998879 
+
+<region> sample=..\..\processed drums\snares\wams20_snare_paper-mids_p.wav lokey=38 hikey=38 end=5656 pitch_keycenter=38 bend_up=700 bend_down=-700 amp_veltrack=59.842518 ampeg_decay=200.199997 ampeg_release=200.199997 pitchlfo_freq=5.998879 
+
+<region> sample=..\..\processed drums\snares\wams20_snare_clap-1b_p.wav lokey=39 hikey=39 end=16256 pitch_keycenter=39 bend_up=700 bend_down=-700 amp_veltrack=59.842518 ampeg_decay=200.199997 ampeg_release=200.199997 pitchlfo_freq=5.998879 
+
+<region> sample=..\..\processed drums\snares\wams20_snare_noise-basic_p.wav lokey=40 hikey=40 end=5856 pitch_keycenter=40 bend_up=700 bend_down=-700 amp_veltrack=59.842518 ampeg_decay=200.199997 ampeg_release=200.199997 pitchlfo_freq=5.998879 
+
+<region> sample=..\..\processed drums\toms\wams20_tom_discord-2_p.wav lokey=41 hikey=41 end=43584 pitch_keycenter=41 bend_up=700 bend_down=-700 amp_veltrack=59.842518 ampeg_decay=200.199997 ampeg_release=200.199997 pitchlfo_freq=5.998879 
+
+<region> sample=..\..\processed drums\cymbals\wams20_cl-hat_chisel-tick_p.wav lokey=42 hikey=42 end=4336 pitch_keycenter=42 bend_up=700 bend_down=-700 amp_veltrack=59.842518 ampeg_decay=200.199997 ampeg_release=200.199997 pitchlfo_freq=5.998879 
+
+<region> sample=..\..\processed drums\toms\wams20_tom_mids-tone-1b_p.wav lokey=43 hikey=43 end=75584 pitch_keycenter=43 bend_up=700 bend_down=-700 amp_veltrack=59.842518 ampeg_decay=200.199997 ampeg_release=200.199997 pitchlfo_freq=5.998879 
+
+<region> sample=..\..\processed drums\cymbals\wams20_cl-hat_chisel-puff_p.wav lokey=44 hikey=44 end=19488 pitch_keycenter=44 bend_up=700 bend_down=-700 amp_veltrack=59.842518 ampeg_decay=200.199997 ampeg_release=200.199997 pitchlfo_freq=5.998879 
+
+<region> sample=..\..\processed drums\toms\wams20_tom_fat-tail_p.wav lokey=45 hikey=45 end=76032 pitch_keycenter=45 bend_up=700 bend_down=-700 amp_veltrack=59.842518 ampeg_decay=200.199997 ampeg_release=200.199997 pitchlfo_freq=5.998879 
+
+<region> sample=..\..\processed drums\cymbals\wams20_op-hat_chuncky-classic_p.wav lokey=46 hikey=46 end=17200 pitch_keycenter=46 bend_up=700 bend_down=-700 amp_veltrack=59.842518 ampeg_decay=200.199997 ampeg_release=200.199997 pitchlfo_freq=5.998879 
+
+<region> sample=..\..\processed drums\percussion\wams20_rimshot_heavy-1_p.wav lokey=47 hikey=47 end=8816 pitch_keycenter=47 bend_up=700 bend_down=-700 amp_veltrack=59.842518 ampeg_decay=200.199997 ampeg_release=200.199997 pitchlfo_freq=5.998879 
+
+<region> sample=..\..\processed drums\percussion\wams20_cowbell_classic-4_p.wav lokey=48 hikey=48 end=18704 pitch_keycenter=48 bend_up=700 bend_down=-700 amp_veltrack=59.842518 ampeg_decay=200.199997 ampeg_release=200.199997 pitchlfo_freq=5.998879 
+
+<region> sample=..\..\processed drums\cymbals\wams20_splash_metal-tones-2_p.wav lokey=49 hikey=49 end=68864 pitch_keycenter=49 bend_up=700 bend_down=-700 amp_veltrack=59.842518 ampeg_decay=200.199997 ampeg_release=200.199997 pitchlfo_freq=5.998879 
+
+<region> sample=..\..\processed drums\cymbals\wams20_ride_classic-detune_p.wav lokey=50 hikey=50 end=33056 pitch_keycenter=50 bend_up=700 bend_down=-700 amp_veltrack=59.842518 ampeg_decay=200.199997 ampeg_release=200.199997 pitchlfo_freq=5.998879 
+

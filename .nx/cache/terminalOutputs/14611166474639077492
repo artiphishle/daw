@@ -1,0 +1,54 @@
+
+> daw@0.1.0 build
+> nx exec -- nx exec -- next build
+
+ [37m[1m [22m[39m Creating an optimized production build ...
+[31mFailed to compile.
+[39m
+./src/app/components/App.tsx
+[31m[1mModule not found[22m[39m: Can't resolve '[32mpackages/pfui[39m'
+
+https://nextjs.org/docs/messages/module-not-found
+
+Import trace for requested module:
+./src/app/components/index.ts
+./src/app/page.tsx
+
+./src/app/components/App.tsx
+[31m[1mModule not found[22m[39m: Can't resolve '[32mpackages/pfui/audio/envelope/adsr/Adsr[39m'
+
+https://nextjs.org/docs/messages/module-not-found
+
+Import trace for requested module:
+./src/app/components/index.ts
+./src/app/page.tsx
+
+./src/app/components/App.tsx
+[31m[1mModule not found[22m[39m: Can't resolve '[32mpackages/pfui/menu/Menu[39m'
+
+https://nextjs.org/docs/messages/module-not-found
+
+Import trace for requested module:
+./src/app/components/index.ts
+./src/app/page.tsx
+
+./src/app/components/Browser.tsx
+[31m[1mModule not found[22m[39m: Can't resolve '[32mpackages/pfui[39m'
+
+https://nextjs.org/docs/messages/module-not-found
+
+Import trace for requested module:
+./src/app/components/index.ts
+./src/app/page.tsx
+
+./src/app/components/Mixer.tsx
+[31m[1mModule not found[22m[39m: Can't resolve '[32mpackages/pfui[39m'
+
+https://nextjs.org/docs/messages/module-not-found
+
+Import trace for requested module:
+./src/app/components/index.ts
+./src/app/page.tsx
+
+
+> Build failed because of webpack errors
