@@ -2,6 +2,12 @@
 @tailwind components;
 @tailwind utilities;
 
+/* PrimeReact */
+.p-colorpicker input {
+  height: 40px;
+  width: calc(100vw / 10);
+}
+
 * {
   box-sizing: border-box;
 }

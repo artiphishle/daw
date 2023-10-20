@@ -1,10 +1,10 @@
 import { Dispatch, SetStateAction } from "react";
-import { Button, Dialog } from "../../packages/ui";
+import { Button, Dialog } from "../../packages/pfui";
 import styles from "../common/styles";
 import { start } from "tone";
 import t from "../core/i18n";
-import { EButtonType } from "packages/ui/button/Button";
-import { EVariant } from "packages/ui/constants";
+import { EButtonType } from "packages/pfui/button/Button";
+import { EVariant } from "packages/pfui/constants";
 
 interface IStartDialog {
   toneReady: boolean;

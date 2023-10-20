@@ -3,7 +3,7 @@ import { Scale } from "tonal";
 
 import { DEFAULT_OFFSET_LEFT } from "app/common/constants";
 import useProjectContext from "@/core/hooks/api/useProjectContext";
-import { Grid } from "packages/ui";
+import { Grid } from "packages/pfui";
 
 import type { ITrack } from "app/common/types/track.types";
 

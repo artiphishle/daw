@@ -10,9 +10,9 @@ import t from "@/core/i18n";
 import { getIconByType } from "config/icons";
 import useProjectContext from "@/core/hooks/api/useProjectContext";
 import { Analyzer } from "@/components";
-import { ButtonGroup, Knob, MuteButton, SoloButton } from "packages/ui";
+import { ButtonGroup, Knob, MuteButton, SoloButton } from "packages/pfui";
 
-import { ESize, EVariant } from "packages/ui/constants";
+import { ESize, EVariant } from "packages/pfui/constants";
 import type { UniqueIdentifier } from "@dnd-kit/core";
 import { ETrackType, type ITrack } from "app/common/types/track.types";
 import type { IMixer } from "app/common/types/mixer.types";
