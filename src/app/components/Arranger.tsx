@@ -5,23 +5,23 @@ import {
   closestCenter,
   useSensor,
   useSensors,
-} from "@dnd-kit/core";
-import classNames from "classnames";
+} from '@dnd-kit/core';
+import classNames from 'classnames';
 import {
   SortableContext,
   arrayMove,
   verticalListSortingStrategy,
-} from "@dnd-kit/sortable";
+} from '@dnd-kit/sortable';
 
-import styles from "app/common/styles";
-import { Locator, Track } from "@/components";
-import Time from "./Time";
-import useProjectContext from "@/core/hooks/api/useProjectContext";
+import styles from 'app/common/styles';
+import { Locator, Track } from '@/components';
+import Time from './Time';
+import useProjectContext from '@/core/hooks/api/useProjectContext';
 
-import type { IArranger } from "../common/types/arranger.types";
-import { EEndpoint } from "../common/types/api.types";
+import type { IArranger } from '../common/types/arranger.types';
+import { EEndpoint } from '../common/types/api.types';
 
-export default function Arranger({ className = "" }: IArranger) {
+export default function Arranger({ className = '' }: IArranger) {
   const mouseSensor = useSensor(MouseSensor);
   const sensors = useSensors(mouseSensor);
   const $ = styles.arranger;
@@ -43,7 +43,7 @@ export default function Arranger({ className = "" }: IArranger) {
       mutate(EEndpoint.ProjectSettings);
     },
   };
-  console.warn("[Arranger] suspicious rerender amount");
+  console.warn('[Arranger] suspicious rerender amount');
   return (
     <section className={classNames($.main, className)}>
       <DndContext
@@ -54,17 +54,29 @@ export default function Arranger({ className = "" }: IArranger) {
         <SortableContext items={tracks} strategy={verticalListSortingStrategy}>
           <ol className="flex-1 ">
             <Time measureCount={measureCount} />
-            {tracks.map((track, trackIndex) => (
-              <Track
-                className={
-                  activeTrackId === track.id ? styles.track.active : ""
-                }
-                key={`track-${trackIndex}`}
-                measureCount={measureCount}
-                quantization={quantization}
-                {...track}
-              />
-            ))}
+            {tracks.map((track, trackIndex) => {
+              const trk = {
+                className:
+                  activeTrackId === track.id ? styles.track.active : '',
+                measureCount,
+                quantization,
+                mutate,
+                patchProjectContext,
+                ...track,
+              };
+
+              return (
+                <Track
+                  key={`track-${trackIndex}`}
+                  tracks={tracks}
+                  track={trk}
+                  measureCount={measureCount}
+                  quantization={quantization}
+                  mutate={mutate}
+                  patchProjectContext={patchProjectContext}
+                />
+              );
+            })}
           </ol>
         </SortableContext>
       </DndContext>

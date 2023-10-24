@@ -20,9 +20,9 @@ import {
   DEFAULT_SCALE,
   DEFAULT_ACTIVE_TRACK_ID,
   DEFAULT_TRACK_OH,
-} from "@/constants";
+} from '@/constants';
 
-import type { IProjectContext } from "@/types/project.types";
+import type { IProjectContext } from '@/types/project.types';
 
 const DefaultPreset: IProjectContext = {
   activeTrackId: DEFAULT_ACTIVE_TRACK_ID,
@@ -36,7 +36,7 @@ const DefaultPreset: IProjectContext = {
   quantization: DEFAULT_QUANTIZATION,
   states: DEFAULT_STATES,
   swing: 0.25,
-  swingSubdivision: "8n",
+  swingSubdivision: '8n',
   tracks: [
     DEFAULT_TRACK_BD,
     DEFAULT_TRACK_SD,
