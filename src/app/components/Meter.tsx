@@ -1,42 +1,38 @@
-"use client";
-import { useEffect, useRef } from "react";
-import { Draw, type Meter as TMeter, Transport } from "tone";
+'use client';
+import { useCallback, useEffect, useRef } from 'react';
+import * as Tone from 'tone';
 
 interface IMeter {
   className?: string;
-  meter?: TMeter;
+  meter: Tone.Meter;
 }
 
 export default function Meter({ className, meter }: IMeter) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
-  useEffect(() => {
-    const canvas = canvasRef.current! as HTMLCanvasElement;
-    const context = canvas.getContext("2d");
+  const drawMeter = useCallback(() => {
+    if (!canvasRef.current) return;
 
-    const render = () => {
-      if (!context || !meter) return;
-      const { width, height } = canvas;
-      const level = meter.getValue() as number;
+    const canvas = canvasRef.current as HTMLCanvasElement;
+    const canvasContext = canvas.getContext('2d');
+    if (!canvasContext) return;
 
-      context.clearRect(0, 0, width, height);
-      context.fillStyle = "transparent";
-      context.fillRect(0, 0, 100, 50);
-      context.fillStyle = "#FDBA74"; // Orange-300
-      context.fillRect(0, 50, 100, level);
-      if (level !== -Infinity) {
-        context.font = "12px Arial";
-        context.fillStyle = "#fff"; // Orange-500
-        context.fillText(`${level.toFixed(2)}db`, 0, 20);
-      }
-    };
-    Transport.scheduleRepeat(
-      (time: number) => Draw.schedule(render, time),
-      "+0.1"
-    );
-    render();
+    canvasContext.clearRect(0, 0, canvas.width, canvas.height);
+
+    const level = -(meter.getValue() as number) * canvas.height;
+    canvasContext.fillStyle = 'white';
+    canvasContext.fillRect(0, canvas.height, canvas.width, level);
+
+    requestAnimationFrame(drawMeter);
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [canvasRef.current]);
+
+  useEffect(() => {
+    if (!canvasRef.current) return;
+    requestAnimationFrame(drawMeter);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [canvasRef.current, drawMeter]);
 
   return (
     <canvas className={className} width="100%" height="50px" ref={canvasRef} />
