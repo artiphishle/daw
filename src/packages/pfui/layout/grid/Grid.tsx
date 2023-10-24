@@ -1,10 +1,10 @@
-import { IGrid } from "packages/pfui/types";
-import classNames from "classnames";
+import { IGrid } from '../../types';
+import classNames from 'classnames';
 
 const Grid = ({
   children,
   className,
-  classNameItem = "",
+  classNameItem = '',
   cols = 4,
   rows = 4,
 }: IGrid) => {
@@ -13,7 +13,7 @@ const Grid = ({
   };
   const items =
     children ||
-    new Array(cols * rows).fill(" ").map((_, itemIndex) => (
+    new Array(cols * rows).fill(' ').map((_, itemIndex) => (
       <div key={`grid-item-${itemIndex}`} className={classNameItem}>
         &nbsp;
       </div>

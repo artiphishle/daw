@@ -10,11 +10,6 @@
 
 <span style='background:#ffffcc;padding:.5rem'>🚨 Don't! Work in progress</span>
 
-```bash
-# Please wait until release
-npm i $NOT_PUBLISHED_YET
-```
-
 ---
 
 ## A

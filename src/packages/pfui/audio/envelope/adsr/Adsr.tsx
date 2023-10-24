@@ -1,4 +1,4 @@
-export default function Adsr() {
+export function Adsr() {
   return (
     <>
       <svg className="defs">

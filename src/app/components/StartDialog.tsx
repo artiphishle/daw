@@ -1,10 +1,10 @@
-import { Dispatch, SetStateAction } from "react";
-import { Button, Dialog } from "../../packages/pfui";
-import styles from "../common/styles";
-import { start } from "tone";
-import t from "../core/i18n";
-import { EButtonType } from "packages/pfui/button/Button";
-import { EVariant } from "packages/pfui/constants";
+import { Dispatch, SetStateAction } from 'react';
+import { Button, Dialog } from '@/pfui';
+import styles from '../common/styles';
+import { start } from 'tone';
+import t from '../core/i18n';
+import { EVariant } from 'packages/pfui/constants';
+import { EButtonType } from 'packages/pfui/button/Button';
 
 interface IStartDialog {
   toneReady: boolean;
@@ -14,7 +14,7 @@ interface IStartDialog {
 function StartDialog({ toneReady, setToneReady }: IStartDialog) {
   return (
     <Dialog className={styles.dialog} id="start" open>
-      <p className="p-4">{t("dialog.allowAudio")}</p>
+      <p className="p-4">{t('dialog.allowAudio')}</p>
       <Button
         onClick={async () => {
           await start();
