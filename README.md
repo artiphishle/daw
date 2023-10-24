@@ -106,6 +106,11 @@ Design will be applied soon, this is just a raw sketch!
 
 #### October, 24th
 
+- **Arranger** Track selection (active track)
+- **Arranger** Toggle note events
+
+#### October, 22th
+
 - **Mixer** Route tracks to channels
 
 #### October, 19th

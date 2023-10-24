@@ -1,18 +1,18 @@
-"use client";
-import useSWR, { useSWRConfig } from "swr";
-import * as Tone from "tone";
+'use client';
+import useSWR, { useSWRConfig } from 'swr';
+import * as Tone from 'tone';
 
-import OmniSynth from "@/core/instruments/OmniSynth";
+import OmniSynth from '@/core/instruments/OmniSynth';
+import Sampler from '@/core/instruments/Sampler';
 
-import { EEndpoint } from "app/common/types/api.types";
-import { ETrackType } from "app/common/types/track.types";
-import type { IProjectContext } from "app/common/types/project.types";
+import { EEndpoint } from 'app/common/types/api.types';
+import { ETrackType } from 'app/common/types/track.types';
+import type { IProjectContext } from 'app/common/types/project.types';
 import {
   type TInputOptions,
   type IInstrument,
   EInstrument,
-} from "app/common/types/instrument.types";
-import Sampler from "@/core/instruments/Sampler";
+} from 'app/common/types/instrument.types';
 
 // TODO load instruments dynamically
 const loadInstrument = (_instrument: EInstrument, options: TInputOptions) => {
@@ -118,10 +118,10 @@ export default function useProjectContext() {
   };
 
   const patch = async (patch: Partial<IProjectContext>) => {
-    console.log("useProjectContext > patch", selectData(patch));
+    console.log('useProjectContext > patch', selectData(patch));
     try {
       const res = await fetch(EEndpoint.ProjectSettings, {
-        method: "PATCH",
+        method: 'PATCH',
         body: JSON.stringify(selectData(patch)),
       });
       const data = await res.json();
