@@ -1,5 +1,5 @@
-import { ESize, EVariant } from "../constants";
-import { Button, EButtonType } from "./Button";
+import { ESize, EVariant } from '../constants';
+import { Button, EButtonType } from './Button';
 
 export function MuteButton() {
   return (

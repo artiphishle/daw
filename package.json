@@ -13,11 +13,11 @@
   "scripts": {
     "ci": "npm run lint && npm run test && npm run build",
     "dev": "next dev",
-    "build": "nx exec -- nx exec -- next build",
+    "build": "next build",
     "start": "next start",
-    "lint": "nx exec -- nx exec -- next lint",
+    "lint": "next lint",
     "telemetry:disable": "npx next telemetry disable",
-    "test": "nx exec -- nx exec -- cypress run --component",
+    "test": "cypress run --component",
     "test:e2e": "cypress run",
     "test:e2e:open": "cypress open"
   },
@@ -61,11 +61,8 @@
     "cypress": "^13.3.2",
     "eslint": "^8.51.0",
     "eslint-plugin-cypress": "^2.15.1",
-    "nx": "17.0.0",
+    "prettier": "^2.6.2",
     "typescript": "^5.2.2",
     "web-audio-test-api": "^0.5.2"
-  },
-  "nx": {
-    "targets": {}
   }
 }

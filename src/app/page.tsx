@@ -1,13 +1,13 @@
-"use client";
+'use client';
 
-import * as Tone from "tone";
-import { useState } from "react";
-import { Loader } from "lucide-react";
-import { App } from "@/components";
-import { Dialog } from "../packages/pfui";
-import { Button, EButtonType } from "../packages/pfui/button/Button";
-import t from "@/core/i18n";
-import { ESize, EVariant } from "../packages/pfui/constants";
+import * as Tone from 'tone';
+import { useState } from 'react';
+import { Loader } from 'lucide-react';
+import { App } from '@/components';
+import { Button, Dialog } from '@/pfui';
+import t from '@/core/i18n';
+import { ESize, EVariant } from '../packages/pfui/constants';
+import { EButtonType } from 'packages/pfui/button/Button';
 
 export default function Home() {
   const [toneReady, setToneReady] = useState(false);
@@ -22,7 +22,7 @@ export default function Home() {
 
     return (
       <Dialog className="mt-[20%] flex flex-col items-center margin-auto p-10">
-        <p className="mb-8">{t("allowSound")}</p>
+        <p className="mb-8">{t('allowSound')}</p>
         {isLoading ? (
           <Loader className="" size={24} />
         ) : (
@@ -32,7 +32,7 @@ export default function Home() {
             type={EButtonType.Button}
             variant={EVariant.Primary}
             onClick={onClick}
-            value={t("ok")}
+            value={t('ok')}
           />
         )}
       </Dialog>

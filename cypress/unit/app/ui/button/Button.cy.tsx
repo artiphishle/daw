@@ -1,8 +1,8 @@
-import { Button } from "packages/pfui";
-import { EButtonType } from "packages/pfui/button/Button";
-import { EVariant } from "packages/pfui/constants";
+import { Button } from 'packages/pfui';
+import { EButtonType } from 'packages/pfui/button/Button';
+import { EVariant } from 'packages/pfui/constants';
 
-describe("Button", () => {
+describe('Button', () => {
   const VariantButton = ({ variant }: { variant: EVariant }) => (
     <Button
       data-cy="button"
@@ -12,7 +12,7 @@ describe("Button", () => {
     />
   );
 
-  it("should render variants: primary, secondary, normal, success, warning, error", () => {
+  it('should render variants: primary, secondary, normal, success, warning, error', () => {
     cy.mount(
       <>
         {(Object.keys(EVariant) as Array<EVariant>).map((variant) => (
@@ -20,6 +20,6 @@ describe("Button", () => {
         ))}
       </>
     );
-    cy.get("button");
+    cy.get('button');
   });
 });

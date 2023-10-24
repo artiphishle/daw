@@ -1,11 +1,11 @@
-import classNames from "classnames";
-import { ButtonHTMLAttributes } from "react";
-import { ESize, EVariant, SPACING } from "../constants";
+import classNames from 'classnames';
+import { ButtonHTMLAttributes } from 'react';
+import { ESize, EVariant, SPACING } from '../constants';
 
 export enum EButtonType {
-  Button = "button",
-  Reset = "reset",
-  Submit = "submit",
+  Button = 'button',
+  Reset = 'reset',
+  Submit = 'submit',
 }
 
 interface IButton extends ButtonHTMLAttributes<HTMLButtonElement> {

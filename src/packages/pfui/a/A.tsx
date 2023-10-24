@@ -1,17 +1,17 @@
-import classNames from "classnames";
+import classNames from 'classnames';
 
-import type { IA } from "packages/pfui";
+import type { IA } from '..';
 
 function A({
   children,
   order,
   className: _className,
   classNameActive,
-  href = "#",
+  href = '#',
   isActive = false,
   ...rest
 }: IA) {
-  const className = classNames("relative p-4", _className, `order-${order}`, {
+  const className = classNames('relative p-4', _className, `order-${order}`, {
     classNameActive: isActive,
   });
   const tabIndex = order;
