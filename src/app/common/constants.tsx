@@ -1,10 +1,10 @@
-import _ from "lodash/fp";
-import * as Tone from "tone";
+import _ from 'lodash/fp';
+import * as Tone from 'tone';
 
-import t from "@/core/i18n";
+import t from '@/core/i18n';
 
-import { ETrackType, type ITrack } from "@/common/types/track.types";
-import type { IChannel } from "./types/channel.types";
+import { ETrackType, type ITrack } from '@/common/types/track.types';
+import type { IChannel } from './types/channel.types';
 
 // ---------- General
 
@@ -14,71 +14,71 @@ export const PROGRESSION = [
    */
 
   // Major
-  "ii V I",
+  'ii V I',
 
   /**
    * Pop
    */
 
   // 50s Progression
-  "I vi IV V",
+  'I vi IV V',
 
   // Pachelbel's Canon
-  "I V vi iii IV I IV V",
+  'I V vi iii IV I IV V',
 
   /**
    * Medieval
    */
 
   // Passamezzo antico
-  "i VII i V III VII i V i",
+  'i VII i V III VII i V i',
 
   // Passamezzo moderno
-  "I IV I V I IV I V I",
+  'I IV I V I IV I V I',
 
   /**
    * Classical
    */
 
   // Circle Progression
-  "vi ii V I",
+  'vi ii V I',
 
   /**
    * Blues
    */
 
   // "12-bar blues" (verify AI msg)
-  "I V vi IV",
+  'I V vi IV',
 
   // Eight-bar blues
-  "I V IV IV I V I V",
+  'I V IV IV I V I V',
 
   // Sixteen-bar blues
-  "I I I I I I I I IV IV I I V IV I I",
+  'I I I I I I I I IV IV I I V IV I I',
 
   /**
    * Jazz
    */
 
   // Montgomery Ward bridge
-  "I IV ii V",
+  'I IV ii V',
 ];
 export const isRomanNum = (test: string) =>
-  ["i", "ii", "iii", "iv", "v", "vi", "vii"].includes(test.toLowerCase());
+  ['i', 'ii', 'iii', 'iv', 'v', 'vi', 'vii'].includes(test.toLowerCase());
 
 // ---------- Project
 
-const DEFAULT_ACTIVE_TRACK_ID = "track-bd";
+const DEFAULT_ACTIVE_TRACK_ID = 'track-bd';
 const DEFAULT_BPM = 98;
-const DEFAULT_CLEF = "D";
-const DEFAULT_SCALE = "minor";
+const DEFAULT_CLEF = 'D';
+const DEFAULT_SCALE = 'minor';
 const DEFAULT_MEASURE_COUNT = 2;
-const DEFAULT_NAME = t("untitled");
+const DEFAULT_NAME = t('untitled');
 const DEFAULT_OFFSET_LEFT = 184;
-const DEFAULT_POSITION = "0:0:0";
+const DEFAULT_POSITION = '0:0:0';
 const DEFAULT_QUANTIZATION = 16;
 const DEFAULT_SWING = 0;
-const DEFAULT_SWING_SUBDIVISION = "8n";
+const DEFAULT_SWING_SUBDIVISION = '8n';
 const DEFAULT_STATES = {
   tabTopActive: 0,
   tabBtmActive: 0,
@@ -165,49 +165,27 @@ const DEFAULT_TRACK_AUDIO: ITrack = {
  * @Track
  */
 const DEFAULT_TRACK_BD: ITrack = {
-  id: "track-bd",
-  name: "Kick",
+  id: 'track-bd',
+  name: 'Kick',
   routing: {
     input: {
-      id: "Player",
-      label: "KickPlayer",
+      id: 'Player',
+      label: 'KickPlayer',
       options: {
-        url: "./samples/Roland_TR-909/BT3AAD0.WAV",
+        url: './samples/Roland_TR-909/BT3AAD0.WAV',
       },
       parts: [
         {
-          label: "BD",
-          length: "1m",
-          events: [
-            { note: "C2" },
-            { note: null },
-            { note: null },
-            { note: null },
-
-            { note: null },
-            { note: null },
-            { note: null },
-            { note: null },
-          ],
+          label: 'BD',
+          events: [{ note: 'C2', duration: '16n', x: 0 }],
         },
         {
-          label: "BD",
-          length: "1m",
-          events: [
-            { note: "C2" },
-            { note: null },
-            { note: null },
-            { note: null },
-
-            { note: null },
-            { note: null },
-            { note: null },
-            { note: null },
-          ],
+          label: 'BD',
+          events: [{ note: 'C2', duration: '16n', x: 0 }],
         },
       ],
     },
-    output: "ch-drums",
+    output: 'ch-drums',
   },
   type: ETrackType.Player,
 };
@@ -215,96 +193,68 @@ const DEFAULT_TRACK_BD: ITrack = {
  * @Track
  */
 const DEFAULT_TRACK_SD: ITrack = {
-  id: "track-sd",
-  name: "Snare",
+  id: 'track-sd',
+  name: 'Snare',
   routing: {
     input: {
-      id: "Player",
-      label: "SnarePlayer",
+      id: 'Player',
+      label: 'SnarePlayer',
       options: {
-        url: "./samples/WaveAlchemy/wa_808_tape/wa_808tape_snare_16_clean.wav",
+        url: './samples/WaveAlchemy/wa_808_tape/wa_808tape_snare_16_clean.wav',
       },
       parts: [
         {
-          label: "SD",
-          length: "1m",
-          events: [
-            { note: null },
-            { note: null },
-            { note: null },
-            { note: null },
-
-            { note: "D2" },
-            { note: null },
-            { note: null },
-            { note: null },
-          ],
+          label: 'SD',
+          events: [{ note: 'D2', duration: '16n', x: 8 }],
         },
         {
-          label: "SD",
-          length: "1m",
-          events: [
-            { note: null },
-            { note: null },
-            { note: null },
-            { note: null },
-
-            { note: "D2" },
-            { note: null },
-            { note: null },
-            { note: null },
-          ],
+          label: 'SD',
+          events: [{ note: 'D2', duration: '16n', x: 8 }],
         },
       ],
     },
-    output: "ch-drums",
+    output: 'ch-drums',
   },
   type: ETrackType.Player,
 };
 const DEFAULT_TRACK_OH: ITrack = {
-  id: "track-oh",
-  name: "OH",
+  id: 'track-oh',
+  name: 'OH',
   routing: {
     input: {
-      id: "Player",
-      label: "inp-oh",
+      id: 'Player',
+      label: 'inp-oh',
       options: {
-        url: "./samples/WaveAlchemy/wa_808_tape/wa_808tape_openhat_01_clean.wav",
+        url: './samples/WaveAlchemy/wa_808_tape/wa_808tape_openhat_01_clean.wav',
       },
       parts: [
         {
-          label: "p1-oh",
-          length: "1m",
+          label: 'p1-oh',
           events: [
-            { note: "F#2" },
-            { note: null },
-            { note: "F#2" },
-            { note: null },
-
-            { note: "F#2" },
-            { note: null },
-            { note: "F#2" },
-            { note: null },
+            { note: 'F#2', duration: '16n', x: 0 },
+            { note: 'F#2', duration: '16n', x: 2 },
+            { note: 'F#2', duration: '16n', x: 4 },
+            { note: 'F#2', duration: '16n', x: 6 },
+            { note: 'F#2', duration: '16n', x: 8 },
+            { note: 'F#2', duration: '16n', x: 10 },
+            { note: 'F#2', duration: '16n', x: 12 },
+            { note: 'F#2', duration: '16n', x: 14 },
           ],
         },
         {
-          label: "p2-oh",
-          length: "1m",
+          label: 'p2-oh',
           events: [
-            { note: "F#2" },
-            { note: null },
-            { note: "F#2" },
-            { note: null },
-
-            { note: "F#2" },
-            { note: null },
-            { note: "F#2" },
-            { note: null },
+            { note: 'F#2', duration: '16n', x: 0 },
+            { note: 'F#2', duration: '16n', x: 2 },
+            { note: 'F#2', duration: '16n', x: 4 },
+            { note: 'F#2', duration: '16n', x: 6 },
+            { note: 'F#2', duration: '16n', x: 8 },
+            { note: 'F#2', duration: '16n', x: 10 },
           ],
         },
       ],
     },
-    output: "ch-drums",
+    output: 'ch-drums',
   },
   type: ETrackType.Player,
 };
@@ -312,49 +262,27 @@ const DEFAULT_TRACK_OH: ITrack = {
  * @Track
  */
 const DEFAULT_TRACK_HI_TOM: ITrack = {
-  id: "track-hi-tom",
-  name: "HiTom",
+  id: 'track-hi-tom',
+  name: 'HiTom',
   routing: {
     input: {
-      id: "Player",
-      label: "Tom Hi",
+      id: 'Player',
+      label: 'Tom Hi',
       options: {
-        url: "./samples/WaveAlchemy/wa_drm_drums/high_tom/wadrm_hitom_acc1_r2.wav",
+        url: './samples/WaveAlchemy/wa_drm_drums/high_tom/wadrm_hitom_acc1_r2.wav',
       },
       parts: [
+        { label: 'HiTomPart', events: [] },
         {
-          label: "HiTomPart",
-          length: "1m",
+          label: 'HiTomPart',
           events: [
-            { note: null },
-            { note: null },
-            { note: null },
-            { note: null },
-
-            { note: null },
-            { note: null },
-            { note: null },
-            { note: null },
-          ],
-        },
-        {
-          label: "HiTomPart",
-          length: "1m",
-          events: [
-            { note: null },
-            { note: null },
-            { note: null },
-            { note: null },
-
-            { note: null },
-            { note: "C4" },
-            { note: null },
-            { note: null },
+            { note: 'C4', duration: '16n', x: 12 },
+            { note: 'C4', duration: '16n', x: 13 },
           ],
         },
       ],
     },
-    output: "ch-drums",
+    output: 'ch-drums',
   },
   type: ETrackType.Player,
 };
@@ -362,49 +290,27 @@ const DEFAULT_TRACK_HI_TOM: ITrack = {
  * @Track
  */
 const DEFAULT_TRACK_MI_TOM: ITrack = {
-  id: "track-mi-tom",
-  name: "MiToms",
+  id: 'track-mi-tom',
+  name: 'MiToms',
   routing: {
     input: {
-      id: "Player",
-      label: "Tom Mi",
+      id: 'Player',
+      label: 'Tom Mi',
       options: {
-        url: "./samples/WaveAlchemy/wa_drm_drums/low_tom/wadrm_lotom_acc2_r5.wav",
+        url: './samples/WaveAlchemy/wa_drm_drums/low_tom/wadrm_lotom_acc2_r5.wav',
       },
       parts: [
         {
-          label: "MiTomPart",
-          length: "1m",
-          events: [
-            { note: null },
-            { note: null },
-            { note: null },
-            { note: null },
-
-            { note: null },
-            { note: null },
-            { note: null },
-            { note: null },
-          ],
+          label: 'MiTomPart',
+          events: [],
         },
         {
-          label: "MiTomPart",
-          length: "1m",
-          events: [
-            { note: null },
-            { note: null },
-            { note: null },
-            { note: null },
-
-            { note: null },
-            { note: null },
-            { note: "F4" },
-            { note: null },
-          ],
+          label: 'MiTomPart',
+          events: [{ note: 'F4', duration: '16n', x: 14 }],
         },
       ],
     },
-    output: "ch-drums",
+    output: 'ch-drums',
   },
   type: ETrackType.Player,
 };
@@ -412,49 +318,27 @@ const DEFAULT_TRACK_MI_TOM: ITrack = {
  * @Track
  */
 const DEFAULT_TRACK_LO_TOM: ITrack = {
-  id: "track-lo-tom",
-  name: "LoTom",
+  id: 'track-lo-tom',
+  name: 'LoTom',
   routing: {
     input: {
-      id: "Player",
-      label: "Tom Lo",
+      id: 'Player',
+      label: 'Tom Lo',
       options: {
-        url: "./samples/WaveAlchemy/wa_drm_drums/mid_tom/wadrm_midtom_acc0_r5.wav",
+        url: './samples/WaveAlchemy/wa_drm_drums/mid_tom/wadrm_midtom_acc0_r5.wav',
       },
       parts: [
         {
-          label: "LoTomPart",
-          length: "1m",
-          events: [
-            { note: null },
-            { note: null },
-            { note: null },
-            { note: null },
-
-            { note: null },
-            { note: null },
-            { note: null },
-            { note: null },
-          ],
+          label: 'LoTomPart',
+          events: [],
         },
         {
-          label: "LoTomPart",
-          length: "1m",
-          events: [
-            { note: null },
-            { note: null },
-            { note: null },
-            { note: null },
-
-            { note: null },
-            { note: null },
-            { note: null },
-            { note: "E4" },
-          ],
+          label: 'LoTomPart',
+          events: [{ note: 'E4', duration: '16n', x: 15 }],
         },
       ],
     },
-    output: "ch-drums",
+    output: 'ch-drums',
   },
   type: ETrackType.Player,
 };
@@ -542,11 +426,11 @@ const DEFAULT_TRACK_SAMPLER: ITrack = {
   @Channel
 */
 const DEFAULT_CHANNEL_DRUMS: IChannel = {
-  id: "ch-drums",
-  label: "Drums",
+  id: 'ch-drums',
+  label: 'Drums',
   routing: {
-    input: "(drums)",
-    output: "master",
+    input: '(drums)',
+    output: 'master',
   },
   options: {
     channelCount: 1,
@@ -560,9 +444,9 @@ const DEFAULT_CHANNEL_DRUMS: IChannel = {
   @Channel
 */
 const DEFAULT_CHANNEL_MASTER: IChannel = {
-  id: "master",
-  label: "Master",
-  routing: { input: "(all)", output: "Stereo out" },
+  id: 'master',
+  label: 'Master',
+  routing: { input: '(all)', output: 'Stereo out' },
   options: {
     channelCount: 1,
     mute: false,
@@ -599,5 +483,4 @@ export {
   DEFAULT_TRACK_LO_TOM,
   DEFAULT_CHANNEL_DRUMS,
   DEFAULT_CHANNEL_MASTER,
-  //
 };

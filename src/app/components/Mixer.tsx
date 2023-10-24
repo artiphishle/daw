@@ -124,7 +124,7 @@ export default function Mixer({ openInstrument }: IMixer) {
         </Inner>
         <Meter meter={channel.id === 'master' ? masterMeter : meter} />
         <Inner>
-          <Icon /> {channel.label}
+          <Icon width="16px" height="16px" /> {channel.label}
         </Inner>
       </section>
     );
@@ -166,7 +166,7 @@ export default function Mixer({ openInstrument }: IMixer) {
         </Inner>
         <Meter className={$.meter} meter={meter} />
         <Inner>
-          <Icon /> {name}
+          <Icon width="16px" height="16px" /> {name}
         </Inner>
       </section>
     );

@@ -1,5 +1,5 @@
-import type { Note, Note as TNote } from "tone/build/esm/core/type/NoteUnits";
-import type { Time as TTime } from "tone/build/esm/core/type/Units";
+import type { Note, Note as TNote } from 'tone/build/esm/core/type/NoteUnits';
+import type { Time as TTime } from 'tone/build/esm/core/type/Units';
 
 export interface IMidiEventPos {
   readonly n: TNote | null;
@@ -11,11 +11,12 @@ export interface IMidiEventPos {
 }
 
 export interface IPlayerEvent {
-  readonly note: Note | null;
+  readonly note: Note;
+  readonly duration: string;
+  readonly x: number;
 }
 
 export interface IMidiPart {
   readonly label: string;
-  readonly length: string;
   readonly events: IPlayerEvent[];
 }
