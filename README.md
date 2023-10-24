@@ -104,6 +104,10 @@ Design will be applied soon, this is just a raw sketch!
 
 ### 🍂 October 2023
 
+#### October, 24th
+
+- **Mixer** Route tracks to channels
+
 #### October, 19th
 
 - **Theme** Start to setup customized theming & added PrimeReact

@@ -1,17 +1,17 @@
-import type { UniqueIdentifier } from "@dnd-kit/core";
+import type { UniqueIdentifier } from '@dnd-kit/core';
 import type {
   IInstrument,
   TInputOptions,
-} from "app/common/types/instrument.types";
-import type { IMidiPart } from "app/common/types/midi.types";
+} from 'app/common/types/instrument.types';
+import type { IMidiPart } from 'app/common/types/midi.types';
 
 export enum ETrackType {
-  Audio = "audio",
-  Channel = "channel",
-  Instrument = "instrument",
-  Player = "player",
-  Players = "players",
-  Sampler = "sampler",
+  Audio = 'audio',
+  Channel = 'channel',
+  Instrument = 'instrument',
+  Player = 'player',
+  Players = 'players',
+  Sampler = 'sampler',
 }
 
 export interface IRoutingInput {
@@ -23,7 +23,7 @@ export interface IRoutingInput {
 }
 export interface ITrackRouting {
   input: IRoutingInput;
-  output?: string;
+  output: string;
 }
 export interface ITrack {
   id: UniqueIdentifier;
