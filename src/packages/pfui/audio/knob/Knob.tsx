@@ -1,5 +1,5 @@
-import { ESize, EVariant } from "packages/pfui/constants";
-import Circle, { ICircle } from "../../shape/Circle";
+import { ESize, EVariant } from '../../constants';
+import Circle, { ICircle } from '../../shape/Circle';
 
 interface IKnob extends ICircle {
   className?: string;
@@ -8,7 +8,7 @@ interface IKnob extends ICircle {
   value?: number;
 }
 
-function Knob({ className = "", min = 0, max = 1, value = 0.8 }: IKnob) {
+function Knob({ className = '', min = 0, max = 1, value = 0.8 }: IKnob) {
   return (
     <Circle color={EVariant.Primary} size={ESize.Sm} className={className}>
       {value}

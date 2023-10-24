@@ -1,10 +1,9 @@
-import { ColorPicker } from "primereact/colorpicker";
-import useMidiDevice from "@/core/hooks/audio/useMidiDevice";
-import styles from "../common/styles";
-import colors from "tailwindcss/colors";
-import _ from "lodash/fp";
-import { useState } from "react";
-import Circle from "packages/pfui/shape/Circle";
+import { ColorPicker } from 'primereact/colorpicker';
+import useMidiDevice from '@/core/hooks/audio/useMidiDevice';
+import styles from '../common/styles';
+import colors from 'tailwindcss/colors';
+import _ from 'lodash/fp';
+import { useState } from 'react';
 
 export default function Settings() {
   // Enable MIDI Device (WebMidi)
@@ -13,26 +12,26 @@ export default function Settings() {
 
   // useEffect(() => {}, []);
   function onChange(e: any) {
-    console.log("yes", e);
+    console.log('yes', e);
   }
   const colorScale = [
-    "50",
-    "100",
-    "200",
-    "300",
-    "400",
-    "500",
-    "600",
-    "700",
-    "800",
-    "900",
+    '50',
+    '100',
+    '200',
+    '300',
+    '400',
+    '500',
+    '600',
+    '700',
+    '800',
+    '900',
   ];
   return (
     <section
       className="p-4 relative"
       style={{
-        background: darkMode ? "black" : "white",
-        color: darkMode ? "white" : "black",
+        background: darkMode ? 'black' : 'white',
+        color: darkMode ? 'white' : 'black',
       }}
     >
       <h1 className={styles.headings.h1}>Settings</h1>
@@ -44,9 +43,9 @@ export default function Settings() {
         <div
           className="p-4 rounded-full cursor-pointer"
           style={{
-            background: darkMode ? "white" : "black",
-            color: darkMode ? "black" : "white",
-            fontWeight: "bold",
+            background: darkMode ? 'white' : 'black',
+            color: darkMode ? 'black' : 'white',
+            fontWeight: 'bold',
           }}
         >
           Toggle Dark/Bright
@@ -75,11 +74,11 @@ export default function Settings() {
                           className="max-w-4"
                           value={shades[sc]}
                           style={{
-                            marginBottom: "10px",
-                            height: "auto",
+                            marginBottom: '10px',
+                            height: 'auto',
                           }}
                           onChange={() => {
-                            console.log("ach");
+                            console.log('ach');
                           }}
                         />
                       </div>
