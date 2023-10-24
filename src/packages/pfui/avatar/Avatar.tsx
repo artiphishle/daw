@@ -1,7 +1,7 @@
-import classNames from "classnames";
-import { UserIcon } from "lucide-react";
-import type { IAvatar } from "packages/pfui";
-import styles from "app/common/styles";
+import classNames from 'classnames';
+import { UserIcon } from 'lucide-react';
+import type { IAvatar } from '..';
+import styles from 'app/common/styles';
 
 function Avatar({ bordered = true, className, rounded = true }: IAvatar) {
   const css = styles.avatar;

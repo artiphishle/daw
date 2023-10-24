@@ -1,5 +1,5 @@
-import { AccordionDetails, AccordionSummary } from "packages/pfui";
-import { ReactNode } from "react";
+import { AccordionDetails, AccordionSummary } from '..';
+import { ReactNode } from 'react';
 
 interface IAccordionProps {
   summary: ReactNode;
@@ -11,7 +11,7 @@ interface IAccordionProps {
 function Accordion({
   details,
   summary,
-  classNameDetails = "",
+  classNameDetails = '',
   open = false,
 }: IAccordionProps) {
   return (

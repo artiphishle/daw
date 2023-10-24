@@ -1,4 +1,4 @@
-import type { IButtonGroup } from "packages/pfui";
+import type { IButtonGroup } from '..';
 
 function ButtonGroup({ children, ...rest }: IButtonGroup) {
   return <div {...rest}>{children}</div>;

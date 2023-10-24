@@ -94,13 +94,9 @@ Design will be applied soon, this is just a raw sketch!
 
 ![alt DAW Screenshot Arranger](./public/screenshot.png)
 
-<div style='display:flex;flex-direction:row;gap:4rem'>
-
 ![alt DAW Screenshot News](./public/screenshot3.png)
 
 ![alt DAW Screenshot Sheets](./public/screenshot2.png)
-
-</div>
 
 ---
 
@@ -108,42 +104,43 @@ Design will be applied soon, this is just a raw sketch!
 
 ### 🍂 October 2023
 
-#### 19th
+#### October, 19th
 
-- **Pfui Menu/ContextMenu** one4all menu. Bind a Menu/Contextmenu to an target area
+- **Theme** Start to setup customized theming & added PrimeReact
+- **Pfui Menu/ContextMenu** one4all menu. Bind a Menu/Contextmenu to a target area
 
-#### 14th
+#### October, 14th
 
 - **Mixer** FFT Analyzers for all tracks
 - **Cypress** Component & E2E tests (removed Jest)
 
-#### 13th
+#### October, 13th
 
 - **Progression** Show famous chord progressions by tonic (try to change clef on top)
 - **E2E Testing** using Cypress, also integrated into CI pipeline & first test for DnD useSortable tracks (Arranger)
 
-#### 12th
+#### October, 12th
 
 - **Arranger** Players & Sampler can play Tone.Sequence
 - **Samples** added new sample library
 
-#### 7th
+#### October, 7th
 
 **Parts of Sequences** playable in `Players` and `Sampler`
 **Free Samples** updated to the public domain
 
-#### 5th
+#### October, 5th
 
 - **Github Workflow** lint, test & build on 'main' push & PR (matrix strategy)
 
-#### 4th
+#### October, 4th
 
 - **Arranger** Quantization grid & playing sequences
 - **SWR 'Selector'** to handle unserializable data
 
 ### 🍃 September 2023
 
-#### 29th
+#### September, 29th
 
 - **Portals** The instruments are loaded at the same location via `usePortal` hook
 - **Refactoring** of the whole project (more soon, project 2 months young)
@@ -152,41 +149,41 @@ Design will be applied soon, this is just a raw sketch!
 - **Arranger & Mixer auto-resize** throttled update on window resize
 - **Browser** Media browser tab, ready to be filled with provided free samples
 
-#### 23th
+#### September, 23th
 
 - **BPM Detection** works, audio tracks are automatically analyzed
 - **MIDI Device** support for Chrome, more to follow (Tab 'Settings')
 
-#### 20th
+#### September, 20th
 
 - **Add/remove notes** in MIDI tracks
 
-#### 15th
+#### September, 15th
 
 - **Mixer** Volume meter, ready to add inserts/sends
 - **SWR** Instruments are now loaded with ProjectContext
 
-#### 13th
+#### September, 13th
 
 - **Store project settings** using SWR
 - **Arranger** playback (drums)
 
 ### ☀️ August 2023
 
-#### 24th
+#### August, 24th
 
 - **Jest Setup** using Rust compiler
 - **Locator & Transport** playable sound
 - **Basic Pitch AI** to analyse audio files to generate:
 - **Generate song sheets** using [ABC.js](https://github.com/paulrosen/abcjs)
 
-#### 22th
+#### August, 22th
 
 - **Arranger** DnD tracks
 - **Locator** visualize transport position
 - **MultiLanguage** `🇨🇭` `🇩🇪` `🏴󠁧󠁢󠁥󠁮󠁧󠁿` `🇫🇷` `🇮🇹`
 
-#### 9th
+#### August, 9th
 
 - **Basic Synths & FX** using Tone.js
 - **Transport** (playback, bpm).

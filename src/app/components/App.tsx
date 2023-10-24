@@ -1,21 +1,21 @@
-"use client";
-import { type MouseEvent, useEffect } from "react";
-import { CogIcon, GridIcon, HopIcon, InfinityIcon } from "lucide-react";
-import * as Tone from "tone";
+'use client';
+import { type MouseEvent, useEffect } from 'react';
+import { CogIcon, GridIcon, HopIcon, InfinityIcon } from 'lucide-react';
+import * as Tone from 'tone';
 import {
   DndContext,
   useSensor,
   type DragEndEvent,
   MouseSensor,
   useSensors,
-} from "@dnd-kit/core";
+} from '@dnd-kit/core';
 
-import styles from "@/common/styles";
+import styles from '@/common/styles';
 import {
   DEFAULT_MEASURE_COUNT,
   DEFAULT_OFFSET_LEFT,
   DEFAULT_QUANTIZATION,
-} from "@/constants";
+} from '@/constants';
 // Import { PanSongParsed } from "./test/unit/PanSong.parsed";
 // import useConverter from "@/core/hooks/useConverter";
 import {
@@ -28,17 +28,15 @@ import {
   Progression,
   Settings,
   Sheet,
-} from "@/components";
-import { A, Grid, Nav, Tabs, TabsPanel } from "packages/pfui";
-import useProjectContext from "@/core/hooks/api/useProjectContext";
-import useAudioInstrument from "@/core/hooks/audio/useAudioInstrument";
+} from '@/components';
+import { A, Adsr, Grid, Menu, Nav, Tabs, TabsPanel } from '@/pfui';
+import useProjectContext from '@/core/hooks/api/useProjectContext';
+import useAudioInstrument from '@/core/hooks/audio/useAudioInstrument';
 
-import type { Note as TNote } from "tone/build/esm/core/type/NoteUnits";
-import t from "../core/i18n";
-import _ from "lodash/fp";
-import Adsr from "packages/pfui/audio/envelope/adsr/Adsr";
-import data from "../../../cypress/fixtures/sheet";
-import { Menu } from "packages/pfui/menu/Menu";
+import type { Note as TNote } from 'tone/build/esm/core/type/NoteUnits';
+import t from '../core/i18n';
+import _ from 'lodash/fp';
+import data from '../../../cypress/fixtures/sheet';
 
 export function App() {
   const { isOpen, InstrumentPortal, openInstrument, closeInstrument } =
@@ -90,27 +88,27 @@ export function App() {
   const tabsBottomItems = [
     {
       children: <div>Mixer</div>,
-      href: "#",
-      id: "tabs-mixer",
+      href: '#',
+      id: 'tabs-mixer',
       order: 1,
       panel: <Mixer openInstrument={openInstrument} />,
-      title: "Mixer",
+      title: 'Mixer',
     },
     {
       children: <div>PianoRoll</div>,
-      href: "#",
-      id: "tabs-pianoRoll",
+      href: '#',
+      id: 'tabs-pianoRoll',
       order: 2,
       panel: <PianoRoll />,
-      title: "PianoRoll",
+      title: 'PianoRoll',
     },
     {
       children: <div>Browser</div>,
-      href: "#",
-      id: "tabs-browser",
+      href: '#',
+      id: 'tabs-browser',
       order: 3,
       panel: <Browser />,
-      title: "Browser",
+      title: 'Browser',
     },
   ];
   const tabsTopItems = [
@@ -121,8 +119,8 @@ export function App() {
           <span>Arranger</span>
         </div>
       ),
-      id: "tabs-arranger",
-      href: "#",
+      id: 'tabs-arranger',
+      href: '#',
       order: 1,
       panel: (
         <>
@@ -130,7 +128,7 @@ export function App() {
           <section className="relative">
             <Grid
               className={
-                "grid absolute top-[32px] left-[184px] right-0 bottom-0"
+                'grid absolute top-[32px] left-[184px] right-0 bottom-0'
               }
               cols={gridCols}
               rows={tracks.length}
@@ -172,7 +170,7 @@ export function App() {
           </Tabs>
         </>
       ),
-      title: "Arranger",
+      title: 'Arranger',
     },
     {
       children: (
@@ -181,11 +179,11 @@ export function App() {
           <span className="hidden">Sheets</span>
         </div>
       ),
-      id: "tabs-sheet",
-      href: "#",
+      id: 'tabs-sheet',
+      href: '#',
       order: 2,
       panel: <>{<Sheet markdown={data[2]} />}</>,
-      title: "Sheet",
+      title: 'Sheet',
     },
     {
       children: (
@@ -194,11 +192,11 @@ export function App() {
           <span className="hidden">Settings</span>
         </div>
       ),
-      id: "tabs-settings",
-      href: "#",
+      id: 'tabs-settings',
+      href: '#',
       order: 3,
       panel: <Settings />,
-      title: "Settings",
+      title: 'Settings',
     },
     {
       children: (
@@ -207,8 +205,8 @@ export function App() {
           <span className="hidden">Tests</span>
         </div>
       ),
-      id: "tabs-test",
-      href: "#",
+      id: 'tabs-test',
+      href: '#',
       order: 4,
       panel: (
         <Droppable id="dropzone-1">
@@ -218,7 +216,7 @@ export function App() {
             <section className="flex flex-col lg:flex-row gap-8">
               <section>
                 <h2 className={styles.headings.h2}>
-                  {_.upperFirst(t("progression"))}
+                  {_.upperFirst(t('progression'))}
                 </h2>
                 <Progression tonic={clef as TNote} />
               </section>
@@ -231,12 +229,12 @@ export function App() {
           </section>
         </Droppable>
       ),
-      title: "Testing",
+      title: 'Testing',
     },
   ];
 
   function dragEnd({ active, delta }: DragEndEvent) {
-    console.log("active/moved x/y", active, delta.x, "/", delta.y);
+    console.log('active/moved x/y', active, delta.x, '/', delta.y);
   }
 
   return (

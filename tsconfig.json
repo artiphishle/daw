@@ -13,14 +13,18 @@
     "noEmit": true,
     "paths": {
       "@/api/*": ["app/api/(routes)/*"],
-      "@/components": ["app/components/index"],
       "@/common/*": ["app/common/*"],
-      "@/core/*": ["app/core/*"],
-      "@/pfui": ["app/pfui/index"],
+      "@/components": ["app/components/index"],
       "@/constants": ["app/common/constants"],
+      "@/core/*": ["app/core/*"],
+      "@/pfui": ["packages/pfui/index"],
       "@/types/*": ["app/common/types/*"]
     },
-    "plugins": [{ "name": "next" }],
+    "plugins": [
+      {
+        "name": "next"
+      }
+    ],
     "resolveJsonModule": true,
     "skipLibCheck": true,
     "strict": true,
@@ -33,5 +37,10 @@
     "**/*.tsx",
     ".next/types/**/*.ts",
     "cypress.config.ts"
-  ]
+  ],
+  "ts-node": {
+    "compilerOptions": {
+      "module": "commonjs"
+    }
+  }
 }

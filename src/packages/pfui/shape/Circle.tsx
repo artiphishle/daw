@@ -1,6 +1,6 @@
-import classNames from "classnames";
-import { ReactNode } from "react";
-import { ESize, EVariant } from "../constants";
+import classNames from 'classnames';
+import { ReactNode } from 'react';
+import { ESize, EVariant } from '../constants';
 
 export interface ICircle {
   children?: ReactNode;
@@ -11,7 +11,7 @@ export interface ICircle {
 
 export default function Circle({
   children,
-  className = "",
+  className = '',
   color = EVariant.Normal,
   size = ESize.Lg,
 }: ICircle) {
