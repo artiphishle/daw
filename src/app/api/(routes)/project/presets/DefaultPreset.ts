@@ -6,8 +6,8 @@ import {
   DEFAULT_NAME,
   DEFAULT_POSITION,
   DEFAULT_QUANTIZATION,
+  DEFAULT_TRACK_INSTRUMENT_BASS,
   // DEFAULT_TRACK_AUDIO,
-  // DEFAULT_TRACK_INSTRUMENT_BASS,
   // DEFAULT_TRACK_SAMPLER,
   // DEFAULT_TRACK_PLAYERS,
   DEFAULT_CHANNEL_DRUMS,
@@ -20,6 +20,8 @@ import {
   DEFAULT_SCALE,
   DEFAULT_ACTIVE_TRACK_ID,
   DEFAULT_TRACK_OH,
+  DEFAULT_SWING,
+  DEFAULT_SWING_SUBDIVISION,
 } from '@/constants';
 
 import type { IProjectContext } from '@/types/project.types';
@@ -35,8 +37,8 @@ const DefaultPreset: IProjectContext = {
   position: DEFAULT_POSITION,
   quantization: DEFAULT_QUANTIZATION,
   states: DEFAULT_STATES,
-  swing: 0.25,
-  swingSubdivision: '8n',
+  swing: DEFAULT_SWING,
+  swingSubdivision: DEFAULT_SWING_SUBDIVISION,
   tracks: [
     DEFAULT_TRACK_BD,
     DEFAULT_TRACK_SD,

@@ -55,6 +55,7 @@
     "no-loss-of-precision": "off",
     "no-magic-numbers": "off",
     "no-mixed-operators": "off",
+    "no-nested-ternary": "off",
     "no-plusplus": "off",
     "no-shadow": "off",
     "no-ternary": "off",

@@ -19,6 +19,7 @@ export { Tabs, TabsPanel } from './tabs'; // TabsPanel obsolete?
 
 // Audio
 export { Adsr } from './audio/envelope/adsr/Adsr';
+export { GoldKnob } from './audio/knob/GoldKnob';
 export { Knob } from './audio/knob/Knob';
 
 // Layout
