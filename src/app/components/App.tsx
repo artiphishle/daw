@@ -29,7 +29,7 @@ import {
   Settings,
   Sheet,
 } from '@/components';
-import { A, Adsr, Grid, Menu, Nav, Tabs, TabsPanel } from '@/pfui';
+import { A, Adsr, GoldKnob, Grid, Menu, Nav, Tabs, TabsPanel } from '@/pfui';
 import useProjectContext from '@/core/hooks/api/useProjectContext';
 import useAudioInstrument from '@/core/hooks/audio/useAudioInstrument';
 
@@ -213,6 +213,10 @@ export function App() {
           <section className="bg-white p-8">
             <h1 className={styles.headings.h1}>News & Showroom</h1>
             <hr className="my-8" />
+            <section>
+              <h2 className={styles.headings.h2}>Knobs</h2>
+              <GoldKnob initialValue={80} size={120} />
+            </section>
             <section className="flex flex-col lg:flex-row gap-8">
               <section>
                 <h2 className={styles.headings.h2}>
@@ -225,6 +229,7 @@ export function App() {
                 <br />
                 <Adsr />
               </section>
+              <hr className="my-8" />
             </section>
           </section>
         </Droppable>
