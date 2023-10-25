@@ -49,9 +49,6 @@ function Track({
   const $li = classNames($.row, className);
   const $e = {
     onArrangementClick: (event: MouseEvent) => {
-      const trackId = (
-        event.currentTarget.previousSibling as HTMLElement
-      ).getAttribute('data-track-id')!;
       const element = event.target as HTMLElement;
       const clientX = event.clientX - DEFAULT_OFFSET_LEFT;
       const qWidth = windowWidth / 16 / measureCount;
@@ -60,7 +57,6 @@ function Track({
       const qIndex = qTotalIndex - partIndex * 16;
       const isNote = element.getAttribute('data-type') === 'note';
 
-      console.log('partIndex', partIndex, qIndex);
       isNote
         ? deleteNote({
             partIndex,
