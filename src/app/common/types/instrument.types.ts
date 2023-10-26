@@ -1,4 +1,4 @@
-import { FC } from "react";
+import { FC } from 'react';
 import {
   ChannelOptions,
   MembraneSynth,
@@ -10,21 +10,21 @@ import {
   PlayersOptions,
   Sampler,
   Synth,
-} from "tone";
-import { RecursivePartial as TRecursivePartial } from "tone/build/esm/core/util/Interface";
+} from 'tone';
+import { RecursivePartial as TRecursivePartial } from 'tone/build/esm/core/util/Interface';
 
 export enum EInstrument {
-  AmSynth = "AmSynth",
-  FmSynth = "FmSynth",
-  MembraneSynth = "MembraneSynth",
-  MetalSynth = "MetalSynth",
-  MonoSynth = "MonoSynth",
-  NoiseSynth = "NoiseSynth",
-  OmniSynth = "OmniSynth",
-  Player = "Player",
-  Players = "Players",
-  Sampler = "Sampler",
-  Synth = "Synth",
+  AmSynth = 'AmSynth',
+  FmSynth = 'FmSynth',
+  MembraneSynth = 'MembraneSynth',
+  MetalSynth = 'MetalSynth',
+  MonoSynth = 'MonoSynth',
+  NoiseSynth = 'NoiseSynth',
+  OmniSynth = 'OmniSynth',
+  Player = 'Player',
+  Players = 'Players',
+  Sampler = 'Sampler',
+  Synth = 'Synth',
 }
 
 export type TInstrument =

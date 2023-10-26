@@ -1,7 +1,6 @@
 'use client';
-import { type MouseEvent, useEffect } from 'react';
+import { type MouseEvent } from 'react';
 import { CogIcon, GridIcon, HopIcon, InfinityIcon } from 'lucide-react';
-import * as Tone from 'tone';
 import {
   DndContext,
   useSensor,
@@ -42,11 +41,13 @@ export function App() {
   const { isOpen, InstrumentPortal, openInstrument, closeInstrument } =
     useAudioInstrument();
 
+  /*
   useEffect(() => {
     const audioContext = new Tone.Context();
     audioContext.resume();
     // Your audio processing code goes here
   }, []);
+  */
 
   // const { audioToAbc, audioToMidi } = useConverter();
   const mouseSensor = useSensor(MouseSensor);

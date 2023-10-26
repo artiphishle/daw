@@ -38,6 +38,7 @@ const styles = {
     meter: 'w-full bg-[#333]',
     track: {
       main: 'pt-6 bg-[#3e4140] border border-r-[#555] border-r-[2px] justify-center text-xs items-center content-end',
+      channel: 'justify-end relative bg-green-700',
       inner: 'flex px-4 items-center gap-1 py-2 border-b border-b-[#555]',
       master:
         'bg-[#3e4140] border border-r-[#555] border-r-[2px] h-full flex flex-col justify-end',
@@ -49,6 +50,9 @@ const styles = {
     main: 'flex flex-1 justify-center items-center mr-1 text-black text-center cursor-pointer text-[0.5rem]',
     bg: 'bg-transparent',
     bgActive: 'bg-blue-900 text-white',
+  },
+  time: {
+    main: 'flex flex-1 items-center px-1 py-2 border-l border-r-gray-200',
   },
   track: {
     audio: { main: 'w-full flex flex-col justify-center' },
