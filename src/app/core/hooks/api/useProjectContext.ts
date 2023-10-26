@@ -6,7 +6,7 @@ import OmniSynth from '@/core/instruments/OmniSynth';
 import Sampler from '@/core/instruments/Sampler';
 
 import { EEndpoint } from 'app/common/types/api.types';
-import { ETrackType } from 'app/common/types/track.types';
+import { ETrackType, IRoutingInput } from 'app/common/types/track.types';
 import type { IProjectContext } from 'app/common/types/project.types';
 import {
   type TInputOptions,
@@ -21,52 +21,32 @@ const loadInstrument = (_instrument: EInstrument, options: TInputOptions) => {
 
   switch (_instrument) {
     case EInstrument.MembraneSynth:
-      Instrument = OmniSynth;
-      instrument = new Tone.MembraneSynth(options as Tone.MembraneSynthOptions);
-      break;
     case EInstrument.MetalSynth:
-      Instrument = OmniSynth;
-      instrument = new Tone.MetalSynth(options as Tone.MetalSynthOptions);
-      break;
     case EInstrument.MonoSynth:
-      Instrument = OmniSynth;
-      instrument = new Tone.MonoSynth(options as Tone.MonoSynthOptions);
-      break;
     case EInstrument.NoiseSynth:
+    case EInstrument.Players:
+    case EInstrument.Synth:
       Instrument = OmniSynth;
-      instrument = new Tone.NoiseSynth(options as Tone.NoiseSynthOptions);
+      instrument = new Tone[_instrument](options as Record<string, unknown>);
       break;
     case EInstrument.Player:
       Instrument = OmniSynth;
-      instrument = new Tone.Player(options as Tone.PlayerOptions);
-      break;
-    case EInstrument.Players:
-      Instrument = OmniSynth;
-      instrument = new Tone.Players(
-        options as Tone.PlayersOptions
-      ) as Tone.Players;
+      instrument = new Tone.Player();
       break;
     case EInstrument.Sampler:
       Instrument = Sampler;
       instrument = new Tone.Sampler(options as Tone.SamplerOptions);
       break;
-    case EInstrument.Synth:
-      Instrument = OmniSynth;
-      instrument = new Tone.Synth(options as Tone.SynthOptions);
-      break;
     default:
-      console.error(
+      console.warn(
         "[useProjectContext] Using 'Synth' for unknown instrument:",
         _instrument
       );
       Instrument = OmniSynth;
       instrument = new Tone.Synth(options as Tone.SynthOptions);
+      break;
   }
-  return {
-    Instrument,
-    instrument,
-    options,
-  };
+  return { Instrument, instrument, options } as IInstrument;
 };
 
 export default function useProjectContext() {
@@ -84,9 +64,7 @@ export default function useProjectContext() {
 
     // 2 Instrument
     const deselectedTracks = tracks.map((track) => {
-      const { type, routing } = track;
-
-      if (type !== ETrackType.Player) return track;
+      const { routing } = track;
       const instrument: IInstrument = loadInstrument(
         routing.input.id as EInstrument,
         { ...routing.input.options }
