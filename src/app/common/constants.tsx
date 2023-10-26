@@ -1,4 +1,5 @@
 import _ from 'lodash/fp';
+import * as Tone from 'tone';
 
 import t from '@/core/i18n';
 
@@ -7,7 +8,7 @@ import type { IChannel } from './types/channel.types';
 import { EInstrument } from './types/instrument.types';
 
 // ---------- General
-/*** @Progression */
+/*** @constants */
 export const PROGRESSION = [
   /*** @Diatonic */
   // Major
@@ -41,13 +42,19 @@ export const PROGRESSION = [
   // Montgomery Ward bridge
   'I IV ii V',
 ];
+export const ROMAN_NUMS = ['i', 'ii', 'iii', 'iv', 'v', 'vi', 'vii'];
 
-export const isRomanNum = (test: string) =>
-  ['i', 'ii', 'iii', 'iv', 'v', 'vi', 'vii'].includes(test.toLowerCase());
+// ---------- Utils
+/*** @utils */
+export const getMeasureTime = (n: number) => Tone.Time(`${n}m`);
+export const getMeasureSeconds = (n: number) => getMeasureTime(n).toSeconds();
+export const getNotationTime = (n: number) => Tone.Time(`${n}n`);
+export const getNotationSeconds = (n: number) => getNotationTime(n).toSeconds();
+export const isRomanNum = (s: string) => ROMAN_NUMS.includes(_.toLower(s));
 
 // ---------- Project
 const DEFAULT_ACTIVE_TRACK_ID = 'track-bd';
-const DEFAULT_BPM = 98;
+const DEFAULT_BPM = 120;
 const DEFAULT_CLEF = 'D';
 const DEFAULT_SCALE = 'minor';
 const DEFAULT_MEASURE_COUNT = 2;
@@ -72,7 +79,7 @@ const DEFAULT_TRACK_INSTRUMENT_BASS: ITrack = {
     output: 'master',
     input: {
       id: EInstrument.MonoSynth,
-      label: 'BA',
+      label: 'in-bass',
       options: {
         oscillator: { type: 'sawtooth' },
         envelope: { attack: 0.01, decay: 0.4, release: 0.3, sustain: 0.2 },
@@ -80,16 +87,16 @@ const DEFAULT_TRACK_INSTRUMENT_BASS: ITrack = {
           attack: 0.001,
           baseFrequency: 180,
           decay: 0.2,
-          octaves: 0,
+          octaves: 2,
           release: 0.2,
           sustain: 0.25,
         },
-        volume: -35,
+        volume: -31,
       },
       parts: [
         {
-          label: 'BA-Part1',
-          events: [],
+          label: 'p1-bass',
+          notes: [['D1'], ['D1'], ['D1'], ['D1'], ['F#1'], ['F#1'], [], []],
         },
       ],
     },
@@ -129,11 +136,11 @@ const DEFAULT_TRACK_BD: ITrack = {
       parts: [
         {
           label: 'BD',
-          events: [{ note: 'C2', duration: '16n', x: 0 }],
+          times: [0],
         },
         {
           label: 'BD',
-          events: [{ note: 'C2', duration: '16n', x: 0 }],
+          times: [0],
         },
       ],
     },
@@ -155,11 +162,11 @@ const DEFAULT_TRACK_SD: ITrack = {
       parts: [
         {
           label: 'p1-SD',
-          events: [{ note: 'D2', duration: '16n', x: 8 }],
+          times: [8],
         },
         {
           label: 'p2-SD',
-          events: [{ note: 'D2', duration: '16n', x: 8 }],
+          times: [8],
         },
       ],
     },
@@ -181,27 +188,11 @@ const DEFAULT_TRACK_OH: ITrack = {
       parts: [
         {
           label: 'p1-oh',
-          events: [
-            { note: 'F#2', duration: '16n', x: 0 },
-            { note: 'F#2', duration: '16n', x: 2 },
-            { note: 'F#2', duration: '16n', x: 4 },
-            { note: 'F#2', duration: '16n', x: 6 },
-            { note: 'F#2', duration: '16n', x: 8 },
-            { note: 'F#2', duration: '16n', x: 10 },
-            { note: 'F#2', duration: '16n', x: 12 },
-            { note: 'F#2', duration: '16n', x: 14 },
-          ],
+          times: [0, 2, 4, 6, 8, 10, 12, 14],
         },
         {
           label: 'p2-oh',
-          events: [
-            { note: 'F#2', duration: '16n', x: 0 },
-            { note: 'F#2', duration: '16n', x: 2 },
-            { note: 'F#2', duration: '16n', x: 4 },
-            { note: 'F#2', duration: '16n', x: 6 },
-            { note: 'F#2', duration: '16n', x: 8 },
-            { note: 'F#2', duration: '16n', x: 10 },
-          ],
+          times: [0, 2, 4, 6, 8, 10],
         },
       ],
     },
@@ -221,13 +212,10 @@ const DEFAULT_TRACK_HI_TOM: ITrack = {
         url: './samples/WaveAlchemy/wa_drm_drums/high_tom/wadrm_hitom_acc1_r2.wav',
       },
       parts: [
-        { label: 'HiTomPart1', events: [] },
+        { label: 'HiTomPart1', times: [] },
         {
           label: 'HiTomPart2',
-          events: [
-            { note: 'C4', duration: '16n', x: 12 },
-            { note: 'C4', duration: '16n', x: 13 },
-          ],
+          times: [12, 13],
         },
       ],
     },
@@ -249,11 +237,11 @@ const DEFAULT_TRACK_MI_TOM: ITrack = {
       parts: [
         {
           label: 'MiTomPart',
-          events: [],
+          times: [],
         },
         {
           label: 'MiTomPart',
-          events: [{ note: 'F4', duration: '16n', x: 14 }],
+          times: [14],
         },
       ],
     },
@@ -275,11 +263,11 @@ const DEFAULT_TRACK_LO_TOM: ITrack = {
       parts: [
         {
           label: 'LoTomPart',
-          events: [],
+          times: [],
         },
         {
           label: 'LoTomPart',
-          events: [{ note: 'E4', duration: '16n', x: 15 }],
+          times: [15],
         },
       ],
     },
@@ -290,12 +278,12 @@ const DEFAULT_TRACK_LO_TOM: ITrack = {
 // -------- Sampler
 /*** @Track */
 const DEFAULT_TRACK_SAMPLER: ITrack = {
-  id: 'track-sampler',
-  name: 'Sampler',
+  id: 'sampler-drums',
+  name: 'Drums',
   routing: {
     input: {
       id: EInstrument.Sampler,
-      label: 'Drums',
+      label: 'in-drums',
       options: {
         baseUrl: './samples/WaveAlchemy/wa_808_tape/',
         urls: {
@@ -304,13 +292,54 @@ const DEFAULT_TRACK_SAMPLER: ITrack = {
           E3: 'wa_808tape_closedhat_08_clean.wav',
         },
         volume: -40,
-        fadeIn: 0.2,
-        fadeOut: 0.2,
+        fadeIn: 0.01,
+        fadeOut: 0.01,
+        curve: 'linear',
       },
       parts: [
         {
-          label: 'Drums (Sampler)',
-          events: [],
+          label: 'p1-sampler',
+          notes: [
+            ['C3', 'E3'],
+            ['E3'],
+            [],
+            ['C3', 'E3'],
+            ['D3'],
+            ['E3'],
+            ['C3', 'E3'],
+            ['E3'],
+            ['C3', 'E3'],
+            ['C3', 'E3'],
+            [],
+            ['E3'],
+            ['D3', 'E3'],
+            [],
+            [],
+            ['E3'],
+          ],
+        },
+        {
+          label: 'p2-sampler',
+          notes: [
+            ['C3', 'E3'],
+            ['E3'],
+            [],
+            ['C3', 'E3'],
+            ['D3'],
+            [],
+            ['C3', 'E3'],
+            ['E3'],
+            ['C3', 'E3'],
+            ['C3', 'E3'],
+            [],
+            ['E3'],
+            ['D3', 'E3'],
+            [],
+            ['E3'],
+            [],
+            [],
+            [],
+          ],
         },
       ],
     },
@@ -365,16 +394,16 @@ export {
   //
   DEFAULT_STATES,
   //
+  DEFAULT_TRACK_SAMPLER,
   // DEFAULT_TRACK_AUDIO,
   DEFAULT_TRACK_INSTRUMENT_BASS,
   // DEFAULT_TRACK_PLAYERS,
-  // DEFAULT_TRACK_SAMPLER,
-  DEFAULT_TRACK_BD,
-  DEFAULT_TRACK_SD,
-  DEFAULT_TRACK_OH,
-  DEFAULT_TRACK_HI_TOM,
-  DEFAULT_TRACK_MI_TOM,
-  DEFAULT_TRACK_LO_TOM,
+  // DEFAULT_TRACK_BD,
+  // DEFAULT_TRACK_SD,
+  // DEFAULT_TRACK_OH,
+  // DEFAULT_TRACK_HI_TOM,
+  // DEFAULT_TRACK_MI_TOM,
+  // DEFAULT_TRACK_LO_TOM,
   DEFAULT_CHANNEL_DRUMS,
   DEFAULT_CHANNEL_MASTER,
 };

@@ -1,5 +1,4 @@
 'use client';
-
 import * as Tone from 'tone';
 import { useState } from 'react';
 import { Loader } from 'lucide-react';
@@ -11,13 +10,12 @@ import { EButtonType } from 'packages/pfui/button/Button';
 
 export default function Home() {
   const [toneReady, setToneReady] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   function Start() {
-    const [isLoading, setIsLoading] = useState(false);
-    const onClick = async () => {
+    const onClick = () => {
       setIsLoading(true);
-      await Tone.start();
-      setToneReady(true);
+      Tone.start().then(() => setToneReady(true));
     };
 
     return (

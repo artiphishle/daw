@@ -71,7 +71,6 @@ export default function Arranger({ className = '' }: IArranger) {
                   tracks={tracks}
                   track={trk}
                   measureCount={measureCount}
-                  quantization={quantization}
                   mutate={mutate}
                   patchProjectContext={patchProjectContext}
                 />

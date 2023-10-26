@@ -104,6 +104,16 @@ Design will be applied soon, this is just a raw sketch!
 
 ### 🍂 October 2023
 
+#### October, 25th
+
+<div class="flex">
+  <img width="133" alt="Screenshot 2023-10-25 at 05 35 02" src="https://github.com/artiphishle/daw/assets/137318798/de1cd173-3d98-49b9-b284-b080a7263c4f">
+
+**Nice Gold Knob**<br>
+(Design by *ykadosh*)
+
+</div>
+
 #### October, 24th
 
 - **Arranger** Track selection (active track)
