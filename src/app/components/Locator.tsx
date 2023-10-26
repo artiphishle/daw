@@ -1,29 +1,29 @@
-"use client";
-import { useState } from "react";
-import cn from "classnames";
+'use client';
+import { useState } from 'react';
+import cn from 'classnames';
 
-import useTransport from "@/core/hooks/useTransport";
-import { DEFAULT_OFFSET_LEFT } from "app/common/constants";
+import useTransport from '@/core/hooks/useTransport';
+import { DEFAULT_OFFSET_LEFT } from 'app/common/constants';
 
-import { EUnit } from "app/common/types/utility.types";
-import type { IProjectContext } from "app/common/types/project.types";
+import { EUnit } from 'app/common/types/utility.types';
+import type { IProjectContext } from 'app/common/types/project.types';
 
 interface ILocator {
   className?: string;
   projectContext: IProjectContext;
 }
 
-const styles = { locator: "bg-black w-[1px] absolute top-0 bottom-0" };
+const styles = { locator: 'bg-black w-[1px] absolute top-0 bottom-0' };
 const getMeasureWidth = (measureCount: number) =>
   (window.innerWidth - DEFAULT_OFFSET_LEFT) / measureCount;
 
-export default function Locator({ className = "", projectContext }: ILocator) {
+export default function Locator({ className = '', projectContext }: ILocator) {
   const [left, setLeft] = useState(DEFAULT_OFFSET_LEFT);
   const [quarter, setQuarter] = useState(0);
   const { measureCount } = projectContext;
 
   function loopFn(position: string) {
-    const splitPosition = position.toString().split(":");
+    const splitPosition = position.toString().split(':');
     const currentMeasure = parseInt(splitPosition[0], 10);
     const currentQuarter = parseInt(splitPosition[1], 10);
     if (currentQuarter === quarter) return;

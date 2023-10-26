@@ -1,6 +1,7 @@
-"use client";
-import { type ChangeEvent, type MouseEvent, useState, useEffect } from "react";
-import { Transport as ToneTransport, start } from "tone";
+'use client';
+import { type ChangeEvent, type MouseEvent, useState, useEffect } from 'react';
+import * as Tone from 'tone';
+
 import {
   CircleIcon,
   FastForwardIcon,
@@ -12,17 +13,17 @@ import {
   RewindIcon,
   SquareIcon,
   TimerIcon,
-} from "lucide-react";
+} from 'lucide-react';
 
-import useProjectContext from "@/core/hooks/api/useProjectContext";
-import useTransport from "@/core/hooks/useTransport";
-import styles from "app/common/styles";
+import useProjectContext from '@/core/hooks/api/useProjectContext';
+import useTransport from '@/core/hooks/useTransport';
 
-import { EEndpoint } from "app/common/types/api.types";
+import styles from 'app/common/styles';
+import { EEndpoint } from '@/common/types/api.types';
+const $ = styles.transport;
 
 export default function Transport() {
-  const $ = styles.transport;
-  const [position, setPosition] = useState<string>("0:0:0.000");
+  const [position, setPosition] = useState<string>('0:0:0.000');
   const loopFn = (position: string) => setPosition(position);
   const { loop } = useTransport({ loopFn });
   const {
@@ -31,48 +32,24 @@ export default function Transport() {
     mutate,
   } = useProjectContext();
 
-  useEffect(() => {
-    if (!$d) return;
-    ToneTransport.bpm.value = $d.bpm;
-    ToneTransport.loop = true;
-    ToneTransport.loopStart = 0;
-    ToneTransport.loopEnd = `${$d.measureCount}m`;
-  }, [$d]);
-
-  const events = {
-    // TransportSettings
-    onBpmChange: (event: ChangeEvent<HTMLSelectElement>) => {
-      const bpm = parseInt(event.target.value, 10);
-      patchProjectContext({ bpm });
-    },
-    onClefChange: (event: ChangeEvent<HTMLSelectElement>) => {
-      const clef = event.target.value;
-      patchProjectContext({ clef });
-    },
-    onMeasureCountChange: (event: ChangeEvent<HTMLSelectElement>) => {
-      const measureCount = parseInt(event.target.value, 10);
-      patchProjectContext({ measureCount });
-    },
-    onQuantizationChange: (event: ChangeEvent<HTMLSelectElement>) => {
-      const quantization = parseInt(event.target.value, 10);
-      patchProjectContext({ quantization });
-    },
-    // TransportControl
-    onPause: (_: MouseEvent<SVGSVGElement>) => ToneTransport.pause(),
-    onRecord: (_: MouseEvent<SVGSVGElement>) =>
-      console.log("🎙️ Recording soon available"),
-    onStart: async (_: MouseEvent<SVGSVGElement>) => {
-      ToneTransport.start();
-      await start();
-    },
-    onStop: (_: MouseEvent<SVGSVGElement>) => {
-      console.log("stop");
-      ToneTransport.stop();
-      loop.stop();
-    },
-  };
-
   function TransportControl() {
+    const events = {
+      // TransportControl
+      onPause: (_: MouseEvent<SVGSVGElement>) => Tone.Transport.pause(),
+      onRecord: (_: MouseEvent<SVGSVGElement>) =>
+        console.log('🎙️ Recording soon available'),
+      onStart: (_: MouseEvent<SVGSVGElement>) => {
+        Tone.Transport.bpm.value = $d!.bpm;
+        Tone.Transport.loop = true;
+        Tone.Transport.loopStart = 0;
+        Tone.Transport.loopEnd = `${$d!.measureCount}m`;
+        Tone.Transport.start();
+        loop.start();
+      },
+      onStop: (_: MouseEvent<SVGSVGElement>) => {
+        Tone.Transport.stop();
+      },
+    };
     return (
       <div className={$.control}>
         <RepeatIcon
@@ -109,6 +86,30 @@ export default function Transport() {
     );
   }
   function TransportSettings() {
+    const events = {
+      onClefChange: (event: ChangeEvent<HTMLSelectElement>) => {
+        const clef = event.target.value;
+        patchProjectContext({ clef });
+        mutate(EEndpoint.ProjectSettings);
+      },
+      onMeasureCountChange: (event: ChangeEvent<HTMLSelectElement>) => {
+        const measureCount = parseInt(event.target.value, 10);
+        patchProjectContext({ measureCount });
+        mutate(EEndpoint.ProjectSettings);
+      },
+      onQuantizationChange: (event: ChangeEvent<HTMLSelectElement>) => {
+        const quantization = parseInt(event.target.value, 10);
+        patchProjectContext({ quantization });
+        mutate(EEndpoint.ProjectSettings);
+      },
+      // TransportSettings
+      onBpmChange: (event: ChangeEvent<HTMLSelectElement>) => {
+        const bpm = parseInt(event.target.value, 10);
+        patchProjectContext({ bpm });
+        mutate(EEndpoint.ProjectSettings);
+      },
+    };
+
     return (
       <section className={$.settings.main}>
         {$d ? (
@@ -181,16 +182,11 @@ export default function Transport() {
                 id="bpm"
                 onChange={events.onBpmChange}
               >
-                {new Array(50).fill("").map((x, i) => (
+                {new Array(50).fill('').map((x, i) => (
                   <option key={i} value={i + 79}>
                     {i + 79}
                   </option>
                 ))}
-                <option value={120}>108</option>
-                <option value={120}>109</option>
-                <option value={120}>110</option>
-                <option value={120}>115</option>
-                <option value={120}>120</option>
               </select>
               <div className={$.settings.item}>
                 <span>
@@ -214,6 +210,7 @@ export default function Transport() {
       </section>
     );
   }
+
   return (
     <section className={$.main}>
       <div className={$.inner}>

@@ -7,42 +7,39 @@ import * as Tone from 'tone';
 
 import { getIconByType } from 'config/icons';
 import { SortableItem } from '@/components';
+import useNoteEditor from '@/core/hooks/useNoteEditor';
 import useScheduler from '@/core/hooks/audio/useAudioScheduler';
 
 import { DEFAULT_OFFSET_LEFT } from 'app/common/constants';
 import Note from '../Note';
+
+import { EEndpoint } from '@/common/types/api.types';
+import { type ITrack } from 'app/common/types/track.types';
 import type { IMidiPart } from 'app/common/types/midi.types';
-import type { ITrack } from 'app/common/types/track.types';
 
 import styles from 'app/common/styles';
-import { EEndpoint } from '@/common/types/api.types';
-import useNoteEditor from '@/core/hooks/useNoteEditor';
 const $ = styles.track;
 
 interface IExtendedTrack {
   tracks: ITrack[];
   track: ITrack;
   measureCount: number;
-  quantization: number;
   mutate: (endpoint: EEndpoint) => void;
   patchProjectContext: (patch: Record<string, any>) => void;
 }
-
 function Track({
   tracks,
   track,
   measureCount,
-  quantization,
   mutate,
   patchProjectContext,
 }: IExtendedTrack) {
   const { id, name, type, routing, className = '' } = track;
   const windowWidth = useWindowWidth() - DEFAULT_OFFSET_LEFT;
-  const { setupPlayer } = useScheduler();
-  const { id: inputId, instrument, parts = [] } = routing.input;
+  const { setupInstrument } = useScheduler();
+  const { id: inputId, instrument, parts } = routing.input;
   const { addNote, deleteNote } = useNoteEditor({
     tracks,
-    parts,
     patchProjectContext,
     mutate,
   });
@@ -73,41 +70,63 @@ function Track({
     },
   };
 
-  const drawPart = (part: IMidiPart, partIndex: number) => {
-    const { events } = part;
+  const drawPart = (pIndex: number, part: IMidiPart) => {
+    const measureWidth = windowWidth / measureCount;
+    const width = measureWidth / 16;
+    const commonStyle = {
+      width,
+      height: '100%',
+      top: '0',
+      borderRight: '1px solid #fff',
+      borderBottom: '1px solid #fff',
+    };
 
-    return events.map(({ note, duration, x }, eventIndex) => {
-      const measureWidth = windowWidth / measureCount;
-      const left = x * (measureWidth / 16) + partIndex * measureWidth;
-      const width = measureWidth / parseInt(duration, 10);
+    if (part.notes)
+      return part.notes.map((notes, notesIndex) => {
+        return notes.map((note, noteIndex) => {
+          return (
+            <Note
+              index={noteIndex}
+              key={`note-${noteIndex}`}
+              style={{
+                ...commonStyle,
+                left: notesIndex * width + pIndex * measureWidth,
+                top: note === 'E3' ? 0 : note === 'D3' ? '33%' : '66%',
+                height: `33%`,
+              }}
+              value={note}
+            />
+          );
+        });
+      });
+    else if (part.times)
+      return part.times.map((time, timeIndex) => {
+        const left = time * width + pIndex * measureWidth;
 
-      return (
-        <Note
-          index={eventIndex}
-          key={`note-${eventIndex}`}
-          note={note}
-          style={{
-            left,
-            width,
-            top: 0,
-            height: '100%',
-            borderRight: '1px solid #fff',
-          }}
-        />
-      );
-    });
+        return (
+          <Note
+            index={timeIndex}
+            key={`note-${timeIndex}`}
+            style={{
+              left,
+              width,
+              top: 0,
+              height: '100%',
+              borderRight: '1px solid #fff',
+            }}
+          />
+        );
+      });
   };
 
+  /*** @issue https://github.com/artiphishle/daw/issues/87 */
   useEffect(() => {
-    if (!(instrument?.options as Tone.PlayerOptions).url) return;
-
-    setupPlayer({
-      player: instrument?.instrument as Tone.Player,
-      id: inputId,
-      parts,
-      windowWidth,
-      measureCount,
-    });
+    const { instrument: i, options } = instrument! as any;
+    if (options.url)
+      i.load(options.url as string) // to useAudioScheduler
+        .then(() => setupInstrument({ id: inputId, instrument: i, parts }))
+        .catch(console.error);
+    else setupInstrument({ id, instrument: i, parts });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [instrument]);
 
@@ -129,7 +148,7 @@ function Track({
         <div className={$.col1.name}>{name}</div>
       </div>
       <div onClick={$e.onArrangementClick} className={$.col2.main}>
-        {parts.map((part, partIndex) => drawPart(part, partIndex))}
+        {parts.map((part, partIndex) => drawPart(partIndex, part))}
       </div>
     </SortableItem>
   );
