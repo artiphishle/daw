@@ -1,5 +1,6 @@
-import { IFlex } from '../../types';
 import classNames from 'classnames';
+
+import type { IFlex } from '@/pfui/types';
 
 export function Flex({ children, vertical = false }: IFlex) {
   const props = {

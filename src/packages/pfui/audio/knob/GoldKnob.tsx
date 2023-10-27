@@ -52,7 +52,8 @@ export function GoldKnob({
           value={previewValue}
           className="text-center w-full bg-transparent font-bold"
           onChange={(event: ChangeEvent) => {
-            const currentStringValue = (event.target as HTMLInputElement).value;
+            const currentStringValue = (event.target as HTMLInputElement)
+              ?.value;
             if (!currentStringValue) return setPreviewValue(0);
             const currentValue = parseInt(currentStringValue, 10);
             setPreviewValue(
@@ -62,7 +63,8 @@ export function GoldKnob({
           onKeyDown={(event: KeyboardEvent) => {
             if (event.key === 'Escape') return setInputVisible(false);
             if (event.key !== 'Enter') return;
-            const currentStringValue = (event.target as HTMLInputElement).value;
+            const currentStringValue = (event.target as HTMLInputElement)
+              ?.value;
             if (!currentStringValue) return setValue(0);
             const currentValue = parseInt(currentStringValue, 10);
             setValue(

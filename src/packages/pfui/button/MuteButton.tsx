@@ -1,5 +1,5 @@
-import { ESize, EVariant } from '../constants';
-import { Button, EButtonType } from './Button';
+import { Button } from '@/pfui';
+import { EButtonType, ESize, EVariant } from '@/pfui/constants';
 
 export function MuteButton() {
   return (

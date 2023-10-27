@@ -1,9 +1,31 @@
+/***
+ * @enums
+ * @constants
+ */
+
+/*** @ui Button */
+export enum EButtonType {
+  Button = 'button',
+  Reset = 'reset',
+  Submit = 'submit',
+}
+
 export enum ESize {
-  Sm = "xs",
-  Md = "md",
-  Lg = "lg",
-  Xl = "xl",
-  Xxl = "2xl",
+  Sm = 'xs',
+  Md = 'md',
+  Lg = 'lg',
+  Xl = 'xl',
+  Xxl = '2xl',
+}
+
+export enum EVariant {
+  Error = 'bg-red-900 text-white',
+  Info = 'bg-cyan-900 text-white',
+  Normal = 'bg-[#000000] text-white',
+  Primary = 'bg-blue-900 text-white',
+  Secondary = 'bg-purple-900 text-white',
+  Success = 'bg-green-900 text-white',
+  Warning = 'bg-orange-900 text-white',
 }
 
 export const SPACING = {
@@ -13,13 +35,3 @@ export const SPACING = {
   [ESize.Xl]: 10,
   [ESize.Xxl]: 12,
 };
-
-export enum EVariant {
-  Error = "bg-red-900 text-white",
-  Info = "bg-cyan-900 text-white",
-  Normal = "bg-[#000000] text-white",
-  Primary = "bg-blue-900 text-white",
-  Secondary = "bg-purple-900 text-white",
-  Success = "bg-green-900 text-white",
-  Warning = "bg-orange-900 text-white",
-}
