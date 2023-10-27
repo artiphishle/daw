@@ -12,13 +12,14 @@
     "moduleResolution": "node",
     "noEmit": true,
     "paths": {
-      "@/api/*": ["app/api/(routes)/*"],
-      "@/common/*": ["app/common/*"],
-      "@/components": ["app/components/index"],
-      "@/constants": ["app/common/constants"],
-      "@/core/*": ["app/core/*"],
+      "@/api/*": ["app/api/*"],
+      "@/common/*": ["app/_common/*"],
+      "@/components": ["app/_components/index"],
+      "@/constants": ["app/_common/constants"],
+      "@/core/*": ["app/_core/*"],
       "@/pfui": ["packages/pfui/index"],
-      "@/types/*": ["app/common/types/*"]
+      "@/pfui/*": ["packages/pfui/*"],
+      "@/types/*": ["app/_common/types/*"]
     },
     "plugins": [
       {

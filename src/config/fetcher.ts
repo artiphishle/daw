@@ -1,4 +1,4 @@
-import { EEndpoint } from "app/common/types/api.types";
+import { EEndpoint } from 'app/_common/types/api.types';
 
 const fetcher = async (url: EEndpoint) => {
   const res = await fetch(url);
