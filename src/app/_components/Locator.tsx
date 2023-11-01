@@ -12,51 +12,32 @@ import styles from 'app/_common/styles';
 const $ = styles.locator;
 
 interface ILocator {
+  position: string;
   className?: string;
 }
 
 const getMeasureWidth = (measureCount: number) =>
   (window.innerWidth - DEFAULT_OFFSET_LEFT) / measureCount;
 
-export default function Locator({ className = '' }: ILocator) {
+export default function Locator({ position, className = '' }: ILocator) {
   const measureCount = 2;
   const [left, setLeft] = useState(DEFAULT_OFFSET_LEFT);
-  const [previousSixteenths, setPrevSixteenths] = useState(0);
-  const [updateInterval, setUpdateInterval] = useState<any>();
-
-  const updateLocator = useCallback((position: string) => {
+  const updateLocator = (position: string) => {
     const [measures, quarters, sixteenths] = position
       .toString()
       .split(':')
       .map((s) => parseInt(s, 10));
-    if (sixteenths === previousSixteenths) return;
 
     const measureWidth = getMeasureWidth(measureCount);
     const newMeasures = measureWidth * measures + DEFAULT_OFFSET_LEFT;
     const newQuarters = (measureWidth / 4) * quarters;
     const newSixteenths = (measureWidth / 16) * sixteenths;
-    setPrevSixteenths(newSixteenths);
-
     const newLeft = newMeasures + newQuarters + newSixteenths;
     if (newLeft !== left) setLeft(newLeft);
-    console.log('left', left);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  };
 
-  /*
-  useEffect(
-    () => {
-      if (Tone.Transport.state !== ETransportState.Started)
-        return clearInterval(updateInterval!);
-
-      const position = Tone.Transport.position.toString();
-      const interval = setInterval(() => updateLocator(position), 200);
-      setUpdateInterval(interval);
-    },
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    [Tone.Transport.state],
-  );
-  */
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  useEffect(() => updateLocator(position), [position]);
 
   return (
     <div style={{ left: `${left}${EUnit.Px}` }} className={cn($, className)} />

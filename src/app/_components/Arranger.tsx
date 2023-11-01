@@ -19,6 +19,8 @@ import { Locator, Time } from '@/components';
 
 import type { IArranger } from '@/common/types/arranger.types';
 import { Flex, Grid } from '@/pfui';
+import { useState } from 'react';
+import useTransport from '@/core/hooks/useTransport';
 
 export default function Arranger({
   project,
@@ -26,6 +28,9 @@ export default function Arranger({
   children,
   className = '',
 }: IArranger) {
+  const [position, setPosition] = useState<string>('0:0:0.000');
+  const loopFn = setPosition;
+  const { loop } = useTransport({ loopFn });
   const { measureCount, quantization, offsetLeft } = project;
   const mouseSensor = useSensor(MouseSensor);
   const sensors = useSensors(mouseSensor);
@@ -76,7 +81,7 @@ export default function Arranger({
               </Flex>
             </SortableContext>
           </DndContext>
-          <Locator />
+          <Locator position={position} />
         </section>
       </section>
     </DndContext>
