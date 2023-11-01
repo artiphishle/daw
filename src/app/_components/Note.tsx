@@ -18,7 +18,7 @@ export function Note({
 }: INote) {
   // TODO dependency injection of styles
   const props = {
-    className: classNames('absolute', $.main, $.bgActive, { className }),
+    className: classNames('absolute', $.main, { className }),
     onClick,
     style,
   };

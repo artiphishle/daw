@@ -58,9 +58,7 @@ const styles = {
     uiInner: 'flex px-4 py-2',
   },
   notes: {
-    main: 'flex flex-1 justify-center items-center mr-1 text-black text-center cursor-pointer text-[0.5rem]',
-    bg: 'bg-transparent',
-    bgActive: 'bg-blue-900 text-white',
+    main: 'flex flex-1 justify-center items-center text-center cursor-pointer text-[0.5rem] bg-blue-900 text-zinc-200 border border-zinc-700',
   },
   time: {
     main: 'flex w-full text-zinc-500 text-xs',
@@ -70,14 +68,13 @@ const styles = {
   },
   track: {
     audio: 'w-full flex flex-col justify-center',
-    active: 'font-bold bg-blue-200 text-black',
+    active: 'font-bold bg-zinc-800 text-white',
     col1: {
-      active: 'bg-blue-400',
-      main: 'flex justify-between items-center px-4 pl-8 bg-blue-100 text-zinc-600',
+      main: 'flex justify-between items-center px-4 pl-8 bg-black/10 text-white border-b border-b-zinc-700',
       name: 'whitespace-nowrap w-28 overflow-x-hidden text-ellipsis',
     },
     col2: {
-      main: 'bg-blue-100/50 relative flex w-full',
+      main: 'bg-zinc-900/50 relative flex w-full border-b border-b-zinc-700',
     },
     icon: 'fill-white w-[16px] h-[16px]', // TODO not white
     li: 'relative flex w-full h-10 text-black mb-1 first:text-zinc-400 text-xs',

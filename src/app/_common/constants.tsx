@@ -8,6 +8,7 @@ import type { IChannel } from './types/channel.types';
 import { EInstrument } from './types/instrument.types';
 import { Note } from 'tone/build/esm/core/type/NoteUnits';
 import { Subdivision } from 'tone/build/esm/core/type/Units';
+import { useProgress } from '@nextui-org/react';
 
 // ---------- General
 /*** @constants */
@@ -364,6 +365,108 @@ const DEFAULT_TRACK_SAMPLER: ITrack = {
   },
   type: ETrackType.Sampler,
 };
+/*** @Track */
+const DEFAULT_TRACK_PIANO: ITrack = {
+  id: 'sampler-piano',
+  name: 'Piano',
+  routing: {
+    input: {
+      id: EInstrument.Sampler,
+      label: 'in-piano',
+      options: {
+        baseUrl: './samples/SalamanderGP-V3_48khz24bit/',
+        urls: {
+          A0: 'A0v1.wav',
+          C1: 'C1v1.wav',
+          'D#1': 'Ds1v1.wav',
+          'F#1': 'Fs1v1.wav',
+          A1: 'A1v1.wav',
+          C2: 'C2v1.wav',
+          'D#2': 'Ds2v1.wav',
+          'F#2': 'Fs2v1.wav',
+          A2: 'A2v1.wav',
+          C3: 'C3v1.wav',
+          'D#3': 'Ds3v1.wav',
+          'F#3': 'Fs3v1.wav',
+          A3: 'A3v1.wav',
+          C4: 'C4v1.wav',
+          'D#4': 'Ds4v1.wav',
+          'F#4': 'Fs4v1.wav',
+          A4: 'A4v1.wav',
+          C5: 'C5v1.wav',
+          'D#5': 'Ds5v1.wav',
+          'F#5': 'Fs5v1.wav',
+          A5: 'A5v1.wav',
+          C6: 'C6v1.wav',
+          'D#6': 'Ds6v1.wav',
+          'F#6': 'Fs6v1.wav',
+          A6: 'A6v1.wav',
+          C7: 'C7v1.wav',
+          'D#7': 'Ds7v1.wav',
+          'F#7': 'Fs7v1.wav',
+          A7: 'A7v1.wav',
+          C8: 'C8v1.wav',
+        },
+        volume: -40,
+        // fadeIn: 0.01,
+        // fadeOut: 0.01,
+        // curve: 'linear',
+      },
+      parts: [
+        {
+          label: 'p1-sampler-pno',
+          notes: [
+            ['A4', 'D4', 'F4'],
+            [],
+            [],
+            [],
+
+            ['A4', 'D4', 'F4'],
+            [],
+            [],
+            [],
+
+            ['A4', 'D4', 'F4'],
+            [],
+            [],
+            [],
+
+            ['A4', 'D4', 'F4'],
+            [],
+            [],
+            [],
+          ],
+        },
+        {
+          label: 'p2-sampler-pno',
+          notes: [
+            ['A4', 'D4', 'F4'],
+            [],
+            [],
+            [],
+
+            ['A4', 'D4', 'F4'],
+            [],
+            [],
+            [],
+
+            ['A4', 'D4', 'F4'],
+            [],
+            [],
+            [],
+
+            ['A4', 'D4', 'F4'],
+            [],
+            [],
+            [],
+          ],
+        },
+      ],
+    },
+    output: 'master',
+  },
+  type: ETrackType.Sampler,
+};
 
 // --------- Channels
 /*** @Channel */
@@ -413,6 +516,7 @@ export {
   //
   DEFAULT_TRACK_AUDIO,
   DEFAULT_TRACK_SAMPLER,
+  DEFAULT_TRACK_PIANO,
   DEFAULT_TRACK_INSTRUMENT_BASS,
   // DEFAULT_TRACK_PLAYERS,
   // DEFAULT_TRACK_BD,
