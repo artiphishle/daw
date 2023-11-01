@@ -57,9 +57,8 @@ export default function Arranger({
           rows={tracks.length}
           style={{
             left: offsetLeft,
-            height: `${tracks.length * 40}px`,
           }}
-          classNameItem="h-[40px] border border-white mb-[1px]"
+          classNameItem="h-[40px] mb-[4px] border-l border-l-white"
         />
         <section className={$.main}>
           <DndContext

@@ -22,6 +22,7 @@ import type { IProject } from '@/common/types/project.types';
 
 import $ from '@/common/styles';
 import usePortal from 'react-useportal';
+import { patchProject } from '@/api/project/_presets/DefaultPreset';
 
 interface IData {
   channels: IChannel[];
@@ -32,7 +33,12 @@ interface IData {
 export function App({ channels: _channels, project, tracks: _tracks }: IData) {
   const { Portal, isOpen, open, close } = usePortal();
   const { init, toneReady } = useToneJs();
-  const { selectChannels, selectTracks } = useSelector();
+  const { deselectChannels, selectChannels, deselectTracks, selectTracks } =
+    useSelector();
+  const _patchProject = (patch: any) => {
+    console.log('patch', patch);
+    patchProject(patch);
+  };
 
   // Following comments will be reused in the future
   // const { audioToAbc, audioToMidi } = useConverter();
@@ -244,6 +250,7 @@ export function App({ channels: _channels, project, tracks: _tracks }: IData) {
               <Arranger project={project} tracks={tracks}>
                 {tracks.map((track) => (
                   <Track
+                    patch={patchProject}
                     key={track.id}
                     track={{
                       ...track,
@@ -265,6 +272,7 @@ export function App({ channels: _channels, project, tracks: _tracks }: IData) {
         </main>
         <Footer />
         <Portal>
+          Portal here
           {project.activeTrackId && isOpen && (
             <Instrument close={close} project={project} track={activeTrack} />
           )}

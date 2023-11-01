@@ -25,6 +25,7 @@ function Track({
   track,
 }: {
   project: IProject;
+  patch: any;
   track: ITrack;
 }) {
   const { setupInstrument } = useScheduler();
@@ -56,8 +57,8 @@ function Track({
         */
     },
     onTrackSelection: (event: MouseEvent) => {
-      // const element = event.currentTarget as HTMLElement;
-      // const trackId = element.getAttribute('data-track-id')!;
+      const element = event.currentTarget as HTMLElement;
+      const trackId = element.getAttribute('data-track-id')!;
       // patch({ activeTrackId: trackId });
     },
   };
@@ -69,8 +70,8 @@ function Track({
       width,
       height: '100%',
       top: '0',
-      borderRight: '1px solid #fff',
-      borderBottom: '1px solid #fff',
+      marginRight: '1px',
+      marginBottom: '1px',
     };
 
     if (part.notes) {
@@ -105,7 +106,6 @@ function Track({
               width,
               top: 0,
               height: '100%',
-              borderRight: '1px solid #fff',
             }}
           />
         );

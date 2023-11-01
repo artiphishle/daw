@@ -16,6 +16,7 @@ import {
 
 import styles from '@/common/styles';
 import type { IProject } from '@/common/types/project.types';
+import { patchProject } from '@/api/project/_presets/DefaultPreset';
 const $ = styles.transport;
 
 interface ITransport {
@@ -52,7 +53,8 @@ export default function Transport({ project }: ITransport) {
 
   function TransportSettings() {
     const patch = (patch: Partial<IProject>) => {
-      // patchProjectContext(patch);
+      const patched = patchProject(patch);
+      console.log('patched', patched);
       // mutate(EEndpoint.ProjectSettings);
     };
     const events = {

@@ -1,4 +1,3 @@
-'use server';
 import {
   DEFAULT_ACTIVE_TRACK_ID,
   DEFAULT_STATES,
@@ -18,7 +17,9 @@ import {
   DEFAULT_TRACK_AUDIO,
   DEFAULT_TRACK_SAMPLER,
   DEFAULT_OFFSET_LEFT,
+  DEFAULT_TRACK_PIANO,
 } from '@/common/constants';
+import { IProject } from '@/common/types/project.types';
 
 /*** @channels */
 const channelDrums = DEFAULT_CHANNEL_DRUMS;
@@ -31,8 +32,9 @@ export async function fetchChannels(/* TODO choose which */) {
 /*** @tracks */
 const trackAudioHalloween = DEFAULT_TRACK_AUDIO;
 const tracksamplerDrums = DEFAULT_TRACK_SAMPLER;
+const trackSamplerPiano = DEFAULT_TRACK_PIANO;
 export async function fetchTracks(/* TODO choose which */) {
-  return [trackAudioHalloween, tracksamplerDrums];
+  return [trackAudioHalloween, tracksamplerDrums, trackSamplerPiano];
 }
 
 /*** @project */
@@ -47,20 +49,25 @@ const quantization = DEFAULT_QUANTIZATION;
 const scale = DEFAULT_SCALE;
 const swing = DEFAULT_SWING;
 const swingSubdivision = DEFAULT_SWING_SUBDIVISION;
+let project: IProject = {
+  activeTrackId,
+  bpm,
+  clef,
+  measureCount,
+  name,
+  offsetLeft,
+  position,
+  quantization,
+  scale,
+  swing,
+  swingSubdivision,
+};
 export async function fetchProject() {
-  return {
-    activeTrackId,
-    bpm,
-    clef,
-    measureCount,
-    name,
-    offsetLeft,
-    position,
-    quantization,
-    scale,
-    swing,
-    swingSubdivision,
-  };
+  return project;
+}
+export async function patchProject(patch: Partial<IProject>) {
+  project = { ...project, ...patch };
+  return project;
 }
 
 /*** @states => active tabs */

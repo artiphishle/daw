@@ -34,6 +34,7 @@ export default function useAudioScheduler() {
         if (id === 'track-instrument-bass') {
           return parts.forEach(({ notes }) => {
             notes?.forEach((note, noteIndex) => {
+              console.info('note', note, id);
               (instrument as Tone.MonoSynth)
                 .triggerAttackRelease(note[0], one16, one16 * noteIndex, 80)
                 .sync();
