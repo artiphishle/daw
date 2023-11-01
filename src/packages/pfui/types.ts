@@ -3,7 +3,7 @@
  * @description all types (not yet, move them here) of 'PFUI' library
  * @todo more accurate type descriptions
  ***/
-import { AllHTMLAttributes } from 'react';
+import { AllHTMLAttributes, Attributes, StyleHTMLAttributes } from 'react';
 
 /***
  * @interfaces
@@ -26,9 +26,11 @@ export interface IButtonGroup extends AllHTMLAttributes<HTMLDivElement> {}
 
 /*** @ui Flex */
 export interface IFlex extends AllHTMLAttributes<HTMLDivElement> {
+  grow?: boolean;
   vertical?: boolean;
 }
 /*** @ui Grid */
 export interface IGrid extends AllHTMLAttributes<HTMLDivElement> {
+  style: any;
   classNameItem?: string;
 }

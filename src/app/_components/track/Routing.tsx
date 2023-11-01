@@ -1,4 +1,5 @@
-import styles from 'app/_common/styles';
+'use client';
+import styles from '@/common/styles';
 import { DndContext, DragEndEvent } from '@dnd-kit/core';
 
 const $e = {

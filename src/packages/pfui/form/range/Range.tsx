@@ -1,3 +1,4 @@
+'use client';
 import { ChangeEvent, useState } from 'react';
 
 interface IRangeInput {

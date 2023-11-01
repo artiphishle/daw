@@ -1,9 +1,11 @@
+'use client';
+import { useState } from 'react';
 import { ColorPicker } from 'primereact/colorpicker';
-import useMidiDevice from 'app/_core/hooks/audio/useMidiDevice';
-import styles from '../_common/styles';
 import colors from 'tailwindcss/colors';
 import _ from 'lodash/fp';
-import { useState } from 'react';
+
+import useMidiDevice from '@/core/hooks/audio/useMidiDevice';
+import styles from '@/common/styles';
 
 export default function Settings() {
   // Enable MIDI Device (WebMidi)
@@ -78,7 +80,7 @@ export default function Settings() {
                             height: 'auto',
                           }}
                           onChange={() => {
-                            console.log('ach');
+                            console.log('TODO Change');
                           }}
                         />
                       </div>

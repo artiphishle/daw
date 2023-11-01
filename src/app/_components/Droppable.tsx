@@ -1,5 +1,6 @@
-import { type ReactNode } from "react";
-import { useDroppable } from "@dnd-kit/core";
+'use client';
+import { type ReactNode } from 'react';
+import { useDroppable } from '@dnd-kit/core';
 
 interface IDroppableProps {
   id: string;

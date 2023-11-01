@@ -3,15 +3,16 @@ import { useMemo } from 'react';
 
 import { PROGRESSION } from 'app/_common/constants';
 import useAudioTheory from 'app/_core/hooks/audio/useAudioTheory';
-import useProjectContext from 'app/_core/hooks/api/useProjectContext';
 
 import type { Note as TNote } from 'tone/build/esm/core/type/NoteUnits';
 import t from 'app/_core/i18n';
+import { fetchProject } from '@/api/project/_presets/DefaultPreset';
 
 interface IProgression {
   tonic: TNote;
 }
 export default function Progression({ tonic }: IProgression) {
+  const { clef } = fetchProject();
   const [, progression] = PROGRESSION;
   const { getChordsByProgression } = useAudioTheory({ tonic });
   const chords = getChordsByProgression(progression);
@@ -21,10 +22,6 @@ export default function Progression({ tonic }: IProgression) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [tonic],
   );
-
-  const { projectContext } = useProjectContext();
-  if (!projectContext) return null;
-  const { clef } = projectContext;
 
   return (
     <section>

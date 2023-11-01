@@ -1,23 +1,22 @@
 'use client';
 import { useCallback, useMemo, type ReactNode } from 'react';
-import { Loader, LucideIcon } from 'lucide-react';
+import { LucideIcon } from 'lucide-react';
 import { useWindowWidth } from '@react-hook/window-size';
 import classNames from 'classnames';
 import * as Tone from 'tone';
 
-import t from 'app/_core/i18n';
 import { getIconByType } from 'config/icons';
-import useProjectContext from 'app/_core/hooks/api/useProjectContext';
-import { Meter } from 'app/_components';
-import { ButtonGroup, Knob, MuteButton, SoloButton } from 'packages/pfui';
+import { DEFAULT_OFFSET_LEFT } from '@/common/constants';
+import t from '@/core/i18n';
+import { Meter } from '@/components';
+import { ButtonGroup, Knob, MuteButton, SoloButton } from '@/pfui';
 
-import { ESize } from 'packages/pfui/constants';
+import { ESize } from '@/pfui/constants';
 import { ETrackType } from 'app/_common/types/track.types';
 import type { UniqueIdentifier } from 'app/_common/types/utility.types';
 import type { IMixer } from 'app/_common/types/mixer.types';
 
 import styles from 'app/_common/styles';
-import { DEFAULT_OFFSET_LEFT } from 'app/_common/constants';
 const $ = styles.mixer;
 
 /*** @templates */
@@ -37,7 +36,13 @@ const TplFX = () => (
  * @description renders channels/tracks
  * @todo extract routing
  */
-export default function Mixer({ openInstrument }: IMixer) {
+export default function Mixer({
+  activeTrackId,
+  channels,
+  className = '',
+  tracks,
+  openInstrument,
+}: IMixer) {
   /*** @master */
   const masterMeter = new Tone.Meter();
   masterMeter.normalRange = true;
@@ -65,14 +70,8 @@ export default function Mixer({ openInstrument }: IMixer) {
     },
     [openInstrument],
   );
-  const { projectContext: $d } = useProjectContext();
-  const tracks = $d?.tracks || [];
-  const channels = $d?.channels || [];
-  if (!$d || !tracks.length) return <Loader />;
-
-  const w = `calc(${windowWidth / tracks.length}px)`;
-  const width = `${parseInt(w, 10) - DEFAULT_OFFSET_LEFT}px`;
-
+  const width =
+    (windowWidth - DEFAULT_OFFSET_LEFT) / (tracks.length + channels.length);
   const getChannelById = (id: string) => {
     if (id === 'master') return masterGain;
     return channels.find((channel) => channel.id === id)?.channel || masterGain;
@@ -97,19 +96,13 @@ export default function Mixer({ openInstrument }: IMixer) {
     label,
     meter,
   }: IMixerRender) {
+    const isActive = id === activeTrackId;
+
     return (
       <section
         key={`${id}-${index}`}
-        className={classNames(
-          $.track.main,
-          {
-            [$.track.channel]:
-              (id as string).split('-')[0] === 'ch' ||
-              (id as string) === 'master',
-          },
-          { [$.track.active]: id === $d!.activeTrackId },
-        )}
-        style={{ width, minWidth: '65px' }}
+        className={classNames($.track.main, { [$.track.active]: isActive })}
+        style={{ width }}
       >
         <Inner>
           <Knob size={ESize.Sm} max={1} min={0} value={0.8} />
@@ -133,7 +126,10 @@ export default function Mixer({ openInstrument }: IMixer) {
         <Inner>
           <h2>{label}</h2>
         </Inner>
-        <Meter meter={id === 'master' ? masterMeter : meter} />
+        <Meter
+          className={classNames($.meter, { [$.meterActive]: isActive })}
+          meter={id === 'master' ? masterMeter : meter}
+        />
         <Inner>
           <Icon width="16px" height="16px" /> {label}
         </Inner>
@@ -182,7 +178,7 @@ export default function Mixer({ openInstrument }: IMixer) {
   });
 
   return (
-    <section id="DAW_MXR" className={$.main}>
+    <section id="DAW_MXR" className={classNames($.main, className)}>
       {[...mixerTracks, ...channelTracks]}
     </section>
   );

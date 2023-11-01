@@ -1,10 +1,11 @@
+import styles from '@/common/styles';
 import { Button } from '@/pfui';
-import { EButtonType, ESize, EVariant } from '@/pfui/constants';
+import { EButtonType, EVariant } from '@/pfui/constants';
 
 export function SoloButton() {
   return (
     <Button
-      size={ESize.Sm}
+      className={styles.icon.md}
       title="Solo"
       type={EButtonType.Button}
       variant={EVariant.Primary}

@@ -3,8 +3,11 @@ import _ from 'lodash/fp';
 import { Scale } from 'tonal';
 
 import { DEFAULT_OFFSET_LEFT } from 'app/_common/constants';
-import useProjectContext from 'app/_core/hooks/api/useProjectContext';
 import { Grid } from 'packages/pfui';
+import {
+  fetchProject,
+  fetchTracks,
+} from '@/api/project/_presets/DefaultPreset';
 
 const $ = {
   main: 'mb-10 bg-white',
@@ -13,18 +16,18 @@ const $ = {
 
 export default function PianoRoll() {
   // Const [currentStepIndex, setCurrentStepIndex] = useState(0);
-  const { projectContext: $d } = useProjectContext();
-  const activeTrack = $d?.tracks.find(({ id }) => id === $d?.activeTrackId);
+  const { activeTrackId, clef, measureCount, quantization } = fetchProject();
+  const tracks = fetchTracks();
+  const activeTrack = tracks.find(({ id }) => id === activeTrackId);
   activeTrack || console.warn('[PianoRoll] No active track');
 
   /*** @todo extract those 4 lines */
-  const clef = $d?.clef;
   const notes2 = Scale.get(`${clef}2 major`).notes;
   const notes1 = Scale.get(`${clef}1 major`).notes;
   const noteScale = [...notes2.reverse(), ...notes1.reverse()];
 
   // const findRowIndex = (note: string) => noteScale.findIndex((n) => n === note);
-  const gridColumnCount = $d ? $d.quantization * $d.measureCount : 0;
+  const gridColumnCount = quantization * measureCount;
   const rows = new Array(noteScale.length * gridColumnCount).fill('_');
 
   return (

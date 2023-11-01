@@ -6,24 +6,20 @@ import cn from 'classnames';
 import { DEFAULT_OFFSET_LEFT } from 'app/_common/constants';
 
 import { EUnit } from 'app/_common/types/utility.types';
-import {
-  ETransportState,
-  type IProjectContext,
-} from 'app/_common/types/project.types';
+import { ETransportState } from 'app/_common/types/project.types';
 
 import styles from 'app/_common/styles';
 const $ = styles.locator;
 
 interface ILocator {
-  projectContext: IProjectContext;
   className?: string;
 }
 
 const getMeasureWidth = (measureCount: number) =>
   (window.innerWidth - DEFAULT_OFFSET_LEFT) / measureCount;
 
-export default function Locator({ className = '', projectContext }: ILocator) {
-  const { measureCount } = projectContext;
+export default function Locator({ className = '' }: ILocator) {
+  const measureCount = 2;
   const [left, setLeft] = useState(DEFAULT_OFFSET_LEFT);
   const [previousSixteenths, setPrevSixteenths] = useState(0);
   const [updateInterval, setUpdateInterval] = useState<any>();
@@ -47,6 +43,7 @@ export default function Locator({ className = '', projectContext }: ILocator) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  /*
   useEffect(
     () => {
       if (Tone.Transport.state !== ETransportState.Started)
@@ -59,6 +56,7 @@ export default function Locator({ className = '', projectContext }: ILocator) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [Tone.Transport.state],
   );
+  */
 
   return (
     <div style={{ left: `${left}${EUnit.Px}` }} className={cn($, className)} />

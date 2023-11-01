@@ -7,6 +7,7 @@ import { ETrackType, type ITrack } from 'app/_common/types/track.types';
 import type { IChannel } from './types/channel.types';
 import { EInstrument } from './types/instrument.types';
 import { Note } from 'tone/build/esm/core/type/NoteUnits';
+import { Subdivision } from 'tone/build/esm/core/type/Units';
 
 // ---------- General
 /*** @constants */
@@ -43,30 +44,21 @@ export const PROGRESSION = [
   // Montgomery Ward bridge
   'I IV ii V',
 ];
-export const ROMAN_NUMS = ['i', 'ii', 'iii', 'iv', 'v', 'vi', 'vii'];
-
-// ---------- Utils
-/*** @utils */
 export const getMaxNotes = (notes: Note[][]) =>
   Math.max(notes.reduce((a, b) => (a > b.length ? a : b.length), 0));
-export const getMeasureTime = (n: number) => Tone.Time(`${n}m`);
-export const getMeasureSeconds = (n: number) => getMeasureTime(n).toSeconds();
-export const getNotationTime = (n: number) => Tone.Time(`${n}n`);
-export const getNotationSeconds = (n: number) => getNotationTime(n).toSeconds();
-export const isRomanNum = (s: string) => ROMAN_NUMS.includes(_.toLower(s));
 
 // ---------- Project
-const DEFAULT_ACTIVE_TRACK_ID = 'track-bd';
+const DEFAULT_ACTIVE_TRACK_ID = 'audio-halloween';
 const DEFAULT_BPM = 120;
 const DEFAULT_CLEF = 'D';
 const DEFAULT_SCALE = 'minor';
 const DEFAULT_MEASURE_COUNT = 2;
 const DEFAULT_NAME = t('untitled');
-const DEFAULT_OFFSET_LEFT = 184;
+const DEFAULT_OFFSET_LEFT = 179;
 const DEFAULT_POSITION = '0:0:0';
 const DEFAULT_QUANTIZATION = 16;
 const DEFAULT_SWING = 0;
-const DEFAULT_SWING_SUBDIVISION = '8n';
+const DEFAULT_SWING_SUBDIVISION: Subdivision = '8n';
 const DEFAULT_STATES = {
   tabTopActive: 0,
   tabBtmActive: 0,

@@ -2,7 +2,7 @@ import type { Subdivision } from 'tone/build/esm/core/type/Units';
 import type { UniqueIdentifier } from '@dnd-kit/core';
 import type { ITrack } from 'app/_common/types/track.types';
 import type { IChannel } from './channel.types';
-import { Dispatch, SetStateAction } from 'react';
+import { Dispatch, ReactNode, SetStateAction } from 'react';
 
 export enum ETransportState {
   Paused = 'paused',
@@ -12,25 +12,25 @@ export enum ETransportState {
 export enum EPortal {
   Instruments = 'portal-instruments',
 }
-
+export interface ISong {
+  children: ReactNode;
+  className?: string;
+  grow?: boolean;
+}
 export interface IStartDialog {
   toneReady: boolean;
   setToneReady: Dispatch<SetStateAction<boolean>>;
 }
-export interface IProjectContext {
+export interface IProject {
   activeTrackId: UniqueIdentifier;
   bpm: number;
   clef: string;
   scale: string; // TODO enum
-  //
-  channels: IChannel[];
-  tracks: ITrack[];
-  //
   measureCount: number;
   name: string;
+  offsetLeft: number;
   position: string;
   quantization: number;
-  states: Record<string, number>;
   swing: number;
   swingSubdivision: Subdivision;
 }

@@ -1,3 +1,4 @@
+'use client';
 import { FC, type CSSProperties, type MouseEvent } from 'react';
 import { GripIcon, KeySquareIcon, XIcon } from 'lucide-react';
 import classNames from 'classnames';
@@ -6,7 +7,7 @@ import { Sampler as ToneSampler, SamplerOptions } from 'tone';
 import { Scale } from 'tonal';
 
 import { ButtonGroup, Grid } from 'packages/pfui';
-import useProjectContext from 'app/_core/hooks/api/useProjectContext';
+import { fetchProject } from '@/api/project/_presets/DefaultPreset';
 
 interface IPad {
   instrument: ToneSampler;
@@ -47,20 +48,16 @@ interface ISampler extends Partial<SamplerOptions> {
 }
 
 const Sampler: FC<ISampler> = ({ instrument, onClose }) => {
+  const { clef } = fetchProject();
+  const scale = getScale(clef);
   const { attributes, listeners, setNodeRef, transform } = useDraggable({
     id: 'sampler',
   });
-
-  const { projectContext, patchProjectContext } = useProjectContext();
-  if (!projectContext) return null;
-  const { clef } = projectContext;
 
   // Maybe: position: "relative", left: "30%", top: "30%",
   const style: CSSProperties = transform
     ? { transform: `translate3d(${transform.x}px ${transform.y}px, 0)` }
     : {};
-
-  const scale = getScale(clef);
 
   return (
     <div ref={setNodeRef} style={style} {...attributes} className={className}>
@@ -78,8 +75,9 @@ const Sampler: FC<ISampler> = ({ instrument, onClose }) => {
         <select
           id="samplay-clef"
           className="w-8 bg-transparent"
-          onChange={(event) =>
-            patchProjectContext({ clef: event.target.value })
+          onChange={
+            (event) => console.log('[Sampler] TODO save onChange')
+            // patchProjectContext({ clef: event.target.value })
           }
           title="Clef"
           value={clef}

@@ -1,55 +1,42 @@
 'use client';
 import _ from 'lodash/fp';
-import * as Tone from 'tone';
-import { MouseEvent, useEffect } from 'react';
 import classNames from 'classnames';
 import { useWindowWidth } from '@react-hook/window-size';
 
 import { getIconByType } from 'config/icons';
-import { SortableItem } from 'app/_components';
-import useNoteEditor from 'app/_core/hooks/useNoteEditor';
-import useScheduler from 'app/_core/hooks/audio/useAudioScheduler';
+import { Note, SortableItem } from '@/components';
+// import useNoteEditor from '@/core/hooks/useNoteEditor';
+import useScheduler from '@/core/hooks/audio/useAudioScheduler';
+import WaveSurferAudioTrack from './WaveSurferAudioTrack';
+import { WaveSurferOptions } from 'wavesurfer.js';
 
-import { DEFAULT_OFFSET_LEFT, getMaxNotes } from 'app/_common/constants';
-import Note from '../Note';
+import { getMaxNotes, DEFAULT_OFFSET_LEFT } from '@/common/constants';
 
-import { EEndpoint } from 'app/_common/types/api.types';
 import { ETrackType, type ITrack } from 'app/_common/types/track.types';
+import { useEffect, type MouseEvent } from 'react';
 import type { IMidiPart } from 'app/_common/types/midi.types';
 
 import styles from 'app/_common/styles';
-import WaveSurferAudioTrack from './WaveSurferAudioTrack';
-import { WaveSurferOptions } from 'wavesurfer.js';
+import { IProject } from '@/common/types/project.types';
 const $ = styles.track;
 
-interface IExtendedTrack {
-  tracks: ITrack[];
-  track: ITrack;
-  measureCount: number;
-  mutate: (endpoint: EEndpoint) => void;
-  patchProjectContext: (patch: Record<string, any>) => void;
-}
 function Track({
-  tracks,
+  project: { measureCount },
   track,
-  measureCount,
-  mutate,
-  patchProjectContext,
-}: IExtendedTrack) {
-  const { id, name, type, routing, className = '' } = track;
-  const windowWidth = useWindowWidth() - DEFAULT_OFFSET_LEFT;
+}: {
+  project: IProject;
+  track: ITrack;
+}) {
   const { setupInstrument } = useScheduler();
+  const { id, name, routing, type, className, isActive = false } = track;
+  // const { addNote, deleteNote } = useNoteEditor(patchTrack);
+  const windowWidth = useWindowWidth() - DEFAULT_OFFSET_LEFT;
   const { id: inputId, instrument, parts } = routing.input;
-  const { addNote, deleteNote } = useNoteEditor({
-    tracks,
-    patchProjectContext,
-    mutate,
-  });
-  const $li = classNames($.row, className);
+  const $li = classNames($.li, className);
   const $e = {
     onArrangementClick: (event: MouseEvent) => {
-      Tone.Transport.stop();
-      Tone.setContext(new Tone.Context());
+      // Tone.Transport.stop();
+      // Tone.setContext(new Tone.Context());
       const element = event.target as HTMLElement;
       const clientX = event.clientX - DEFAULT_OFFSET_LEFT;
       const qWidth = windowWidth / 16 / measureCount;
@@ -58,6 +45,7 @@ function Track({
       const qIndex = qTotalIndex - partIndex * 16;
       const isNote = element.getAttribute('data-type') === 'note';
 
+      /*
       isNote
         ? deleteNote({
             partIndex,
@@ -65,12 +53,12 @@ function Track({
             noteIndex: parseInt(element.getAttribute('data-index')!, 10),
           })
         : addNote({ track, partIndex, qIndex });
+        */
     },
     onTrackSelection: (event: MouseEvent) => {
-      const element = event.currentTarget as HTMLElement;
-      const trackId = element.getAttribute('data-track-id')!;
-      patchProjectContext({ activeTrackId: trackId });
-      mutate(EEndpoint.ProjectSettings);
+      // const element = event.currentTarget as HTMLElement;
+      // const trackId = element.getAttribute('data-track-id')!;
+      // patch({ activeTrackId: trackId });
     },
   };
 
@@ -128,16 +116,18 @@ function Track({
   useEffect(() => {
     const { instrument: i, options } = instrument! as any;
     if (options.url && i?.load)
-      i.load(options.url as string) // to useAudioScheduler
+      i.load(options.url as string)
         .then(() => setupInstrument({ id: inputId, instrument: i, parts }))
         .catch(console.error);
     else setupInstrument({ id, instrument: i, parts });
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [instrument]);
+  }, []);
 
   const props = {
     main: { id, className: $li },
-    inner: { className: classNames($.col1.main, className) },
+    inner: {
+      className: classNames({ [$.active]: isActive }, $.col1.main, className),
+    },
   };
   const TypeIcon = getIconByType(type);
 
@@ -149,8 +139,9 @@ function Track({
         {...props.inner}
         style={{ height: 40 }}
       >
-        <TypeIcon />
-        <div className={$.col1.name}>{name}</div>
+        <TypeIcon className={$.icon} />
+        &nbsp;
+        <div className={$.col1.name}>{windowWidth < 100 ? '' : name}</div>
       </div>
       <div onClick={$e.onArrangementClick} className={$.col2.main}>
         {type === ETrackType.Audio ? (

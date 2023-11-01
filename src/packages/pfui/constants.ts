@@ -11,7 +11,7 @@ export enum EButtonType {
 }
 
 export enum ESize {
-  Sm = 'xs',
+  Sm = 'sm',
   Md = 'md',
   Lg = 'lg',
   Xl = 'xl',
@@ -29,9 +29,9 @@ export enum EVariant {
 }
 
 export const SPACING = {
-  [ESize.Sm]: 4,
-  [ESize.Md]: 6,
-  [ESize.Lg]: 8,
-  [ESize.Xl]: 10,
-  [ESize.Xxl]: 12,
+  [ESize.Sm]: 6,
+  [ESize.Md]: 10,
+  [ESize.Lg]: 12,
+  [ESize.Xl]: 16,
+  [ESize.Xxl]: 20,
 };

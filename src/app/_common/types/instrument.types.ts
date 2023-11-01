@@ -13,6 +13,14 @@ import {
 } from 'tone';
 import { RecursivePartial as TRecursivePartial } from 'tone/build/esm/core/util/Interface';
 
+export interface IInstrumentPortal {
+  InstrumentPortal: FC<{}>;
+  openInstrument: () => void;
+  toggleInstrument: () => void;
+  closeInstrument: () => void;
+  isOpen: boolean;
+}
+
 export enum EInstrument {
   AmSynth = 'AmSynth',
   FmSynth = 'FmSynth',

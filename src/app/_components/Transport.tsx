@@ -1,12 +1,11 @@
 'use client';
-import { type ChangeEvent, type MouseEvent, useState, useEffect } from 'react';
 import * as Tone from 'tone';
+import { type ChangeEvent, useState } from 'react';
 
 import {
   CircleIcon,
   FastForwardIcon,
   KeySquareIcon,
-  Loader,
   Music2Icon,
   PlayIcon,
   RepeatIcon,
@@ -15,194 +14,158 @@ import {
   TimerIcon,
 } from 'lucide-react';
 
-import useProjectContext from 'app/_core/hooks/api/useProjectContext';
-
-import styles from 'app/_common/styles';
-import { EEndpoint } from 'app/_common/types/api.types';
+import styles from '@/common/styles';
+import type { IProject } from '@/common/types/project.types';
 const $ = styles.transport;
 
-export default function Transport() {
+interface ITransport {
+  project: IProject;
+}
+export default function Transport({ project }: ITransport) {
+  const { bpm, clef, measureCount, quantization } = project;
   const [position, setPosition] = useState<string>('0:0:0.000');
-  const loopFn = (position: string) => setPosition(position);
-  const {
-    projectContext: $d,
-    patchProjectContext,
-    mutate,
-  } = useProjectContext();
+  // const loopFn = (position: string) => setPosition(position);
 
   function TransportControl() {
     const events = {
-      // TransportControl
-      onPause: (_: MouseEvent<SVGSVGElement>) => Tone.Transport.pause(),
-      onRecord: (_: MouseEvent<SVGSVGElement>) =>
-        console.log('🎙️ Recording soon available'),
-      onStart: (_: MouseEvent<SVGSVGElement>) => {
-        Tone.Transport.bpm.value = $d?.bpm || 120;
-        Tone.Transport.loop = true;
-        Tone.Transport.loopStart = 0;
-        Tone.Transport.loopEnd = `${$d!.measureCount}m`;
-        Tone.Transport.start();
-      },
-      onStop: (_: MouseEvent<SVGSVGElement>) => {
-        Tone.Transport.stop();
-      },
+      onPause: () => Tone.Transport.pause(),
+      onRecord: () => console.info('🎙️ Recording soon available'),
+      onStart: () => Tone.Transport.start(),
+      onStop: () => Tone.Transport.stop(),
     };
+    const commonIconStyles = { fill: '#fff', className: styles.button.navbar };
     return (
-      <div className={$.control}>
-        <RepeatIcon
-          className={styles.button.navbar}
-          fill="#fff"
-          onClick={events.onStop}
-        />
-        <RewindIcon
-          className={styles.button.navbar}
-          fill="#fff"
-          onClick={events.onStop}
-        />
-        <FastForwardIcon
-          className={styles.button.navbar}
-          fill="#fff"
-          onClick={events.onStop}
-        />
-        <SquareIcon
-          className={styles.button.navbar}
-          fill="#fff"
-          onClick={events.onStop}
-        />
-        <PlayIcon
-          className={styles.button.navbar}
-          fill="#0f0"
-          onClick={events.onStart}
-        />
+      <div id="DAW_TRANSPORT_CONTROL" className={$.control}>
+        <RepeatIcon {...commonIconStyles} onClick={events.onStop} />
+        <RewindIcon {...commonIconStyles} onClick={events.onStop} />
+        <FastForwardIcon {...commonIconStyles} onClick={events.onStop} />
+        <SquareIcon {...commonIconStyles} fill="#00f" onClick={events.onStop} />
+        <PlayIcon {...commonIconStyles} fill="#0f0" onClick={events.onStart} />
         <CircleIcon
-          className={styles.button.navbar}
+          {...commonIconStyles}
           fill="#f00"
           onClick={events.onRecord}
         />
       </div>
     );
   }
+
   function TransportSettings() {
+    const patch = (patch: Partial<IProject>) => {
+      // patchProjectContext(patch);
+      // mutate(EEndpoint.ProjectSettings);
+    };
     const events = {
       onClefChange: (event: ChangeEvent<HTMLSelectElement>) => {
-        const clef = event.target.value;
-        patchProjectContext({ clef });
-        mutate(EEndpoint.ProjectSettings);
+        patch({ clef: event.target.value });
       },
       onMeasureCountChange: (event: ChangeEvent<HTMLSelectElement>) => {
-        const measureCount = parseInt(event.target.value, 10);
-        patchProjectContext({ measureCount });
-        mutate(EEndpoint.ProjectSettings);
+        patch({ measureCount: parseInt(event.target.value, 10) });
       },
       onQuantizationChange: (event: ChangeEvent<HTMLSelectElement>) => {
-        const quantization = parseInt(event.target.value, 10);
-        patchProjectContext({ quantization });
-        mutate(EEndpoint.ProjectSettings);
+        patch({ quantization: parseInt(event.target.value, 10) });
       },
-      // TransportSettings
       onBpmChange: (event: ChangeEvent<HTMLSelectElement>) => {
-        const bpm = parseInt(event.target.value, 10);
-        patchProjectContext({ bpm });
-        mutate(EEndpoint.ProjectSettings);
+        patch({ bpm: parseInt(event.target.value, 10) });
       },
     };
 
     return (
-      <section className={$.settings.main}>
-        {$d ? (
-          <div className={$.settings.inner}>
+      <section id="DAW_TRANSPORT_SETTINGS" className={$.settings.main}>
+        <div className={$.settings.inner}>
+          <div className={$.settings.item}>
+            <label
+              className={styles.transport.settings.label}
+              htmlFor="clef"
+              title="clef"
+            ></label>
+            <KeySquareIcon
+              color="rgb(103, 232, 249)"
+              className={styles.icon.sm}
+            />
+            <select
+              className="w-8 ml-1 bg-transparent"
+              defaultValue={clef}
+              id="clef"
+              onChange={events.onClefChange}
+              title="Clef"
+            >
+              <option value="C">C</option>
+              <option value="D">D</option>
+              <option value="E">E</option>
+            </select>
+          </div>
+          <div className={$.settings.item}>
+            <label className={$.settings.label} htmlFor="measureCount">
+              M
+            </label>
+            <select
+              className={$.settings.input}
+              defaultValue={measureCount}
+              id="measureCount"
+              onChange={events.onMeasureCountChange}
+              title="Measure Count"
+            >
+              <option value="1">1</option>
+              <option value="2">2</option>
+              <option value="4">4</option>
+              <option value="8">8</option>
+            </select>
+          </div>
+          <div className={$.settings.item}>
+            <label className={$.settings.label} htmlFor="quantization">
+              Q
+            </label>
+            <select
+              className={$.settings.input}
+              defaultValue={quantization}
+              id="quantization"
+              onChange={events.onQuantizationChange}
+              title="Quantization"
+            >
+              <option value="2">2</option>
+              <option value="4">4</option>
+              <option value="8">8</option>
+              <option value="16">16</option>
+              <option value="32">32</option>
+              <option value="64">64</option>
+              <option value="128">128</option>
+            </select>
+          </div>
+          <div className={$.settings.item}>
+            <label
+              className={$.settings.label}
+              htmlFor="bpm"
+              title="bpm"
+            ></label>
+            <TimerIcon color="rgb(103, 232, 249)" className="w-4 h-4" />
+            <select
+              className={$.settings.input}
+              defaultValue={bpm}
+              id="bpm"
+              onChange={events.onBpmChange}
+            >
+              {new Array(50).fill('').map((x, i) => (
+                <option key={i} value={i + 79}>
+                  {i + 79}
+                </option>
+              ))}
+            </select>
             <div className={$.settings.item}>
-              <label
-                className={styles.transport.settings.label}
-                htmlFor="clef"
-                title="clef"
-              ></label>
-              <KeySquareIcon color="rgb(103, 232, 249)" className="w-4 h-4" />
+              <span>
+                <Music2Icon color="rgb(103, 232, 249)" className="w-4 h-4" />
+              </span>
+              &nbsp;
               <select
-                className="w-8 ml-1 bg-transparent"
-                defaultValue={$d.clef}
-                id="clef"
-                onChange={events.onClefChange}
-                title="Clef"
+                className="bg-transparent"
+                defaultValue={4}
+                title="Time Signature"
               >
-                <option value="C">C</option>
-                <option value="D">D</option>
-                <option value="E">E</option>
+                <option value="4">4/4</option>
               </select>
-            </div>
-            <div className={$.settings.item}>
-              <label className={$.settings.label} htmlFor="measureCount">
-                M
-              </label>
-              <select
-                className={$.settings.input}
-                defaultValue={$d.measureCount}
-                id="measureCount"
-                onChange={events.onMeasureCountChange}
-                title="Measure Count"
-              >
-                <option>1</option>
-                <option>2</option>
-                <option>3</option>
-                <option>4</option>
-              </select>
-            </div>
-            <div className={$.settings.item}>
-              <label className={$.settings.label} htmlFor="quantization">
-                Q
-              </label>
-              <select
-                className={$.settings.input}
-                defaultValue={$d.quantization}
-                id="quantization"
-                onChange={events.onQuantizationChange}
-                title="Quantization"
-              >
-                <option>2</option>
-                <option>4</option>
-                <option>8</option>
-                <option>16</option>
-                <option>32</option>
-                <option>64</option>
-              </select>
-            </div>
-            <div className={$.settings.item}>
-              <label
-                className={$.settings.label}
-                htmlFor="bpm"
-                title="bpm"
-              ></label>
-              <TimerIcon color="rgb(103, 232, 249)" className="w-4 h-4" />
-              <select
-                className={$.settings.input}
-                defaultValue={$d.bpm}
-                id="bpm"
-                onChange={events.onBpmChange}
-              >
-                {new Array(50).fill('').map((x, i) => (
-                  <option key={i} value={i + 79}>
-                    {i + 79}
-                  </option>
-                ))}
-              </select>
-              <div className={$.settings.item}>
-                <span>
-                  <Music2Icon color="rgb(103, 232, 249)" className="w-4 h-4" />
-                </span>
-                &nbsp;
-                <select
-                  className="bg-transparent"
-                  defaultValue={4}
-                  title="Time Signature"
-                >
-                  <option value="4">4/4</option>
-                </select>
-              </div>
             </div>
           </div>
-        ) : (
-          <Loader />
-        )}
+        </div>
         <span className={$.settings.position}>{position}</span>
       </section>
     );

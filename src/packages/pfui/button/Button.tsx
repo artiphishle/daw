@@ -24,7 +24,7 @@ export const Button = ({
   const className = classNames(_className, variant);
   const style = {
     style: {
-      padding: `${SPACING[size] / 2}px ${SPACING[size] * 3}px`,
+      padding: `${SPACING[size] / 2}px ${SPACING[size] / 2}px`,
       borderRadius: rounded ? `${SPACING[rounded]}px` : '',
     },
   };

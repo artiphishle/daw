@@ -1,56 +1,41 @@
 'use client';
 import _ from 'lodash/fp';
-import { useEffect, type MouseEvent } from 'react';
-import { CogIcon, GridIcon, HopIcon, InfinityIcon } from 'lucide-react';
-import * as Tone from 'tone';
-import {
-  DndContext,
-  useSensor,
-  type DragEndEvent,
-  MouseSensor,
-  useSensors,
-} from '@dnd-kit/core';
 
-import styles from 'app/_common/styles';
-import {
-  DEFAULT_MEASURE_COUNT,
-  DEFAULT_OFFSET_LEFT,
-  DEFAULT_QUANTIZATION,
-} from 'app/_common/constants';
-// Import { PanSongParsed } from "./test/unit/PanSong.parsed";
-// import useConverter from "@/core/hooks/useConverter";
+import t from '@/core/i18n';
 import {
   Arranger,
-  Browser,
-  Droppable,
+  Footer,
+  Instrument,
+  Header,
   Mixer,
-  Navbar,
-  PianoRoll,
-  Progression,
-  Settings,
-  Sheet,
-} from 'app/_components';
-import { A, Adsr, GoldKnob, Grid, Menu, Nav, Tabs, TabsPanel } from '@/pfui';
-import useProjectContext from 'app/_core/hooks/api/useProjectContext';
-import useAudioInstrument from 'app/_core/hooks/audio/useAudioInstrument';
+  Song,
+  Track,
+} from '@/components';
+import { Button, ButtonGroup, Dialog, Flex, Menu } from '@/pfui';
+import { useSelector } from '@/core/hooks/useSelector';
+import { useToneJs } from '@/core/hooks/useToneJs';
 
-import type { Note as TNote } from 'tone/build/esm/core/type/NoteUnits';
-import t from '@/core/i18n';
-import data from '../../../cypress/fixtures/sheet';
+import { EButtonType, ESize, EVariant } from '@/pfui/constants';
+import type { IChannel } from '@/common/types/channel.types';
+import type { ITrack } from '@/common/types/track.types';
+import type { IProject } from '@/common/types/project.types';
 
-export function App() {
-  const { isOpen, InstrumentPortal, openInstrument, closeInstrument } =
-    useAudioInstrument();
+import $ from '@/common/styles';
+import usePortal from 'react-useportal';
 
-  useEffect(() => {
-    const audioContext = new Tone.Context().resume();
-    // Your audio processing code goes here
-  }, []);
+interface IData {
+  channels: IChannel[];
+  project: IProject;
+  tracks: ITrack[];
+}
 
+export function App({ channels: _channels, project, tracks: _tracks }: IData) {
+  const { Portal, isOpen, open, close } = usePortal();
+  const { init, toneReady } = useToneJs();
+  const { selectChannels, selectTracks } = useSelector();
+
+  // Following comments will be reused in the future
   // const { audioToAbc, audioToMidi } = useConverter();
-  const mouseSensor = useSensor(MouseSensor);
-  const sensors = useSensors(mouseSensor);
-
   /*
   const convertAudioToMidi = async () => {
     try {
@@ -61,7 +46,6 @@ export function App() {
     }
   };
   */
-
   /* TODO
   useEffect(() => {
     (async () => {
@@ -73,24 +57,14 @@ export function App() {
     })();
   }, [audioToAbc]);
   */
-
-  const { projectContext, patchProjectContext } = useProjectContext();
-  const gridCols =
-    (projectContext?.quantization || DEFAULT_QUANTIZATION) *
-    (projectContext?.measureCount || DEFAULT_MEASURE_COUNT);
-  const activeTrackId = projectContext?.activeTrackId;
-  const clef = projectContext?.clef;
-  const tabBtmActive = projectContext?.states.tabBtmActive;
-  const tabTopActive = projectContext?.states.tabTopActive;
-  const tracks = projectContext?.tracks || [];
-
+  /*
   const tabsBottomItems = [
     {
       children: <div>Mixer</div>,
       href: '#',
       id: 'tabs-mixer',
       order: 1,
-      panel: <Mixer openInstrument={openInstrument} />,
+      panel: <div>Mixer</div>, // <Mixer openInstrument={openInstrument} />,
       title: 'Mixer',
     },
     {
@@ -110,6 +84,8 @@ export function App() {
       title: 'Browser',
     },
   ];
+  */
+  /*
   const tabsTopItems = [
     {
       children: (
@@ -123,20 +99,29 @@ export function App() {
       order: 1,
       panel: (
         <>
-          {/* TODO Extract as 'Backdrop' component */}
           <section className="relative">
             <Grid
-              className={
-                'grid absolute top-[32px] left-[184px] right-0 bottom-0'
-              }
+              className={'grid absolute top-[32px] right-0 bottom-0'}
               cols={gridCols}
               rows={tracks.length}
+              style={{ left: DEFAULT_OFFSET_LEFT }}
               classNameItem="h-[40px] border border-[#fff] mb-[1px]"
             />
-            <Arranger className="absolute top-0 left-0 right-0 bottom-0" />
+            <Arranger className={$.main}>
+              {tracks.map((track, trackIndex) => {
+                const trk = {
+                  className:
+                    activeTrackId === track.id ? styles.track.active : '',
+                  measureCount,
+                  quantization,
+                  ...track,
+                };
+                return <Track key={`arranger-track-${track.id}`} {...trk} />;
+              })}
+            </Arranger>
           </section>
           <Tabs className="justify-end">
-            <Nav className={`ml-[184px]`}>
+            <Nav className={`ml-[179px]`}>
               {tabsBottomItems.map(({ id, children }: any, aIndex) => (
                 <A
                   classNameActive="bg-white font-bold"
@@ -146,7 +131,7 @@ export function App() {
                   isActive={tabBtmActive === aIndex}
                   onClick={(event: MouseEvent<HTMLAnchorElement>) => {
                     event.preventDefault();
-                    patchProjectContext({
+                    /* patch({
                       states: {
                         tabTopActive: tabTopActive as number,
                         tabBtmActive: aIndex,
@@ -236,62 +221,106 @@ export function App() {
       title: 'Testing',
     },
   ];
+  */
 
-  function dragEnd({ active, delta }: DragEndEvent) {
-    console.log('active/moved x/y', active, delta.x, '/', delta.y);
+  if (toneReady) {
+    const channels = selectChannels(_channels);
+    const tracks = selectTracks(_tracks);
+    const activeTrack = tracks.find(
+      (track) => track.id === project.activeTrackId,
+    );
+
+    /***
+     * New way of structuring
+     * It's not perfect yet but it's a start
+     * @todo Create a layout repository introducing portals and flattened structure
+     */
+    return (
+      <>
+        <Header project={project} />
+        <main className={$.main}>
+          <Song grow={true}>
+            <Flex grow={true} vertical={true}>
+              <Arranger project={project} tracks={tracks}>
+                {tracks.map((track) => (
+                  <Track
+                    key={track.id}
+                    track={{
+                      ...track,
+                      isActive: project.activeTrackId === track.id,
+                    }}
+                    project={project}
+                  />
+                ))}
+              </Arranger>
+              <Mixer
+                activeTrackId={project.activeTrackId}
+                channels={channels}
+                tracks={tracks}
+                openInstrument={open}
+              />
+            </Flex>
+          </Song>
+          <Menu isContextMenu={true} />
+        </main>
+        <Footer />
+        <Portal>
+          {project.activeTrackId && isOpen && (
+            <Instrument close={close} project={project} track={activeTrack} />
+          )}
+        </Portal>
+      </>
+    );
   }
 
   return (
-    <DndContext onDragEnd={dragEnd} sensors={sensors}>
-      <main className={styles.main}>
-        <div className="flex flex-col flex-1">
-          <Navbar />
-          <Tabs>
-            <Nav className={`ml-[${DEFAULT_OFFSET_LEFT}px]`}>
-              {tabsTopItems.map(({ id, children }, aIndex) => (
-                <A
-                  classNameActive="bg-white font-bold"
-                  id={`tabs-top-nav-${id}-${aIndex}`}
-                  order={aIndex + 1}
-                  key={`tabs-top-nav-${id}-${aIndex}`}
-                  onClick={() => {
-                    patchProjectContext({
-                      states: {
-                        tabBtmActive: tabBtmActive as number,
-                        tabTopActive: aIndex,
-                      },
-                    });
-                  }}
-                >
-                  {children}
-                </A>
-              ))}
-            </Nav>
-            {tabsTopItems.map(({ id, panel }, panelIndex) => (
-              <TabsPanel
-                id={`tabs-top-panel-${id}-${panelIndex}`}
-                isActive={panelIndex === tabTopActive}
-                key={`tabs-top-panel-${id}-${panelIndex}`}
-                className="flex-1"
-                Content={panel}
-              />
-            ))}
-          </Tabs>
-        </div>
-        <Menu isContextMenu={true} />
-      </main>
-
-      <InstrumentPortal>
-        {isOpen &&
-          tracks.map((track) => {
-            if (activeTrackId !== track.id) return null;
-            const I = track.routing.input.instrument?.Instrument;
-            if (!I) return null;
-            return (
-              <I key={`instrument-${track.id}`} onClose={closeInstrument} />
-            );
-          })}
-      </InstrumentPortal>
-    </DndContext>
+    <>
+      <Dialog open className="absolute top-[20%] max-w-[80%] p-8">
+        <h3 className={$.headings.h3}>{t('allowSound')}</h3>
+        <ButtonGroup className="text-center mt-10">
+          <Button
+            onClick={init}
+            variant={EVariant.Primary}
+            size={ESize.Xl}
+            type={EButtonType.Button}
+            value={t('ok')}
+          />
+        </ButtonGroup>
+      </Dialog>
+    </>
   );
 }
+
+/*
+  <Tabs>
+    <Nav className={`ml-[${DEFAULT_OFFSET_LEFT}px]`}>
+      {tabsTopItems.map(({ id, children }, aIndex) => (
+        <A
+          classNameActive="bg-white font-bold"
+          id={`tabs-top-nav-${id}-${aIndex}`}
+          order={aIndex + 1}
+          key={`tabs-top-nav-${id}-${aIndex}`}
+          onClick={() => {
+            patchProjectContext({
+              states: {
+                tabBtmActive: tabBtmActive as number,
+                tabTopActive: aIndex,
+              },
+            });
+          }}
+        >
+          {children}
+        </A>
+      ))}
+    </Nav>
+    {tabsTopItems.map(({ id, panel }, panelIndex) => (
+      <TabsPanel
+        id={`tabs-top-panel-${id}-${panelIndex}`}
+        isActive={panelIndex === tabTopActive}
+        key={`tabs-top-panel-${id}-${panelIndex}`}
+        className="flex-1"
+        Content={panel}
+      />
+    ))}
+  </Tabs>
+*/

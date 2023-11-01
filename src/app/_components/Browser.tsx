@@ -80,11 +80,11 @@ export default function Browser() {
   return (
     <section className="flex flex-col">
       <div className="flex bg-black text-white">
-        <div className="w-[184px]">&nbsp;</div>
+        <div className="w-[179px]">&nbsp;</div>
         <Search />
       </div>
       <section className="flex flex-1 bg-white px-4 text-xs">
-        <div className="w-[184px]">&nbsp;</div>
+        <div className="w-[179px]">&nbsp;</div>
         <div className="flex-1 bg-gray-50">
           <Accordion
             open={true}

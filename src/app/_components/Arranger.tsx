@@ -1,3 +1,4 @@
+'use client';
 import {
   DndContext,
   DragEndEvent,
@@ -13,72 +14,72 @@ import {
   verticalListSortingStrategy,
 } from '@dnd-kit/sortable';
 
-import styles from 'app/_common/styles';
-import { Locator, Track } from 'app/_components';
-import Time from './Time';
-import useProjectContext from 'app/_core/hooks/api/useProjectContext';
+import styles from '@/common/styles';
+import { Locator, Time } from '@/components';
 
-import type { IArranger } from '../_common/types/arranger.types';
-import { EEndpoint } from '../_common/types/api.types';
-import { ETrackType } from 'app/_common/types/track.types';
+import type { IArranger } from '@/common/types/arranger.types';
+import { Flex, Grid } from '@/pfui';
 
-export default function Arranger({ className = '' }: IArranger) {
+export default function Arranger({
+  project,
+  tracks,
+  children,
+  className = '',
+}: IArranger) {
+  const { measureCount, quantization, offsetLeft } = project;
   const mouseSensor = useSensor(MouseSensor);
   const sensors = useSensors(mouseSensor);
   const $ = styles.arranger;
-  const { projectContext, patchProjectContext, mutate } = useProjectContext();
-
-  if (!projectContext) return null;
-  const { tracks, activeTrackId, measureCount, quantization } = projectContext;
 
   const events = {
-    dragEnd: async (event: DragEndEvent) => {
+    dragEnd: (event: DragEndEvent) => {
       const { active, over } = event;
       if (active.id === over?.id) return;
 
       const oldIndex = tracks.findIndex(({ id }) => id === active.id);
       const newIndex = tracks.findIndex(({ id }) => id === over?.id);
       const sortedTracks = arrayMove(tracks, oldIndex, newIndex);
-
-      await patchProjectContext({ tracks: sortedTracks });
-      mutate(EEndpoint.ProjectSettings);
+      // await patchProjectContext({ tracks: sortedTracks });
+      // mutate(EEndpoint.ProjectSettings);
     },
   };
+
+  function dragEnd({ active, delta }: DragEndEvent) {
+    console.log('active/moved x/y', active, delta.x, '/', delta.y);
+  }
+
   return (
-    <section className={classNames($.main, className)}>
-      <DndContext
-        sensors={sensors}
-        collisionDetection={closestCenter}
-        onDragEnd={events.dragEnd}
-      >
-        <SortableContext items={tracks} strategy={verticalListSortingStrategy}>
-          <ol className="flex-1 ">
-            <Time measureCount={measureCount} />
-            {tracks.map((track, trackIndex) => {
-              const trk = {
-                className:
-                  activeTrackId === track.id ? styles.track.active : '',
-                measureCount,
-                quantization,
-                mutate,
-                patchProjectContext,
-                ...track,
-              };
-              return (
-                <Track
-                  key={`track-${trackIndex}`}
-                  tracks={tracks}
-                  track={trk}
-                  measureCount={measureCount}
-                  mutate={mutate}
-                  patchProjectContext={patchProjectContext}
-                />
-              );
-            })}
-          </ol>
-        </SortableContext>
-      </DndContext>
-      {projectContext && <Locator projectContext={projectContext} />}
-    </section>
+    <DndContext onDragEnd={dragEnd} sensors={sensors}>
+      <section className={classNames($.main, className)}>
+        <Grid
+          className={'grid absolute top-[32px] right-0'}
+          cols={tracks.length * measureCount * quantization}
+          rows={tracks.length}
+          style={{
+            left: offsetLeft,
+            height: `${tracks.length * 40}px`,
+          }}
+          classNameItem="h-[40px] border border-white mb-[1px]"
+        />
+        <section className={$.main}>
+          <DndContext
+            sensors={sensors}
+            collisionDetection={closestCenter}
+            onDragEnd={events.dragEnd}
+          >
+            <SortableContext
+              items={tracks}
+              strategy={verticalListSortingStrategy}
+            >
+              <Flex grow vertical>
+                <Time />
+                <ol className="flex-1">{children}</ol>
+              </Flex>
+            </SortableContext>
+          </DndContext>
+          <Locator />
+        </section>
+      </section>
+    </DndContext>
   );
 }
