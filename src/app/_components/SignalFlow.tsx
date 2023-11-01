@@ -5,13 +5,17 @@ import { useWindowWidth } from '@react-hook/window-size';
 
 import 'reactflow/dist/style.css';
 import styles from 'app/_common/styles';
-import useProjectContext from '@/core/hooks/api/useProjectContext';
+import {
+  fetchChannels,
+  fetchProject,
+  fetchTracks,
+} from '@/api/project/_presets/DefaultPreset';
 
 export default function Dsp() {
+  const channels = fetchChannels();
+  const { bpm } = fetchProject();
+  const tracks = fetchTracks();
   const windowWidth = useWindowWidth();
-  const { projectContext: $d } = useProjectContext();
-  const channels = $d?.channels || [];
-  const tracks = $d?.tracks || [];
 
   const channelNodes = channels.map(({ id, label }, channelIndex) => {
     const channelNode = {
@@ -57,7 +61,7 @@ export default function Dsp() {
       <section>
         <h1 className={styles.headings.h1}>Projekt</h1>
         <h2 className={styles.headings.h2}>General info</h2>
-        <p>Bpm: {$d?.bpm}</p>
+        <p>Bpm: {bpm}</p>
 
         <div style={{ marginTop: '10vh', width: '100vw', height: '80vh' }}>
           <ReactFlow

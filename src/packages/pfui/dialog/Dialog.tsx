@@ -1,4 +1,4 @@
-import { AllHTMLAttributes } from "react";
+import { AllHTMLAttributes } from 'react';
 
 interface IDialog extends AllHTMLAttributes<HTMLDialogElement> {}
 

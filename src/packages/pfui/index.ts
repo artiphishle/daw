@@ -1,3 +1,5 @@
+'use client';
+
 /*** @pfui elements */
 export { A } from './a/A';
 export { Accordion, AccordionSummary, AccordionDetails } from './accordion';

@@ -31,4 +31,5 @@ export interface ITrack {
   routing: ITrackRouting;
   type: ETrackType;
   className?: string;
+  isActive?: boolean;
 }

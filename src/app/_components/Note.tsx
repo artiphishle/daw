@@ -1,8 +1,7 @@
 import classNames from 'classnames';
-
 import type { AllHTMLAttributes, CSSProperties } from 'react';
 
-import styles from 'app/_common/styles';
+import styles from '@/common/styles';
 const $ = styles.notes;
 
 interface INote extends AllHTMLAttributes<HTMLDivElement> {
@@ -10,7 +9,7 @@ interface INote extends AllHTMLAttributes<HTMLDivElement> {
   style: CSSProperties;
 }
 
-export default function Note({
+export function Note({
   index,
   onClick,
   className = '',

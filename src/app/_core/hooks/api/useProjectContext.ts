@@ -1,4 +1,3 @@
-'use client';
 import useSWR, { useSWRConfig } from 'swr';
 import * as Tone from 'tone';
 
@@ -12,9 +11,8 @@ import {
   type IInstrument,
   EInstrument,
 } from 'app/_common/types/instrument.types';
-import { useEffect, useState } from 'react';
+import { useSelector } from '../useSelector';
 
-// TODO load instruments dynamically
 const loadInstrument = (_instrument: EInstrument, options: TInputOptions) => {
   let instrument = null;
   let Instrument = null;
@@ -49,78 +47,36 @@ const loadInstrument = (_instrument: EInstrument, options: TInputOptions) => {
   return { Instrument, instrument, options } as IInstrument;
 };
 
-export default function useProjectContext() {
+export default function useProjectContext(dangerousFields: string[]) {
   const { mutate } = useSWRConfig();
-  const [loaded, setLoaded] = useState<any>([]);
+  const { deselect, select } = useSelector();
 
-  // Add unserializable data and return the data
-  const deselectData = (data: IProjectContext) => {
-    const { channels = [], tracks = [] } = data;
+  const fetcher = async (url: EEndpoint) =>
+    select(await (await fetch(url)).json());
 
-    // 1 Channel
-    const deselectedChannels = channels.map((channel) => ({
-      ...channel,
-      channel: new Tone.Channel(channel.options),
-    }));
+  const patch = (patch: Partial<IProjectContext>) => {
+    // 1. Remove (deselect) unserializable data (Tone instrument/channel)
+    const body = { method: 'PATCH', body: JSON.stringify(deselect(patch)) };
 
-    // 2 Instrument
-    const deselectedTracks = tracks.map((track) => {
-      const { routing } = track;
-      const instrument: IInstrument = loadInstrument(
-        routing.input.id as EInstrument,
-        { ...routing.input.options },
-      );
-      setLoaded((loaded: any) => [...loaded, instrument]);
-      routing.input.instrument = instrument;
-      return {
-        ...track,
-        routing: { ...routing, input: { ...routing.input, instrument } },
-      };
+    // 2. Update project data
+    fetch(EEndpoint.ProjectSettings, body).then((res) => {
+      res
+        .json()
+        .then((data) => {
+          // 3. Update local cache (TODO first this? optimistic)
+          mutate(EEndpoint.ProjectSettings, deselect(data)).catch(
+            console.error,
+          );
+        })
+        .catch(console.error);
     });
-    return { ...data, channels: deselectedChannels, tracks: deselectedTracks };
   };
-
-  // Remove unnserializable data and return the 'patch' to be applied
-  const selectData = (data: Partial<IProjectContext>) => {
-    if (!data.tracks) return data;
-    const tracks = data.tracks.map((track) => {
-      if (!track.routing.input.instrument) return track;
-      delete track.routing.input.instrument;
-      return track;
-    });
-    return { ...data, tracks };
-  };
-
-  const fetcher = async (url: EEndpoint) => {
-    const res = await fetch(url);
-    const data = await res.json();
-    return deselectData(data);
-  };
-
-  const patch = async (patch: Partial<IProjectContext>) => {
-    console.log('useProjectContext > patch', selectData(patch));
-    try {
-      const res = await fetch(EEndpoint.ProjectSettings, {
-        method: 'PATCH',
-        body: JSON.stringify(selectData(patch)),
-      });
-      const data = await res.json();
-      await mutate(EEndpoint.ProjectSettings, deselectData(data));
-    } catch (error) {
-      console.error(error);
-    }
-  };
-
-  const { data, error, isLoading } = useSWR<IProjectContext, any, EEndpoint>(
-    EEndpoint.ProjectSettings,
-    fetcher,
-  );
 
   return {
-    projectContext: data,
-    error,
-    isLoading,
-    patchProjectContext: patch,
-    mutate,
+    data: useSWR<Partial<IProjectContext>, any, EEndpoint>(
+      EEndpoint.ProjectSettings,
+      fetcher,
+    ),
+    patch,
   };
 }

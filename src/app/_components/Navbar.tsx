@@ -4,25 +4,24 @@ import styles from 'app/_common/styles';
 import t from 'app/_core/i18n';
 
 import { Avatar } from 'packages/pfui';
-import { Transport } from 'app/_components';
-import { useRef } from 'react';
+import { Transport } from '@/components';
+import type { IProject } from '@/common/types/project.types';
 
-export default function Navbar() {
-  const menuMainRef = useRef(null);
+export default function Navbar({ project }: { project: IProject }) {
   const { navbar } = styles;
-  const events = {
-    showMenu: () => {
-      console.log('show');
-    },
-  };
+  console.log('[Navbar] server-side');
 
   return (
     <div className={navbar.ui}>
       <div className={navbar.uiInner}>
-        <MenuIcon className={navbar.icon} />
-        <h1 className={styles.headings.h1}>{t('daw')}</h1>
+        &nbsp;
+        <h1 className={styles.headings.h1}>
+          <MenuIcon className={styles.icon.md} />
+        </h1>
+        &nbsp;
+        {t('daw')}
       </div>
-      <Transport />
+      {<Transport project={project} />}
       <Avatar />
     </div>
   );
