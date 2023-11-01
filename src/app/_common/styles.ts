@@ -34,7 +34,7 @@ const styles = {
     md: 'w-[24px] h-[24px]',
     lg: 'w-[32px] h-[32px]',
   },
-  locator: 'bg-black w-[1px] absolute top-0 bottom-0',
+  locator: 'bg-zinc-700 w-[1px] absolute top-0 bottom-0',
   menu: {
     main: 'absolute bg-black border border-zinc-700',
     nav: 'flex flex-col items-center',

@@ -17,6 +17,7 @@ import {
 import styles from '@/common/styles';
 import type { IProject } from '@/common/types/project.types';
 import { patchProject } from '@/api/project/_presets/DefaultPreset';
+import useTransport from '@/core/hooks/useTransport';
 const $ = styles.transport;
 
 interface ITransport {
@@ -25,7 +26,10 @@ interface ITransport {
 export default function Transport({ project }: ITransport) {
   const { bpm, clef, measureCount, quantization } = project;
   const [position, setPosition] = useState<string>('0:0:0.000');
-  // const loopFn = (position: string) => setPosition(position);
+  const loopFn = (position: string) => {
+    setPosition(position);
+  };
+  const { loop } = useTransport({ loopFn });
 
   function TransportControl() {
     const events = {
