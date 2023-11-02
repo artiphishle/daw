@@ -1,12 +1,7 @@
 import classNames from 'classnames';
 import { ButtonHTMLAttributes } from 'react';
-import { ESize, EVariant, SPACING } from '../constants';
 
-export enum EButtonType {
-  Button = 'button',
-  Reset = 'reset',
-  Submit = 'submit',
-}
+import { SPACING, EButtonType, ESize, EVariant } from '@/pfui/constants';
 
 interface IButton extends ButtonHTMLAttributes<HTMLButtonElement> {
   readonly type: EButtonType;
@@ -17,7 +12,7 @@ interface IButton extends ButtonHTMLAttributes<HTMLButtonElement> {
   readonly variant?: EVariant;
 }
 
-const Button = ({
+export const Button = ({
   className: _className,
   value,
   rounded,
@@ -29,14 +24,11 @@ const Button = ({
   const className = classNames(_className, variant);
   const style = {
     style: {
-      padding: `${SPACING[size] / 2}px ${SPACING[size] * 3}px`,
-      // eslint-disable-next-line no-undefined
-      borderRadius: rounded ? `${SPACING[rounded]}px` : undefined,
+      padding: `${SPACING[size] / 2}px ${SPACING[size] / 2}px`,
+      borderRadius: rounded ? `${SPACING[rounded]}px` : '',
     },
   };
   const props = { ...rest, className, ...style };
 
   return <button {...props}>{value}</button>;
 };
-
-export { Button };

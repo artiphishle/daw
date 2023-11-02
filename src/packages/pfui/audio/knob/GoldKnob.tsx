@@ -1,3 +1,4 @@
+'use client';
 import classNames from 'classnames';
 import { ChangeEvent, KeyboardEvent, MouseEvent, useState } from 'react';
 
@@ -52,21 +53,23 @@ export function GoldKnob({
           value={previewValue}
           className="text-center w-full bg-transparent font-bold"
           onChange={(event: ChangeEvent) => {
-            const currentStringValue = (event.target as HTMLInputElement).value;
+            const currentStringValue = (event.target as HTMLInputElement)
+              ?.value;
             if (!currentStringValue) return setPreviewValue(0);
             const currentValue = parseInt(currentStringValue, 10);
             setPreviewValue(
-              currentValue < 0 ? 0 : currentValue > 320 ? 320 : currentValue
+              currentValue < 0 ? 0 : currentValue > 320 ? 320 : currentValue,
             );
           }}
           onKeyDown={(event: KeyboardEvent) => {
             if (event.key === 'Escape') return setInputVisible(false);
             if (event.key !== 'Enter') return;
-            const currentStringValue = (event.target as HTMLInputElement).value;
+            const currentStringValue = (event.target as HTMLInputElement)
+              ?.value;
             if (!currentStringValue) return setValue(0);
             const currentValue = parseInt(currentStringValue, 10);
             setValue(
-              currentValue < 0 ? 0 : currentValue > 320 ? 320 : currentValue
+              currentValue < 0 ? 0 : currentValue > 320 ? 320 : currentValue,
             );
             setInputVisible(false);
           }}

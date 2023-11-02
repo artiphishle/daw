@@ -1,22 +1,24 @@
 import classNames from 'classnames';
 import { UserIcon } from 'lucide-react';
-import type { IAvatar } from '..';
-import styles from 'app/common/styles';
+
+import type { IAvatar } from '@/pfui/types';
+
+import styles from 'app/_common/styles';
+const $ = styles.avatar;
 
 function Avatar({ bordered = true, className, rounded = true }: IAvatar) {
-  const css = styles.avatar;
   const props = {
     className: classNames(
       { className },
-      css.main,
-      { [css.bordered]: bordered },
-      { [css.rounded]: rounded }
+      $.main,
+      { [$.bordered]: bordered },
+      { [$.rounded]: rounded },
     ),
   };
 
   return (
     <div {...props}>
-      <UserIcon className={css.icon} />
+      <UserIcon className={styles.icon.lg} />
     </div>
   );
 }

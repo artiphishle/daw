@@ -1,6 +1,6 @@
 import classNames from 'classnames';
 
-import type { IA } from '..';
+import type { IA } from '@/pfui/types';
 
 function A({
   children,

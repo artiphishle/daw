@@ -1,4 +1,5 @@
-import { ChangeEvent, useState } from "react";
+'use client';
+import { ChangeEvent, useState } from 'react';
 
 interface IRangeInput {
   id?: string;
@@ -15,7 +16,7 @@ function RangeInput({
   min = 0,
   max = 100,
   initialValue = 0,
-  placeholder = "0",
+  placeholder = '0',
   step = 1,
 }: IRangeInput) {
   const [value, setValue] = useState(initialValue);
@@ -32,7 +33,7 @@ function RangeInput({
           value={value}
           step={step}
           onChange={(event: ChangeEvent<HTMLInputElement>) =>
-            setValue(parseInt(event.target.value, 10))
+            setValue(parseInt(event.target?.value, 10))
           }
         />
       </label>

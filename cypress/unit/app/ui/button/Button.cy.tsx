@@ -1,11 +1,11 @@
 import { Button } from 'packages/pfui';
-import { EButtonType } from 'packages/pfui/button/Button';
-import { EVariant } from 'packages/pfui/constants';
+import { EVariant, EButtonType, ESize } from 'packages/pfui/constants';
 
 describe('Button', () => {
   const VariantButton = ({ variant }: { variant: EVariant }) => (
     <Button
       data-cy="button"
+      size={ESize.Lg}
       type={EButtonType.Button}
       value="Button"
       variant={variant}
@@ -18,7 +18,7 @@ describe('Button', () => {
         {(Object.keys(EVariant) as Array<EVariant>).map((variant) => (
           <VariantButton key={`btn-variant-${variant}`} variant={variant} />
         ))}
-      </>
+      </>,
     );
     cy.get('button');
   });

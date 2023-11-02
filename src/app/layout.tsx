@@ -1,15 +1,17 @@
-import { PrimeReactProvider } from "primereact/api";
+// eslint-disable-next-line camelcase
+import { Inter } from 'next/font/google';
+import { PrimeReactProvider } from 'primereact/api';
 
-import { type Metadata } from "next";
-import { type ReactNode } from "react";
+import './globals.css';
 
-import "./globals.css";
-import { Inter } from "next/font/google";
-const inter = Inter({ subsets: ["latin"] });
+import { type Metadata } from 'next';
+import { type ReactNode } from 'react';
+
+const inter = Inter({ subsets: ['latin'], display: 'swap' });
 
 export const metadata: Metadata = {
-  description: "Digital Audio Workstation",
-  title: "DAW",
+  description: 'Digital Audio Workstation',
+  title: 'DAW',
 };
 
 interface IRootLayoutProps {
@@ -19,7 +21,7 @@ interface IRootLayoutProps {
 export default function RootLayout({ children }: IRootLayoutProps) {
   return (
     <html className="box-content h-full" lang="en">
-      <body className={`${inter.className} h-full`}>
+      <body className={`${inter.className} flex flex-col h-full`}>
         <PrimeReactProvider>{children}</PrimeReactProvider>
       </body>
     </html>
