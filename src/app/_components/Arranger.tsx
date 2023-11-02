@@ -21,15 +21,19 @@ import type { IArranger } from '@/common/types/arranger.types';
 import { Flex, Grid } from '@/pfui';
 import { useState } from 'react';
 import useTransport from '@/core/hooks/useTransport';
-import { patchTrack, patchTracks } from '@/api/project/_presets/DefaultPreset';
+import {
+  patchProject,
+  patchTrack,
+  patchTracks,
+} from '@/api/project/_presets/DefaultPreset';
 
 export default function Arranger({
   project: initialProject,
-  tracks: initialTracks,
+  tracks,
+  setTracks,
   className = '',
 }: IArranger) {
   const [position, setPosition] = useState<string>('0:0:0.000');
-  const [tracks, setTracks] = useState(initialTracks);
   const [project, setProject] = useState(initialProject);
   const [activeTrackId, setActiveTrackId] = useState(
     initialProject.activeTrackId,
@@ -44,7 +48,6 @@ export default function Arranger({
   const events = {
     dragEnd: ({ active, over }: DragEndEvent) => {
       if (active.id === over?.id) return;
-
       const oldIndex = tracks.findIndex(({ id }) => id === active.id);
       const newIndex = tracks.findIndex(({ id }) => id === over?.id);
       const sortedTracks = arrayMove(tracks, oldIndex, newIndex);
@@ -78,7 +81,7 @@ export default function Arranger({
                 <ol className={$.ol}>
                   {tracks.map((track) => (
                     <Track
-                      patchProject={patchTrack}
+                      patchProject={patchProject}
                       patchTrack={patchTrack}
                       key={track.id}
                       project={project}

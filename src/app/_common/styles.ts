@@ -65,6 +65,9 @@ const styles = {
   notes: {
     main: 'flex flex-1 justify-center items-center text-center cursor-pointer text-[0.5rem] bg-blue-900 text-zinc-200 border border-zinc-700',
   },
+  portal: {
+    main: 'fixed top-1/3 left-1/3 z-50 flex justify-center items-center bg-black/90 text-zinc-100 p-8 rounded-sm border border-zinc-700',
+  },
   progression: {
     tr: 'border border-b-zinc-100',
     td1: 'h-[40px] mb-[4px] border-l border-l-white',

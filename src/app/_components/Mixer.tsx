@@ -1,5 +1,5 @@
 'use client';
-import { useCallback, useMemo, type ReactNode } from 'react';
+import { useCallback, useMemo, type ReactNode, MouseEvent } from 'react';
 import { LucideIcon } from 'lucide-react';
 import { useWindowWidth } from '@react-hook/window-size';
 import classNames from 'classnames';
@@ -58,7 +58,13 @@ export default function Mixer({
   );
   const getRouting = useCallback(
     ({ label, output }: { label: string; output?: string }) => {
-      const a = { href: '#', onClick: openInstrument };
+      const a = {
+        href: '#',
+        onClick: (event: MouseEvent) => {
+          event.preventDefault();
+          openInstrument();
+        },
+      };
       return (
         <ol>
           <li>

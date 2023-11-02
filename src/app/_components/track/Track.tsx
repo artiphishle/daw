@@ -1,24 +1,22 @@
 'use client';
+import { useEffect, type MouseEvent } from 'react';
 import _ from 'lodash/fp';
 import classNames from 'classnames';
 import { useWindowWidth } from '@react-hook/window-size';
 
 import { getIconByType } from 'config/icons';
 import { Note, SortableItem } from '@/components';
-// import useNoteEditor from '@/core/hooks/useNoteEditor';
 import useScheduler from '@/core/hooks/audio/useAudioScheduler';
+import { getMaxNotes, DEFAULT_OFFSET_LEFT } from '@/common/constants';
 import WaveSurferAudioTrack from './WaveSurferAudioTrack';
 import { WaveSurferOptions } from 'wavesurfer.js';
-
-import { getMaxNotes, DEFAULT_OFFSET_LEFT } from '@/common/constants';
+import useNoteEditor from '@/core/hooks/useNoteEditor';
 
 import { ETrackType, type ITrack } from 'app/_common/types/track.types';
-import { useEffect, type MouseEvent } from 'react';
-import type { IMidiPart } from 'app/_common/types/midi.types';
+import type { IMidiPart } from '@/common/types/midi.types';
+import type { IProject } from '@/common/types/project.types';
 
 import styles from 'app/_common/styles';
-import { IProject } from '@/common/types/project.types';
-import useNoteEditor from '@/core/hooks/useNoteEditor';
 const $ = styles.track;
 
 function Track({
@@ -31,7 +29,7 @@ function Track({
   project: IProject;
   patchProject: (patch: Partial<IProject>) => Promise<void>;
   patchTrack: (patch: Partial<ITrack>) => Promise<void>;
-  setActiveTrackId: any;
+  setActiveTrackId: (activeTrackId: any) => void;
   track: ITrack;
 }) {
   const { setupInstrument } = useScheduler();
