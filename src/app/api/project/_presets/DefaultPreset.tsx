@@ -78,13 +78,11 @@ export async function fetchProject() {
 }
 export async function patchProject(patch: Partial<IProject>) {
   project = { ...project, ...patch };
-  return project;
 }
 
 /*** @states => active tabs */
 export async function fetchStates() {
   const states = await DEFAULT_STATES;
-  return states;
 }
 
 // DEFAULT_TRACK_INSTRUMENT_BASS,

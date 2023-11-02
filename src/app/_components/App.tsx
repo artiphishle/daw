@@ -11,7 +11,6 @@ import {
   Instrument,
   Mixer,
   Song,
-  Track,
 } from '@/components';
 import { Button, ButtonGroup, Dialog, Flex, Menu } from '@/pfui';
 import { useSelector } from '@/core/hooks/useSelector';
@@ -20,9 +19,16 @@ import { useToneJs } from '@/core/hooks/useToneJs';
 import { EButtonType, ESize, EVariant } from '@/pfui/constants';
 import type { IData, IProject } from '@/common/types/project.types';
 import $ from '@/common/styles';
+import { useEffect, useState } from 'react';
+import { ITrack } from '@/common/types/track.types';
 
-export function App({ channels: _channels, project, tracks: _tracks }: IData) {
-  const { Portal, isOpen, open, close } = usePortal();
+export function App({
+  channels: _channels,
+  project,
+  tracks: initialTracks,
+}: IData) {
+  const [tracks, setTracks] = useState<ITrack[] | null>(null);
+  const { Portal, openPortal, closePortal, isOpen } = usePortal();
   const { init, toneReady } = useToneJs();
   const { deselectChannels, selectChannels, deselectTracks, selectTracks } =
     useSelector();
@@ -219,13 +225,14 @@ export function App({ channels: _channels, project, tracks: _tracks }: IData) {
   ];
   */
 
+  useEffect(() => {
+    setTracks(selectTracks(initialTracks));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   if (toneReady) {
     const channels = selectChannels(_channels);
-    const tracks = selectTracks(_tracks);
-    const activeTrack = tracks.find(
-      (track) => track.id === project.activeTrackId,
-    );
-
+    const activeTrack = tracks?.find(({ id }) => id === project.activeTrackId);
     /***
      * New way of structuring
      * It's not perfect yet but it's a start
@@ -237,11 +244,15 @@ export function App({ channels: _channels, project, tracks: _tracks }: IData) {
         <main className={$.main}>
           <Song grow={true}>
             <Flex grow={true} vertical={true}>
-              <Arranger project={project} tracks={tracks} />
+              <Arranger
+                project={project}
+                setTracks={setTracks}
+                tracks={tracks || []}
+              />
               <Mixer
                 activeTrackId={project.activeTrackId}
                 channels={channels}
-                tracks={tracks}
+                tracks={tracks || []}
                 openInstrument={open}
               />
             </Flex>
@@ -250,9 +261,12 @@ export function App({ channels: _channels, project, tracks: _tracks }: IData) {
         </main>
         <Footer />
         <Portal>
-          Portal here
-          {project.activeTrackId && isOpen && (
-            <Instrument close={close} project={project} track={activeTrack} />
+          {isOpen && (
+            <section className={$.portal.main}>
+              {activeTrack && (
+                <Instrument onClose={closePortal} activeTrack={activeTrack} />
+              )}
+            </section>
           )}
         </Portal>
       </>
