@@ -1,12 +1,10 @@
 'use client';
-import { useCallback, useEffect, useState } from 'react';
-import * as Tone from 'tone';
+import { useEffect, useState } from 'react';
 import cn from 'classnames';
 
 import { DEFAULT_OFFSET_LEFT } from 'app/_common/constants';
 
 import { EUnit } from 'app/_common/types/utility.types';
-import { ETransportState } from 'app/_common/types/project.types';
 
 import styles from 'app/_common/styles';
 const $ = styles.locator;
