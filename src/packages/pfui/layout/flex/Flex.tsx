@@ -1,9 +1,12 @@
-import { IFlex } from '../../types';
 import classNames from 'classnames';
 
-export function Flex({ children, vertical = false }: IFlex) {
-  const props = {
-    className: classNames('flex', { 'flex-col': vertical }),
-  };
-  return <div {...props}>{children}</div>;
+import type { IFlex } from '@/pfui/types';
+
+export function Flex({ children, grow = false, vertical = false }: IFlex) {
+  const className = classNames('flex', {
+    'flex-1': grow,
+    'flex-col': vertical,
+  });
+
+  return <div className={className}>{children}</div>;
 }

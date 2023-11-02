@@ -1,10 +1,10 @@
-import styles from "app/common/styles";
-import t from "@/core/i18n";
+import styles from 'app/_common/styles';
+import t from 'app/_core/i18n';
 
 enum EMessageType {
-  Info = "info",
-  Error = "error",
-  Success = "success",
+  Info = 'info',
+  Error = 'error',
+  Success = 'success',
 }
 interface IMessageProps {
   message: string;

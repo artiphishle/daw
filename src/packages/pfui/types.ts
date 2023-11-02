@@ -1,53 +1,40 @@
-/**
- * TODO more accurate type descriptions
- * (e.g. ReactNode is not good enough for Ul children (only Li))
- */
-import { AllHTMLAttributes, ReactNode } from "react";
+/***
+ * @types
+ * @description all types (not yet, move them here) of 'PFUI' library
+ * @todo more accurate type descriptions
+ ***/
+import React, {
+  AllHTMLAttributes,
+  Attributes,
+  StyleHTMLAttributes,
+} from 'react';
 
-/**
- * ELEMENTS
+/***
+ * @interfaces
  */
 
-// A
-interface IA extends Readonly<AllHTMLAttributes<HTMLAnchorElement>> {
+/*** @ui Anchor */
+export interface IA extends Readonly<AllHTMLAttributes<HTMLAnchorElement>> {
   readonly id: string;
   readonly order: number;
   readonly isActive?: boolean;
   readonly classNameActive?: string;
 }
-// Ol
-interface IOl extends Readonly<AllHTMLAttributes<HTMLOListElement>> {
-  readonly children: ReactNode;
-}
-// Ul
-interface IUl extends Readonly<AllHTMLAttributes<HTMLUListElement>> {
-  readonly children: ReactNode;
-}
-
-/**
- * COMPOUNDS
- */
-
-// Avatar
-interface IAvatar extends AllHTMLAttributes<HTMLDivElement> {
+/*** @ui Avatar */
+export interface IAvatar extends AllHTMLAttributes<HTMLDivElement> {
   bordered?: boolean;
   rounded?: boolean;
 }
-interface IButtonGroup extends AllHTMLAttributes<HTMLDivElement> {}
+/*** @ui ButtonGroup */
+export interface IButtonGroup extends AllHTMLAttributes<HTMLDivElement> {}
 
-/**
- * LAYOUTS
- */
-
-// Flex
-interface IFlex extends AllHTMLAttributes<HTMLDivElement> {
+/*** @ui Flex */
+export interface IFlex extends AllHTMLAttributes<HTMLDivElement> {
+  grow?: boolean;
   vertical?: boolean;
 }
-// Grid
-interface IGrid extends AllHTMLAttributes<HTMLDivElement> {
+/*** @ui Grid */
+export interface IGrid extends AllHTMLAttributes<HTMLDivElement> {
   classNameItem?: string;
+  style?: React.CSSProperties;
 }
-
-export type { IA, IOl, IUl };
-export type { IAvatar, IButtonGroup };
-export type { IFlex, IGrid };

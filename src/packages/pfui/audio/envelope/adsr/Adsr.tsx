@@ -153,7 +153,7 @@ export function Adsr() {
                     cx="20"
                     cy="20"
                     r="14"
-                    fill="#ffffff"
+                    fill="#fff"
                   ></circle>
                   <circle
                     className="indicator-dot"
@@ -227,7 +227,7 @@ export function Adsr() {
                     cx="20"
                     cy="20"
                     r="14"
-                    fill="#ffffff"
+                    fill="#fff"
                   ></circle>
                   <circle
                     className="indicator-dot"
@@ -301,7 +301,7 @@ export function Adsr() {
                     cx="20"
                     cy="20"
                     r="14"
-                    fill="#ffffff"
+                    fill="#fff"
                   ></circle>
                   <circle
                     className="indicator-dot"
@@ -375,7 +375,7 @@ export function Adsr() {
                     cx="20"
                     cy="20"
                     r="14"
-                    fill="#ffffff"
+                    fill="#fff"
                   ></circle>
                   <circle
                     className="indicator-dot"
@@ -449,7 +449,7 @@ export function Adsr() {
                     cx="20"
                     cy="20"
                     r="14"
-                    fill="#ffffff"
+                    fill="#fff"
                   ></circle>
                   <circle
                     className="indicator-dot"
@@ -523,7 +523,7 @@ export function Adsr() {
                     cx="20"
                     cy="20"
                     r="14"
-                    fill="#ffffff"
+                    fill="#fff"
                   ></circle>
                   <circle
                     className="indicator-dot"
@@ -599,7 +599,7 @@ export function Adsr() {
                   cx="20"
                   cy="20"
                   r="14"
-                  fill="#ffffff"
+                  fill="#fff"
                 ></circle>
               </g>
             </svg>
@@ -664,7 +664,7 @@ export function Adsr() {
                   cx="20"
                   cy="20"
                   r="14"
-                  fill="#ffffff"
+                  fill="#fff"
                 ></circle>
               </g>
             </svg>
@@ -729,7 +729,7 @@ export function Adsr() {
                   cx="20"
                   cy="20"
                   r="14"
-                  fill="#ffffff"
+                  fill="#fff"
                 ></circle>
               </g>
             </svg>
