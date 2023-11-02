@@ -40,6 +40,7 @@ export default function Arranger({
   );
   const loopFn = setPosition;
   const { loop } = useTransport({ loopFn });
+  loop.start();
   const { measureCount, quantization, offsetLeft } = project;
   const mouseSensor = useSensor(MouseSensor);
   const sensors = useSensors(mouseSensor);
