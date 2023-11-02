@@ -3,7 +3,11 @@
  * @description all types (not yet, move them here) of 'PFUI' library
  * @todo more accurate type descriptions
  ***/
-import { AllHTMLAttributes, Attributes, StyleHTMLAttributes } from 'react';
+import React, {
+  AllHTMLAttributes,
+  Attributes,
+  StyleHTMLAttributes,
+} from 'react';
 
 /***
  * @interfaces
@@ -31,6 +35,6 @@ export interface IFlex extends AllHTMLAttributes<HTMLDivElement> {
 }
 /*** @ui Grid */
 export interface IGrid extends AllHTMLAttributes<HTMLDivElement> {
-  style: any;
   classNameItem?: string;
+  style?: React.CSSProperties;
 }

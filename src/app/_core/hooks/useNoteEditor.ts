@@ -1,6 +1,6 @@
-import { fetchTracks } from '@/api/project/_presets/DefaultPreset';
-import { UniqueIdentifier } from '@/common/types/utility.types';
-import type { ITrack } from 'app/_common/types/track.types';
+import _ from 'lodash/fp';
+
+import type { ITrack } from '@/common/types/track.types';
 
 interface IAddNote {
   qIndex: number;
@@ -8,38 +8,27 @@ interface IAddNote {
   track: ITrack;
 }
 interface IDeleteNote {
-  track: ITrack;
   noteIndex: number;
   partIndex: number;
+  track: ITrack;
 }
-export default function useNoteEditor(
-  update: (patch: Record<string, any>) => void,
-) {
-  const tracks = fetchTracks();
-  const getTrackIndex = (id: UniqueIdentifier) =>
-    tracks.findIndex((t) => t.id === id);
+interface IUseNoteEditor {
+  patchTrack: (patch: Partial<ITrack>) => Promise<void>;
+}
 
+export default function useNoteEditor({ patchTrack }: IUseNoteEditor) {
   return {
-    addNote: ({ track, qIndex, partIndex }: IAddNote) => {
-      const patchTracks = [...tracks.filter((t) => t.id !== track.id)];
-
-      track.routing.input.parts[partIndex].times?.push(qIndex);
-      patchTracks.splice(getTrackIndex(track.id), 0, track);
-      update({ tracks: patchTracks });
+    /*** @todo Support part.notes */
+    addNote: async ({ track, qIndex, partIndex }: IAddNote) => {
+      const path = `routing.input.parts[${partIndex}].times`;
+      return await patchTrack(_.set(path, qIndex)(track));
     },
-    deleteNote: ({ noteIndex, partIndex, track }: IDeleteNote) => {
-      const patchTracks = [...tracks.filter((t) => t.id !== track.id)];
-      const newTimes = track.routing.input.parts[partIndex].times;
-      newTimes?.splice(noteIndex, 1);
-      const newInput = { ...track.routing.input };
-      newInput.parts[partIndex] = {
-        label: track.routing.input.parts[partIndex].label,
-        times: newTimes,
-      };
-      const newTrack = { ...track };
-      newTrack.routing.input = newInput;
-      patchTracks.splice(getTrackIndex(track.id), 0, newTrack);
-      update({ tracks: patchTracks });
+    /*** @todo Support part.notes */
+    deleteNote: async ({ noteIndex, partIndex, track }: IDeleteNote) => {
+      const { times = [] } = track.routing.input.parts[partIndex];
+      const newTimes = times.splice(noteIndex, 0, noteIndex);
+      const path = `routing.input.parts[${partIndex}].times`;
+      return await patchTrack(_.set(path, newTimes)(track));
     },
   };
 }

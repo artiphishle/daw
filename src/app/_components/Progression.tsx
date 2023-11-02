@@ -1,23 +1,25 @@
 import _ from 'lodash/fp';
-import { useMemo } from 'react';
+import React from 'react';
 
-import { PROGRESSION } from 'app/_common/constants';
-import useAudioTheory from 'app/_core/hooks/audio/useAudioTheory';
+import { PROGRESSION } from '@/common/constants';
+import t from '@/core/i18n';
+import useAudioTheory from '@/core/hooks/audio/useAudioTheory';
 
 import type { Note as TNote } from 'tone/build/esm/core/type/NoteUnits';
-import t from 'app/_core/i18n';
-import { fetchProject } from '@/api/project/_presets/DefaultPreset';
+
+import styles from '@/common/styles';
+const $ = styles.progression;
 
 interface IProgression {
-  tonic: TNote;
+  clef: string;
+  tonic: TNote; // clef[0] I assume
 }
-export default function Progression({ tonic }: IProgression) {
-  const { clef } = fetchProject();
+export default function Progression({ clef, tonic }: IProgression) {
   const [, progression] = PROGRESSION;
   const { getChordsByProgression } = useAudioTheory({ tonic });
   const chords = getChordsByProgression(progression);
 
-  const memoProgressions = useMemo(
+  const memoProgressions = React.useMemo(
     () => PROGRESSION.map((p) => getChordsByProgression(p).join(' ')),
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [tonic],
@@ -25,16 +27,13 @@ export default function Progression({ tonic }: IProgression) {
 
   return (
     <section>
-      <h3 className="py-4">
-        Calculate progression (try to change &apos;clef&apos; on top)
-      </h3>
       <table>
         <thead>
           <tr>
-            <th>Roman numerals</th>
+            <th>{t('romanNumerals')}</th>
           </tr>
           <tr>
-            <th>Tonic</th>
+            <th>{t('tonic')}</th>
           </tr>
           <tr>
             <th>{_.upperFirst(t('progression'))}</th>
@@ -45,21 +44,18 @@ export default function Progression({ tonic }: IProgression) {
             return (
               <tr
                 key={`testing-progression-${progressionIndex}`}
-                className="border border-b-gray-100"
+                className={$.tr}
               >
-                <td className="p-1 border border-r-gray-100">
+                <td className={$.td1}>
                   <b>{PROGRESSION[progressionIndex]}</b>
                 </td>
-                <td className="p-1">{clef}</td>
-                <td className="p-1 bg-gray-200">{memoProgression}</td>
+                <td className={$.td2}>{clef}</td>
+                <td className={$.td3}>{memoProgression}</td>
               </tr>
             );
           })}
         </tbody>
       </table>
-      <small>
-        Try to change the &apos;clef&apos; in the transporter on top
-      </small>
     </section>
   );
 }

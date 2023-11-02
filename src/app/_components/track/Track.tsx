@@ -18,26 +18,30 @@ import type { IMidiPart } from 'app/_common/types/midi.types';
 
 import styles from 'app/_common/styles';
 import { IProject } from '@/common/types/project.types';
+import useNoteEditor from '@/core/hooks/useNoteEditor';
 const $ = styles.track;
 
 function Track({
+  patchProject,
+  patchTrack,
   project: { measureCount },
+  setActiveTrackId,
   track,
 }: {
   project: IProject;
-  patch: any;
+  patchProject: (patch: Partial<IProject>) => Promise<void>;
+  patchTrack: (patch: Partial<ITrack>) => Promise<void>;
+  setActiveTrackId: any;
   track: ITrack;
 }) {
   const { setupInstrument } = useScheduler();
   const { id, name, routing, type, className, isActive = false } = track;
-  // const { addNote, deleteNote } = useNoteEditor(patchTrack);
+  const { addNote, deleteNote } = useNoteEditor({ patchTrack });
   const windowWidth = useWindowWidth() - DEFAULT_OFFSET_LEFT;
   const { id: inputId, instrument, parts } = routing.input;
   const $li = classNames($.li, className);
   const $e = {
     onArrangementClick: (event: MouseEvent) => {
-      // Tone.Transport.stop();
-      // Tone.setContext(new Tone.Context());
       const element = event.target as HTMLElement;
       const clientX = event.clientX - DEFAULT_OFFSET_LEFT;
       const qWidth = windowWidth / 16 / measureCount;
@@ -46,7 +50,6 @@ function Track({
       const qIndex = qTotalIndex - partIndex * 16;
       const isNote = element.getAttribute('data-type') === 'note';
 
-      /*
       isNote
         ? deleteNote({
             partIndex,
@@ -54,12 +57,12 @@ function Track({
             noteIndex: parseInt(element.getAttribute('data-index')!, 10),
           })
         : addNote({ track, partIndex, qIndex });
-        */
     },
     onTrackSelection: (event: MouseEvent) => {
       const element = event.currentTarget as HTMLElement;
       const trackId = element.getAttribute('data-track-id')!;
-      // patch({ activeTrackId: trackId });
+      setActiveTrackId(trackId);
+      patchProject({ activeTrackId: trackId });
     },
   };
 

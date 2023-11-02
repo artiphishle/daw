@@ -5,7 +5,6 @@ import { IProject } from './project.types';
 interface IArranger {
   readonly project: IProject;
   readonly tracks: ITrack[];
-  readonly children: ReactNode;
   readonly className?: string;
 }
 

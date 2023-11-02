@@ -12,6 +12,7 @@ export enum ETransportState {
 export enum EPortal {
   Instruments = 'portal-instruments',
 }
+
 export interface ISong {
   children: ReactNode;
   className?: string;
@@ -34,7 +35,11 @@ export interface IProject {
   swing: number;
   swingSubdivision: Subdivision;
 }
-
+export interface IData {
+  channels: IChannel[];
+  project: IProject;
+  tracks: ITrack[];
+}
 export interface ISignalFlow {
   in: UniqueIdentifier;
   out: UniqueIdentifier;
