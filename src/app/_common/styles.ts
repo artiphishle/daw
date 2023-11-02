@@ -15,6 +15,11 @@ const styles = {
   /*** @components */
   arranger: {
     main: 'flex flex-1 relative bg-zinc-900/80',
+    ol: 'flex-1',
+    innerBack: {
+      main: 'grid absolute top-[32px] right-0',
+      item: 'item: h-[40px] mb-[4px] border-l border-l-white',
+    },
     inner: 'flex-1',
   },
   avatar: {
@@ -59,6 +64,12 @@ const styles = {
   },
   notes: {
     main: 'flex flex-1 justify-center items-center text-center cursor-pointer text-[0.5rem] bg-blue-900 text-zinc-200 border border-zinc-700',
+  },
+  progression: {
+    tr: 'border border-b-zinc-100',
+    td1: 'h-[40px] mb-[4px] border-l border-l-white',
+    td2: 'p-1',
+    td3: 'p-1 bg-zinc-200',
   },
   time: {
     main: 'flex w-full text-zinc-500 text-xs',

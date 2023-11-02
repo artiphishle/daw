@@ -19,22 +19,33 @@ import {
   DEFAULT_OFFSET_LEFT,
   DEFAULT_TRACK_PIANO,
 } from '@/common/constants';
-import { IProject } from '@/common/types/project.types';
+import type { IChannel } from '@/common/types/channel.types';
+import type { IProject } from '@/common/types/project.types';
+import type { ITrack } from '@/common/types/track.types';
+import _ from 'lodash/fp';
 
 /*** @channels */
 const channelDrums = DEFAULT_CHANNEL_DRUMS;
 const channelMaster = DEFAULT_CHANNEL_MASTER;
-export async function fetchChannels(/* TODO choose which */) {
-  const channels = await [channelDrums, channelMaster];
-  return channels;
+const channels = [channelDrums, channelMaster];
+export const fetchChannels = () => channels;
+export async function patchChannel(patch: Partial<IChannel>) {
+  const channelIndex = channels.findIndex(({ id }) => id === patch.id);
+  channels[channelIndex] = _.merge(patch)(channels[channelIndex]);
 }
 
 /*** @tracks */
 const trackAudioHalloween = DEFAULT_TRACK_AUDIO;
 const tracksamplerDrums = DEFAULT_TRACK_SAMPLER;
 const trackSamplerPiano = DEFAULT_TRACK_PIANO;
-export async function fetchTracks(/* TODO choose which */) {
-  return [trackAudioHalloween, tracksamplerDrums, trackSamplerPiano];
+let tracks = [trackAudioHalloween, tracksamplerDrums, trackSamplerPiano];
+export const fetchTracks = async () => tracks;
+export const patchTracks = async (patch: ITrack[]) => {
+  tracks = patch;
+};
+export async function patchTrack(patch: Partial<ITrack>) {
+  const trackIndex = tracks.findIndex(({ id }) => id === patch.id);
+  tracks[trackIndex] = _.merge(patch)(tracks[trackIndex]);
 }
 
 /*** @project */

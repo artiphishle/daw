@@ -1,18 +1,22 @@
-import useSWR, { useSWRConfig } from 'swr';
+// import useSWR, { useSWRConfig } from 'swr';
+/*
 import * as Tone from 'tone';
 
 import OmniSynth from 'app/_core/instruments/OmniSynth';
 import Sampler from 'app/_core/instruments/Sampler';
-
-import { EEndpoint } from 'app/_common/types/api.types';
-import type { IProjectContext } from 'app/_common/types/project.types';
+*/
+// import { EEndpoint } from 'app/_common/types/api.types';
+// import type { IProject } from 'app/_common/types/project.types';
+/*
 import {
   type TInputOptions,
   type IInstrument,
   EInstrument,
 } from 'app/_common/types/instrument.types';
-import { useSelector } from '../useSelector';
+*/
+// import { useSelector } from '../useSelector';
 
+/*
 const loadInstrument = (_instrument: EInstrument, options: TInputOptions) => {
   let instrument = null;
   let Instrument = null;
@@ -46,19 +50,20 @@ const loadInstrument = (_instrument: EInstrument, options: TInputOptions) => {
   }
   return { Instrument, instrument, options } as IInstrument;
 };
-
+*/
 export default function useProjectContext(dangerousFields: string[]) {
-  const { mutate } = useSWRConfig();
-  const { deselect, select } = useSelector();
-
+  return {};
+  // const { mutate } = useSWRConfig();
+  // const { deselect, select } = useSelector();
+  /*
   const fetcher = async (url: EEndpoint) =>
     select(await (await fetch(url)).json());
-
-  const patch = (patch: Partial<IProjectContext>) => {
-    // 1. Remove (deselect) unserializable data (Tone instrument/channel)
-    const body = { method: 'PATCH', body: JSON.stringify(deselect(patch)) };
-
-    // 2. Update project data
+  */
+  // const patch = (patch: Partial<IProjectContext>) => {
+  // 1. Remove (deselect) unserializable data (Tone instrument/channel)
+  // const body = { method: 'PATCH', body: JSON.stringify(deselect(patch)) };
+  // 2. Update project data
+  /*
     fetch(EEndpoint.ProjectSettings, body).then((res) => {
       res
         .json()
@@ -70,8 +75,10 @@ export default function useProjectContext(dangerousFields: string[]) {
         })
         .catch(console.error);
     });
-  };
+    */
+}
 
+/*
   return {
     data: useSWR<Partial<IProjectContext>, any, EEndpoint>(
       EEndpoint.ProjectSettings,
@@ -79,4 +86,4 @@ export default function useProjectContext(dangerousFields: string[]) {
     ),
     patch,
   };
-}
+  */

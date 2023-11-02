@@ -1,22 +1,17 @@
 'use client';
 import React from 'react';
 import ReactFlow from 'reactflow';
+import 'reactflow/dist/style.css';
+
 import { useWindowWidth } from '@react-hook/window-size';
 
-import 'reactflow/dist/style.css';
+import type { IData } from '@/common/types/project.types';
+
 import styles from 'app/_common/styles';
-import {
-  fetchChannels,
-  fetchProject,
-  fetchTracks,
-} from '@/api/project/_presets/DefaultPreset';
 
-export default function Dsp() {
-  const channels = fetchChannels();
-  const { bpm } = fetchProject();
-  const tracks = fetchTracks();
+export default function Dsp({ channels, project, tracks }: IData) {
+  const { bpm } = project;
   const windowWidth = useWindowWidth();
-
   const channelNodes = channels.map(({ id, label }, channelIndex) => {
     const channelNode = {
       id: id as string,

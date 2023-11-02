@@ -35,8 +35,14 @@ export default function Transport({ project }: ITransport) {
     const events = {
       onPause: () => Tone.Transport.pause(),
       onRecord: () => console.info('🎙️ Recording soon available'),
-      onStart: () => Tone.Transport.start(),
-      onStop: () => Tone.Transport.stop(),
+      onStart: () => {
+        loop.start();
+        Tone.Transport.start();
+      },
+      onStop: () => {
+        loop.stop();
+        Tone.Transport.stop();
+      },
     };
     const commonIconStyles = { fill: '#fff', className: styles.button.navbar };
     return (

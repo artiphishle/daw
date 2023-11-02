@@ -1,12 +1,14 @@
 'use client';
 import _ from 'lodash/fp';
+import usePortal from 'react-useportal';
 
 import t from '@/core/i18n';
+import { patchProject } from '@/api/project/_presets/DefaultPreset';
 import {
   Arranger,
   Footer,
-  Instrument,
   Header,
+  Instrument,
   Mixer,
   Song,
   Track,
@@ -16,27 +18,15 @@ import { useSelector } from '@/core/hooks/useSelector';
 import { useToneJs } from '@/core/hooks/useToneJs';
 
 import { EButtonType, ESize, EVariant } from '@/pfui/constants';
-import type { IChannel } from '@/common/types/channel.types';
-import type { ITrack } from '@/common/types/track.types';
-import type { IProject } from '@/common/types/project.types';
-
+import type { IData, IProject } from '@/common/types/project.types';
 import $ from '@/common/styles';
-import usePortal from 'react-useportal';
-import { patchProject } from '@/api/project/_presets/DefaultPreset';
-
-interface IData {
-  channels: IChannel[];
-  project: IProject;
-  tracks: ITrack[];
-}
 
 export function App({ channels: _channels, project, tracks: _tracks }: IData) {
   const { Portal, isOpen, open, close } = usePortal();
   const { init, toneReady } = useToneJs();
   const { deselectChannels, selectChannels, deselectTracks, selectTracks } =
     useSelector();
-  const _patchProject = (patch: any) => {
-    console.log('patch', patch);
+  const _patchProject = (patch: Partial<IProject>) => {
     patchProject(patch);
   };
 
@@ -178,8 +168,8 @@ export function App({ channels: _channels, project, tracks: _tracks }: IData) {
     {
       children: (
         <div className="flex">
-          <CogIcon className="w-[24px] h-[24px]" />
-          <span className="hidden">Settings</span>
+          <CogIcon className={styles.icon.md} />
+          <span className="hidden">{$('settings')}</span>
         </div>
       ),
       id: 'tabs-settings',
@@ -191,8 +181,8 @@ export function App({ channels: _channels, project, tracks: _tracks }: IData) {
     {
       children: (
         <div className="flex">
-          <InfinityIcon className="w-[24px] h-[24px]" />
-          <span className="hidden">Tests</span>
+          <InfinityIcon className={styles.icon.md} />
+          <span className="hidden">{t('tests')}</span>
         </div>
       ),
       id: 'tabs-test',
@@ -224,7 +214,7 @@ export function App({ channels: _channels, project, tracks: _tracks }: IData) {
           </section>
         </Droppable>
       ),
-      title: 'Testing',
+      title: t('testing'),
     },
   ];
   */
@@ -247,19 +237,7 @@ export function App({ channels: _channels, project, tracks: _tracks }: IData) {
         <main className={$.main}>
           <Song grow={true}>
             <Flex grow={true} vertical={true}>
-              <Arranger project={project} tracks={tracks}>
-                {tracks.map((track) => (
-                  <Track
-                    patch={patchProject}
-                    key={track.id}
-                    track={{
-                      ...track,
-                      isActive: project.activeTrackId === track.id,
-                    }}
-                    project={project}
-                  />
-                ))}
-              </Arranger>
+              <Arranger project={project} tracks={tracks} />
               <Mixer
                 activeTrackId={project.activeTrackId}
                 channels={channels}

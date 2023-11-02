@@ -15,20 +15,25 @@ import {
 } from '@dnd-kit/sortable';
 
 import styles from '@/common/styles';
-import { Locator, Time } from '@/components';
+import { Locator, Time, Track } from '@/components';
 
 import type { IArranger } from '@/common/types/arranger.types';
 import { Flex, Grid } from '@/pfui';
 import { useState } from 'react';
 import useTransport from '@/core/hooks/useTransport';
+import { patchTrack, patchTracks } from '@/api/project/_presets/DefaultPreset';
 
 export default function Arranger({
-  project,
-  tracks,
-  children,
+  project: initialProject,
+  tracks: initialTracks,
   className = '',
 }: IArranger) {
   const [position, setPosition] = useState<string>('0:0:0.000');
+  const [tracks, setTracks] = useState(initialTracks);
+  const [project, setProject] = useState(initialProject);
+  const [activeTrackId, setActiveTrackId] = useState(
+    initialProject.activeTrackId,
+  );
   const loopFn = setPosition;
   const { loop } = useTransport({ loopFn });
   const { measureCount, quantization, offsetLeft } = project;
@@ -37,33 +42,26 @@ export default function Arranger({
   const $ = styles.arranger;
 
   const events = {
-    dragEnd: (event: DragEndEvent) => {
-      const { active, over } = event;
+    dragEnd: ({ active, over }: DragEndEvent) => {
       if (active.id === over?.id) return;
 
       const oldIndex = tracks.findIndex(({ id }) => id === active.id);
       const newIndex = tracks.findIndex(({ id }) => id === over?.id);
       const sortedTracks = arrayMove(tracks, oldIndex, newIndex);
-      // await patchProjectContext({ tracks: sortedTracks });
-      // mutate(EEndpoint.ProjectSettings);
+      setTracks(sortedTracks);
+      patchTracks(sortedTracks);
     },
   };
 
-  function dragEnd({ active, delta }: DragEndEvent) {
-    console.log('active/moved x/y', active, delta.x, '/', delta.y);
-  }
-
   return (
-    <DndContext onDragEnd={dragEnd} sensors={sensors}>
+    <DndContext onDragEnd={events.dragEnd} sensors={sensors}>
       <section className={classNames($.main, className)}>
         <Grid
-          className={'grid absolute top-[32px] right-0'}
+          className={$.innerBack.main}
           cols={tracks.length * measureCount * quantization}
           rows={tracks.length}
-          style={{
-            left: offsetLeft,
-          }}
-          classNameItem="h-[40px] mb-[4px] border-l border-l-white"
+          style={{ left: offsetLeft }}
+          classNameItem={$.innerBack.item}
         />
         <section className={$.main}>
           <DndContext
@@ -77,7 +75,21 @@ export default function Arranger({
             >
               <Flex grow vertical>
                 <Time />
-                <ol className="flex-1">{children}</ol>
+                <ol className={$.ol}>
+                  {tracks.map((track) => (
+                    <Track
+                      patchProject={patchTrack}
+                      patchTrack={patchTrack}
+                      key={track.id}
+                      project={project}
+                      setActiveTrackId={setActiveTrackId}
+                      track={{
+                        ...track,
+                        isActive: activeTrackId === track.id,
+                      }}
+                    />
+                  ))}
+                </ol>
               </Flex>
             </SortableContext>
           </DndContext>

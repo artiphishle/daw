@@ -15,6 +15,6 @@ interface IUseTransportProps {
 
 export default function useTransport({ loopFn }: IUseTransportProps) {
   const repeat = () => loopFn && loopFn(pos.format(pos.get()));
-  const loop = new Tone.Loop(repeat, '16n').start();
+  const loop = new Tone.Loop(repeat, '16n');
   return { loop };
 }

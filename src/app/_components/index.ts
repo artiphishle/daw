@@ -16,7 +16,6 @@ import Settings from './Settings';
 import Sheet from './Sheet';
 import Song from './Song';
 import { Time } from './Time';
-import Toolbar from './Toolbar';
 import Track from './track/Track';
 import Transport from './Transport';
 import Draggable from './Draggable';
@@ -42,7 +41,6 @@ export {
   Sheet,
   Song,
   Time,
-  Toolbar,
   Track,
   Transport,
   //

@@ -1,8 +1,8 @@
+import { isRomanNum } from '@/common/utils';
 import _ from 'lodash/fp';
 import { Chord, Progression } from 'tonal';
 
 import type { Note as TNote } from 'tone/build/esm/core/type/NoteUnits';
-import { isRomanNum } from 'app/_common/constants';
 
 const ERR_NUM = '[useAudioTheory] isRomanNum: Invalid numeral';
 

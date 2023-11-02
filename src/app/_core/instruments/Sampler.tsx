@@ -7,7 +7,6 @@ import { Sampler as ToneSampler, SamplerOptions } from 'tone';
 import { Scale } from 'tonal';
 
 import { ButtonGroup, Grid } from 'packages/pfui';
-import { fetchProject } from '@/api/project/_presets/DefaultPreset';
 
 interface IPad {
   instrument: ToneSampler;
@@ -18,7 +17,6 @@ const color = 'bg-lime-950 text-white';
 const position = 'fixed z-50 top-[calc(50%-172px)] left-[calc(50%-204px)]';
 const spacing = 'p-4 pb-8';
 const className = classNames(color, position, spacing, 'w-96 flex flex-col');
-
 const getScale = (clef: string) => [
   ...Scale.get(`${clef}7 major`).notes,
   ...Scale.get(`${clef}6 major`).notes,
@@ -27,7 +25,6 @@ const getScale = (clef: string) => [
   ...Scale.get(`${clef}3 major`).notes,
   ...Scale.get(`${clef}2 major`).notes,
 ];
-
 const Pad = ({ instrument, label }: IPad) => (
   <button
     title={label}
@@ -48,7 +45,8 @@ interface ISampler extends Partial<SamplerOptions> {
 }
 
 const Sampler: FC<ISampler> = ({ instrument, onClose }) => {
-  const { clef } = fetchProject();
+  /*** @todo no hardcoding, how to get clef? */
+  const clef = 'D';
   const scale = getScale(clef);
   const { attributes, listeners, setNodeRef, transform } = useDraggable({
     id: 'sampler',

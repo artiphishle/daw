@@ -1,4 +1,3 @@
-'use client';
 import _ from 'lodash/fp';
 import { Scale } from 'tonal';
 
@@ -14,10 +13,11 @@ const $ = {
   inner: 'flex flex-cols text-xs',
 };
 
-export default function PianoRoll() {
+export default async function PianoRoll() {
   // Const [currentStepIndex, setCurrentStepIndex] = useState(0);
-  const { activeTrackId, clef, measureCount, quantization } = fetchProject();
-  const tracks = fetchTracks();
+  const { activeTrackId, clef, measureCount, quantization } =
+    await fetchProject();
+  const tracks = await fetchTracks();
   const activeTrack = tracks.find(({ id }) => id === activeTrackId);
   activeTrack || console.warn('[PianoRoll] No active track');
 

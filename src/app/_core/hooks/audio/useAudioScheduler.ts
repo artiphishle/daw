@@ -14,12 +14,10 @@ interface IUseScheduler {
 }
 
 export default function useAudioScheduler() {
-  const ROMAN_NUMS = ['i', 'ii', 'iii', 'iv', 'v', 'vi', 'vii'];
   const getMeasureTime = (n: number) => Tone.Time(`${n}m`);
   const getMeasureSeconds = (n: number) => getMeasureTime(n).toSeconds();
   const getNotationTime = (n: number) => Tone.Time(`${n}n`);
   const getNotationSeconds = (n: number) => getNotationTime(n).toSeconds();
-  const isRomanNum = (s: string) => ROMAN_NUMS.includes(_.toLower(s));
 
   const one16 = getNotationSeconds(16);
   const oneM = getMeasureSeconds(1);
