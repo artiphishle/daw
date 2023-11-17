@@ -7,7 +7,7 @@ interface IMeter {
   meter: Tone.Meter;
 }
 
-export default function Meter({ className, meter }: IMeter) {
+export function Meter({ className, meter }: IMeter) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
   const drawMeter = useCallback(() => {

@@ -1,15 +1,9 @@
 'use client';
-import { type ReactNode } from 'react';
 import { useDroppable } from '@dnd-kit/core';
 
-interface IDroppableProps {
-  id: string;
-  children?: ReactNode;
-}
+import type { IDroppable } from '@/common/types/project.types';
 
-function Droppable({ children, id }: IDroppableProps) {
+export function Droppable({ children, id }: IDroppable) {
   const { setNodeRef } = useDroppable({ id });
   return <section ref={setNodeRef}>{children}</section>;
 }
-
-export default Droppable;
