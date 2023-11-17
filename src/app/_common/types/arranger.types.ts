@@ -6,7 +6,8 @@ interface IArranger {
   readonly project: IProject;
   readonly tracks: ITrack[];
   readonly className?: string;
-  readonly setTracks: (tracks: any) => void;
+  readonly setProject: (project: IProject) => void;
+  readonly setTracks: (tracks: ITrack[]) => void;
 }
 
 export type { IArranger };

@@ -1,11 +1,7 @@
 import { Flex } from '@/pfui';
 import type { ISong } from '@/common/types/project.types';
 
-export default function Song({
-  grow = false,
-  children,
-  className = '',
-}: ISong) {
+export function Song({ grow = false, children, className = '' }: ISong) {
   // const { bpm, swing, swingSubdivision } = fetchProject();
   // const [isPlaying, setIsPlaying] = useState(false);
   // const [project, setProject] = useState<IProject | null>(null);

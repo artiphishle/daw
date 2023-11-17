@@ -36,7 +36,7 @@ const TplFX = () => (
  * @description renders channels/tracks
  * @todo extract routing
  */
-export default function Mixer({
+export function Mixer({
   activeTrackId,
   channels,
   className = '',
@@ -46,7 +46,7 @@ export default function Mixer({
   /*** @master */
   const masterMeter = new Tone.Meter();
   masterMeter.normalRange = true;
-  const masterGain = new Tone.Gain(0.5).toDestination().chain(masterMeter);
+  const masterGain = new Tone.Gain(0).toDestination().chain(masterMeter);
 
   const windowWidth = useWindowWidth();
   const FxChannel = useMemo(
@@ -133,7 +133,10 @@ export default function Mixer({
           <h2>{label}</h2>
         </Inner>
         <Meter
-          className={classNames($.meter, { [$.meterActive]: isActive })}
+          className={classNames(
+            $.meter,
+            isActive ? $.meterActive : $.meterInactive,
+          )}
           meter={id === 'master' ? masterMeter : meter}
         />
         <Inner>

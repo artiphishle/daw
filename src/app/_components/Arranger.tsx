@@ -1,4 +1,5 @@
 'use client';
+import { useState } from 'react';
 import {
   DndContext,
   DragEndEvent,
@@ -14,37 +15,36 @@ import {
   verticalListSortingStrategy,
 } from '@dnd-kit/sortable';
 
-import styles from '@/common/styles';
 import { Locator, Time, Track } from '@/components';
-
-import type { IArranger } from '@/common/types/arranger.types';
 import { Flex, Grid } from '@/pfui';
-import { useState } from 'react';
-import useTransport from '@/core/hooks/useTransport';
+import { useSelector, useTransport } from '@/core/hooks';
 import {
   patchProject,
   patchTrack,
   patchTracks,
 } from '@/api/project/_presets/DefaultPreset';
 
-export default function Arranger({
-  project: initialProject,
+import type { IArranger } from '@/common/types/arranger.types';
+
+import styles from '@/common/styles';
+const $ = styles.arranger;
+
+export function Arranger({
+  project,
   tracks,
+  setProject,
   setTracks,
   className = '',
 }: IArranger) {
   const [position, setPosition] = useState<string>('0:0:0.000');
-  const [project, setProject] = useState(initialProject);
-  const [activeTrackId, setActiveTrackId] = useState(
-    initialProject.activeTrackId,
-  );
+  const [activeTrackId, setActiveTrackId] = useState(project.activeTrackId);
   const loopFn = setPosition;
   const { loop } = useTransport({ loopFn });
   loop.start();
   const { measureCount, quantization, offsetLeft } = project;
+  const { deselectTracks } = useSelector();
   const mouseSensor = useSensor(MouseSensor);
   const sensors = useSensors(mouseSensor);
-  const $ = styles.arranger;
 
   const events = {
     dragEnd: ({ active, over }: DragEndEvent) => {
@@ -53,7 +53,7 @@ export default function Arranger({
       const newIndex = tracks.findIndex(({ id }) => id === over?.id);
       const sortedTracks = arrayMove(tracks, oldIndex, newIndex);
       setTracks(sortedTracks);
-      patchTracks(sortedTracks);
+      patchTracks(deselectTracks(sortedTracks).tracks);
     },
   };
 
@@ -78,7 +78,10 @@ export default function Arranger({
               strategy={verticalListSortingStrategy}
             >
               <Flex grow vertical>
-                <Time />
+                <Time
+                  measureCount={project.measureCount}
+                  setProject={setProject}
+                />
                 <ol className={$.ol}>
                   {tracks.map((track) => (
                     <Track

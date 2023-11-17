@@ -1,24 +1,25 @@
 'use client';
-import { type ReactNode } from 'react';
 import { useDraggable } from '@dnd-kit/core';
 
-interface IDraggableProps {
-  children: ReactNode;
-  id: string;
-}
+import type { IDraggable } from '@/common/types/project.types';
 
-export default function Draggable({ id, children }: IDraggableProps) {
-  const { attributes, listeners, setNodeRef, transform } = useDraggable({
-    id,
-  });
+export function Draggable({ id, children }: IDraggable) {
+  const {
+    attributes,
+    listeners,
+    setNodeRef: ref,
+    transform,
+  } = useDraggable({ id });
 
-  const style = transform
-    ? { transform: `translate3d(${transform.x}px, ${transform.y}px, 0)` }
-    : {};
-
-  return (
-    <div ref={setNodeRef} style={style} {...listeners} {...attributes}>
-      {children}
-    </div>
-  );
+  const { x, y } = transform || {};
+  const style = x ? { transform: `translate3d(${x}px, ${y}px, 0)` } : {};
+  const props = {
+    ...ref,
+    ...style,
+    ...listeners,
+    ...attributes,
+    /*** @url{https://docs.dndkit.com/api-documentation/draggable#recommendations} */
+    className: 'touch-none',
+  };
+  return <div {...props}>{children}</div>;
 }

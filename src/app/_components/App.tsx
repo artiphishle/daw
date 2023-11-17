@@ -1,6 +1,7 @@
 'use client';
 import _ from 'lodash/fp';
 import usePortal from 'react-useportal';
+import { Splitter, SplitterPanel } from 'primereact/splitter';
 
 import t from '@/core/i18n';
 import { patchProject } from '@/api/project/_presets/DefaultPreset';
@@ -12,7 +13,7 @@ import {
   Mixer,
   Song,
 } from '@/components';
-import { Button, ButtonGroup, Dialog, Flex, Menu } from '@/pfui';
+import { Button, ButtonGroup, Dialog, Menu } from '@/pfui';
 import { useSelector } from '@/core/hooks/useSelector';
 import { useToneJs } from '@/core/hooks/useToneJs';
 
@@ -23,10 +24,11 @@ import { useEffect, useState } from 'react';
 import { ITrack } from '@/common/types/track.types';
 
 export function App({
-  channels: _channels,
-  project,
+  channels: initialChannels,
+  project: initialProject,
   tracks: initialTracks,
 }: IData) {
+  const [project, setProject] = useState<IProject | null>(null);
   const [tracks, setTracks] = useState<ITrack[] | null>(null);
   const { Portal, openPortal, closePortal, isOpen } = usePortal();
   const { init, toneReady } = useToneJs();
@@ -41,14 +43,13 @@ export function App({
   /*
   const convertAudioToMidi = async () => {
     try {
-      // TODO stream it & not run always at start up
       const notes = await audioToMidi({ audio: "/halloween.mp3" });
     } catch (error) {
       console.error(error);
     }
   };
   */
-  /* TODO
+  /*
   useEffect(() => {
     (async () => {
       try {
@@ -226,12 +227,13 @@ export function App({
   */
 
   useEffect(() => {
+    setProject(initialProject);
     setTracks(selectTracks(initialTracks));
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  if (toneReady) {
-    const channels = selectChannels(_channels);
+  if (toneReady && tracks?.length && project) {
+    const channels = selectChannels(initialChannels);
     const activeTrack = tracks?.find(({ id }) => id === project.activeTrackId);
     /***
      * New way of structuring
@@ -240,22 +242,34 @@ export function App({
      */
     return (
       <>
-        <Header project={project} />
+        <Header project={project} setProject={setProject} />
         <main className={$.main}>
           <Song grow={true}>
-            <Flex grow={true} vertical={true}>
-              <Arranger
-                project={project}
-                setTracks={setTracks}
-                tracks={tracks || []}
-              />
-              <Mixer
-                activeTrackId={project.activeTrackId}
-                channels={channels}
-                tracks={tracks || []}
-                openInstrument={open}
-              />
-            </Flex>
+            <Splitter
+              className="w-full bg-zinc-600"
+              gutterSize={2}
+              layout="vertical"
+            >
+              <SplitterPanel className="border-black flex align-items-center justify-content-center">
+                <Arranger
+                  setProject={setProject}
+                  setTracks={setTracks}
+                  project={project}
+                  tracks={tracks}
+                />
+              </SplitterPanel>
+              <SplitterPanel
+                size={20}
+                className="flex align-items-center justify-content-center"
+              >
+                <Mixer
+                  activeTrackId={project.activeTrackId}
+                  channels={channels}
+                  tracks={tracks}
+                  openInstrument={openPortal}
+                />
+              </SplitterPanel>
+            </Splitter>
           </Song>
           <Menu isContextMenu={true} />
         </main>
