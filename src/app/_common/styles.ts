@@ -18,7 +18,7 @@ const styles = {
     ol: 'flex-1',
     innerBack: {
       main: 'grid absolute top-[32px] right-0',
-      item: 'item: h-[40px] mb-[4px] border-l border-l-white',
+      item: 'item: h-[40px] border-r border-r-white last:border-r-0',
     },
     inner: 'flex-1',
   },
@@ -46,15 +46,16 @@ const styles = {
     a: 'flex text-white py-2 px-4 gap-2 border-b border-zinc-600',
   },
   mixer: {
-    main: 'bg-zinc-950 flex w-full text-zinc-200 pl-[179px]',
+    main: 'h-full bg-zinc-950 flex w-full text-zinc-200 pl-[179px]',
     inner: 'flex w-full items-center',
     meter: 'w-full bg-zinc-900',
-    meterActive: 'bg-zinc-900',
+    meterActive: 'w-full bg-zinc-800',
+    meterInactive: 'bg-zinc-900',
     track: {
-      main: 'max-w-[110px] pt-6 mr-2 justify-center text-xs items-center content-end relative',
-      inner: 'flex px-4 items-center gap-1 py-2 border-b border-b-[#555]',
+      main: 'flex flex-col min-w-[93px] max-w-[150px] border-r border-r-zinc-700 pt-6 justify-center text-xs items-center content-end relative',
+      inner: 'flex px-4 items-center gap-1 py-2',
       master: 'h-full',
-      active: 'bg-zinc-800 text-zinc-300',
+      active: 'bg-zinc-900 text-zinc-300',
       inactive: '',
     },
   },
@@ -63,7 +64,7 @@ const styles = {
     uiInner: 'flex px-4 py-2',
   },
   notes: {
-    main: 'flex flex-1 justify-center items-center text-center cursor-pointer text-[0.5rem] bg-blue-900 text-zinc-200 border border-zinc-700',
+    main: 'absolute flex flex-1 justify-center items-center text-center cursor-pointer text-[0.5rem] bg-blue-900 text-zinc-200 border border-blue-700',
   },
   portal: {
     main: 'fixed top-1/3 left-1/3 z-50 flex justify-center items-center bg-black/90 text-zinc-100 p-8 rounded-sm border border-zinc-700',
@@ -73,6 +74,9 @@ const styles = {
     td1: 'h-[40px] mb-[4px] border-l border-l-white',
     td2: 'p-1',
     td3: 'p-1 bg-zinc-200',
+  },
+  sheet: {
+    main: 'bg-white p-8',
   },
   time: {
     main: 'flex w-full text-zinc-500 text-xs',
@@ -84,14 +88,14 @@ const styles = {
     audio: 'w-full flex flex-col justify-center',
     active: 'font-bold bg-zinc-800 text-white',
     col1: {
-      main: 'flex justify-between items-center px-4 pl-8 bg-black/10 text-white border-b border-b-zinc-700',
+      main: 'h-[40px] flex justify-between items-center px-4 pl-8 bg-black/10 text-white',
       name: 'whitespace-nowrap w-28 overflow-x-hidden text-ellipsis',
     },
     col2: {
-      main: 'bg-zinc-900/50 relative flex w-full border-b border-b-zinc-700',
+      main: 'h-[40px] bg-zinc-900/50 relative flex w-full',
     },
     icon: 'fill-white w-[16px] h-[16px]', // TODO not white
-    li: 'relative flex w-full h-10 text-black mb-1 first:text-zinc-400 text-xs',
+    li: 'relative flex w-full h-[40px] text-black border-t-zinc-700 first:text-zinc-400 text-xs border-t border-t-zinc-700 last:border-b last:border-b-zinc-700',
   },
   transport: {
     main: 'flex px-4',

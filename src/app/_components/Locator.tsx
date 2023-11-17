@@ -17,7 +17,7 @@ interface ILocator {
 const getMeasureWidth = (measureCount: number) =>
   (window.innerWidth - DEFAULT_OFFSET_LEFT) / measureCount;
 
-export default function Locator({ position, className = '' }: ILocator) {
+export function Locator({ position, className = '' }: ILocator) {
   const measureCount = 2;
   const [left, setLeft] = useState(DEFAULT_OFFSET_LEFT);
   const updateLocator = (position: string) => {

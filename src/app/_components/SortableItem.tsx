@@ -1,26 +1,14 @@
 'use client';
-import React, { type ReactNode } from 'react';
+import classNames from 'classnames';
 import { useSortable } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
 import { GripVerticalIcon } from 'lucide-react';
 
-import styles from 'app/_common/styles';
+import type { ISortableItem } from '@/common/types/project.types';
 
-import type { UniqueIdentifier } from '@dnd-kit/core';
-import classNames from 'classnames';
+import $ from '@/common/styles';
 
-interface ISortableItemProps {
-  children: ReactNode;
-  className: string;
-  id: UniqueIdentifier;
-}
-
-export default function SortableItem({
-  children,
-  className,
-  id,
-}: ISortableItemProps) {
-  const css = styles.track;
+export function SortableItem({ children, className, id }: ISortableItem) {
   const { attributes, listeners, setNodeRef, transform, transition } =
     useSortable({ id });
 
@@ -39,10 +27,7 @@ export default function SortableItem({
     >
       <div
         {...listeners}
-        className={classNames(
-          styles.icon.sm,
-          'absolute left-[.3rem] top-[.5rem]',
-        )}
+        className={classNames($.icon.sm, 'absolute left-[.3rem] top-[.5rem]')}
       >
         <GripVerticalIcon />
       </div>

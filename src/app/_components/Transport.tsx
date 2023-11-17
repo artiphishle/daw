@@ -1,6 +1,7 @@
 'use client';
-import * as Tone from 'tone';
 import { type ChangeEvent, useState } from 'react';
+import * as Tone from 'tone';
+import { Note } from 'tonal';
 
 import {
   CircleIcon,
@@ -14,16 +15,15 @@ import {
   TimerIcon,
 } from 'lucide-react';
 
-import styles from '@/common/styles';
-import type { IProject } from '@/common/types/project.types';
 import { patchProject } from '@/api/project/_presets/DefaultPreset';
-import useTransport from '@/core/hooks/useTransport';
+import { useTransport } from '@/core/hooks';
+
+import type { IProject, ITransport } from '@/common/types/project.types';
+
+import styles from '@/common/styles';
 const $ = styles.transport;
 
-interface ITransport {
-  project: IProject;
-}
-export default function Transport({ project }: ITransport) {
+export function Transport({ project, setProject }: ITransport) {
   const { bpm, clef, measureCount, quantization } = project;
   const [position, setPosition] = useState<string>('0:0:0.000');
   const loopFn = (position: string) => {
@@ -60,25 +60,32 @@ export default function Transport({ project }: ITransport) {
       </div>
     );
   }
-
   function TransportSettings() {
-    const patch = (patch: Partial<IProject>) => {
-      const patched = patchProject(patch);
-      console.log('patched', patched);
-      // mutate(EEndpoint.ProjectSettings);
+    const patch = async (patch: Partial<IProject>) => {
+      await patchProject(patch);
     };
     const events = {
       onClefChange: (event: ChangeEvent<HTMLSelectElement>) => {
-        patch({ clef: event.target.value });
+        const clef = event.target.value;
+        console.log({ clef });
+        setProject({ ...project, clef });
+        patch({ clef });
       },
       onMeasureCountChange: (event: ChangeEvent<HTMLSelectElement>) => {
-        patch({ measureCount: parseInt(event.target.value, 10) });
+        const measureCount = parseInt(event.target.value, 10);
+        setProject({ ...project, measureCount });
+        console.log({ measureCount });
+        patch({ measureCount });
       },
       onQuantizationChange: (event: ChangeEvent<HTMLSelectElement>) => {
-        patch({ quantization: parseInt(event.target.value, 10) });
+        const quantization = parseInt(event.target.value, 10);
+        setProject({ ...project, quantization });
+        patch({ quantization });
       },
       onBpmChange: (event: ChangeEvent<HTMLSelectElement>) => {
-        patch({ bpm: parseInt(event.target.value, 10) });
+        const bpm = parseInt(event.target.value, 10);
+        setProject({ ...project, bpm });
+        patch({ bpm });
       },
     };
 
@@ -102,9 +109,11 @@ export default function Transport({ project }: ITransport) {
               onChange={events.onClefChange}
               title="Clef"
             >
-              <option value="C">C</option>
-              <option value="D">D</option>
-              <option value="E">E</option>
+              {Note.names().map((note: string) => (
+                <option key={note} value={note}>
+                  {note}
+                </option>
+              ))}
             </select>
           </div>
           <div className={$.settings.item}>
@@ -118,10 +127,11 @@ export default function Transport({ project }: ITransport) {
               onChange={events.onMeasureCountChange}
               title="Measure Count"
             >
-              <option value="1">1</option>
-              <option value="2">2</option>
-              <option value="4">4</option>
-              <option value="8">8</option>
+              {['1', '2', '4', '8'].map((num) => (
+                <option key={`measure-count-${num}`} value={num}>
+                  {num}
+                </option>
+              ))}
             </select>
           </div>
           <div className={$.settings.item}>
@@ -135,13 +145,11 @@ export default function Transport({ project }: ITransport) {
               onChange={events.onQuantizationChange}
               title="Quantization"
             >
-              <option value="2">2</option>
-              <option value="4">4</option>
-              <option value="8">8</option>
-              <option value="16">16</option>
-              <option value="32">32</option>
-              <option value="64">64</option>
-              <option value="128">128</option>
+              {['2', '4', '8', '16', '32'].map((num) => (
+                <option key={`measure-count-${num}`} value={num}>
+                  {num}
+                </option>
+              ))}
             </select>
           </div>
           <div className={$.settings.item}>

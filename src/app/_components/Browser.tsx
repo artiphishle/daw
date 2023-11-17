@@ -19,7 +19,7 @@ const $ = styles.browser;
 const DIR_BASE = '/api/directories';
 const DIR_SAMPLES = `${DIR_BASE}samples/`;
 
-export default function Browser() {
+export function Browser() {
   const searchRef = useRef<HTMLInputElement>(null);
   const [filter, setFilter] = useState('');
   const [filterList, setFilterList] = useState<IDirectory[]>([]);

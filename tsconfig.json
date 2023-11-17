@@ -15,17 +15,15 @@
       "@/api/*": ["app/api/*"],
       "@/common/*": ["app/_common/*"],
       "@/components": ["app/_components/index"],
-      "@/constants": ["app/_common/constants"],
+      "@/components/*": ["app/_components/*"],
+      "@/constants/*": ["app/_common/constants/*"],
       "@/core/*": ["app/_core/*"],
+      "@/core/hooks/*": ["app/_core/hooks/*"],
       "@/pfui": ["packages/pfui/index"],
       "@/pfui/*": ["packages/pfui/*"],
       "@/types/*": ["app/_common/types/*"]
     },
-    "plugins": [
-      {
-        "name": "next"
-      }
-    ],
+    "plugins": [{ "name": "next" }],
     "resolveJsonModule": true,
     "skipLibCheck": true,
     "strict": true,
