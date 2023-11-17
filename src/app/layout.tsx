@@ -1,5 +1,6 @@
 // eslint-disable-next-line camelcase
 import { Inter } from 'next/font/google';
+import { ClerkProvider } from '@clerk/nextjs';
 import { PrimeReactProvider } from 'primereact/api';
 
 import './globals.css';
@@ -20,10 +21,12 @@ interface IRootLayoutProps {
 
 export default function RootLayout({ children }: IRootLayoutProps) {
   return (
-    <html className="box-content h-full" lang="en">
-      <body className={`${inter.className} flex flex-col h-full`}>
-        <PrimeReactProvider>{children}</PrimeReactProvider>
-      </body>
-    </html>
+    <ClerkProvider>
+      <html className="box-content h-full" lang="en">
+        <body className={`${inter.className} flex flex-col h-full`}>
+          <PrimeReactProvider>{children}</PrimeReactProvider>
+        </body>
+      </html>
+    </ClerkProvider>
   );
 }

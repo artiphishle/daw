@@ -6,28 +6,17 @@ import _ from 'lodash/fp';
 
 import useMidiDevice from '@/core/hooks/audio/useMidiDevice';
 import styles from '@/common/styles';
+import { colorScale } from '@/common/utils';
 
-export default function Settings() {
+export function Settings() {
   // Enable MIDI Device (WebMidi)
   useMidiDevice({ sysex: false });
   const [darkMode, setDarkMode] = useState(false);
 
-  // useEffect(() => {}, []);
-  function onChange(e: any) {
-    console.log('yes', e);
+  function onChange(event: any) {
+    console.log('change', event);
   }
-  const colorScale = [
-    '50',
-    '100',
-    '200',
-    '300',
-    '400',
-    '500',
-    '600',
-    '700',
-    '800',
-    '900',
-  ];
+
   return (
     <section
       className="p-4 relative"

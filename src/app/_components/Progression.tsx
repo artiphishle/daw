@@ -14,7 +14,7 @@ interface IProgression {
   clef: string;
   tonic: TNote; // clef[0] I assume
 }
-export default function Progression({ clef, tonic }: IProgression) {
+export function Progression({ clef, tonic }: IProgression) {
   const [, progression] = PROGRESSION;
   const { getChordsByProgression } = useAudioTheory({ tonic });
   const chords = getChordsByProgression(progression);

@@ -35,7 +35,7 @@ export default function Dsp({ channels, project, tracks }: IData) {
     return trackNode;
   });
 
-  // TODO routing table
+  /*** @todo routing table */
   const initialEdges = [
     { id: 'edge-1', source: 'track-bd', target: 'ch-drums' },
     { id: 'edge-2', source: 'track-sd', target: 'ch-drums' },

@@ -1,5 +1,4 @@
 import _ from 'lodash/fp';
-import * as Tone from 'tone';
 
 import t from 'app/_core/i18n';
 
@@ -8,7 +7,7 @@ import type { IChannel } from './types/channel.types';
 import { EInstrument } from './types/instrument.types';
 import { Note } from 'tone/build/esm/core/type/NoteUnits';
 import { Subdivision } from 'tone/build/esm/core/type/Units';
-import { useProgress } from '@nextui-org/react';
+import { EScale } from './types/project.types';
 
 // ---------- General
 /*** @constants */
@@ -52,8 +51,8 @@ export const getMaxNotes = (notes: Note[][]) =>
 const DEFAULT_ACTIVE_TRACK_ID = 'audio-halloween';
 const DEFAULT_BPM = 120;
 const DEFAULT_CLEF = 'D';
-const DEFAULT_SCALE = 'minor';
-const DEFAULT_MEASURE_COUNT = 2;
+const DEFAULT_SCALE: EScale = EScale.Minor;
+const DEFAULT_MEASURE_COUNT = 4;
 const DEFAULT_NAME = t('untitled');
 const DEFAULT_OFFSET_LEFT = 179;
 const DEFAULT_POSITION = '0:0:0';
@@ -359,6 +358,54 @@ const DEFAULT_TRACK_SAMPLER: ITrack = {
             [],
           ],
         },
+        {
+          label: 'p3-sampler',
+          notes: [
+            ['C3', 'E3'],
+            [],
+            [],
+            ['C3', 'E3'],
+
+            ['D3'],
+            [],
+            ['C3'],
+            [],
+
+            ['C3', 'E3'],
+            ['C3'],
+            [],
+            [],
+
+            ['D3'],
+            [],
+            [],
+            [],
+          ],
+        },
+        {
+          label: 'p4-sampler',
+          notes: [
+            ['C3', 'E3'],
+            [],
+            [],
+            ['C3'],
+
+            ['D3', 'E3'],
+            [],
+            ['C3'],
+            [],
+
+            ['C3', 'E3'],
+            ['C3'],
+            [],
+            [],
+
+            ['D3', 'E3'],
+            [],
+            [],
+            [],
+          ],
+        },
       ],
     },
     output: 'ch-drums',
@@ -456,6 +503,54 @@ const DEFAULT_TRACK_PIANO: ITrack = {
             [],
 
             ['A4', 'D4', 'F4'],
+            [],
+            [],
+            [],
+          ],
+        },
+        {
+          label: 'p3-sampler-pno',
+          notes: [
+            ['B4', 'D4', 'F4'],
+            [],
+            [],
+            [],
+
+            ['B4', 'D4', 'F4'],
+            [],
+            [],
+            [],
+
+            ['B4', 'D4', 'F4'],
+            [],
+            [],
+            [],
+
+            ['B4', 'D4', 'F4'],
+            [],
+            [],
+            [],
+          ],
+        },
+        {
+          label: 'p4-sampler-pno',
+          notes: [
+            ['B4', 'D4', 'A4'],
+            [],
+            [],
+            [],
+
+            ['B4', 'D4', 'A4'],
+            [],
+            [],
+            [],
+
+            ['B4', 'D4', 'A4'],
+            [],
+            [],
+            [],
+
+            ['B4', 'D4', 'A4'],
             [],
             [],
             [],

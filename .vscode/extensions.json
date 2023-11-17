@@ -1,0 +1,10 @@
+{
+  "recommendations": [
+    "infeng.vscode-react-typescript",
+    "dbaeumer.vscode-eslint",
+    "eamodio.gitlens",
+    "shd101wyy.markdown-preview-enhanced",
+    "jebbs.plantuml",
+    "esbenp.prettier-vscode"
+  ]
+}

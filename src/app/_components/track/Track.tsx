@@ -19,7 +19,7 @@ import type { IProject } from '@/common/types/project.types';
 import styles from 'app/_common/styles';
 const $ = styles.track;
 
-function Track({
+export function Track({
   patchProject,
   patchTrack,
   project: { measureCount },
@@ -138,7 +138,7 @@ function Track({
         data-track-id={id}
         onClick={$e.onTrackSelection}
         {...props.inner}
-        style={{ height: 40 }}
+        // style={{ height: 40 }}
       >
         <TypeIcon className={$.icon} />
         &nbsp;
@@ -156,4 +156,3 @@ function Track({
     </SortableItem>
   );
 }
-export default Track;

@@ -3,13 +3,19 @@ import { MenuIcon } from 'lucide-react';
 import styles from 'app/_common/styles';
 import t from 'app/_core/i18n';
 
-import { Avatar } from 'packages/pfui';
 import { Transport } from '@/components';
-import type { IProject } from '@/common/types/project.types';
+import type { IProject } from '@/types/project.types';
+import { UserButton } from '@clerk/nextjs';
 
-export default function Navbar({ project }: { project: IProject }) {
+export function Navbar({
+  project,
+  setProject,
+}: {
+  project: IProject;
+  setProject: (project: IProject) => void;
+}) {
   const { navbar } = styles;
-  console.log('[Navbar] server-side');
+  console.info('[Navbar] server-side');
 
   return (
     <div className={navbar.ui}>
@@ -21,8 +27,8 @@ export default function Navbar({ project }: { project: IProject }) {
         &nbsp;
         {t('daw')}
       </div>
-      {<Transport project={project} />}
-      <Avatar />
+      {<Transport project={project} setProject={setProject} />}
+      <UserButton afterSignOutUrl="/" />
     </div>
   );
 }

@@ -13,7 +13,7 @@ const $ = {
   inner: 'flex flex-cols text-xs',
 };
 
-export default async function PianoRoll() {
+export async function PianoRoll() {
   // Const [currentStepIndex, setCurrentStepIndex] = useState(0);
   const { activeTrackId, clef, measureCount, quantization } =
     await fetchProject();
