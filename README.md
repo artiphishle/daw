@@ -114,6 +114,17 @@ Design will be applied soon, this is just a raw sketch!
 
 </div>
 
+#### November, 17th
+
+- **Auth** Account create/edit/delete/login/logout
+- **OAuth2** Google/Facebook/Apple/Mail/Github/Notion/Phone/etc.
+
+### 2024
+
+#### January, 22th
+
+- **License** MIT license added, feel free to add some credits to 'artiphishle' Github account or Instagram account with the same name. It's also very appreciated if you decide to become a collaborator in the main repo instead of forking (unless there is a good reason obviously). Thanks!
+
 #### October, 24th
 
 - **Arranger** Track selection (active track)
