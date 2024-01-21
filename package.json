@@ -7,6 +7,7 @@
     "safari 12"
   ],
   "name": "daw",
+  "license": "MIT",
   "version": "0.1.0",
   "private": true,
   "types": "./src/app/types.d.ts",
