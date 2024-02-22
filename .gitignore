@@ -3,8 +3,9 @@ npm-debug.log*
 node_modules/
 
 # Next.js
-.*.env
-.*.env.local
+.env
+.env.local
+.env.prod
 .next/
 .swc/
 .vercel
