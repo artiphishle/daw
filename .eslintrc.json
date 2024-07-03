@@ -1,5 +1,5 @@
 {
-  "extends": ["plugin:cypress/recommended", "eslint:all", "next"],
+  "extends": ["plugin:cypress/recommended", "eslint:all", "next", "prettier"],
   "overrides": [
     {
       "files": ["**/*.test.ts", "**/*.test.tsx"],
