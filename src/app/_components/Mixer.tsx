@@ -46,7 +46,7 @@ export function Mixer({
   /*** @master */
   const masterMeter = new Tone.Meter();
   masterMeter.normalRange = true;
-  const masterGain = new Tone.Gain(0).toDestination().chain(masterMeter);
+  const masterGain = new Tone.Gain(Tone.dbToGain(-3)).toDestination().chain(masterMeter);
 
   const windowWidth = useWindowWidth();
   const FxChannel = useMemo(

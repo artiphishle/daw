@@ -37,10 +37,6 @@ const nextConfig = {
             key: "Access-Control-Allow-Origin",
             value: "https://trusted-domain.com",
           }, */
-          {
-            key: 'X-Content-Type-Options',
-            value: 'nosniff',
-          },
           /* {
             key: "Expect-CT",
             value: 'max-age=0, report-uri="https://example.com/report"',

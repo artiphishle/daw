@@ -1,8 +1,6 @@
-// eslint-disable-next-line camelcase
 import { Inter } from 'next/font/google';
-import { ClerkProvider } from '@clerk/nextjs';
+import { ClerkProvider } from '@clerk/nextjs'
 import { PrimeReactProvider } from 'primereact/api';
-
 import './globals.css';
 
 import { type Metadata } from 'next';
