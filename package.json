@@ -50,7 +50,7 @@
     "framer-motion": "^11.2.12",
     "lodash": "^4.17.21",
     "lucide-react": "^0.400.0",
-    "next": "^14.2.20",
+    "next": "^14.2.22",
     "postcss": "8.4.39",
     "primeicons": "^7.0.0",
     "primereact": "^10.7.0",
