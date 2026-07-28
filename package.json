@@ -70,11 +70,11 @@
   },
   "devDependencies": {
     "@clerk/types": "^4.7.0",
-    "@next/eslint-plugin-next": "^14.2.4",
+    "@next/eslint-plugin-next": "^16.2.12",
     "@types/react": "^18.3.3",
     "@types/react-dom": "^18.3.0",
     "cypress": "^13.13.0",
-    "eslint-config-next": "^14.2.4",
+    "eslint-config-next": "^16.2.12",
     "eslint-config-prettier": "latest",
     "eslint-plugin-cypress": "^3.3.0",
     "prettier": "latest",
